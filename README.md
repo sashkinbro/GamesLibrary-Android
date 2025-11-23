@@ -78,4 +78,4 @@ Only public metadata (title, cover, year, platform, etc.) is used.
 ## Contributing
 
 Pull requests and issue reports are welcome.
-If you add a new platform filter or data source, keep the UI minimal and consistent.
+If you add a new platform filter or data source, keep the UI minimal and consistent..
