@@ -43,7 +43,7 @@ You can also submit anonymous test results to keep your own testing history and 
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/<sashkinbro>/GamesLibrary-Android.git
+   git clone https://github.com/sashkinbro/GamesLibrary-Android.git
 2. Open in Android Studio.
 3. Add Firebase config:
 
