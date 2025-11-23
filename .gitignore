@@ -1,20 +1,33 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+### Android / Gradle
+.gradle/
+build/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
 local.properties
 
-# Firebase / Google services
+### IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+/out/
+.navigation/
+*.log
+
+### Keystore
+*.jks
+*.keystore
+key.properties
+
+### OS junk
+.DS_Store
+Thumbs.db
+
+### Firebase / Google services
 app/google-services.json
 google-services.json
 **/google-services.json
