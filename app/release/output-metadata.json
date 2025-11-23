@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.sbro.ps3games",
+  "applicationId": "com.sbro.gameslibrary",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
+      "versionCode": 55,
+      "versionName": "0.4.2",
       "outputFile": "app-release.apk"
     }
   ],
