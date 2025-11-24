@@ -27,7 +27,7 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="about_link_github_title">Репозиторий GitHub</string>
     <string name="about_link_github_subtitle">Исходный код и issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Спасибо, что пользуетесь GamesLibrary</string>
+    <string name="about_footer">Разработано Sashkin Apps © 2025</string>
     <string name="title_ps_games_library">Игры</string>
     <string name="subtitle_games_count">%1$d игр</string>
     <string name="subtitle_error">Ошибка</string>

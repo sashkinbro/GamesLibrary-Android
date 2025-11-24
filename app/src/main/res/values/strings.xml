@@ -27,7 +27,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="about_link_github_title">GitHub repository</string>
     <string name="about_link_github_subtitle">Source code &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Thanks for using GamesLibrary</string>
+    <string name="about_footer">Developed by Sashkin Apps © 2025</string>
     <string name="title_ps_games_library">Games</string>
     <string name="subtitle_games_count">%1$d games</string>
     <string name="subtitle_error">Error</string>
