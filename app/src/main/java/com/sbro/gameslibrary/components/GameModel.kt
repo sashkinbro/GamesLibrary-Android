@@ -16,7 +16,11 @@ data class GameTestResult(
     val testedAppVersion: String = "",
     val testedDateFormatted: String = "",
     val issueNote: String = "",
-    val updatedAtMillis: Long = 0L
+    val updatedAtMillis: Long = 0L,
+    val resolutionWidth: String = "",
+    val resolutionHeight: String = "",
+    val fpsMin: String = "",
+    val fpsMax: String = ""
 ) : Serializable
 
 data class Game(

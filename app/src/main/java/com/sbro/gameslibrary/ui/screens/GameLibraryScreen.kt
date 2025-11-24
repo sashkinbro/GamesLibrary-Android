@@ -1,7 +1,9 @@
 package com.sbro.gameslibrary.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.SystemClock
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,15 +13,21 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Sort
@@ -30,7 +38,6 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SnippetFolder
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -46,6 +53,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -53,6 +61,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -65,7 +74,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -73,6 +84,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.Game
@@ -547,7 +559,8 @@ fun GameLibraryScreen(
                 EditStatusDialog(
                     game = selectedGame!!,
                     onDismiss = { showEditDialog = false },
-                    onSave = { status, device, gpu, app, appVersion, issueNote ->
+                    onSave = { status, device, gpu, app, appVersion, issueNote, resW, resH, fpsMin, fpsMax ->
+
                         viewModel.updateGameStatus(
                             context = context,
                             gameId = selectedGame!!.id,
@@ -556,8 +569,13 @@ fun GameLibraryScreen(
                             testedGpuDriver = gpu,
                             testedApp = app,
                             testedAppVersion = appVersion,
-                            issueNote = issueNote
+                            issueNote = issueNote,
+                            resolutionWidth = resW,
+                            resolutionHeight = resH,
+                            fpsMin = fpsMin,
+                            fpsMax = fpsMax
                         )
+
                         showEditDialog = false
                     }
                 )
@@ -573,12 +591,24 @@ fun GameLibraryScreen(
     }
 }
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditStatusDialog(
     game: Game,
     onDismiss: () -> Unit,
-    onSave: (WorkStatus, String, String, String, String, String) -> Unit
+    onSave: (
+        WorkStatus,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String
+    ) -> Unit
 ) {
     var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
     var deviceText by remember { mutableStateOf("") }
@@ -586,7 +616,6 @@ fun EditStatusDialog(
     var issueText by remember { mutableStateOf("") }
 
     val platform = game.platform.lowercase()
-
     val appOptions = when {
         platform.contains("switch") || platform.contains("nintendo") -> {
             listOf("Yuzu", "Eden", "Citron", "Torzu", "Sumi", "Sudachi", "Strato")
@@ -602,12 +631,70 @@ fun EditStatusDialog(
     var selectedApp by remember { mutableStateOf(appOptions.first()) }
     var appExpanded by remember { mutableStateOf(false) }
     var appVersion by remember { mutableStateOf("") }
+    var resW by remember { mutableStateOf("") }
+    var resH by remember { mutableStateOf("") }
+    var fpsFrom by remember { mutableStateOf("") }
+    var fpsTo by remember { mutableStateOf("") }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dialog_edit_status_title)) },
-        text = {
-            Column {
+    val isFormValid by remember(
+        currentStatus,
+        deviceText,
+        gpuText,
+        selectedApp,
+        appVersion,
+        issueText,
+        resW,
+        resH,
+        fpsFrom,
+        fpsTo
+    ) {
+        derivedStateOf {
+            val baseValid =
+                deviceText.trim().isNotEmpty() &&
+                        gpuText.trim().isNotEmpty() &&
+                        selectedApp.trim().isNotEmpty() &&
+                        appVersion.trim().isNotEmpty() &&
+                        resW.trim().isNotEmpty() &&
+                        resH.trim().isNotEmpty() &&
+                        fpsFrom.trim().isNotEmpty() &&
+                        fpsTo.trim().isNotEmpty()
+
+            val issueValid =
+                currentStatus != WorkStatus.NOT_WORKING || issueText.trim().isNotEmpty()
+
+            baseValid && issueValid
+        }
+    }
+
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(28.dp),
+            tonalElevation = 6.dp
+        ) {
+            val scrollState = rememberScrollState()
+            val configuration = LocalConfiguration.current
+            val maxDialogHeight = configuration.screenHeightDp.dp * 0.9f
+            val bringIntoViewRequester = remember { BringIntoViewRequester() }
+            val scope = rememberCoroutineScope()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = maxDialogHeight)
+                    .verticalScroll(scrollState)
+                    .imePadding()
+                    .padding(horizontal = 20.dp, vertical = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.dialog_edit_status_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(12.dp))
+
                 Text(
                     text = stringResource(R.string.dialog_edit_status_description, game.title),
                     style = MaterialTheme.typography.bodySmall
@@ -658,6 +745,81 @@ fun EditStatusDialog(
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.dialog_edit_status_resolution_label),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = resW,
+                        onValueChange = { resW = it },
+                        label = { Text(stringResource(R.string.resolution_width_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    )
+
+                    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(text = "×", style = MaterialTheme.typography.titleMedium)
+
+                    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                    OutlinedTextField(
+                        value = resH,
+                        onValueChange = { resH = it },
+                        label = { Text(stringResource(R.string.resolution_height_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = stringResource(R.string.dialog_edit_status_fps_label),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = fpsFrom,
+                        onValueChange = { fpsFrom = it },
+                        label = { Text(stringResource(R.string.fps_min_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    )
+
+                    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(text = "–", style = MaterialTheme.typography.titleMedium)
+
+                    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                    OutlinedTextField(
+                        value = fpsTo,
+                        onValueChange = { fpsTo = it },
+                        label = { Text(stringResource(R.string.fps_max_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
 
                 ExposedDropdownMenuBox(
                     expanded = appExpanded,
@@ -701,34 +863,66 @@ fun EditStatusDialog(
                     label = { Text(stringResource(R.string.dialog_edit_status_app_version_label)) },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .bringIntoViewRequester(bringIntoViewRequester)
+                        .onFocusEvent { state ->
+                            if (state.isFocused) {
+                                scope.launch {
+                                    bringIntoViewRequester.bringIntoView()
+                                }
+                            }
+                        }
                 )
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onSave(
-                        currentStatus,
-                        deviceText,
-                        gpuText,
-                        selectedApp,
-                        appVersion,
-                        issueText
+
+                Spacer(modifier = Modifier.height(12.dp))
+                HorizontalDivider()
+
+                if (!isFormValid) {
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = stringResource(R.string.dialog_fill_all_fields),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error
                     )
                 }
-            ) {
-                Text(stringResource(R.string.button_save))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.button_cancel))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(R.string.button_cancel))
+                    }
+
+                    TextButton(
+                        enabled = isFormValid,
+                        onClick = {
+                            onSave(
+                                currentStatus,
+                                deviceText.trim(),
+                                gpuText.trim(),
+                                selectedApp.trim(),
+                                appVersion.trim(),
+                                issueText.trim(),
+                                resW.trim(),
+                                resH.trim(),
+                                fpsFrom.trim(),
+                                fpsTo.trim()
+                            )
+                        }
+                    ) {
+                        Text(stringResource(R.string.button_save))
+                    }
+                }
             }
         }
-    )
+    }
 }
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun TestedHistoryDialog(
     game: Game,
@@ -745,13 +939,44 @@ fun TestedHistoryDialog(
     val sortedTests = game.testResults.sortedByDescending { it.updatedAtMillis }
     var selected by remember { mutableStateOf(sortedTests.firstOrNull()) }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dialog_test_history_title, game.title)) },
-        text = {
-            Column {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(28.dp),
+            tonalElevation = 6.dp
+        ) {
+            val scrollState = rememberScrollState()
+            val configuration = LocalConfiguration.current
+            val maxDialogHeight = configuration.screenHeightDp.dp * 0.9f
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = maxDialogHeight)
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 20.dp, vertical = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.dialog_test_history_title, game.title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(12.dp))
+
                 if (sortedTests.isEmpty()) {
                     Text(stringResource(R.string.dialog_test_history_empty))
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = onDismiss) {
+                            Text(stringResource(R.string.button_ok))
+                        }
+                    }
                     return@Column
                 }
 
@@ -806,6 +1031,27 @@ fun TestedHistoryDialog(
                         Text(stringResource(R.string.test_history_gpu_driver, t.testedGpuDriver))
                     }
 
+                    val hasRes = t.resolutionWidth.isNotBlank() && t.resolutionHeight.isNotBlank()
+                    val hasFps = t.fpsMin.isNotBlank() && t.fpsMax.isNotBlank()
+
+                    if (hasRes) {
+                        Text(
+                            stringResource(
+                                R.string.test_history_resolution,
+                                "${t.resolutionWidth}×${t.resolutionHeight}"
+                            )
+                        )
+                    }
+
+                    if (hasFps) {
+                        Text(
+                            stringResource(
+                                R.string.test_history_fps,
+                                "${t.fpsMin}–${t.fpsMax}"
+                            )
+                        )
+                    }
+
                     if (t.testedApp.isNotBlank()) {
                         val ver =
                             if (t.testedAppVersion.isNotBlank()) " v${t.testedAppVersion}" else ""
@@ -817,14 +1063,22 @@ fun TestedHistoryDialog(
                         Text(stringResource(R.string.test_history_issue, t.issueNote))
                     }
                 }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.button_ok))
+                Spacer(modifier = Modifier.height(12.dp))
+                HorizontalDivider()
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(R.string.button_ok))
+                    }
+                }
             }
         }
-    )
+    }
 }
 
 @Composable

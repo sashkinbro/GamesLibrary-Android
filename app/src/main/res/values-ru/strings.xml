@@ -27,7 +27,7 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="about_link_github_title">Репозиторий GitHub</string>
     <string name="about_link_github_subtitle">Исходный код и issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Спасибо, что пользуетесь GamesLibrary ❤️</string>
+    <string name="about_footer">Спасибо, что пользуетесь GamesLibrary</string>
     <string name="title_ps_games_library">Игры</string>
     <string name="subtitle_games_count">%1$d игр</string>
     <string name="subtitle_error">Ошибка</string>
@@ -96,6 +96,14 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="title_ps3_games_library">Игры PS3</string>
     <string name="title_pc_games_library">Игры ПК</string>
     <string name="title_switch_games_library">Игры Switch</string>
-
+    <string name="dialog_edit_status_resolution_label">Разрешение</string>
+    <string name="resolution_width_hint">Ширина</string>
+    <string name="resolution_height_hint">Высота</string>
+    <string name="dialog_edit_status_fps_label">Диапазон FPS</string>
+    <string name="fps_min_hint">От</string>
+    <string name="fps_max_hint">До</string>
+    <string name="test_history_resolution">Разрешение: %1$s</string>
+    <string name="test_history_fps">FPS: %1$s</string>
+    <string name="dialog_fill_all_fields">Заполните все поля перед сохранением</string>
 
 </resources>

@@ -236,6 +236,38 @@ fun GameCard(
                             }
                         }
 
+                        latestTest?.let { t ->
+                            val hasRes = t.resolutionWidth.isNotBlank() && t.resolutionHeight.isNotBlank()
+                            val hasFps = t.fpsMin.isNotBlank() && t.fpsMax.isNotBlank()
+
+                            if (hasRes || hasFps) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Info,
+                                        contentDescription = null,
+                                        tint = colorScheme.secondary,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+
+                                    val resText = if (hasRes) "${t.resolutionWidth}×${t.resolutionHeight}" else ""
+                                    val fpsText = if (hasFps) "${t.fpsMin}–${t.fpsMax} FPS" else ""
+
+                                    val finalText = when {
+                                        hasRes && hasFps -> "$resText • $fpsText"
+                                        hasRes -> resText
+                                        else -> fpsText
+                                    }
+
+                                    Text(
+                                        text = finalText,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
+                                    )
+                                }
+                            }
+                        }
+
                         latestTest?.testedApp?.let { app ->
                             if (app.isNotBlank()) {
                                 Row(

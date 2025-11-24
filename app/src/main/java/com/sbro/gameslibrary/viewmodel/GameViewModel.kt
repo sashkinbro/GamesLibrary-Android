@@ -53,7 +53,11 @@ data class RemoteTestResult(
     val testedApp: String = "",
     val testedAppVersion: String = "",
     val issueNote: String = "",
-    val updatedAt: com.google.firebase.Timestamp? = null
+    val updatedAt: com.google.firebase.Timestamp? = null,
+    val resolutionWidth: String = "",
+    val resolutionHeight: String = "",
+    val fpsMin: String = "",
+    val fpsMax: String = ""
 )
 
 class GameViewModel : ViewModel() {
@@ -277,6 +281,10 @@ class GameViewModel : ViewModel() {
                         val testedAppVersion = doc.getString("testedAppVersion") ?: ""
                         val issueNote = doc.getString("issueNote") ?: ""
                         val updatedAt = doc.getTimestamp("updatedAt")
+                        val resolutionWidth = doc.getString("resolutionWidth") ?: ""
+                        val resolutionHeight = doc.getString("resolutionHeight") ?: ""
+                        val fpsMin = doc.getString("fpsMin") ?: ""
+                        val fpsMax = doc.getString("fpsMax") ?: ""
 
                         if (gameId.isBlank()) null else {
                             RemoteTestResult(
@@ -288,7 +296,11 @@ class GameViewModel : ViewModel() {
                                 testedApp = testedApp,
                                 testedAppVersion = testedAppVersion,
                                 issueNote = issueNote,
-                                updatedAt = updatedAt
+                                updatedAt = updatedAt,
+                                resolutionWidth = resolutionWidth,
+                                resolutionHeight = resolutionHeight,
+                                fpsMin = fpsMin,
+                                fpsMax = fpsMax
                             )
                         }
                     } catch (e: Exception) {
@@ -320,7 +332,11 @@ class GameViewModel : ViewModel() {
                                 testedAppVersion = remote.testedAppVersion,
                                 testedDateFormatted = formattedDate,
                                 issueNote = remote.issueNote,
-                                updatedAtMillis = millis
+                                updatedAtMillis = millis,
+                                resolutionWidth = remote.resolutionWidth,
+                                resolutionHeight = remote.resolutionHeight,
+                                fpsMin = remote.fpsMin,
+                                fpsMax = remote.fpsMax
                             )
                         }
                         .sortedByDescending { it.updatedAtMillis }
@@ -362,7 +378,11 @@ class GameViewModel : ViewModel() {
         testedGpuDriver: String,
         testedApp: String,
         testedAppVersion: String,
-        issueNote: String
+        issueNote: String,
+        resolutionWidth: String,
+        resolutionHeight: String,
+        fpsMin: String,
+        fpsMax: String
     ) {
         val now = com.google.firebase.Timestamp.now()
 
@@ -381,7 +401,11 @@ class GameViewModel : ViewModel() {
             testedAppVersion = testedAppVersion,
             testedDateFormatted = formattedDate,
             issueNote = issueNote,
-            updatedAtMillis = now.toDate().time
+            updatedAtMillis = now.toDate().time,
+            resolutionWidth = resolutionWidth,
+            resolutionHeight = resolutionHeight,
+            fpsMin = fpsMin,
+            fpsMax = fpsMax
         )
 
         val updated = _games.value.map { game ->
@@ -408,7 +432,11 @@ class GameViewModel : ViewModel() {
                     "testedApp" to testedApp,
                     "testedAppVersion" to testedAppVersion,
                     "issueNote" to issueNote,
-                    "updatedAt" to now
+                    "updatedAt" to now,
+                    "resolutionWidth" to resolutionWidth,
+                    "resolutionHeight" to resolutionHeight,
+                    "fpsMin" to fpsMin,
+                    "fpsMax" to fpsMax
                 )
                 testsCollection.add(data).await()
 

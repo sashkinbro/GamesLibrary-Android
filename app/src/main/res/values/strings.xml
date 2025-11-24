@@ -27,7 +27,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="about_link_github_title">GitHub repository</string>
     <string name="about_link_github_subtitle">Source code &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Thanks for using GamesLibrary ❤️</string>
+    <string name="about_footer">Thanks for using GamesLibrary</string>
     <string name="title_ps_games_library">Games</string>
     <string name="subtitle_games_count">%1$d games</string>
     <string name="subtitle_error">Error</string>
@@ -96,5 +96,14 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="title_ps3_games_library">PS3 games</string>
     <string name="title_pc_games_library">PC games</string>
     <string name="title_switch_games_library">Switch games</string>
+    <string name="dialog_edit_status_resolution_label">Resolution</string>
+    <string name="resolution_width_hint">Width</string>
+    <string name="resolution_height_hint">Height</string>
+    <string name="dialog_edit_status_fps_label">FPS range</string>
+    <string name="fps_min_hint">From</string>
+    <string name="fps_max_hint">To</string>
+    <string name="test_history_resolution">Resolution: %1$s</string>
+    <string name="test_history_fps">FPS: %1$s</string>
+    <string name="dialog_fill_all_fields">Fill in all fields before saving</string>
 
 </resources>
