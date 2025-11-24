@@ -16,8 +16,8 @@ android {
         applicationId = "com.sbro.gameslibrary"
         minSdk = 24
         targetSdk = 55
-        versionCode = 55
-        versionName = "0.4.2"
+        versionCode = 58
+        versionName = "0.4.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
