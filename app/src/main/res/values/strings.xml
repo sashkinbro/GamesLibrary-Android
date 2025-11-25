@@ -105,5 +105,8 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="test_history_resolution">Resolution: %1$s</string>
     <string name="test_history_fps">FPS: %1$s</string>
     <string name="dialog_fill_all_fields">Fill in all fields before saving</string>
+    <string name="about_igdb_attribution">
+    Cover images are provided by the official IGDB API.
+</string>
 
 </resources>

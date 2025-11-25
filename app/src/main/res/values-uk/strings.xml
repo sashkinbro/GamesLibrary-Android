@@ -105,5 +105,7 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="test_history_resolution">Роздільна здатність: %1$s</string>
     <string name="test_history_fps">FPS: %1$s</string>
     <string name="dialog_fill_all_fields">Заповніть усі поля перед збереженням</string>
-
+    <string name="about_igdb_attribution">
+    Обкладинки ігор отримані з офіційного API IGDB.
+</string>
 </resources>
