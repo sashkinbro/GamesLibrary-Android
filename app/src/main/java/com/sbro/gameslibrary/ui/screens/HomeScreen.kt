@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -267,6 +268,7 @@ private fun HomeHeroCard() {
     ) {
         Box(
             modifier = Modifier
+                .fillMaxWidth()
                 .background(backgroundBrush)
                 .padding(24.dp)
         ) {
@@ -280,7 +282,7 @@ private fun HomeHeroCard() {
                         .padding(top = 2.dp)
                 )
 
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Column {
                     Text(

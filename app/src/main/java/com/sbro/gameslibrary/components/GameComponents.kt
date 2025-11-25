@@ -331,7 +331,9 @@ fun GameCard(
                         text = game.genre,
                         style = MaterialTheme.typography.labelSmall,
                         color = colorScheme.primary,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                 }
