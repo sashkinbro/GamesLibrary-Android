@@ -1,6 +1,7 @@
 package com.sbro.gameslibrary.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.SystemClock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,10 +18,15 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
@@ -96,6 +102,7 @@ import com.sbro.gameslibrary.viewmodel.PlatformFilter
 import com.sbro.gameslibrary.viewmodel.SortOption
 import kotlinx.coroutines.launch
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameLibraryScreen(
@@ -105,6 +112,23 @@ fun GameLibraryScreen(
     lockedPlatform: PlatformFilter? = null
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+
+    val screenWidthDp = configuration.screenWidthDp
+    val orientation = configuration.orientation
+    val isTablet = screenWidthDp >= 600
+    val isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT
+
+    val useGridLayout = isTablet && !isPortrait
+
+    val horizontalPadding = when {
+        screenWidthDp >= 840 -> 48.dp
+        isTablet -> 32.dp
+        else -> 16.dp
+    }
+    val verticalPadding = if (isTablet) 12.dp else 8.dp
+
+    val actionIconSize = if (isTablet) 28.dp else 24.dp
 
     LaunchedEffect(Unit) {
         viewModel.init(context)
@@ -249,8 +273,9 @@ fun GameLibraryScreen(
                                 }
                             ) {
                                 Icon(
-                                    Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = stringResource(R.string.cd_navigate_back)
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.cd_navigate_back),
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
                         }
@@ -263,7 +288,8 @@ fun GameLibraryScreen(
                             }) {
                                 Icon(
                                     Icons.Filled.Close,
-                                    contentDescription = stringResource(R.string.cd_close_search)
+                                    contentDescription = stringResource(R.string.cd_close_search),
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
                         } else {
@@ -275,7 +301,8 @@ fun GameLibraryScreen(
                             }) {
                                 Icon(
                                     Icons.Filled.Search,
-                                    contentDescription = stringResource(R.string.cd_open_search)
+                                    contentDescription = stringResource(R.string.cd_open_search),
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
 
@@ -287,7 +314,8 @@ fun GameLibraryScreen(
                             }) {
                                 Icon(
                                     Icons.AutoMirrored.Filled.Sort,
-                                    contentDescription = stringResource(R.string.cd_open_sort)
+                                    contentDescription = stringResource(R.string.cd_open_sort),
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
 
@@ -382,7 +410,8 @@ fun GameLibraryScreen(
                             }) {
                                 Icon(
                                     Icons.Filled.Sync,
-                                    contentDescription = stringResource(R.string.cd_sync_remote)
+                                    contentDescription = stringResource(R.string.cd_sync_remote),
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
 
@@ -404,7 +433,8 @@ fun GameLibraryScreen(
                                 Icon(
                                     imageVector = if (showFavoritesOnly) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                                     contentDescription = stringResource(R.string.cd_show_favorites),
-                                    tint = if (showFavoritesOnly) Color(0xFFE91E63) else MaterialTheme.colorScheme.onSurface
+                                    tint = if (showFavoritesOnly) Color(0xFFE91E63) else MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.size(actionIconSize)
                                 )
                             }
                         }
@@ -497,29 +527,73 @@ fun GameLibraryScreen(
                             )
                         }
                     } else {
-                        LazyColumn(
-                            state = listState,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            items(
-                                items = gamesToDisplay,
-                                key = { it.id }
-                            ) { game ->
-                                GameCard(
-                                    game = game,
-                                    onEditStatus = { g ->
-                                        selectedGame = g
-                                        showEditDialog = true
-                                    },
-                                    onToggleFavorite = { g ->
-                                        viewModel.toggleFavorite(context, g.id)
-                                    },
-                                    onShowTestHistory = { g ->
-                                        historyGame = g
-                                        showHistoryDialog = true
+
+                        if (useGridLayout) {
+                            LazyVerticalGrid(
+                                columns = GridCells.Adaptive(minSize = 520.dp),
+                                contentPadding = PaddingValues(
+                                    horizontal = horizontalPadding,
+                                    vertical = verticalPadding
+                                ),
+                                horizontalArrangement = Arrangement.spacedBy(18.dp),
+                                verticalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                gridItems(
+                                    items = gamesToDisplay,
+                                    key = { it.id }
+                                ) { game ->
+                                    GameCard(
+                                        game = game,
+                                        onEditStatus = { g ->
+                                            selectedGame = g
+                                            showEditDialog = true
+                                        },
+                                        onToggleFavorite = { g ->
+                                            viewModel.toggleFavorite(context, g.id)
+                                        },
+                                        onShowTestHistory = { g ->
+                                            historyGame = g
+                                            showHistoryDialog = true
+                                        }
+                                    )
+                                }
+                            }
+                        } else {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.TopCenter
+                            ) {
+                                LazyColumn(
+                                    state = listState,
+                                    contentPadding = PaddingValues(
+                                        horizontal = horizontalPadding,
+                                        vertical = verticalPadding
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .widthIn(max = if (isTablet) 720.dp else 999.dp)
+                                ) {
+                                    items(
+                                        items = gamesToDisplay,
+                                        key = { it.id }
+                                    ) { game ->
+                                        GameCard(
+                                            game = game,
+                                            onEditStatus = { g ->
+                                                selectedGame = g
+                                                showEditDialog = true
+                                            },
+                                            onToggleFavorite = { g ->
+                                                viewModel.toggleFavorite(context, g.id)
+                                            },
+                                            onShowTestHistory = { g ->
+                                                historyGame = g
+                                                showHistoryDialog = true
+                                            }
+                                        )
                                     }
-                                )
+                                }
                             }
                         }
                     }
@@ -666,13 +740,19 @@ fun EditStatusDialog(
         }
     }
 
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp
+    val isTablet = screenWidthDp >= 600
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(28.dp),
-            tonalElevation = 6.dp
+            tonalElevation = 6.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = if (isTablet) 560.dp else 999.dp)
         ) {
             val scrollState = rememberScrollState()
-            val configuration = LocalConfiguration.current
             val maxDialogHeight = configuration.screenHeightDp.dp * 0.9f
             val bringIntoViewRequester = remember { BringIntoViewRequester() }
             val scope = rememberCoroutineScope()
@@ -939,13 +1019,19 @@ fun TestedHistoryDialog(
     val sortedTests = game.testResults.sortedByDescending { it.updatedAtMillis }
     var selected by remember { mutableStateOf(sortedTests.firstOrNull()) }
 
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp
+    val isTablet = screenWidthDp >= 600
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(28.dp),
-            tonalElevation = 6.dp
+            tonalElevation = 6.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = if (isTablet) 560.dp else 999.dp)
         ) {
             val scrollState = rememberScrollState()
-            val configuration = LocalConfiguration.current
             val maxDialogHeight = configuration.screenHeightDp.dp * 0.9f
 
             Column(
