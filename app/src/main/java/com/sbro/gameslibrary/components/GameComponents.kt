@@ -2,6 +2,7 @@ package com.sbro.gameslibrary.components
 
 //noinspection SuspiciousImport
 import android.R
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
@@ -49,15 +50,18 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R as AppR
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun GameCard(
     game: Game,
@@ -67,6 +71,27 @@ fun GameCard(
 ) {
     val context = LocalContext.current
     val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp
+    val isTabletOrWide = screenWidthDp >= 600
+
+    val cardCorner = if (isTabletOrWide) 20.dp else 16.dp
+    val outerPadding = if (isTabletOrWide) 20.dp else 16.dp
+    val imageColumnWidth = if (isTabletOrWide) 190.dp else 150.dp
+    val imageWidth = if (isTabletOrWide) 150.dp else 120.dp
+    val favoriteButtonSize = if (isTabletOrWide) 56.dp else 48.dp
+    val favoriteIconSize = if (isTabletOrWide) 34.dp else 28.dp
+    val smallIconSize = if (isTabletOrWide) 20.dp else 16.dp
+    val tinyIconSize = if (isTabletOrWide) 16.dp else 14.dp
+    val betweenBlocks = if (isTabletOrWide) 12.dp else 10.dp
+    val bottomPaddingH = if (isTabletOrWide) 16.dp else 12.dp
+    val bottomPaddingV = if (isTabletOrWide) 10.dp else 8.dp
+    val badgeRadius = if (isTabletOrWide) 6.dp else 4.dp
+    val badgeIcon = if (isTabletOrWide) 12.dp else 10.dp
+    val statusIcon = if (isTabletOrWide) 16.dp else 14.dp
+    val statusHPadding = if (isTabletOrWide) 12.dp else 10.dp
+    val statusVPadding = if (isTabletOrWide) 7.dp else 5.dp
+
     var expanded by remember { mutableStateOf(false) }
     var showIssueDialog by remember { mutableStateOf(false) }
 
@@ -75,7 +100,7 @@ fun GameCard(
     val latestStatus = game.overallStatus()
 
     Card(
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(cardCorner),
         colors = CardDefaults.cardColors(
             containerColor = cardColor,
             contentColor = colorScheme.onSurface
@@ -84,24 +109,24 @@ fun GameCard(
         border = BorderStroke(1.dp, colorScheme.outline.copy(alpha = 0.15f)),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
+            .padding(bottom = if (isTabletOrWide) 18.dp else 16.dp)
             .animateContentSize(animationSpec = spring())
     ) {
         Column(
             modifier = Modifier.clipToBounds()
         ) {
-            Row(modifier = Modifier.padding(16.dp)) {
+            Row(modifier = Modifier.padding(outerPadding)) {
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.width(150.dp)
+                    modifier = Modifier.width(imageColumnWidth)
                 ) {
                     Card(
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(if (isTabletOrWide) 14.dp else 12.dp),
                         colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceVariant),
                         elevation = CardDefaults.cardElevation(1.dp),
                         modifier = Modifier
-                            .width(120.dp)
+                            .width(imageWidth)
                             .aspectRatio(3f / 4f)
                     ) {
                         AsyncImage(
@@ -116,35 +141,38 @@ fun GameCard(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(if (isTabletOrWide) 10.dp else 8.dp))
 
                     IconButton(
                         onClick = { onToggleFavorite(game) },
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier.size(favoriteButtonSize)
                     ) {
                         Icon(
                             imageVector = if (game.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = "Favorite",
                             tint = if (game.isFavorite) Color(0xFFE91E63) else colorScheme.onSurface.copy(alpha = 0.6f),
-                            modifier = Modifier.size(28.dp)
+                            modifier = Modifier.size(favoriteIconSize)
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(if (isTabletOrWide) 20.dp else 16.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
 
                     Text(
                         text = game.title,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = if (isTabletOrWide)
+                            MaterialTheme.typography.titleLarge
+                        else
+                            MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         color = colorScheme.onSurface
                     )
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(if (isTabletOrWide) 8.dp else 6.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (game.year.isNotEmpty()) {
@@ -152,7 +180,10 @@ fun GameCard(
                                 text = game.year,
                                 icon = Icons.Filled.CalendarToday,
                                 color = colorScheme.surfaceVariant,
-                                textColor = colorScheme.onSurfaceVariant
+                                textColor = colorScheme.onSurfaceVariant,
+                                isTabletOrWide = isTabletOrWide,
+                                badgeRadius = badgeRadius,
+                                iconSize = badgeIcon
                             )
                         }
                         if (game.year.isNotEmpty() && game.rating.isNotEmpty()) {
@@ -163,27 +194,33 @@ fun GameCard(
                                 text = game.rating,
                                 icon = Icons.Filled.Star,
                                 color = Color(0xFFFFF9C4),
-                                textColor = Color(0xFFF57F17)
+                                textColor = Color(0xFFF57F17),
+                                isTabletOrWide = isTabletOrWide,
+                                badgeRadius = badgeRadius,
+                                iconSize = badgeIcon
                             )
                         }
                     }
 
                     if (game.platform.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(6.dp))
+                        Spacer(modifier = Modifier.height(if (isTabletOrWide) 8.dp else 6.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             InfoBadge(
                                 text = game.platform,
                                 icon = Icons.Filled.SportsEsports,
                                 color = colorScheme.secondaryContainer,
-                                textColor = colorScheme.onSecondaryContainer
+                                textColor = colorScheme.onSecondaryContainer,
+                                isTabletOrWide = isTabletOrWide,
+                                badgeRadius = badgeRadius,
+                                iconSize = badgeIcon
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(betweenBlocks))
 
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (isTabletOrWide) 6.dp else 4.dp),
                         modifier = Modifier.padding(top = 4.dp)
                     ) {
 
@@ -195,7 +232,11 @@ fun GameCard(
                                 ) {
                                     showIssueDialog = true
                                 }
-                            }
+                            },
+                            isTabletOrWide = isTabletOrWide,
+                            iconSize = statusIcon,
+                            horizontalPadding = statusHPadding,
+                            verticalPadding = statusVPadding
                         )
 
                         latestTest?.testedDevice?.let { device ->
@@ -205,12 +246,15 @@ fun GameCard(
                                         imageVector = Icons.Filled.Info,
                                         contentDescription = null,
                                         tint = colorScheme.primary,
-                                        modifier = Modifier.size(16.dp)
+                                        modifier = Modifier.size(smallIconSize)
                                     )
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = device,
-                                        style = MaterialTheme.typography.bodyMedium,
+                                        style = if (isTabletOrWide)
+                                            MaterialTheme.typography.bodyLarge
+                                        else
+                                            MaterialTheme.typography.bodyMedium,
                                         color = colorScheme.onSurface.copy(alpha = 0.9f)
                                     )
                                 }
@@ -224,12 +268,15 @@ fun GameCard(
                                         imageVector = Icons.Filled.Info,
                                         contentDescription = null,
                                         tint = colorScheme.secondary,
-                                        modifier = Modifier.size(16.dp)
+                                        modifier = Modifier.size(smallIconSize)
                                     )
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = gpu,
-                                        style = MaterialTheme.typography.bodyMedium,
+                                        style = if (isTabletOrWide)
+                                            MaterialTheme.typography.bodyLarge
+                                        else
+                                            MaterialTheme.typography.bodyMedium,
                                         color = colorScheme.onSurface.copy(alpha = 0.9f)
                                     )
                                 }
@@ -246,7 +293,7 @@ fun GameCard(
                                         imageVector = Icons.Filled.Info,
                                         contentDescription = null,
                                         tint = colorScheme.secondary,
-                                        modifier = Modifier.size(16.dp)
+                                        modifier = Modifier.size(smallIconSize)
                                     )
                                     Spacer(modifier = Modifier.width(6.dp))
 
@@ -261,7 +308,10 @@ fun GameCard(
 
                                     Text(
                                         text = finalText,
-                                        style = MaterialTheme.typography.bodyMedium,
+                                        style = if (isTabletOrWide)
+                                            MaterialTheme.typography.bodyLarge
+                                        else
+                                            MaterialTheme.typography.bodyMedium,
                                         color = colorScheme.onSurface.copy(alpha = 0.9f)
                                     )
                                 }
@@ -277,14 +327,17 @@ fun GameCard(
                                         imageVector = Icons.Filled.Android,
                                         contentDescription = null,
                                         tint = colorScheme.tertiary,
-                                        modifier = Modifier.size(16.dp)
+                                        modifier = Modifier.size(smallIconSize)
                                     )
                                     Spacer(modifier = Modifier.width(6.dp))
 
                                     Column {
                                         Text(
                                             text = app,
-                                            style = MaterialTheme.typography.bodyMedium,
+                                            style = if (isTabletOrWide)
+                                                MaterialTheme.typography.bodyLarge
+                                            else
+                                                MaterialTheme.typography.bodyMedium,
                                             color = colorScheme.onSurface.copy(alpha = 0.9f)
                                         )
 
@@ -297,12 +350,15 @@ fun GameCard(
                                                     imageVector = Icons.Filled.Info,
                                                     contentDescription = null,
                                                     tint = colorScheme.onSurface.copy(alpha = 0.6f),
-                                                    modifier = Modifier.size(14.dp)
+                                                    modifier = Modifier.size(tinyIconSize)
                                                 )
                                                 Spacer(modifier = Modifier.width(4.dp))
                                                 Text(
                                                     text = "v$appVersion",
-                                                    style = MaterialTheme.typography.labelMedium,
+                                                    style = if (isTabletOrWide)
+                                                        MaterialTheme.typography.labelLarge
+                                                    else
+                                                        MaterialTheme.typography.labelMedium,
                                                     color = colorScheme.onSurface.copy(alpha = 0.7f)
                                                 )
                                             }
@@ -316,7 +372,10 @@ fun GameCard(
                             if (date.isNotBlank()) {
                                 Text(
                                     text = "${stringResource(AppR.string.tested_label)} $date",
-                                    style = MaterialTheme.typography.labelMedium,
+                                    style = if (isTabletOrWide)
+                                        MaterialTheme.typography.labelLarge
+                                    else
+                                        MaterialTheme.typography.labelMedium,
                                     color = colorScheme.onSurface.copy(alpha = 0.7f)
                                 )
                             }
@@ -325,15 +384,18 @@ fun GameCard(
                 }
             }
 
-            Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+            Column(modifier = Modifier.padding(horizontal = bottomPaddingH, vertical = bottomPaddingV)) {
                 if (game.genre.isNotEmpty()) {
                     Text(
                         text = game.genre,
-                        style = MaterialTheme.typography.labelSmall,
+                        style = if (isTabletOrWide)
+                            MaterialTheme.typography.labelLarge
+                        else
+                            MaterialTheme.typography.labelSmall,
                         color = colorScheme.primary,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                        textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                 }
@@ -343,7 +405,10 @@ fun GameCard(
                         text = game.description.ifEmpty {
                             stringResource(AppR.string.no_description)
                         },
-                        style = MaterialTheme.typography.bodySmall,
+                        style = if (isTabletOrWide)
+                            MaterialTheme.typography.bodyMedium
+                        else
+                            MaterialTheme.typography.bodySmall,
                         color = colorScheme.onSurface.copy(alpha = 0.85f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
@@ -365,14 +430,24 @@ fun GameCard(
                                 if (expanded)
                                     stringResource(AppR.string.button_hide_info)
                                 else
-                                    stringResource(AppR.string.button_show_info)
+                                    stringResource(AppR.string.button_show_info),
+                                style = if (isTabletOrWide)
+                                    MaterialTheme.typography.titleMedium
+                                else
+                                    MaterialTheme.typography.bodyMedium
                             )
                         }
 
                         Spacer(modifier = Modifier.width(12.dp))
 
                         TextButton(onClick = { onEditStatus(game) }) {
-                            Text(stringResource(id = AppR.string.button_edit_status))
+                            Text(
+                                stringResource(id = AppR.string.button_edit_status),
+                                style = if (isTabletOrWide)
+                                    MaterialTheme.typography.titleMedium
+                                else
+                                    MaterialTheme.typography.bodyMedium
+                            )
                         }
                     }
 
@@ -382,7 +457,13 @@ fun GameCard(
                         TextButton(
                             onClick = { onShowTestHistory(game) }
                         ) {
-                            Text(stringResource(id = AppR.string.button_tested_history))
+                            Text(
+                                stringResource(id = AppR.string.button_tested_history),
+                                style = if (isTabletOrWide)
+                                    MaterialTheme.typography.titleMedium
+                                else
+                                    MaterialTheme.typography.bodyMedium
+                            )
                         }
                     }
 
@@ -419,18 +500,27 @@ fun InfoBadge(
     text: String,
     icon: ImageVector,
     color: Color,
-    textColor: Color = Color.Black
+    textColor: Color = Color.Black,
+    isTabletOrWide: Boolean = false,
+    badgeRadius: androidx.compose.ui.unit.Dp = 4.dp,
+    iconSize: androidx.compose.ui.unit.Dp = 10.dp
 ) {
-    Surface(color = color, shape = RoundedCornerShape(4.dp)) {
+    Surface(color = color, shape = RoundedCornerShape(badgeRadius)) {
         Row(
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+            modifier = Modifier.padding(
+                horizontal = if (isTabletOrWide) 8.dp else 6.dp,
+                vertical = if (isTabletOrWide) 3.dp else 2.dp
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(icon, null, Modifier.size(10.dp), tint = textColor)
+            Icon(icon, null, Modifier.size(iconSize), tint = textColor)
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = text,
-                style = MaterialTheme.typography.labelSmall,
+                style = if (isTabletOrWide)
+                    MaterialTheme.typography.labelLarge
+                else
+                    MaterialTheme.typography.labelSmall,
                 color = textColor,
                 maxLines = 1
             )
@@ -441,7 +531,11 @@ fun InfoBadge(
 @Composable
 fun WorkStatusBadge(
     status: WorkStatus,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+    isTabletOrWide: Boolean = false,
+    iconSize: androidx.compose.ui.unit.Dp = 14.dp,
+    horizontalPadding: androidx.compose.ui.unit.Dp = 10.dp,
+    verticalPadding: androidx.compose.ui.unit.Dp = 5.dp
 ) {
     val bgColor: Color
     val contentColor: Color
@@ -485,21 +579,24 @@ fun WorkStatusBadge(
         modifier = clickableModifier
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+            modifier = Modifier.padding(horizontal = horizontalPadding, vertical = verticalPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = contentColor,
-                modifier = Modifier.size(14.dp)
+                modifier = Modifier.size(iconSize)
             )
 
             Spacer(modifier = Modifier.width(6.dp))
 
             Text(
                 text = stringResource(id = textResId),
-                style = MaterialTheme.typography.labelMedium,
+                style = if (isTabletOrWide)
+                    MaterialTheme.typography.labelLarge
+                else
+                    MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
                 color = contentColor
             )
