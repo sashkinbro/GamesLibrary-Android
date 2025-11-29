@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.util.JsonParser
-import com.sbro.gameslibrary.components.Game
-import com.sbro.gameslibrary.components.GameTestResult
-import com.sbro.gameslibrary.components.WorkStatus
+import com.sbro.gameslibrary.components.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,16 +46,37 @@ data class RemoteTestResult(
     val gameId: String = "",
     val title: String = "",
     val status: String = WorkStatus.UNTESTED.name,
-    val testedDevice: String = "",
-    val testedGpuDriver: String = "",
+
+    val testedAndroidVersion: String = "",
+    val testedDeviceModel: String = "",
+    val testedGpuModel: String = "",
+    val testedRam: String = "",
+    val testedWrapper: String = "",
+    val testedPerformanceMode: String = "",
+
     val testedApp: String = "",
     val testedAppVersion: String = "",
+    val testedGameVersionOrBuild: String = "",
+
+    val issueType: String = IssueType.CRASH.firestoreValue,
+    val reproducibility: String = Reproducibility.ALWAYS.firestoreValue,
+    val workaround: String = "",
     val issueNote: String = "",
-    val updatedAt: com.google.firebase.Timestamp? = null,
+
+    val emulatorBuildType: String = EmulatorBuildType.STABLE.firestoreValue,
+    val accuracyLevel: String = "",
+    val resolutionScale: String = "",
+    val asyncShaderEnabled: Boolean = false,
+    val frameSkip: String = "",
+
     val resolutionWidth: String = "",
     val resolutionHeight: String = "",
     val fpsMin: String = "",
-    val fpsMax: String = ""
+    val fpsMax: String = "",
+
+    val mediaLink: String = "",
+
+    val updatedAt: com.google.firebase.Timestamp? = null
 )
 
 class GameViewModel : ViewModel() {
@@ -79,7 +98,6 @@ class GameViewModel : ViewModel() {
     private val CACHE_FILE_NAME = "games_cache.dat"
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private val testsCollection = firestore.collection("gameTests")
 
     sealed class UiState {
@@ -95,7 +113,6 @@ class GameViewModel : ViewModel() {
 
     fun init(context: Context) {
         if (_games.value.isNotEmpty() || _uiState.value is UiState.Loading) return
-
         _uiState.value = UiState.Loading
         loadFromCache(context)
     }
@@ -122,9 +139,7 @@ class GameViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val file = File(context.filesDir, CACHE_FILE_NAME)
             if (!file.exists()) {
-                withContext(Dispatchers.Main) {
-                    loadFromAssets(context)
-                }
+                withContext(Dispatchers.Main) { loadFromAssets(context) }
                 return@launch
             }
 
@@ -140,16 +155,12 @@ class GameViewModel : ViewModel() {
                             syncFromRemote(context)
                         }
                     } else {
-                        withContext(Dispatchers.Main) {
-                            loadFromAssets(context)
-                        }
+                        withContext(Dispatchers.Main) { loadFromAssets(context) }
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                withContext(Dispatchers.Main) {
-                    loadFromAssets(context)
-                }
+                withContext(Dispatchers.Main) { loadFromAssets(context) }
             }
         }
     }
@@ -167,7 +178,6 @@ class GameViewModel : ViewModel() {
                     recomputeFiltered()
                     saveToCache(context, parsedGames)
                     _uiState.value = UiState.Success(parsedGames.size)
-
                     syncFromRemote(context)
                 }
             }.onFailure {
@@ -222,7 +232,6 @@ class GameViewModel : ViewModel() {
         }
 
         list = when (_sortOption.value) {
-
             SortOption.TITLE ->
                 list.sortedBy { it.title.lowercase() }
 
@@ -275,32 +284,72 @@ class GameViewModel : ViewModel() {
                         val gameId = doc.getString("gameId") ?: doc.getString("id") ?: ""
                         val title = doc.getString("title") ?: ""
                         val statusStr = doc.getString("status") ?: WorkStatus.UNTESTED.name
-                        val testedDevice = doc.getString("testedDevice") ?: ""
-                        val testedGpuDriver = doc.getString("testedGpuDriver") ?: ""
+
+                        val testedAndroidVersion = doc.getString("testedAndroidVersion") ?: ""
+                        val testedDeviceModel = doc.getString("testedDeviceModel") ?: ""
+                        val testedGpuModel = doc.getString("testedGpuModel") ?: ""
+                        val testedRam = doc.getString("testedRam") ?: ""
+                        val testedWrapper = doc.getString("testedWrapper") ?: ""
+                        val testedPerformanceMode = doc.getString("testedPerformanceMode") ?: ""
+
                         val testedApp = doc.getString("testedApp") ?: ""
                         val testedAppVersion = doc.getString("testedAppVersion") ?: ""
+                        val testedGameVersionOrBuild = doc.getString("testedGameVersionOrBuild") ?: ""
+
+                        val issueType = doc.getString("issueType") ?: IssueType.CRASH.firestoreValue
+                        val reproducibility = doc.getString("reproducibility") ?: Reproducibility.ALWAYS.firestoreValue
+                        val workaround = doc.getString("workaround") ?: ""
                         val issueNote = doc.getString("issueNote") ?: ""
+
+                        val emulatorBuildType = doc.getString("emulatorBuildType") ?: EmulatorBuildType.STABLE.firestoreValue
+                        val accuracyLevel = doc.getString("accuracyLevel") ?: ""
+                        val resolutionScale = doc.getString("resolutionScale") ?: ""
+                        val asyncShaderEnabled = doc.getBoolean("asyncShaderEnabled") ?: false
+                        val frameSkip = doc.getString("frameSkip") ?: ""
+
                         val updatedAt = doc.getTimestamp("updatedAt")
                         val resolutionWidth = doc.getString("resolutionWidth") ?: ""
                         val resolutionHeight = doc.getString("resolutionHeight") ?: ""
                         val fpsMin = doc.getString("fpsMin") ?: ""
                         val fpsMax = doc.getString("fpsMax") ?: ""
 
+                        val mediaLink = doc.getString("mediaLink") ?: ""
+
                         if (gameId.isBlank()) null else {
                             RemoteTestResult(
                                 gameId = gameId,
                                 title = title,
                                 status = statusStr,
-                                testedDevice = testedDevice,
-                                testedGpuDriver = testedGpuDriver,
+
+                                testedAndroidVersion = testedAndroidVersion,
+                                testedDeviceModel = testedDeviceModel,
+                                testedGpuModel = testedGpuModel,
+                                testedRam = testedRam,
+                                testedWrapper = testedWrapper,
+                                testedPerformanceMode = testedPerformanceMode,
+
                                 testedApp = testedApp,
                                 testedAppVersion = testedAppVersion,
+                                testedGameVersionOrBuild = testedGameVersionOrBuild,
+
+                                issueType = issueType,
+                                reproducibility = reproducibility,
+                                workaround = workaround,
                                 issueNote = issueNote,
-                                updatedAt = updatedAt,
+
+                                emulatorBuildType = emulatorBuildType,
+                                accuracyLevel = accuracyLevel,
+                                resolutionScale = resolutionScale,
+                                asyncShaderEnabled = asyncShaderEnabled,
+                                frameSkip = frameSkip,
+
                                 resolutionWidth = resolutionWidth,
                                 resolutionHeight = resolutionHeight,
                                 fpsMin = fpsMin,
-                                fpsMax = fpsMax
+                                fpsMax = fpsMax,
+
+                                mediaLink = mediaLink,
+                                updatedAt = updatedAt
                             )
                         }
                     } catch (e: Exception) {
@@ -326,24 +375,43 @@ class GameViewModel : ViewModel() {
                                     WorkStatus.NOT_WORKING.name -> WorkStatus.NOT_WORKING
                                     else -> WorkStatus.UNTESTED
                                 },
-                                testedDevice = remote.testedDevice,
-                                testedGpuDriver = remote.testedGpuDriver,
+
+                                testedAndroidVersion = remote.testedAndroidVersion,
+                                testedDeviceModel = remote.testedDeviceModel,
+                                testedGpuModel = remote.testedGpuModel,
+                                testedRam = remote.testedRam,
+                                testedWrapper = remote.testedWrapper,
+                                testedPerformanceMode = remote.testedPerformanceMode,
+
                                 testedApp = remote.testedApp,
                                 testedAppVersion = remote.testedAppVersion,
-                                testedDateFormatted = formattedDate,
+                                testedGameVersionOrBuild = remote.testedGameVersionOrBuild,
+
+                                issueType = IssueType.fromFirestore(remote.issueType),
+                                reproducibility = Reproducibility.fromFirestore(remote.reproducibility),
+                                workaround = remote.workaround,
                                 issueNote = remote.issueNote,
-                                updatedAtMillis = millis,
+
+                                emulatorBuildType = EmulatorBuildType.fromFirestore(remote.emulatorBuildType),
+                                accuracyLevel = remote.accuracyLevel,
+                                resolutionScale = remote.resolutionScale,
+                                asyncShaderEnabled = remote.asyncShaderEnabled,
+                                frameSkip = remote.frameSkip,
+
                                 resolutionWidth = remote.resolutionWidth,
                                 resolutionHeight = remote.resolutionHeight,
                                 fpsMin = remote.fpsMin,
-                                fpsMax = remote.fpsMax
+                                fpsMax = remote.fpsMax,
+
+                                mediaLink = remote.mediaLink,
+
+                                testedDateFormatted = formattedDate,
+                                updatedAtMillis = millis
                             )
                         }
                         .sortedByDescending { it.updatedAtMillis }
 
-                    game.copy(
-                        testResults = testsForGame
-                    )
+                    game.copy(testResults = testsForGame)
                 }
 
                 _games.value = updated
@@ -374,15 +442,36 @@ class GameViewModel : ViewModel() {
         context: Context,
         gameId: String,
         newStatus: WorkStatus,
-        newDevice: String,
-        testedGpuDriver: String,
+
+        testedAndroidVersion: String,
+        testedDeviceModel: String,
+
+        testedGpuModel: String,
+        testedRam: String,
+        testedWrapper: String,
+        testedPerformanceMode: String,
+
         testedApp: String,
         testedAppVersion: String,
+        testedGameVersionOrBuild: String,
+
+        issueType: IssueType,
+        reproducibility: Reproducibility,
+        workaround: String,
         issueNote: String,
+
+        emulatorBuildType: EmulatorBuildType,
+        accuracyLevel: String,
+        resolutionScale: String,
+        asyncShaderEnabled: Boolean,
+        frameSkip: String,
+
         resolutionWidth: String,
         resolutionHeight: String,
         fpsMin: String,
-        fpsMax: String
+        fpsMax: String,
+
+        mediaLink: String
     ) {
         val now = com.google.firebase.Timestamp.now()
 
@@ -395,17 +484,39 @@ class GameViewModel : ViewModel() {
 
         val newTest = GameTestResult(
             status = newStatus,
-            testedDevice = newDevice,
-            testedGpuDriver = testedGpuDriver,
+
+            testedAndroidVersion = testedAndroidVersion,
+            testedDeviceModel = testedDeviceModel,
+
+            testedGpuModel = testedGpuModel,
+            testedRam = testedRam,
+            testedWrapper = testedWrapper,
+            testedPerformanceMode = testedPerformanceMode,
+
             testedApp = testedApp,
             testedAppVersion = testedAppVersion,
-            testedDateFormatted = formattedDate,
+            testedGameVersionOrBuild = testedGameVersionOrBuild,
+
+            issueType = issueType,
+            reproducibility = reproducibility,
+            workaround = workaround,
             issueNote = issueNote,
-            updatedAtMillis = now.toDate().time,
+
+            emulatorBuildType = emulatorBuildType,
+            accuracyLevel = accuracyLevel,
+            resolutionScale = resolutionScale,
+            asyncShaderEnabled = asyncShaderEnabled,
+            frameSkip = frameSkip,
+
             resolutionWidth = resolutionWidth,
             resolutionHeight = resolutionHeight,
             fpsMin = fpsMin,
-            fpsMax = fpsMax
+            fpsMax = fpsMax,
+
+            mediaLink = mediaLink,
+
+            testedDateFormatted = formattedDate,
+            updatedAtMillis = now.toDate().time
         )
 
         val updated = _games.value.map { game ->
@@ -427,16 +538,37 @@ class GameViewModel : ViewModel() {
                     "gameId" to gameId,
                     "title" to currentGameTitle,
                     "status" to newStatus.name,
-                    "testedDevice" to newDevice,
-                    "testedGpuDriver" to testedGpuDriver,
+
+                    "testedAndroidVersion" to testedAndroidVersion,
+                    "testedDeviceModel" to testedDeviceModel,
+
+                    "testedGpuModel" to testedGpuModel,
+                    "testedRam" to testedRam,
+                    "testedWrapper" to testedWrapper,
+                    "testedPerformanceMode" to testedPerformanceMode,
+
                     "testedApp" to testedApp,
                     "testedAppVersion" to testedAppVersion,
+                    "testedGameVersionOrBuild" to testedGameVersionOrBuild,
+
+                    "issueType" to issueType.firestoreValue,
+                    "reproducibility" to reproducibility.firestoreValue,
+                    "workaround" to workaround,
                     "issueNote" to issueNote,
+
+                    "emulatorBuildType" to emulatorBuildType.firestoreValue,
+                    "accuracyLevel" to accuracyLevel,
+                    "resolutionScale" to resolutionScale,
+                    "asyncShaderEnabled" to asyncShaderEnabled,
+                    "frameSkip" to frameSkip,
+
                     "updatedAt" to now,
                     "resolutionWidth" to resolutionWidth,
                     "resolutionHeight" to resolutionHeight,
                     "fpsMin" to fpsMin,
-                    "fpsMax" to fpsMax
+                    "fpsMax" to fpsMax,
+
+                    "mediaLink" to mediaLink
                 )
                 testsCollection.add(data).await()
 

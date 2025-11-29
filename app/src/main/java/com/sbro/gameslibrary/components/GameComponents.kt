@@ -239,7 +239,7 @@ fun GameCard(
                             verticalPadding = statusVPadding
                         )
 
-                        latestTest?.testedDevice?.let { device ->
+                        latestTest?.testedDeviceModel?.let { device ->
                             if (device.isNotBlank() && !device.equals("NaN", ignoreCase = true)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(
@@ -261,7 +261,7 @@ fun GameCard(
                             }
                         }
 
-                        latestTest?.testedGpuDriver?.let { gpu ->
+                        latestTest?.testedGpuModel?.let { gpu ->
                             if (gpu.isNotBlank()) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(
@@ -273,6 +273,28 @@ fun GameCard(
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = gpu,
+                                        style = if (isTabletOrWide)
+                                            MaterialTheme.typography.bodyLarge
+                                        else
+                                            MaterialTheme.typography.bodyMedium,
+                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
+                                    )
+                                }
+                            }
+                        }
+
+                        latestTest?.testedAndroidVersion?.let { av ->
+                            if (av.isNotBlank()) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Info,
+                                        contentDescription = null,
+                                        tint = colorScheme.secondary,
+                                        modifier = Modifier.size(smallIconSize)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = "Android $av",
                                         style = if (isTabletOrWide)
                                             MaterialTheme.typography.bodyLarge
                                         else
@@ -308,6 +330,33 @@ fun GameCard(
 
                                     Text(
                                         text = finalText,
+                                        style = if (isTabletOrWide)
+                                            MaterialTheme.typography.bodyLarge
+                                        else
+                                            MaterialTheme.typography.bodyMedium,
+                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
+                                    )
+                                }
+                            }
+                        }
+
+                        latestTest?.let { t ->
+                            val envParts = buildList {
+                                if (t.testedWrapper.isNotBlank()) add(t.testedWrapper)
+                                if (t.testedPerformanceMode.isNotBlank()) add(t.testedPerformanceMode)
+                                if (t.testedGameVersionOrBuild.isNotBlank()) add("Build ${t.testedGameVersionOrBuild}")
+                            }
+                            if (envParts.isNotEmpty()) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Info,
+                                        contentDescription = null,
+                                        tint = colorScheme.tertiary,
+                                        modifier = Modifier.size(smallIconSize)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = envParts.joinToString(" • "),
                                         style = if (isTabletOrWide)
                                             MaterialTheme.typography.bodyLarge
                                         else

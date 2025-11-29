@@ -8,19 +8,89 @@ enum class WorkStatus {
     NOT_WORKING
 }
 
+enum class IssueType(val firestoreValue: String) {
+    CRASH("Crash"),
+    BLACK_SCREEN("Black screen"),
+    SOFTLOCK("Softlock"),
+    GRAPHICS_GLITCHES("Graphics glitches"),
+    AUDIO_ISSUES("Audio issues"),
+    CONTROLS_NOT_WORKING("Controls not working"),
+    SLOW_PERFORMANCE("Slow performance");
+
+    companion object {
+        fun fromFirestore(value: String?): IssueType {
+            return entries.firstOrNull { it.firestoreValue == value } ?: CRASH
+        }
+    }
+}
+
+enum class Reproducibility(val firestoreValue: String) {
+    ALWAYS("Always"),
+    OFTEN("Often"),
+    RARE("Rare"),
+    ONCE("Once");
+
+    companion object {
+        fun fromFirestore(value: String?): Reproducibility {
+            return entries.firstOrNull { it.firestoreValue == value } ?: ALWAYS
+        }
+    }
+}
+
+enum class EmulatorBuildType(val firestoreValue: String) {
+    STABLE("Stable"),
+    CANARY("Canary"),
+    GIT_HASH("Git hash");
+
+    companion object {
+        fun fromFirestore(value: String?): EmulatorBuildType {
+            return entries.firstOrNull { it.firestoreValue == value } ?: STABLE
+        }
+    }
+}
+
 data class GameTestResult(
     val status: WorkStatus = WorkStatus.UNTESTED,
-    val testedDevice: String = "",
-    val testedGpuDriver: String = "",
+
+    val testedAndroidVersion: String = "",
+    val testedDeviceModel: String = "",
+
+
+    val testedGpuModel: String = "",
+    val testedRam: String = "",
+    val testedWrapper: String = "",
+    val testedPerformanceMode: String = "",
+
+
     val testedApp: String = "",
     val testedAppVersion: String = "",
-    val testedDateFormatted: String = "",
+    val testedGameVersionOrBuild: String = "",
+
+
+    val issueType: IssueType = IssueType.CRASH,
+    val reproducibility: Reproducibility = Reproducibility.ALWAYS,
+    val workaround: String = "",
     val issueNote: String = "",
-    val updatedAtMillis: Long = 0L,
+
+
+    val emulatorBuildType: EmulatorBuildType = EmulatorBuildType.STABLE,
+    val accuracyLevel: String = "",
+    val resolutionScale: String = "",
+    val asyncShaderEnabled: Boolean = false,
+    val frameSkip: String = "",
+
+
     val resolutionWidth: String = "",
     val resolutionHeight: String = "",
     val fpsMin: String = "",
-    val fpsMax: String = ""
+    val fpsMax: String = "",
+
+
+    val mediaLink: String = "",
+
+
+    val testedDateFormatted: String = "",
+    val updatedAtMillis: Long = 0L
 ) : Serializable
 
 data class Game(
@@ -41,7 +111,6 @@ data class Game(
     fun latestTestOrNull(): GameTestResult? {
         return testResults.maxByOrNull { it.updatedAtMillis }
     }
-
 
     fun overallStatus(): WorkStatus {
         if (testResults.isEmpty()) return WorkStatus.UNTESTED
