@@ -19,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.Games
@@ -55,6 +56,7 @@ import com.sbro.gameslibrary.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    onBack: () -> Unit,
     onOpenAllGames: () -> Unit,
     onOpenPs3Games: () -> Unit,
     onOpenPcGames: () -> Unit,
@@ -90,9 +92,17 @@ fun HomeScreen(
             topBar = {
                 Column {
                     TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { safeClick(onBack) }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.cd_back)
+                                )
+                            }
+                        },
                         title = {
                             Text(
-                                text = stringResource(R.string.home_title),
+                                text = stringResource(R.string.home_platforms_title),
                                 style = MaterialTheme.typography.titleLarge.copy(
                                     fontWeight = FontWeight.Bold
                                 )
@@ -109,6 +119,7 @@ fun HomeScreen(
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Color.Transparent,
                             titleContentColor = MaterialTheme.colorScheme.onSurface,
+                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                             actionIconContentColor = MaterialTheme.colorScheme.onSurface
                         )
                     )

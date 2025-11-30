@@ -1,0 +1,1022 @@
+package com.sbro.gameslibrary.ui.screens
+
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sbro.gameslibrary.R
+import com.sbro.gameslibrary.components.EmulatorBuildType
+import com.sbro.gameslibrary.components.Game
+import com.sbro.gameslibrary.components.IssueType
+import com.sbro.gameslibrary.components.Reproducibility
+import com.sbro.gameslibrary.components.WorkStatus
+import com.sbro.gameslibrary.viewmodel.GameViewModel
+import kotlinx.coroutines.launch
+
+data class EditDialogResult(
+    val status: WorkStatus,
+    val testedAndroidVersion: String,
+    val testedDeviceModel: String,
+    val testedGpuModel: String,
+    val testedRam: String,
+    val testedWrapper: String,
+    val testedPerformanceMode: String,
+    val testedApp: String,
+    val testedAppVersion: String,
+    val testedGameVersionOrBuild: String,
+    val issueType: IssueType,
+    val reproducibility: Reproducibility,
+    val workaround: String,
+    val issueNote: String,
+    val emulatorBuildType: EmulatorBuildType,
+    val accuracyLevel: String,
+    val resolutionScale: String,
+    val asyncShaderEnabled: Boolean,
+    val frameSkip: String,
+    val resolutionWidth: String,
+    val resolutionHeight: String,
+    val fpsMin: String,
+    val fpsMax: String,
+    val mediaLink: String
+)
+
+@SuppressLint("ConfigurationScreenWidthHeight")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EditStatusScreen(
+    viewModel: GameViewModel = viewModel(),
+    gameId: String,
+    onBack: () -> Unit
+) {
+    val context = LocalContext.current
+    val games by viewModel.games.collectAsState()
+    val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
+
+    LaunchedEffect(Unit) { viewModel.init(context) }
+
+    if (game == null) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Edit status") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+                        }
+                    }
+                )
+            }
+        ) { pv ->
+            Box(Modifier.fillMaxSize().padding(pv), contentAlignment = Alignment.Center) {
+                Text("Game not found")
+            }
+        }
+        return
+    }
+
+    EditStatusContent(
+        game = game,
+        onBack = onBack,
+        onSave = { result ->
+            viewModel.updateGameStatus(
+                context = context,
+                gameId = game.id,
+                newStatus = result.status,
+                testedAndroidVersion = result.testedAndroidVersion,
+                testedDeviceModel = result.testedDeviceModel,
+                testedGpuModel = result.testedGpuModel,
+                testedRam = result.testedRam,
+                testedWrapper = result.testedWrapper,
+                testedPerformanceMode = result.testedPerformanceMode,
+                testedApp = result.testedApp,
+                testedAppVersion = result.testedAppVersion,
+                testedGameVersionOrBuild = result.testedGameVersionOrBuild,
+                issueType = result.issueType,
+                reproducibility = result.reproducibility,
+                workaround = result.workaround,
+                issueNote = result.issueNote,
+                emulatorBuildType = result.emulatorBuildType,
+                accuracyLevel = result.accuracyLevel,
+                resolutionScale = result.resolutionScale,
+                asyncShaderEnabled = result.asyncShaderEnabled,
+                frameSkip = result.frameSkip,
+                resolutionWidth = result.resolutionWidth,
+                resolutionHeight = result.resolutionHeight,
+                fpsMin = result.fpsMin,
+                fpsMax = result.fpsMax,
+                mediaLink = result.mediaLink
+            )
+            onBack()
+        }
+    )
+}
+
+@SuppressLint("ConfigurationScreenWidthHeight")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EditStatusContent(
+    game: Game,
+    onBack: () -> Unit,
+    onSave: (EditDialogResult) -> Unit
+) {
+    var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
+    val otherLabel = stringResource(R.string.option_other)
+    val customLabel = stringResource(R.string.option_custom)
+
+    val platformLower = game.platform.lowercase()
+    val isSwitchPlatform = platformLower.contains("switch") || platformLower.contains("nintendo")
+    val isPcPlatform = platformLower.contains("pc") || platformLower.contains("windows")
+
+    val appOptions = when {
+        isSwitchPlatform -> listOf("Yuzu", "Eden", "Citron", "Torzu", "Sumi", "Sudachi", "Strato")
+        isPcPlatform -> listOf("Winlator", "GameHub")
+        else -> listOf("RPCSX-UI-Android", "aPS3e")
+    }
+
+    val androidMajor = remember {
+        Build.VERSION.RELEASE?.substringBefore(".") ?: ""
+    }
+    val deviceModelAuto = remember {
+        val manu = Build.MANUFACTURER.orEmpty().trim()
+        val model = Build.MODEL.orEmpty().trim()
+        if (manu.isNotBlank()) "$manu $model" else model
+    }
+
+    var androidVersionSelected by remember { mutableStateOf(androidMajor) }
+    var androidVersionCustom by remember { mutableStateOf(if (androidMajor.isBlank()) androidMajor else "") }
+
+    var deviceModelText by remember { mutableStateOf(deviceModelAuto) }
+    var gpuModelText by remember { mutableStateOf("") }
+
+    var ramSelected by remember { mutableStateOf("") }
+    var ramCustom by remember { mutableStateOf("") }
+
+    var wrapperSelected by remember { mutableStateOf("") }
+    var wrapperCustom by remember { mutableStateOf("") }
+
+    var perfModeSelected by remember { mutableStateOf("") }
+    var perfModeCustom by remember { mutableStateOf("") }
+
+    var selectedApp by remember { mutableStateOf(appOptions.first()) }
+    var appExpanded by remember { mutableStateOf(false) }
+    var appVersionText by remember { mutableStateOf("") }
+    var gameVersionText by remember { mutableStateOf("") }
+
+    var selectedIssueType by remember { mutableStateOf(IssueType.CRASH) }
+    var issueExpanded by remember { mutableStateOf(false) }
+
+    var selectedRepro by remember { mutableStateOf(Reproducibility.ALWAYS) }
+    var reproExpanded by remember { mutableStateOf(false) }
+
+    var workaroundText by remember { mutableStateOf("") }
+    var issueNoteText by remember { mutableStateOf("") }
+
+    var selectedEmuBuild by remember { mutableStateOf(EmulatorBuildType.STABLE) }
+    var emuExpanded by remember { mutableStateOf(false) }
+
+    var accuracySelected by remember { mutableStateOf("") }
+    var accuracyCustom by remember { mutableStateOf("") }
+
+    var scaleSelected by remember { mutableStateOf("") }
+    var scaleCustom by remember { mutableStateOf("") }
+
+    var asyncShaderEnabled by remember { mutableStateOf(false) }
+
+    var frameSkipSelected by remember { mutableStateOf("") }
+    var frameSkipCustom by remember { mutableStateOf("") }
+
+    val resolutionPresets = listOf(
+        "640×360", "854×480", "960×540", "1280×720", "1600×900",
+        "1920×1080", "2340×1080", "2400×1080", "2560×1440",
+        "3200×1800", "3840×2160", customLabel
+    )
+    var resolutionPresetSelected by remember { mutableStateOf("") }
+    var resPresetExpanded by remember { mutableStateOf(false) }
+
+    var resW by remember { mutableStateOf("") }
+    var resH by remember { mutableStateOf("") }
+
+    var fpsFrom by remember { mutableStateOf("") }
+    var fpsTo by remember { mutableStateOf("") }
+
+    var mediaLinkText by remember { mutableStateOf("") }
+
+    val androidVersions = listOf("16","15", "14", "13", "12", "11", "10", "9","8","7", otherLabel)
+    val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB","24 GB", otherLabel)
+
+    val wrapperOptions = when {
+        isPcPlatform -> listOf("DXVK", "VKD3D", "WineD3D", "OpenGL", otherLabel)
+        else -> listOf("Vulkan", "OpenGL", "D3D wrapper", otherLabel)
+    }
+
+    val perfModeOptions = listOf("Extreme performance", "Performance", "Balanced", "Quality", otherLabel)
+    val accuracyOptions = listOf("Performance", "Balanced", "Accuracy", otherLabel)
+    val scaleOptions = listOf("0.5x","0.75x", "1x","1.25x", "1.5x","1.75x", "2x","2.25x","2.5x","2.75x","3x", otherLabel)
+    val frameSkipOptions = listOf("0", "1", "2", otherLabel)
+
+    val showEmulatorSettings = !isPcPlatform
+    val showWrapper = true
+    val showPerfMode = true
+
+    val androidVersionFinal =
+        if (androidVersionSelected == otherLabel) androidVersionCustom.trim()
+        else androidVersionSelected.trim()
+
+    val ramFinal =
+        if (ramSelected == otherLabel) ramCustom.trim()
+        else ramSelected.trim()
+
+    val wrapperFinal =
+        if (wrapperSelected == otherLabel) wrapperCustom.trim()
+        else wrapperSelected.trim()
+
+    val perfModeFinal =
+        if (perfModeSelected == otherLabel) perfModeCustom.trim()
+        else perfModeSelected.trim()
+
+    val accuracyFinal =
+        if (accuracySelected == otherLabel) accuracyCustom.trim()
+        else accuracySelected.trim()
+
+    val scaleFinal =
+        if (scaleSelected == otherLabel) scaleCustom.trim()
+        else scaleSelected.trim()
+
+    val frameSkipFinal =
+        if (frameSkipSelected == otherLabel) frameSkipCustom.trim()
+        else frameSkipSelected.trim()
+
+    LaunchedEffect(resolutionPresetSelected) {
+        if (resolutionPresetSelected.isNotBlank() &&
+            resolutionPresetSelected != customLabel
+        ) {
+            val parts = resolutionPresetSelected.split("×")
+            if (parts.size == 2) {
+                resW = parts[0]
+                resH = parts[1]
+            }
+        }
+    }
+
+    val isFormValid by remember(
+        currentStatus,
+        androidVersionFinal,
+        deviceModelText, gpuModelText, ramFinal,
+        wrapperFinal, perfModeFinal,
+        selectedApp, appVersionText, gameVersionText,
+        accuracyFinal, scaleFinal, frameSkipFinal,
+        resW, resH, fpsFrom, fpsTo,
+        issueNoteText
+    ) {
+        derivedStateOf {
+            val baseValid =
+                androidVersionFinal.isNotEmpty() &&
+                        deviceModelText.trim().isNotEmpty() &&
+                        gpuModelText.trim().isNotEmpty() &&
+                        ramFinal.isNotEmpty() &&
+                        wrapperFinal.isNotEmpty() &&
+                        perfModeFinal.isNotEmpty() &&
+                        selectedApp.trim().isNotEmpty() &&
+                        appVersionText.trim().isNotEmpty() &&
+                        gameVersionText.trim().isNotEmpty() &&
+                        resW.trim().isNotEmpty() &&
+                        resH.trim().isNotEmpty() &&
+                        fpsFrom.trim().isNotEmpty() &&
+                        fpsTo.trim().isNotEmpty()
+
+            val issueValid =
+                currentStatus != WorkStatus.NOT_WORKING || issueNoteText.trim().isNotEmpty()
+
+            val emuValid =
+                !showEmulatorSettings || (
+                        accuracyFinal.isNotEmpty() &&
+                                scaleFinal.isNotEmpty() &&
+                                frameSkipFinal.isNotEmpty()
+                        )
+
+            baseValid && issueValid && emuValid
+        }
+    }
+
+    val configuration = LocalConfiguration.current
+    val maxHeight = configuration.screenHeightDp.dp * 0.95f
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val scope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
+
+    Scaffold(
+        topBar = {
+            Column {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.dialog_edit_status_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+                        }
+                    }
+                )
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+                )
+            }
+        }
+    ) { pv ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(pv)
+                .heightIn(max = maxHeight)
+                .verticalScroll(scrollState)
+                .imePadding()
+                .padding(horizontal = 20.dp, vertical = 16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.dialog_edit_status_description, game.title),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            WorkStatusRadioGroup(
+                selected = currentStatus,
+                onSelectedChange = { currentStatus = it }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader(stringResource(R.string.section_device_env))
+
+            DropdownWithCustom(
+                labelRes = R.string.label_android_version,
+                options = androidVersions,
+                selected = androidVersionSelected,
+                onSelectedChange = { androidVersionSelected = it },
+                customValue = androidVersionCustom,
+                onCustomChange = { androidVersionCustom = it },
+                customPlaceholderRes = R.string.label_android_version,
+                otherLabel = otherLabel
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = deviceModelText,
+                onValueChange = { deviceModelText = it },
+                label = { Text(stringResource(R.string.label_device_model)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = gpuModelText,
+                onValueChange = { gpuModelText = it },
+                label = { Text(stringResource(R.string.label_gpu_model)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            DropdownWithCustom(
+                labelRes = R.string.label_ram,
+                options = ramOptions,
+                selected = ramSelected,
+                onSelectedChange = { ramSelected = it },
+                customValue = ramCustom,
+                onCustomChange = { ramCustom = it },
+                customPlaceholderRes = R.string.label_ram,
+                otherLabel = otherLabel
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            if (showWrapper) {
+                DropdownWithCustom(
+                    labelRes = R.string.label_wrapper,
+                    options = wrapperOptions,
+                    selected = wrapperSelected,
+                    onSelectedChange = { wrapperSelected = it },
+                    customValue = wrapperCustom,
+                    onCustomChange = { wrapperCustom = it },
+                    customPlaceholderRes = R.string.label_wrapper,
+                    otherLabel = otherLabel
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+            if (showPerfMode) {
+                DropdownWithCustom(
+                    labelRes = R.string.label_performance_mode,
+                    options = perfModeOptions,
+                    selected = perfModeSelected,
+                    onSelectedChange = { perfModeSelected = it },
+                    customValue = perfModeCustom,
+                    onCustomChange = { perfModeCustom = it },
+                    customPlaceholderRes = R.string.label_performance_mode,
+                    otherLabel = otherLabel
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader(stringResource(R.string.section_app_game))
+
+            ExposedDropdownMenuBox(
+                expanded = appExpanded,
+                onExpandedChange = { appExpanded = !appExpanded }
+            ) {
+                OutlinedTextField(
+                    value = selectedApp,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(stringResource(R.string.dialog_edit_status_app_label)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = appExpanded)
+                    },
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.menuAnchor().fillMaxWidth()
+                )
+
+                DropdownMenu(
+                    expanded = appExpanded,
+                    onDismissRequest = { appExpanded = false }
+                ) {
+                    appOptions.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                selectedApp = option
+                                appExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = appVersionText,
+                onValueChange = { appVersionText = it },
+                label = { Text(stringResource(R.string.dialog_edit_status_app_version_label)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = gameVersionText,
+                onValueChange = { gameVersionText = it },
+                label = { Text(stringResource(R.string.label_game_version_build)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            if (currentStatus == WorkStatus.NOT_WORKING) {
+                Spacer(modifier = Modifier.height(16.dp))
+                SectionHeader(stringResource(R.string.section_issue_details))
+
+                ExposedDropdownMenuBox(
+                    expanded = issueExpanded,
+                    onExpandedChange = { issueExpanded = !issueExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = stringResource(issueTypeToLabel(selectedIssueType)),
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text(stringResource(R.string.label_issue_type)) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = issueExpanded) },
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                    )
+
+                    DropdownMenu(
+                        expanded = issueExpanded,
+                        onDismissRequest = { issueExpanded = false }
+                    ) {
+                        IssueType.entries.forEach { type ->
+                            DropdownMenuItem(
+                                text = { Text(stringResource(issueTypeToLabel(type))) },
+                                onClick = {
+                                    selectedIssueType = type
+                                    issueExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                ExposedDropdownMenuBox(
+                    expanded = reproExpanded,
+                    onExpandedChange = { reproExpanded = !reproExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = stringResource(reproToLabel(selectedRepro)),
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text(stringResource(R.string.label_reproducibility)) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = reproExpanded) },
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                    )
+
+                    DropdownMenu(
+                        expanded = reproExpanded,
+                        onDismissRequest = { reproExpanded = false }
+                    ) {
+                        Reproducibility.entries.forEach { r ->
+                            DropdownMenuItem(
+                                text = { Text(stringResource(reproToLabel(r))) },
+                                onClick = {
+                                    selectedRepro = r
+                                    reproExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = workaroundText,
+                    onValueChange = { workaroundText = it },
+                    label = { Text(stringResource(R.string.label_workaround)) },
+                    minLines = 1,
+                    maxLines = 2,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = issueNoteText,
+                    onValueChange = { issueNoteText = it },
+                    label = { Text(stringResource(R.string.dialog_issue_note_label)) },
+                    minLines = 2,
+                    maxLines = 4,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            } else {
+                if (issueNoteText.isNotBlank()) issueNoteText = ""
+                if (workaroundText.isNotBlank()) workaroundText = ""
+            }
+
+            if (showEmulatorSettings) {
+                Spacer(modifier = Modifier.height(16.dp))
+                SectionHeader(stringResource(R.string.section_emulator_settings))
+
+                ExposedDropdownMenuBox(
+                    expanded = emuExpanded,
+                    onExpandedChange = { emuExpanded = !emuExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = stringResource(emuBuildToLabel(selectedEmuBuild)),
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text(stringResource(R.string.label_emulator_build_type)) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = emuExpanded) },
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                    )
+
+                    DropdownMenu(
+                        expanded = emuExpanded,
+                        onDismissRequest = { emuExpanded = false }
+                    ) {
+                        EmulatorBuildType.entries.forEach { e ->
+                            DropdownMenuItem(
+                                text = { Text(stringResource(emuBuildToLabel(e))) },
+                                onClick = {
+                                    selectedEmuBuild = e
+                                    emuExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                DropdownWithCustom(
+                    labelRes = R.string.label_accuracy_level,
+                    options = accuracyOptions,
+                    selected = accuracySelected,
+                    onSelectedChange = { accuracySelected = it },
+                    customValue = accuracyCustom,
+                    onCustomChange = { accuracyCustom = it },
+                    customPlaceholderRes = R.string.label_accuracy_level,
+                    otherLabel = otherLabel
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                DropdownWithCustom(
+                    labelRes = R.string.label_resolution_scale,
+                    options = scaleOptions,
+                    selected = scaleSelected,
+                    onSelectedChange = { scaleSelected = it },
+                    customValue = scaleCustom,
+                    onCustomChange = { scaleCustom = it },
+                    customPlaceholderRes = R.string.label_resolution_scale,
+                    otherLabel = otherLabel
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Switch(
+                        checked = asyncShaderEnabled,
+                        onCheckedChange = { asyncShaderEnabled = it }
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.label_async_shader))
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                DropdownWithCustom(
+                    labelRes = R.string.label_frame_skip,
+                    options = frameSkipOptions,
+                    selected = frameSkipSelected,
+                    onSelectedChange = { frameSkipSelected = it },
+                    customValue = frameSkipCustom,
+                    onCustomChange = { frameSkipCustom = it },
+                    customPlaceholderRes = R.string.label_frame_skip,
+                    otherLabel = otherLabel
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader(stringResource(R.string.section_result_metrics))
+
+            ExposedDropdownMenuBox(
+                expanded = resPresetExpanded,
+                onExpandedChange = { resPresetExpanded = !resPresetExpanded }
+            ) {
+                OutlinedTextField(
+                    value = resolutionPresetSelected,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(stringResource(R.string.dialog_edit_status_resolution_label)) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = resPresetExpanded) },
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.menuAnchor().fillMaxWidth()
+                )
+
+                DropdownMenu(
+                    expanded = resPresetExpanded,
+                    onDismissRequest = { resPresetExpanded = false }
+                ) {
+                    resolutionPresets.forEach { p ->
+                        DropdownMenuItem(
+                            text = { Text(p) },
+                            onClick = {
+                                resolutionPresetSelected = p
+                                resPresetExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = resW,
+                    onValueChange = { resW = it },
+                    label = { Text(stringResource(R.string.resolution_width_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                Text(text = "×", style = MaterialTheme.typography.titleMedium)
+
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                OutlinedTextField(
+                    value = resH,
+                    onValueChange = { resH = it },
+                    label = { Text(stringResource(R.string.resolution_height_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = stringResource(R.string.dialog_edit_status_fps_label),
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = fpsFrom,
+                    onValueChange = { fpsFrom = it },
+                    label = { Text(stringResource(R.string.fps_min_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                Text(text = "–", style = MaterialTheme.typography.titleMedium)
+
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                OutlinedTextField(
+                    value = fpsTo,
+                    onValueChange = { fpsTo = it },
+                    label = { Text(stringResource(R.string.fps_max_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader(stringResource(R.string.section_media))
+
+            OutlinedTextField(
+                value = mediaLinkText,
+                onValueChange = { mediaLinkText = it },
+                label = { Text(stringResource(R.string.label_media_link)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .bringIntoViewRequester(bringIntoViewRequester)
+                    .onFocusEvent { state ->
+                        if (state.isFocused) {
+                            scope.launch { bringIntoViewRequester.bringIntoView() }
+                        }
+                    }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            HorizontalDivider()
+
+            if (!isFormValid) {
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = stringResource(R.string.dialog_fill_all_fields),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = onBack) {
+                    Text(stringResource(R.string.button_cancel))
+                }
+
+                TextButton(
+                    enabled = isFormValid,
+                    onClick = {
+                        onSave(
+                            EditDialogResult(
+                                status = currentStatus,
+
+                                testedAndroidVersion = androidVersionFinal,
+                                testedDeviceModel = deviceModelText.trim(),
+                                testedGpuModel = gpuModelText.trim(),
+                                testedRam = ramFinal,
+                                testedWrapper = wrapperFinal,
+                                testedPerformanceMode = perfModeFinal,
+
+                                testedApp = selectedApp.trim(),
+                                testedAppVersion = appVersionText.trim(),
+                                testedGameVersionOrBuild = gameVersionText.trim(),
+
+                                issueType = selectedIssueType,
+                                reproducibility = selectedRepro,
+                                workaround = workaroundText.trim(),
+                                issueNote = issueNoteText.trim(),
+
+                                emulatorBuildType = selectedEmuBuild,
+                                accuracyLevel = if (showEmulatorSettings) accuracyFinal else "",
+                                resolutionScale = if (showEmulatorSettings) scaleFinal else "",
+                                asyncShaderEnabled = if (showEmulatorSettings) asyncShaderEnabled else false,
+                                frameSkip = if (showEmulatorSettings) frameSkipFinal else "",
+
+                                resolutionWidth = resW.trim(),
+                                resolutionHeight = resH.trim(),
+                                fpsMin = fpsFrom.trim(),
+                                fpsMax = fpsTo.trim(),
+
+                                mediaLink = mediaLinkText.trim()
+                            )
+                        )
+                    }
+                ) {
+                    Text(stringResource(R.string.button_save))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SectionHeader(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge,
+        fontWeight = FontWeight.Bold
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+}
+
+fun issueTypeToLabel(type: IssueType): Int = when (type) {
+    IssueType.CRASH -> R.string.issue_type_crash
+    IssueType.BLACK_SCREEN -> R.string.issue_type_black_screen
+    IssueType.SOFTLOCK -> R.string.issue_type_softlock
+    IssueType.GRAPHICS_GLITCHES -> R.string.issue_type_graphics
+    IssueType.AUDIO_ISSUES -> R.string.issue_type_audio
+    IssueType.CONTROLS_NOT_WORKING -> R.string.issue_type_controls
+    IssueType.SLOW_PERFORMANCE -> R.string.issue_type_performance
+}
+
+fun reproToLabel(r: Reproducibility): Int = when (r) {
+    Reproducibility.ALWAYS -> R.string.repro_always
+    Reproducibility.OFTEN -> R.string.repro_often
+    Reproducibility.RARE -> R.string.repro_rare
+    Reproducibility.ONCE -> R.string.repro_once
+}
+
+fun emuBuildToLabel(e: EmulatorBuildType): Int = when (e) {
+    EmulatorBuildType.STABLE -> R.string.emu_build_stable
+    EmulatorBuildType.CANARY -> R.string.emu_build_canary
+    EmulatorBuildType.GIT_HASH -> R.string.emu_build_git
+}
+
+@Composable
+fun WorkStatusRadioGroup(
+    selected: WorkStatus,
+    onSelectedChange: (WorkStatus) -> Unit
+) {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = selected == WorkStatus.WORKING,
+                onClick = { onSelectedChange(WorkStatus.WORKING) }
+            )
+            Text(text = stringResource(id = R.string.work_status_working))
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = selected == WorkStatus.UNTESTED,
+                onClick = { onSelectedChange(WorkStatus.UNTESTED) }
+            )
+            Text(text = stringResource(id = R.string.work_status_untested))
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = selected == WorkStatus.NOT_WORKING,
+                onClick = { onSelectedChange(WorkStatus.NOT_WORKING) }
+            )
+            Text(text = stringResource(id = R.string.work_status_not_working))
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownWithCustom(
+    labelRes: Int,
+    options: List<String>,
+    selected: String,
+    onSelectedChange: (String) -> Unit,
+    customValue: String,
+    onCustomChange: (String) -> Unit,
+    customPlaceholderRes: Int,
+    otherLabel: String
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selected,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(labelRes)) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.menuAnchor().fillMaxWidth()
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { opt ->
+                DropdownMenuItem(
+                    text = { Text(opt) },
+                    onClick = {
+                        onSelectedChange(opt)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+
+    if (selected == otherLabel) {
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = customValue,
+            onValueChange = onCustomChange,
+            label = { Text(stringResource(customPlaceholderRes)) },
+            singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}

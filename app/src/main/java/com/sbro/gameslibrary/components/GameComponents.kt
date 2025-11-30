@@ -3,6 +3,7 @@ package com.sbro.gameslibrary.components
 //noinspection SuspiciousImport
 import android.R
 import android.annotation.SuppressLint
+import android.os.SystemClock
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
@@ -10,6 +11,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,12 +24,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
-import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Warning
@@ -41,11 +43,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -67,10 +71,11 @@ fun GameCard(
     game: Game,
     onEditStatus: (Game) -> Unit,
     onToggleFavorite: (Game) -> Unit,
-    onShowTestHistory: (Game) -> Unit
+    onShowTestHistory: (Game) -> Unit,
+    onOpenDetails: (Game) -> Unit
 ) {
     val context = LocalContext.current
-    val colorScheme = MaterialTheme.colorScheme
+    val cs = MaterialTheme.colorScheme
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val isTabletOrWide = screenWidthDp >= 600
@@ -81,40 +86,75 @@ fun GameCard(
     val imageWidth = if (isTabletOrWide) 150.dp else 120.dp
     val favoriteButtonSize = if (isTabletOrWide) 56.dp else 48.dp
     val favoriteIconSize = if (isTabletOrWide) 34.dp else 28.dp
-    val smallIconSize = if (isTabletOrWide) 20.dp else 16.dp
-    val tinyIconSize = if (isTabletOrWide) 16.dp else 14.dp
+
+    val badgeRadius = if (isTabletOrWide) 10.dp else 8.dp
+    val badgeIcon = if (isTabletOrWide) 16.dp else 14.dp
+
+    val statusIcon = if (isTabletOrWide) 20.dp else 18.dp
+    val statusHPadding = if (isTabletOrWide) 16.dp else 14.dp
+    val statusVPadding = if (isTabletOrWide) 9.dp else 8.dp
+
+    val testedIcon = if (isTabletOrWide) 18.dp else 16.dp
+    val testedHPadding = if (isTabletOrWide) 14.dp else 12.dp
+    val testedVPadding = if (isTabletOrWide) 8.dp else 7.dp
+
+    val deviceChipIcon = if (isTabletOrWide) 18.dp else 16.dp
+    val deviceChipRadius = if (isTabletOrWide) 12.dp else 10.dp
+
     val betweenBlocks = if (isTabletOrWide) 12.dp else 10.dp
     val bottomPaddingH = if (isTabletOrWide) 16.dp else 12.dp
     val bottomPaddingV = if (isTabletOrWide) 10.dp else 8.dp
-    val badgeRadius = if (isTabletOrWide) 6.dp else 4.dp
-    val badgeIcon = if (isTabletOrWide) 12.dp else 10.dp
-    val statusIcon = if (isTabletOrWide) 16.dp else 14.dp
-    val statusHPadding = if (isTabletOrWide) 12.dp else 10.dp
-    val statusVPadding = if (isTabletOrWide) 7.dp else 5.dp
 
     var expanded by remember { mutableStateOf(false) }
     var showIssueDialog by remember { mutableStateOf(false) }
 
-    val cardColor = MaterialTheme.colorScheme.surface
+    val cardColor = cs.surface
     val latestTest = game.latestTestOrNull()
     val latestStatus = game.overallStatus()
 
+
+    val testedCount = game.testResults.size
+
+
+    val last3Devices = remember(game.testResults) {
+        game.testResults
+            .takeLast(3)
+            .map { it.testedDeviceModel }
+            .map { it.trim() }
+            .filter { it.isNotBlank() && !it.equals("NaN", true) }
+    }
+
+    val shape = RoundedCornerShape(cardCorner)
+    val interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+
+    val lastClickTime = remember { mutableLongStateOf(0L) }
+    fun safeClick(action: () -> Unit) {
+        val now = SystemClock.elapsedRealtime()
+        if (now - lastClickTime.longValue < 500L) return
+        lastClickTime.longValue = now
+        action()
+    }
+
     Card(
-        shape = RoundedCornerShape(cardCorner),
+        shape = shape,
         colors = CardDefaults.cardColors(
             containerColor = cardColor,
-            contentColor = colorScheme.onSurface
+            contentColor = cs.onSurface
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        border = BorderStroke(1.dp, colorScheme.outline.copy(alpha = 0.15f)),
+        border = BorderStroke(1.dp, cs.outline.copy(alpha = 0.15f)),
         modifier = Modifier
             .fillMaxWidth()
+            .clip(shape)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) { safeClick { onOpenDetails(game) } }
             .padding(bottom = if (isTabletOrWide) 18.dp else 16.dp)
             .animateContentSize(animationSpec = spring())
     ) {
-        Column(
-            modifier = Modifier.clipToBounds()
-        ) {
+        Column(modifier = Modifier.clipToBounds()) {
+
             Row(modifier = Modifier.padding(outerPadding)) {
 
                 Column(
@@ -123,7 +163,7 @@ fun GameCard(
                 ) {
                     Card(
                         shape = RoundedCornerShape(if (isTabletOrWide) 14.dp else 12.dp),
-                        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceVariant),
+                        colors = CardDefaults.cardColors(containerColor = cs.surfaceVariant),
                         elevation = CardDefaults.cardElevation(1.dp),
                         modifier = Modifier
                             .width(imageWidth)
@@ -150,7 +190,7 @@ fun GameCard(
                         Icon(
                             imageVector = if (game.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = "Favorite",
-                            tint = if (game.isFavorite) Color(0xFFE91E63) else colorScheme.onSurface.copy(alpha = 0.6f),
+                            tint = if (game.isFavorite) Color(0xFFE91E63) else cs.onSurface.copy(alpha = 0.6f),
                             modifier = Modifier.size(favoriteIconSize)
                         )
                     }
@@ -169,7 +209,7 @@ fun GameCard(
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        color = colorScheme.onSurface
+                        color = cs.onSurface
                     )
 
                     Spacer(modifier = Modifier.height(if (isTabletOrWide) 8.dp else 6.dp))
@@ -179,8 +219,8 @@ fun GameCard(
                             InfoBadge(
                                 text = game.year,
                                 icon = Icons.Filled.CalendarToday,
-                                color = colorScheme.surfaceVariant,
-                                textColor = colorScheme.onSurfaceVariant,
+                                color = cs.surfaceVariant,
+                                textColor = cs.onSurfaceVariant,
                                 isTabletOrWide = isTabletOrWide,
                                 badgeRadius = badgeRadius,
                                 iconSize = badgeIcon
@@ -208,8 +248,8 @@ fun GameCard(
                             InfoBadge(
                                 text = game.platform,
                                 icon = Icons.Filled.SportsEsports,
-                                color = colorScheme.secondaryContainer,
-                                textColor = colorScheme.onSecondaryContainer,
+                                color = cs.secondaryContainer,
+                                textColor = cs.onSecondaryContainer,
                                 isTabletOrWide = isTabletOrWide,
                                 badgeRadius = badgeRadius,
                                 iconSize = badgeIcon
@@ -219,213 +259,45 @@ fun GameCard(
 
                     Spacer(modifier = Modifier.height(betweenBlocks))
 
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(if (isTabletOrWide) 6.dp else 4.dp),
-                        modifier = Modifier.padding(top = 4.dp)
-                    ) {
-
-                        WorkStatusBadge(
-                            status = latestStatus,
-                            onClick = {
-                                if (latestStatus == WorkStatus.NOT_WORKING &&
-                                    latestTest?.issueNote?.isNotBlank() == true
-                                ) {
-                                    showIssueDialog = true
-                                }
-                            },
-                            isTabletOrWide = isTabletOrWide,
-                            iconSize = statusIcon,
-                            horizontalPadding = statusHPadding,
-                            verticalPadding = statusVPadding
-                        )
-
-                        latestTest?.testedDeviceModel?.let { device ->
-                            if (device.isNotBlank() && !device.equals("NaN", ignoreCase = true)) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Info,
-                                        contentDescription = null,
-                                        tint = colorScheme.primary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = device,
-                                        style = if (isTabletOrWide)
-                                            MaterialTheme.typography.bodyLarge
-                                        else
-                                            MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                    )
-                                }
+                    WorkStatusBadge(
+                        status = latestStatus,
+                        onClick = {
+                            if (latestStatus == WorkStatus.NOT_WORKING &&
+                                latestTest?.issueNote?.isNotBlank() == true
+                            ) {
+                                showIssueDialog = true
                             }
-                        }
+                        },
+                        isTabletOrWide = isTabletOrWide,
+                        iconSize = statusIcon,
+                        horizontalPadding = statusHPadding,
+                        verticalPadding = statusVPadding
+                    )
 
-                        latestTest?.testedGpuModel?.let { gpu ->
-                            if (gpu.isNotBlank()) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Info,
-                                        contentDescription = null,
-                                        tint = colorScheme.secondary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = gpu,
-                                        style = if (isTabletOrWide)
-                                            MaterialTheme.typography.bodyLarge
-                                        else
-                                            MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                    )
-                                }
-                            }
-                        }
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                        latestTest?.testedAndroidVersion?.let { av ->
-                            if (av.isNotBlank()) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Info,
-                                        contentDescription = null,
-                                        tint = colorScheme.secondary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = "Android $av",
-                                        style = if (isTabletOrWide)
-                                            MaterialTheme.typography.bodyLarge
-                                        else
-                                            MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                    )
-                                }
-                            }
-                        }
+                    TestedCountBadge(
+                        count = testedCount,
+                        isTabletOrWide = isTabletOrWide,
+                        iconSize = testedIcon,
+                        horizontalPadding = testedHPadding,
+                        verticalPadding = testedVPadding
+                    )
 
-                        latestTest?.let { t ->
-                            val hasRes = t.resolutionWidth.isNotBlank() && t.resolutionHeight.isNotBlank()
-                            val hasFps = t.fpsMin.isNotBlank() && t.fpsMax.isNotBlank()
+                    if (last3Devices.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                            if (hasRes || hasFps) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Info,
-                                        contentDescription = null,
-                                        tint = colorScheme.secondary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-
-                                    val resText = if (hasRes) "${t.resolutionWidth}×${t.resolutionHeight}" else ""
-                                    val fpsText = if (hasFps) "${t.fpsMin}–${t.fpsMax} FPS" else ""
-
-                                    val finalText = when {
-                                        hasRes && hasFps -> "$resText • $fpsText"
-                                        hasRes -> resText
-                                        else -> fpsText
-                                    }
-
-                                    Text(
-                                        text = finalText,
-                                        style = if (isTabletOrWide)
-                                            MaterialTheme.typography.bodyLarge
-                                        else
-                                            MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                    )
-                                }
-                            }
-                        }
-
-                        latestTest?.let { t ->
-                            val envParts = buildList {
-                                if (t.testedWrapper.isNotBlank()) add(t.testedWrapper)
-                                if (t.testedPerformanceMode.isNotBlank()) add(t.testedPerformanceMode)
-                                if (t.testedGameVersionOrBuild.isNotBlank()) add("Build ${t.testedGameVersionOrBuild}")
-                            }
-                            if (envParts.isNotEmpty()) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Info,
-                                        contentDescription = null,
-                                        tint = colorScheme.tertiary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = envParts.joinToString(" • "),
-                                        style = if (isTabletOrWide)
-                                            MaterialTheme.typography.bodyLarge
-                                        else
-                                            MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                    )
-                                }
-                            }
-                        }
-
-                        latestTest?.testedApp?.let { app ->
-                            if (app.isNotBlank()) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Android,
-                                        contentDescription = null,
-                                        tint = colorScheme.tertiary,
-                                        modifier = Modifier.size(smallIconSize)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-
-                                    Column {
-                                        Text(
-                                            text = app,
-                                            style = if (isTabletOrWide)
-                                                MaterialTheme.typography.bodyLarge
-                                            else
-                                                MaterialTheme.typography.bodyMedium,
-                                            color = colorScheme.onSurface.copy(alpha = 0.9f)
-                                        )
-
-                                        val appVersion = latestTest.testedAppVersion
-                                        if (appVersion.isNotBlank()) {
-                                            Row(
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Filled.Info,
-                                                    contentDescription = null,
-                                                    tint = colorScheme.onSurface.copy(alpha = 0.6f),
-                                                    modifier = Modifier.size(tinyIconSize)
-                                                )
-                                                Spacer(modifier = Modifier.width(4.dp))
-                                                Text(
-                                                    text = "v$appVersion",
-                                                    style = if (isTabletOrWide)
-                                                        MaterialTheme.typography.labelLarge
-                                                    else
-                                                        MaterialTheme.typography.labelMedium,
-                                                    color = colorScheme.onSurface.copy(alpha = 0.7f)
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        latestTest?.testedDateFormatted?.let { date ->
-                            if (date.isNotBlank()) {
-                                Text(
-                                    text = "${stringResource(AppR.string.tested_label)} $date",
-                                    style = if (isTabletOrWide)
-                                        MaterialTheme.typography.labelLarge
-                                    else
-                                        MaterialTheme.typography.labelMedium,
-                                    color = colorScheme.onSurface.copy(alpha = 0.7f)
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalArrangement = Arrangement.spacedBy(6.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            last3Devices.forEach { device ->
+                                DeviceChip(
+                                    text = device,
+                                    isTabletOrWide = isTabletOrWide,
+                                    iconSize = deviceChipIcon,
+                                    radius = deviceChipRadius
                                 )
                             }
                         }
@@ -441,7 +313,7 @@ fun GameCard(
                             MaterialTheme.typography.labelLarge
                         else
                             MaterialTheme.typography.labelSmall,
-                        color = colorScheme.primary,
+                        color = cs.primary,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
@@ -458,7 +330,7 @@ fun GameCard(
                             MaterialTheme.typography.bodyMedium
                         else
                             MaterialTheme.typography.bodySmall,
-                        color = colorScheme.onSurface.copy(alpha = 0.85f),
+                        color = cs.onSurface.copy(alpha = 0.85f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
@@ -503,9 +375,7 @@ fun GameCard(
                     if (game.testResults.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(6.dp))
 
-                        TextButton(
-                            onClick = { onShowTestHistory(game) }
-                        ) {
+                        TextButton(onClick = { onShowTestHistory(game) }) {
                             Text(
                                 stringResource(id = AppR.string.button_tested_history),
                                 style = if (isTabletOrWide)
@@ -530,9 +400,7 @@ fun GameCard(
                     Text(stringResource(AppR.string.button_ok))
                 }
             },
-            title = {
-                Text(stringResource(AppR.string.dialog_issue_title))
-            },
+            title = { Text(stringResource(AppR.string.dialog_issue_title)) },
             text = {
                 Text(
                     text = latestTest?.issueNote?.ifBlank {
@@ -557,19 +425,19 @@ fun InfoBadge(
     Surface(color = color, shape = RoundedCornerShape(badgeRadius)) {
         Row(
             modifier = Modifier.padding(
-                horizontal = if (isTabletOrWide) 8.dp else 6.dp,
-                vertical = if (isTabletOrWide) 3.dp else 2.dp
+                horizontal = if (isTabletOrWide) 10.dp else 8.dp,
+                vertical = if (isTabletOrWide) 5.dp else 4.dp
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(icon, null, Modifier.size(iconSize), tint = textColor)
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = text,
                 style = if (isTabletOrWide)
                     MaterialTheme.typography.labelLarge
                 else
-                    MaterialTheme.typography.labelSmall,
+                    MaterialTheme.typography.labelMedium,
                 color = textColor,
                 maxLines = 1
             )
@@ -638,7 +506,7 @@ fun WorkStatusBadge(
                 modifier = Modifier.size(iconSize)
             )
 
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Text(
                 text = stringResource(id = textResId),
@@ -648,6 +516,96 @@ fun WorkStatusBadge(
                     MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
                 color = contentColor
+            )
+        }
+    }
+}
+
+@Composable
+fun TestedCountBadge(
+    count: Int,
+    isTabletOrWide: Boolean = false,
+    iconSize: androidx.compose.ui.unit.Dp = 16.dp,
+    horizontalPadding: androidx.compose.ui.unit.Dp = 12.dp,
+    verticalPadding: androidx.compose.ui.unit.Dp = 7.dp
+) {
+    val cs = MaterialTheme.colorScheme
+
+    val bgColor =
+        if (count > 0) cs.primaryContainer
+        else cs.surfaceVariant
+
+    val contentColor =
+        if (count > 0) cs.onPrimaryContainer
+        else cs.onSurfaceVariant
+
+    Surface(
+        color = bgColor,
+        shape = RoundedCornerShape(50),
+        border = BorderStroke(1.dp, contentColor.copy(alpha = 0.25f))
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = horizontalPadding, vertical = verticalPadding),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.History,
+                contentDescription = null,
+                tint = contentColor,
+                modifier = Modifier.size(iconSize)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = stringResource(AppR.string.tests_badge_label, count),
+                style = if (isTabletOrWide)
+                    MaterialTheme.typography.labelLarge
+                else
+                    MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = contentColor
+            )
+        }
+    }
+}
+
+@Composable
+private fun DeviceChip(
+    text: String,
+    isTabletOrWide: Boolean,
+    iconSize: androidx.compose.ui.unit.Dp,
+    radius: androidx.compose.ui.unit.Dp
+) {
+    val cs = MaterialTheme.colorScheme
+    Surface(
+        color = cs.surfaceVariant,
+        shape = RoundedCornerShape(radius),
+        border = BorderStroke(1.dp, cs.outline.copy(alpha = 0.12f))
+    ) {
+        Row(
+            modifier = Modifier.padding(
+                horizontal = if (isTabletOrWide) 10.dp else 8.dp,
+                vertical = if (isTabletOrWide) 6.dp else 5.dp
+            ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.PhoneAndroid,
+                contentDescription = null,
+                tint = cs.onSurfaceVariant,
+                modifier = Modifier.size(iconSize)
+            )
+            Spacer(Modifier.width(6.dp))
+            Text(
+                text = text,
+                style = if (isTabletOrWide)
+                    MaterialTheme.typography.labelLarge
+                else
+                    MaterialTheme.typography.labelMedium,
+                color = cs.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

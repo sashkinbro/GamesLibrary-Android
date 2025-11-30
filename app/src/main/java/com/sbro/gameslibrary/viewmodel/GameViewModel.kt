@@ -29,6 +29,15 @@ enum class SortOption {
     PLATFORM
 }
 
+data class TestComment(
+    val id: String = "",
+    val gameId: String = "",
+    val testMillis: Long = 0L,
+    val text: String = "",
+    val authorDevice: String = "",
+    val createdAt: com.google.firebase.Timestamp? = null
+)
+
 enum class PlatformFilter {
     ALL,
     PC,
@@ -82,6 +91,7 @@ data class RemoteTestResult(
 class GameViewModel : ViewModel() {
 
     private val _games = MutableStateFlow<List<Game>>(emptyList())
+    val games = _games.asStateFlow()
     private val _searchText = MutableStateFlow("")
     private val _sortOption = MutableStateFlow(SortOption.STATUS_WORKING)
 
@@ -99,6 +109,12 @@ class GameViewModel : ViewModel() {
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val testsCollection = firestore.collection("gameTests")
+
+    private val commentsCollection = firestore.collection("testComments")
+
+    private val _commentsByTest =
+        MutableStateFlow<Map<Long, List<TestComment>>>(emptyMap())
+    val commentsByTest = _commentsByTest.asStateFlow()
 
     sealed class UiState {
         object Idle : UiState()
@@ -418,19 +434,110 @@ class GameViewModel : ViewModel() {
                 recomputeFiltered()
                 saveToCache(context, updated)
 
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_sync_success),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         context,
                         context.getString(R.string.toast_sync_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun loadCommentsForGame(gameId: String) {
+        viewModelScope.launch {
+            try {
+                val snapshot = withContext(Dispatchers.IO) {
+                    commentsCollection
+                        .whereEqualTo("gameId", gameId)
+                        .get()
+                        .await()
+                }
+
+                val comments = snapshot.documents.mapNotNull { d ->
+                    val text = d.getString("text") ?: return@mapNotNull null
+                    val millis = d.getLong("testMillis") ?: return@mapNotNull null
+
+                    TestComment(
+                        id = d.id,
+                        gameId = d.getString("gameId") ?: gameId,
+                        testMillis = millis,
+                        text = text,
+                        authorDevice = d.getString("authorDevice") ?: "",
+                        createdAt = d.getTimestamp("createdAt")
+                    )
+                }
+
+                val grouped = comments
+                    .groupBy { it.testMillis }
+                    .mapValues { (_, list) ->
+                        list.sortedBy { it.createdAt?.toDate()?.time ?: 0L }
+                    }
+
+                _commentsByTest.value = grouped
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun addTestComment(
+        context: Context,
+        gameId: String,
+        testMillis: Long,
+        text: String
+    ) {
+        val trimmed = text.trim()
+        if (trimmed.isBlank()) return
+
+        val now = com.google.firebase.Timestamp.now()
+        val deviceName =
+            "${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}".trim()
+
+        val newLocal = TestComment(
+            id = "local_${now.toDate().time}",
+            gameId = gameId,
+            testMillis = testMillis,
+            text = trimmed,
+            authorDevice = deviceName,
+            createdAt = now
+        )
+
+        val currentMap = _commentsByTest.value.toMutableMap()
+        val list = currentMap[testMillis].orEmpty().toMutableList()
+        list.add(newLocal)
+        currentMap[testMillis] = list
+        _commentsByTest.value = currentMap
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val data = mapOf(
+                    "gameId" to gameId,
+                    "testMillis" to testMillis,
+                    "text" to trimmed,
+                    "authorDevice" to deviceName,
+                    "createdAt" to now
+                )
+                commentsCollection.add(data).await()
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.test_comment_saved),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                loadCommentsForGame(gameId)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.test_comment_saved_offline),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -571,7 +678,6 @@ class GameViewModel : ViewModel() {
                     "mediaLink" to mediaLink
                 )
                 testsCollection.add(data).await()
-
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         context,
