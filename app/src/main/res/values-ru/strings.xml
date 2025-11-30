@@ -219,5 +219,15 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="onboard_body_3">Записывайте FPS, глюки и заметки для каждой тестовой сессии.</string>
     <string name="onboard_title_4">Играйте и делитесь результатами</string>
     <string name="onboard_body_4">История хранится на устройстве, а отчётами можно делиться в любое время.</string>
+    <string name="edit_status_title">Редактировать статус</string>
+    <string name="edit_status_game_not_found">Игра не найдена</string>
+    <string name="action_close">Закрыть</string>
+    <string name="search_in_db_button">Поиск в БД</string>
+    <string name="search_device_title">Поиск устройства в БД</string>
+    <string name="search_device_input_hint">Введите название модели (мин. 2 символа)</string>
+    <string name="search_device_start_typing">Начните вводить, чтобы увидеть результаты…</string>
+    <string name="search_device_no_matches">Совпадений нет. Вы можете закрыть и ввести модель вручную.</string>
+    <string name="search_device_cpu_prefix">CPU: %1$s</string>
+    <string name="search_device_ram_prefix">RAM: %1$s</string>
 
 </resources>

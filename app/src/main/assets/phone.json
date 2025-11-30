@@ -1,0 +1,9938 @@
+[
+  {
+    "id": 1,
+    "name": "Vivo X300 Pro",
+    "cpu": "Dimensity 9500",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2,
+    "name": "Sigma mobile X-treme PQ58",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 3,
+    "name": "Blackview BV8800",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 4,
+    "name": "Realme 11 Pro Plus",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 5,
+    "name": "Apple iPhone 17 Pro Max",
+    "cpu": "Apple A19 Pro",
+    "ram": "12 GB"
+  },
+  {
+    "id": 6,
+    "name": "Apple iPhone 16 Pro Max",
+    "cpu": "Apple A18 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 7,
+    "name": "Realme 11 4G",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 8,
+    "name": "Soyes XS16",
+    "cpu": "MediaTek MTK6737",
+    "ram": "2 GB"
+  },
+  {
+    "id": 9,
+    "name": "Land Rover T100",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 10,
+    "name": "Google Pixel 4",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 11,
+    "name": "Doogee S118 Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 12,
+    "name": "LG V50S ThinQ 5G",
+    "cpu": "Qualcomm SDM855 Snapdragon 855",
+    "ram": "8 GB"
+  },
+  {
+    "id": 13,
+    "name": "Nokia 106",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 14,
+    "name": "AGM M7 Pro",
+    "cpu": null,
+    "ram": "2 GB"
+  },
+  {
+    "id": 15,
+    "name": "Asus ROG Phone 5s",
+    "cpu": "Snapdragon 888+ 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 16,
+    "name": "Xiaomi Redmi Note 10 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 17,
+    "name": "OPPO A96 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 18,
+    "name": "Wiko U Feel",
+    "cpu": "MediaTek MT6735",
+    "ram": "3 GB"
+  },
+  {
+    "id": 19,
+    "name": "Panasonic TU446",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 20,
+    "name": "UMIDIGI Bison X10",
+    "cpu": "Helio P60",
+    "ram": "4 GB"
+  },
+  {
+    "id": 21,
+    "name": "OPPO Reno12 FS 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 22,
+    "name": "Hotwav Note 12",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 23,
+    "name": "CUBOT Hafury Meet",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 24,
+    "name": "Samsung Galaxy A56",
+    "cpu": "Exynos 1580",
+    "ram": "8 GB"
+  },
+  {
+    "id": 25,
+    "name": "Oukitel WP6",
+    "cpu": "Helio P70",
+    "ram": "6 GB"
+  },
+  {
+    "id": 26,
+    "name": "Samsung Galaxy A04",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 27,
+    "name": "Nokia 3210",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 28,
+    "name": "AGM Glory G1S",
+    "cpu": "Snapdragon 480 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 29,
+    "name": "Tecno Spark 20",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 30,
+    "name": "Blackview A80s",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 31,
+    "name": "Doogee DK10",
+    "cpu": "Dimensity 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 32,
+    "name": "Oukitel WP13",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 33,
+    "name": "Realme 13 Pro",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 34,
+    "name": "Blackview A53",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 35,
+    "name": "OPPO Reno7",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 36,
+    "name": "Oukitel C53",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 37,
+    "name": "Doogee Fire 3 Ultra",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 38,
+    "name": "Xiaomi Redmi A4 5G",
+    "cpu": "Snapdragon 4s Gen 2",
+    "ram": "4 GB"
+  },
+  {
+    "id": 39,
+    "name": "iiiF150 Raptor",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 40,
+    "name": "Tecno Pop 3",
+    "cpu": "MediaTek MT6580",
+    "ram": "1 GB"
+  },
+  {
+    "id": 41,
+    "name": "Unihertz Luna",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 42,
+    "name": "Motorola Edge 20",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 43,
+    "name": "UleFone Armor 29 Pro",
+    "cpu": "Dimensity 7400",
+    "ram": "16 GB"
+  },
+  {
+    "id": 44,
+    "name": "Samsung Galaxy A02",
+    "cpu": "Mediatek MT6739W",
+    "ram": "2 GB"
+  },
+  {
+    "id": 45,
+    "name": "ZTE H500",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 46,
+    "name": "UMIDIGI A13 Pro",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "6 GB"
+  },
+  {
+    "id": 47,
+    "name": "Fossibot F101 Pro",
+    "cpu": "MediaTek MT8788",
+    "ram": "8 GB"
+  },
+  {
+    "id": 48,
+    "name": "Realme Narzo 50i Prime",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 49,
+    "name": "Realme XT",
+    "cpu": "Qualcomm SDM712 Snapdragon 712",
+    "ram": "6 GB"
+  },
+  {
+    "id": 50,
+    "name": "Sony Xperia Z5 Compact",
+    "cpu": "Qualcomm MSM8994 Snapdragon 810",
+    "ram": "2 GB"
+  },
+  {
+    "id": 51,
+    "name": "Fossibot F106 Pro",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 52,
+    "name": "UleFone Armor 11T 5G",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 53,
+    "name": "iiiF150 Air1",
+    "cpu": "Helio G37",
+    "ram": "6 GB"
+  },
+  {
+    "id": 54,
+    "name": "Blackview BV4800 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 55,
+    "name": "iHunt Like 12 Pro",
+    "cpu": "MediaTek MT6739",
+    "ram": "2 GB"
+  },
+  {
+    "id": 56,
+    "name": "Sigma mobile X-treme PV68",
+    "cpu": "Unisoc SC6531",
+    "ram": null
+  },
+  {
+    "id": 57,
+    "name": "Oukitel WP21 Ultra",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 58,
+    "name": "Nubia V70 Design",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 59,
+    "name": "Sony Xperia XZs",
+    "cpu": "Qualcomm MSM8996 Snapdragon 820",
+    "ram": "4 GB"
+  },
+  {
+    "id": 60,
+    "name": "Unihertz Tank 2",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 61,
+    "name": "iiiF150 B2 Ultra",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 62,
+    "name": "CUBOT King Kong 9",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 63,
+    "name": "Realme C25",
+    "cpu": "Helio G70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 64,
+    "name": "UleFone Note 14",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 65,
+    "name": "Xiaomi Redmi 7",
+    "cpu": "Qualcomm SDM632 Snapdragon 632",
+    "ram": "3 GB"
+  },
+  {
+    "id": 66,
+    "name": "Huawei Nova 10 SE",
+    "cpu": "Snapdragon 680G 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 67,
+    "name": "Unihertz Jelly 2",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 68,
+    "name": "Nokia 6303 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 69,
+    "name": "Unihertz Shark 3",
+    "cpu": "Dimensity 8300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 70,
+    "name": "Oukitel WP22",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 71,
+    "name": "Gigaset GX6",
+    "cpu": "Dimensity 900",
+    "ram": "6 GB"
+  },
+  {
+    "id": 72,
+    "name": "Oukitel WP53",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 73,
+    "name": "UleFone Armor 33 Pro",
+    "cpu": "Dimensity 7300X",
+    "ram": "12 GB"
+  },
+  {
+    "id": 74,
+    "name": "Realme C11",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 75,
+    "name": "Huawei Mate X6",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 76,
+    "name": "Fossibot F107 Pro",
+    "cpu": "Dimensity 7300 Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 77,
+    "name": "Poco M4 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 78,
+    "name": "Huawei Nova 10",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 79,
+    "name": "AGM H5",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 80,
+    "name": "Oukitel WP5 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 81,
+    "name": "OPPO A18",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 82,
+    "name": "Doogee Blade 10 Power",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "6 GB"
+  },
+  {
+    "id": 83,
+    "name": "Realme C31",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "3 GB"
+  },
+  {
+    "id": 84,
+    "name": "Xiaomi Redmi Note 13 Pro 5G",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 85,
+    "name": "Samsung Galaxy Xcover6 Pro",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 86,
+    "name": "Oukitel C57 Pro",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 87,
+    "name": "UleFone Armor Mini 3",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 88,
+    "name": "UMIDIGI Bison X20",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 89,
+    "name": "Realme C21Y",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "4 GB"
+  },
+  {
+    "id": 90,
+    "name": "CUBOT A30",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "6 GB"
+  },
+  {
+    "id": 91,
+    "name": "Oukitel C16 Pro",
+    "cpu": "MediaTek MT6761P Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 92,
+    "name": "Unihertz Hike",
+    "cpu": "Helio G200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 93,
+    "name": "Sigma mobile X-style 341 Bro",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 94,
+    "name": "Oukitel WP10",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 95,
+    "name": "Sony Xperia Pro-I",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 96,
+    "name": "Nokia 5310",
+    "cpu": "Unisoc 6531F",
+    "ram": null
+  },
+  {
+    "id": 97,
+    "name": "Xiaomi Redmi Note 12 CN",
+    "cpu": "Snapdragon 4 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 98,
+    "name": "HMD Pulse Plus",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 99,
+    "name": "Realme C12",
+    "cpu": "Helio G35",
+    "ram": "3 GB"
+  },
+  {
+    "id": 100,
+    "name": "TCL 305i",
+    "cpu": "MT6739V",
+    "ram": "2 GB"
+  },
+  {
+    "id": 101,
+    "name": "Samsung Galaxy S20 Plus 5G",
+    "cpu": "Exynos 990 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 102,
+    "name": "UMIDIGI Power 5",
+    "cpu": "Helio G25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 103,
+    "name": "Soyes XS13",
+    "cpu": "MediaTek MT6580",
+    "ram": "1 GB"
+  },
+  {
+    "id": 104,
+    "name": "Xiaomi Redmi Note 9",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 105,
+    "name": "Blackview BV9600",
+    "cpu": "MediaTek Helio P70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 106,
+    "name": "OPPO Reno4 Lite",
+    "cpu": "Helio P95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 107,
+    "name": "OPPO Reno7 Pro 5G",
+    "cpu": "Dimensity 1200 Max",
+    "ram": "8 GB"
+  },
+  {
+    "id": 108,
+    "name": "Verico A183",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 109,
+    "name": "CROSSCALL Spider-X5",
+    "cpu": "MediaTek MTK6276A",
+    "ram": null
+  },
+  {
+    "id": 110,
+    "name": "Doogee S punk",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 111,
+    "name": "Realme X",
+    "cpu": "Snapdragon 710",
+    "ram": "8 GB"
+  },
+  {
+    "id": 112,
+    "name": "Swisstone BBM 625",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 113,
+    "name": "Blackview BV9800 Pro",
+    "cpu": "Helio P70",
+    "ram": "6 GB"
+  },
+  {
+    "id": 114,
+    "name": "Oukitel WP26",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 115,
+    "name": "Blackview Xplore 2",
+    "cpu": "Dimensity 8300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 116,
+    "name": "AGM A10",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "3 GB"
+  },
+  {
+    "id": 117,
+    "name": "Oukitel WP62",
+    "cpu": "Dimensity 7025",
+    "ram": "8 GB"
+  },
+  {
+    "id": 118,
+    "name": "HMD Pulse",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 119,
+    "name": "UleFone Armor 8 Pro",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 120,
+    "name": "OPPO A3 4G",
+    "cpu": "Snapdragon 6s 4G Gen1",
+    "ram": "6 GB"
+  },
+  {
+    "id": 121,
+    "name": "Oukitel WP18 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 122,
+    "name": "Doogee S200 Ultra",
+    "cpu": "Dimensity 7400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 123,
+    "name": "Honor 50 Lite",
+    "cpu": "Snapdragon 662",
+    "ram": "6 GB"
+  },
+  {
+    "id": 124,
+    "name": "Xiaomi Redmi 10",
+    "cpu": "Helio G88",
+    "ram": "6 GB"
+  },
+  {
+    "id": 125,
+    "name": "UleFone Note 11P",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 126,
+    "name": "Nokia 150",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 127,
+    "name": "Nubia Music",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 128,
+    "name": "Doogee V30T",
+    "cpu": "Dimensity 1080",
+    "ram": "12 GB"
+  },
+  {
+    "id": 129,
+    "name": "Xiaomi Redmi Note 11 Pro 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 130,
+    "name": "Panasonic TU250",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 131,
+    "name": "Realme C63",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "6 GB"
+  },
+  {
+    "id": 132,
+    "name": "Oukitel WP27",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 133,
+    "name": "Sharp Aquos sense9",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 134,
+    "name": "OPPO Reno8",
+    "cpu": "Dimensity 1300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 135,
+    "name": "Gigaset GL7",
+    "cpu": null,
+    "ram": "0.5 GB"
+  },
+  {
+    "id": 136,
+    "name": "Blackview BV6600",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 137,
+    "name": "Sigma mobile X-treme PQ57",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 138,
+    "name": "Nokia 6101",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 139,
+    "name": "Sony Xperia Z3 Compact",
+    "cpu": "Qualcomm MSM8974AC Snapdragon 801",
+    "ram": "2 GB"
+  },
+  {
+    "id": 140,
+    "name": "Xiaomi Redmi Note 12 5G",
+    "cpu": "Snapdragon 4 Gen 1",
+    "ram": "4 GB"
+  },
+  {
+    "id": 141,
+    "name": "Realme 11 Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 142,
+    "name": "Sony Xperia 10",
+    "cpu": "Qualcomm SDM630 Snapdragon 630",
+    "ram": "3 GB"
+  },
+  {
+    "id": 143,
+    "name": "Blackview A70 Pro",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 144,
+    "name": "OPPO Reno6",
+    "cpu": "Snapdragon 720G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 145,
+    "name": "AGM M9 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 146,
+    "name": "Sigma mobile X-style 310 Force",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 147,
+    "name": "OPPO A38",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 148,
+    "name": "Realme Narzo 50A",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 149,
+    "name": "AGM X6 Phantom",
+    "cpu": "Unisoc Tiger T750",
+    "ram": "8 GB"
+  },
+  {
+    "id": 150,
+    "name": "Tecno Spark 10",
+    "cpu": "Helio G37",
+    "ram": "8 GB"
+  },
+  {
+    "id": 151,
+    "name": "OPPO A5m",
+    "cpu": "Snapdragon 6s 4G Gen1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 152,
+    "name": "OPPO Reno6 Pro",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 153,
+    "name": "OPPO Reno12 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 154,
+    "name": "Hotwav W11",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 155,
+    "name": "Oukitel WP19",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 156,
+    "name": "Motorola Edge 50 Fusion",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 157,
+    "name": "Sigma mobile Comfort 50 Optima",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 158,
+    "name": "OPPO Reno12 F 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 159,
+    "name": "Tecno Spark 20C",
+    "cpu": "Helio G36",
+    "ram": "8 GB"
+  },
+  {
+    "id": 160,
+    "name": "UleFone Armor Mini 20 4G",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 161,
+    "name": "Ergo R231",
+    "cpu": "Mediatek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 162,
+    "name": "CATerpillar S42 H+",
+    "cpu": "Helio A20",
+    "ram": "3 GB"
+  },
+  {
+    "id": 163,
+    "name": "Infinix Smart 9",
+    "cpu": "Helio G81",
+    "ram": "3 GB"
+  },
+  {
+    "id": 164,
+    "name": "UleFone Armor 21",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 165,
+    "name": "Oukitel WP28E",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 166,
+    "name": "Blackview BL9000",
+    "cpu": "Dimensity 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 167,
+    "name": "Poco F8 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 168,
+    "name": "Doogee Fire 6 Power",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 169,
+    "name": "Lenovo P2",
+    "cpu": "Qualcomm MSM8953 Snapdragon 625",
+    "ram": "3 GB"
+  },
+  {
+    "id": 170,
+    "name": "Realme 9i",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 171,
+    "name": "Realme GT 6",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 172,
+    "name": "Sony Xperia XZ1",
+    "cpu": "Qualcomm MSM8998 Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 173,
+    "name": "Google Pixel 3a",
+    "cpu": "Snapdragon 670",
+    "ram": "4 GB"
+  },
+  {
+    "id": 174,
+    "name": "Xiaomi Redmi Note 12 Pro 4G",
+    "cpu": "Snapdragon 732G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 175,
+    "name": "Samsung Galaxy A03 Core",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 176,
+    "name": "Doogee S96 Pro",
+    "cpu": "Helio G90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 177,
+    "name": "Realme C53",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "6 GB"
+  },
+  {
+    "id": 178,
+    "name": "Nomi i1890",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 179,
+    "name": "Blackview Shark 6",
+    "cpu": "Unisoc Tiger T760",
+    "ram": "8 GB"
+  },
+  {
+    "id": 180,
+    "name": "Samsung Galaxy S24 FE",
+    "cpu": "Exynos 2400e",
+    "ram": "8 GB"
+  },
+  {
+    "id": 181,
+    "name": "Sigma mobile X-style 31 Power",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 182,
+    "name": "Doogee Blade 10 Ultra",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 183,
+    "name": "OnePlus Ace 5 Racing",
+    "cpu": "Dimensity 9400e",
+    "ram": "12 GB"
+  },
+  {
+    "id": 184,
+    "name": "AGM Note N1",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 185,
+    "name": "Sony Xperia XZ2 Compact",
+    "cpu": "Qualcomm MSM8998 Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 186,
+    "name": "CUBOT King Kong Mini 4",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 187,
+    "name": "Meizu Note 21 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 188,
+    "name": "Doogee Blade 10 Max",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 189,
+    "name": "UMIDIGI Bison GT2 5G",
+    "cpu": "Dimensity 900",
+    "ram": "8 GB"
+  },
+  {
+    "id": 190,
+    "name": "Realme C61",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "8 GB"
+  },
+  {
+    "id": 191,
+    "name": "Doogee S41 Max",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 192,
+    "name": "Nokia 105",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 193,
+    "name": "Doogee Fire 6 Max",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 194,
+    "name": "Nothing Phone 2a Plus",
+    "cpu": "Dimensity 7350 Pro",
+    "ram": "12 GB"
+  },
+  {
+    "id": 195,
+    "name": "iHunt S24 Plus",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 196,
+    "name": "AGM M8 Flip",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 197,
+    "name": "Doogee Note 58 Pro",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 198,
+    "name": "Blackview BV6600E",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 199,
+    "name": "Doro 8200",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 200,
+    "name": "Soyes XS15",
+    "cpu": "Mediatek MTK6580",
+    "ram": "2 GB"
+  },
+  {
+    "id": 201,
+    "name": "DIZO Star 300",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 202,
+    "name": "Oukitel C1",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 203,
+    "name": "Realme P3 Ultra",
+    "cpu": "Dimensity 8350 Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 204,
+    "name": "Oukitel C36",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 205,
+    "name": "iHunt Titan Music P22000 Ultra",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 206,
+    "name": "UleFone RugKing",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 207,
+    "name": "UMIDIGI G9T",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 208,
+    "name": "Motorola Edge 70",
+    "cpu": "Snapdragon 7 Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 209,
+    "name": "Doogee S40",
+    "cpu": "MediaTek MT6739",
+    "ram": "2 GB"
+  },
+  {
+    "id": 210,
+    "name": "Maxcom MM34D 4G",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 211,
+    "name": "MyPhone Hammer Iron Va",
+    "cpu": "MediaTek G36",
+    "ram": "4 GB"
+  },
+  {
+    "id": 212,
+    "name": "Doogee N55 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 213,
+    "name": "Realme C21",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 214,
+    "name": "Hotwav Cyber X",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 215,
+    "name": "Fossibot F101",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 216,
+    "name": "CUBOT King Kong Mini 2",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 217,
+    "name": "Maxcom MM815",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 218,
+    "name": "UMIDIGI A13S",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 219,
+    "name": "Doro Primo 413",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 220,
+    "name": "Nokia 1110",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 221,
+    "name": "iiiF150 Bison",
+    "cpu": "Helio G25",
+    "ram": "6 GB"
+  },
+  {
+    "id": 222,
+    "name": "UMIDIGI Bison X10S",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 223,
+    "name": "Google Pixel 10 Pro Fold",
+    "cpu": "Tensor G5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 224,
+    "name": "OPPO Reno7 Lite",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 225,
+    "name": "Realme 9 Pro Plus",
+    "cpu": "Dimensity 920",
+    "ram": "6 GB"
+  },
+  {
+    "id": 226,
+    "name": "CUBOT X20",
+    "cpu": "Helio P23",
+    "ram": "4 GB"
+  },
+  {
+    "id": 227,
+    "name": "Poco X4 Pro 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 228,
+    "name": "UMIDIGI G1",
+    "cpu": "MediaTek MT6739",
+    "ram": "2 GB"
+  },
+  {
+    "id": 229,
+    "name": "Doogee S40 Pro",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 230,
+    "name": "MyPhone 6410 LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 231,
+    "name": "MyPhone Halo 3",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 232,
+    "name": "Geemarc CL8700",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 233,
+    "name": "Blackview BL8800",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 234,
+    "name": "Apple iPhone 15",
+    "cpu": "Apple A16",
+    "ram": "6 GB"
+  },
+  {
+    "id": 235,
+    "name": "Blackview BV7100",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 236,
+    "name": "MyPhone Bueno LTE",
+    "cpu": "Unisoc Tiger T107",
+    "ram": null
+  },
+  {
+    "id": 237,
+    "name": "Maxcom MS601 4G",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 238,
+    "name": "Sony Xperia XA2 Dual",
+    "cpu": "Qualcomm Snapdragon 630",
+    "ram": "3 GB"
+  },
+  {
+    "id": 239,
+    "name": "Oukitel C1 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 240,
+    "name": "Hotwav T5 Max",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 241,
+    "name": "UleFone Power Armor 16 Pro",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 242,
+    "name": "UleFone Armor X3",
+    "cpu": "MediaTek MT6580",
+    "ram": "2 GB"
+  },
+  {
+    "id": 243,
+    "name": "Realme P3 Lite 4G",
+    "cpu": "Unisoc T7250",
+    "ram": "8 GB"
+  },
+  {
+    "id": 244,
+    "name": "Blackview BV5500 Pro",
+    "cpu": "MediaTek MT6739V",
+    "ram": "3 GB"
+  },
+  {
+    "id": 245,
+    "name": "Blackview BV5200",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 246,
+    "name": "UleFone Armor 25T 4G",
+    "cpu": "Helio G99",
+    "ram": "6 GB"
+  },
+  {
+    "id": 247,
+    "name": "Blackview Xplore 1 Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 248,
+    "name": "Meizu Mblu 22 Pro",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 249,
+    "name": "Doro 6060",
+    "cpu": "MediaTek MT6260A",
+    "ram": null
+  },
+  {
+    "id": 250,
+    "name": "Doogee X98 Pro",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 251,
+    "name": "Hotwav Cyber X Pro",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 252,
+    "name": "UleFone Note 20 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 253,
+    "name": "Xiaomi Redmi Note 11S",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 254,
+    "name": "Doogee V Max LR",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 255,
+    "name": "Tkexun G10-1",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 256,
+    "name": "UleFone Note 7",
+    "cpu": "MediaTek MT6580",
+    "ram": "1 GB"
+  },
+  {
+    "id": 257,
+    "name": "Blackview Fort 1",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "6 GB"
+  },
+  {
+    "id": 258,
+    "name": "Motorola Moto G86 Power",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 259,
+    "name": "OPPO A95",
+    "cpu": "Snapdragon 662",
+    "ram": "8 GB"
+  },
+  {
+    "id": 260,
+    "name": "UMIDIGI Bison Pro",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 261,
+    "name": "UleFone Armor 33",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 262,
+    "name": "Oukitel WP20 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 263,
+    "name": "UleFone Power Armor 14",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 264,
+    "name": "Sigma mobile Comfort 50 Shell Duo",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 265,
+    "name": "Doogee Blade GT Pro",
+    "cpu": "Dimensity 7025",
+    "ram": "12 GB"
+  },
+  {
+    "id": 266,
+    "name": "UMIDIGI A9",
+    "cpu": "Helio G25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 267,
+    "name": "Oukitel C58 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 268,
+    "name": "Nomi i2820",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 269,
+    "name": "HMD 130 Music",
+    "cpu": "Unisoc 6531F",
+    "ram": null
+  },
+  {
+    "id": 270,
+    "name": "Doogee N10",
+    "cpu": "Spreadtrum SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 271,
+    "name": "UMIDIGI A11S",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 272,
+    "name": "Maxcom MM443",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 273,
+    "name": "Realme GT 2 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 274,
+    "name": "OPPO A54s",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 275,
+    "name": "Infinix Note 12",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 276,
+    "name": "CUBOT C30",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 277,
+    "name": "Nokia 6303i Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 278,
+    "name": "Oukitel C23 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 279,
+    "name": "Nokia 1800",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 280,
+    "name": "UMIDIGI F3 SE",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "4 GB"
+  },
+  {
+    "id": 281,
+    "name": "Vivo Y15",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 282,
+    "name": "Oscal Tank 1",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 283,
+    "name": "CUBOT Note 40",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 284,
+    "name": "iiiF150 B3C",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 285,
+    "name": "Oukitel WP50",
+    "cpu": "Dimensity 6100+",
+    "ram": "4 GB"
+  },
+  {
+    "id": 286,
+    "name": "Servo X4",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 287,
+    "name": "ZTE Blade A72 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 288,
+    "name": "Doogee S200 X",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 289,
+    "name": "Doro 6520",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 290,
+    "name": "AGM M9 2G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 291,
+    "name": "MyPhone 7340",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 292,
+    "name": "LG G4 32GB",
+    "cpu": "Qualcomm MSM8992 Snapdragon 808",
+    "ram": "3 GB"
+  },
+  {
+    "id": 293,
+    "name": "iiiF150 R2022",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 294,
+    "name": "Nokia 114",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 295,
+    "name": "Sony Xperia X Performance",
+    "cpu": "Qualcomm MSM8996 Snapdragon 820",
+    "ram": "3 GB"
+  },
+  {
+    "id": 296,
+    "name": "UleFone Power Armor 14 Pro",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 297,
+    "name": "UleFone Armor X10 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 298,
+    "name": "Vivo X80 Lite",
+    "cpu": "Dimensity 900",
+    "ram": "8 GB"
+  },
+  {
+    "id": 299,
+    "name": "Blackview A80 Plus",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 300,
+    "name": "iHunt Note Ultra",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "3 GB"
+  },
+  {
+    "id": 301,
+    "name": "Panasonic TU456",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 302,
+    "name": "CUBOT Note 9",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 303,
+    "name": "Doogee S61",
+    "cpu": "Helio G35",
+    "ram": "6 GB"
+  },
+  {
+    "id": 304,
+    "name": "Oscal Flat 2C",
+    "cpu": "Unisoc Tiger T603",
+    "ram": "2 GB"
+  },
+  {
+    "id": 305,
+    "name": "Nomi i1871",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 306,
+    "name": "MyPhone Hammer Horizon LTE",
+    "cpu": "Unisoc T127",
+    "ram": null
+  },
+  {
+    "id": 307,
+    "name": "Tecno Spark 9 Pro",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 308,
+    "name": "OPPO Reno5 Pro 5G",
+    "cpu": "Dimensity 1000+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 309,
+    "name": "Oukitel WP12 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 310,
+    "name": "Doogee X96 Pro",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 311,
+    "name": "HMD 110 4G",
+    "cpu": "Unisoc Tiger T127",
+    "ram": null
+  },
+  {
+    "id": 312,
+    "name": "UleFone Armor X8i",
+    "cpu": "Helio A25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 313,
+    "name": "Oukitel C61",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 314,
+    "name": "Maxcom MM426 SE",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 315,
+    "name": "Huawei Nova 6 5G",
+    "cpu": "HiSilicon Kirin 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 316,
+    "name": "Gigaset GL590",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 317,
+    "name": "Honor X6",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 318,
+    "name": "MyPhone 3510 LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 319,
+    "name": "Samsung Galaxy M32",
+    "cpu": "Helio G80",
+    "ram": "6 GB"
+  },
+  {
+    "id": 320,
+    "name": "Uniwa V171",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 321,
+    "name": "TTFone Titan TT950",
+    "cpu": null,
+    "ram": "0.5 GB"
+  },
+  {
+    "id": 322,
+    "name": "CUBOT X30",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 323,
+    "name": "CROSSCALL Core-X5",
+    "cpu": "Snapdragon 665",
+    "ram": "4 GB"
+  },
+  {
+    "id": 324,
+    "name": "Doogee S cyber Pro",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 325,
+    "name": "MyPhone Tango 2 LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 326,
+    "name": "Maxcom MM142",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 327,
+    "name": "MyPhone Hammer Iron V",
+    "cpu": "Helio G36",
+    "ram": "6 GB"
+  },
+  {
+    "id": 328,
+    "name": "Sony Xperia X Compact",
+    "cpu": "Qualcomm MSM8956 Snapdragon 650",
+    "ram": "3 GB"
+  },
+  {
+    "id": 329,
+    "name": "Sigma mobile X-treme PR68",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 330,
+    "name": "UleFone Armor X7",
+    "cpu": "Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 331,
+    "name": "Doogee S95 Pro",
+    "cpu": "Mediatek MT6779 Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 332,
+    "name": "Doogee V40 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 333,
+    "name": "UleFone Note 10",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 334,
+    "name": "CUBOT Hafury V1",
+    "cpu": "MediaTek MT8788V/WA",
+    "ram": "8 GB"
+  },
+  {
+    "id": 335,
+    "name": "UleFone Armor X9",
+    "cpu": "Helio A25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 336,
+    "name": "HMD 3210",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 337,
+    "name": "Apple iPhone 16e",
+    "cpu": "Apple A18",
+    "ram": "8 GB"
+  },
+  {
+    "id": 338,
+    "name": "Oukitel K15 Plus",
+    "cpu": "Helio A20",
+    "ram": "4 GB"
+  },
+  {
+    "id": 339,
+    "name": "Blackview BV4900",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 340,
+    "name": "MyPhone Halo 4 Plus LTE",
+    "cpu": "Unisoc Tiger T107",
+    "ram": null
+  },
+  {
+    "id": 341,
+    "name": "AGM M8 Flip Security Plus",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 342,
+    "name": "UMIDIGI A9 Pro",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 343,
+    "name": "UMIDIGI Power 7S",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 344,
+    "name": "CUBOT King Kong Star 2",
+    "cpu": "Dimensity 8200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 345,
+    "name": "Oscal Flat 1C",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 346,
+    "name": "Infinix Note 12",
+    "cpu": "Helio G88",
+    "ram": "6 GB"
+  },
+  {
+    "id": 347,
+    "name": "Blackview A90",
+    "cpu": "Helio P60",
+    "ram": "4 GB"
+  },
+  {
+    "id": 348,
+    "name": "Emporia Simplicity",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 349,
+    "name": "Oukitel C25",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 350,
+    "name": "UleFone Armor 12S",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 351,
+    "name": "Nokia N96",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 352,
+    "name": "UMIDIGI C1",
+    "cpu": "MediaTek MT6739",
+    "ram": "2 GB"
+  },
+  {
+    "id": 353,
+    "name": "OPPO A58",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 354,
+    "name": "UleFone Note 19",
+    "cpu": "Unisoc Tiger T603",
+    "ram": "3 GB"
+  },
+  {
+    "id": 355,
+    "name": "UMIDIGI Bison GT2",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 356,
+    "name": "Soyes XS18 Pro Max",
+    "cpu": "MediaTek MT6737",
+    "ram": "2 GB"
+  },
+  {
+    "id": 357,
+    "name": "Honor X9",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 358,
+    "name": "Doogee N55",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 359,
+    "name": "CATerpillar S42",
+    "cpu": "Helio A20",
+    "ram": "3 GB"
+  },
+  {
+    "id": 360,
+    "name": "UleFone Armor Mini 20 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 361,
+    "name": "Google Pixel 3",
+    "cpu": "Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 362,
+    "name": "UleFone Note 8P",
+    "cpu": "MediaTek MT6737",
+    "ram": "2 GB"
+  },
+  {
+    "id": 363,
+    "name": "iHunt S24 Xtreme",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 364,
+    "name": "Doogee S90C",
+    "cpu": "Mediatek MT6771 Helio P70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 365,
+    "name": "AGM H5 Pro",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 366,
+    "name": "Hotwav T7",
+    "cpu": "MediaTek MT8788",
+    "ram": "4 GB"
+  },
+  {
+    "id": 367,
+    "name": "MyPhone Hammer Bow LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 368,
+    "name": "UleFone Armor X31 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 369,
+    "name": "Tecno Pop 4 Pro",
+    "cpu": "Mediatek MT6739",
+    "ram": "1 GB"
+  },
+  {
+    "id": 370,
+    "name": "UMIDIGI A13",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "4 GB"
+  },
+  {
+    "id": 371,
+    "name": "Oukitel WP35 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 372,
+    "name": "Samsung Galaxy A13 New",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 373,
+    "name": "CUBOT Note 50",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 374,
+    "name": "Alcatel 1S 6025H",
+    "cpu": "Helio P22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 375,
+    "name": "HMD 105",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 376,
+    "name": "Vivo V50 Lite",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 377,
+    "name": "Hotwav Note 15 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 378,
+    "name": "Doogee Blade 10 Ultra Energy",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 379,
+    "name": "Doogee N50",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 380,
+    "name": "Oukitel P1",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 381,
+    "name": "UleFone Armor 27T Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 382,
+    "name": "UMIDIGI A11",
+    "cpu": "Helio G25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 383,
+    "name": "TCL 60 SE",
+    "cpu": "Helio G81",
+    "ram": "8 GB"
+  },
+  {
+    "id": 384,
+    "name": "iHunt S22 Plus",
+    "cpu": "Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 385,
+    "name": "Sigma mobile X-style 281 Clik",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 386,
+    "name": "Fossibot S1 5G",
+    "cpu": "Dimensity 6100+",
+    "ram": "6 GB"
+  },
+  {
+    "id": 387,
+    "name": "Vivo Y15s",
+    "cpu": "Helio P35",
+    "ram": "3 GB"
+  },
+  {
+    "id": 388,
+    "name": "Doogee N50S",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 389,
+    "name": "MyPhone Hammer Ranger",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 390,
+    "name": "Honor X7d",
+    "cpu": "Snapdragon 685",
+    "ram": "6 GB"
+  },
+  {
+    "id": 391,
+    "name": "MyPhone Hammer Blade Va 5G",
+    "cpu": "Dimensity 720",
+    "ram": "8 GB"
+  },
+  {
+    "id": 392,
+    "name": "Maxcom MM445 4G",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 393,
+    "name": "Maxcom MM718 4G",
+    "cpu": "UM89107",
+    "ram": null
+  },
+  {
+    "id": 394,
+    "name": "UMIDIGI C1 Max",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "6 GB"
+  },
+  {
+    "id": 395,
+    "name": "UleFone Note 6T",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 396,
+    "name": "Alcatel 1V 5007U",
+    "cpu": "Helio A25",
+    "ram": "2 GB"
+  },
+  {
+    "id": 397,
+    "name": "Tecno Camon 20 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 398,
+    "name": "Emporia Pure LTE",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 399,
+    "name": "iHunt S23 Plus",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 400,
+    "name": "MyPhone Flip LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 401,
+    "name": "Realme Narzo 50i",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 402,
+    "name": "Oukitel C31",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 403,
+    "name": "Blackview BV5300",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 404,
+    "name": "Hotwav T5 Pro",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 405,
+    "name": "Gigaset GS5 Lite",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 406,
+    "name": "Doogee X98",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 407,
+    "name": "Wiko Tommy",
+    "cpu": "Snapdragon 212",
+    "ram": "1 GB"
+  },
+  {
+    "id": 408,
+    "name": "Realme C55",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 409,
+    "name": "MyPhone Hammer Construction",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 410,
+    "name": "ZTE Blade A35",
+    "cpu": "Unisoc SC9863A1",
+    "ram": "2 GB"
+  },
+  {
+    "id": 411,
+    "name": "Maxcom MM245 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 412,
+    "name": "Oukitel C57s",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 413,
+    "name": "Oscal Flat 2",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 414,
+    "name": "Sigma mobile X-treme PQ38",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 415,
+    "name": "Hotwav Cyber 7",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 416,
+    "name": "MyPhone Halo 3 LTE",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 417,
+    "name": "Oukitel C60 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 418,
+    "name": "Oukitel WP20",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 419,
+    "name": "Maxcom MM828",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 420,
+    "name": "iHunt Tank 3 Pro",
+    "cpu": "Dimensity 8200",
+    "ram": "16 GB"
+  },
+  {
+    "id": 421,
+    "name": "UMIDIGI A11 Pro Max",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 422,
+    "name": "Nokia 110 4G",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 423,
+    "name": "CATerpillar S48C",
+    "cpu": null,
+    "ram": "3 GB"
+  },
+  {
+    "id": 424,
+    "name": "Sony Xperia 1",
+    "cpu": "Qualcomm SDM855 Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 425,
+    "name": "Samsung Galaxy M23",
+    "cpu": "Snapdragon 750G 5G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 426,
+    "name": "Nubia Z70 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 427,
+    "name": "Nokia 225 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 428,
+    "name": "UleFone Armor 27",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 429,
+    "name": "iiiF150 B2",
+    "cpu": "Helio G37",
+    "ram": "6 GB"
+  },
+  {
+    "id": 430,
+    "name": "Oukitel WP21",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 431,
+    "name": "Oukitel WP36",
+    "cpu": "MediaTek MT8788",
+    "ram": "8 GB"
+  },
+  {
+    "id": 432,
+    "name": "Xiaomi Redmi 9A",
+    "cpu": "Helio G25",
+    "ram": "2 GB"
+  },
+  {
+    "id": 433,
+    "name": "Honor Magic5 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 434,
+    "name": "Asus Zenfone 7 Pro ZS671KS",
+    "cpu": "Snapdragon 865+ 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 435,
+    "name": "Motorola Moto G14",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 436,
+    "name": "VERTU Signature",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 437,
+    "name": "UleFone Armor 23 Ultra",
+    "cpu": "Dimensity 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 438,
+    "name": "Huawei P40",
+    "cpu": "Kirin 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 439,
+    "name": "Blackview BV6200 Pro",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 440,
+    "name": "UleFone Armor X31",
+    "cpu": "Helio G91",
+    "ram": "6 GB"
+  },
+  {
+    "id": 441,
+    "name": "Panasonic TU160",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 442,
+    "name": "Oukitel WP39 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 443,
+    "name": "Sigma mobile Comfort 50 HIT",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 444,
+    "name": "Nokia 6233",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 445,
+    "name": "CUBOT P90",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 446,
+    "name": "OnePlus Ace 2V",
+    "cpu": "Dimensity 9000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 447,
+    "name": "Poco X7 Pro",
+    "cpu": "Dimensity 8400-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 448,
+    "name": "Motorola Moto G54",
+    "cpu": "Dimensity 7020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 449,
+    "name": "Nokia 1280",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 450,
+    "name": "Sigma mobile X-style 34 NRG",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 451,
+    "name": "Realme X50 5G",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 452,
+    "name": "Sigma mobile Comfort 50 Shell Duo Type-C",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 453,
+    "name": "OnePlus 13",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 454,
+    "name": "OPPO A76",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 455,
+    "name": "Nokia E52",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 456,
+    "name": "Blackview BV6200",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 457,
+    "name": "IQOO 9T",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 458,
+    "name": "Doogee Blade 10",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 459,
+    "name": "Blackview BV9300",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 460,
+    "name": "Doogee S100 Pro",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 461,
+    "name": "Oukitel WP35S",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 462,
+    "name": "Oukitel C50",
+    "cpu": "Dimensity 6100+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 463,
+    "name": "Vivo X300",
+    "cpu": "Dimensity 9500",
+    "ram": "12 GB"
+  },
+  {
+    "id": 464,
+    "name": "UleFone Armor 27 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 465,
+    "name": "Doogee Fire 7",
+    "cpu": "Dimensity 6300",
+    "ram": "4 GB"
+  },
+  {
+    "id": 466,
+    "name": "Blackview BL5000 5G",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 467,
+    "name": "Tkexun M1",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 468,
+    "name": "UMIDIGI G5 Mecha",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 469,
+    "name": "Oukitel WP32 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 470,
+    "name": "Oukitel G5",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 471,
+    "name": "CUBOT X100",
+    "cpu": "Dimensity 7025",
+    "ram": "8 GB"
+  },
+  {
+    "id": 472,
+    "name": "Blackview BL8800 Pro",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 473,
+    "name": "Unihertz Tank 2 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 474,
+    "name": "Unihertz Tank 4",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 475,
+    "name": "Ergo B184",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 476,
+    "name": "Google Pixel 9 Pro Fold",
+    "cpu": "Tensor G4",
+    "ram": "16 GB"
+  },
+  {
+    "id": 477,
+    "name": "2E E240",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 478,
+    "name": "Oukitel WP28",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 479,
+    "name": "OPPO A60",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 480,
+    "name": "Oscal C60",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 481,
+    "name": "OnePlus Nord N20 SE",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 482,
+    "name": "Blackview BV6600 Pro",
+    "cpu": "MediaTek MT6765V/CA",
+    "ram": "4 GB"
+  },
+  {
+    "id": 483,
+    "name": "Doogee V Max Plus",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 484,
+    "name": "Samsung Galaxy A24",
+    "cpu": "Helio G99",
+    "ram": "4 GB"
+  },
+  {
+    "id": 485,
+    "name": "Honor Magic V2",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 486,
+    "name": "OPPO Reno8 Lite 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 487,
+    "name": "Realme GT5",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 488,
+    "name": "Fossibot F110 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 489,
+    "name": "Poco M3 Pro 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 490,
+    "name": "UleFone Armor X12 Pro",
+    "cpu": "Helio G36",
+    "ram": "4 GB"
+  },
+  {
+    "id": 491,
+    "name": "Oscal C80",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 492,
+    "name": "CUBOT King Kong Power 3",
+    "cpu": "Helio G99",
+    "ram": "6 GB"
+  },
+  {
+    "id": 493,
+    "name": "Asus Zenfone 11 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 494,
+    "name": "Oukitel WP33 Pro",
+    "cpu": "Dimensity 6100+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 495,
+    "name": "Blackview A55 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 496,
+    "name": "Maxcom MM814",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 497,
+    "name": "Samsung Galaxy A23",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 498,
+    "name": "Apple iPhone Xs",
+    "cpu": "Apple A12 Bionic",
+    "ram": "4 GB"
+  },
+  {
+    "id": 499,
+    "name": "UleFone Note 6P",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 500,
+    "name": "Hotwav Hyper 7 Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 501,
+    "name": "Blackview BV4800 SE",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 502,
+    "name": "Doogee S200 Max",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 503,
+    "name": "UleFone Note 17 Pro",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 504,
+    "name": "Xiaomi Redmi Note 12 Pro 5G",
+    "cpu": "Dimensity 1080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 505,
+    "name": "Sony Xperia XZ",
+    "cpu": "Qualcomm MSM8996 Snapdragon 820",
+    "ram": "3 GB"
+  },
+  {
+    "id": 506,
+    "name": "UleFone Armor X32 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 507,
+    "name": "Blackview Wave 8",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 508,
+    "name": "IQOO 13",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 509,
+    "name": "Nokia 2660 Flip",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 510,
+    "name": "Oukitel WP30 Pro",
+    "cpu": "Dimensity 8050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 511,
+    "name": "Samsung Galaxy Xcover7 Pro",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "6 GB"
+  },
+  {
+    "id": 512,
+    "name": "2E E240",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 513,
+    "name": "Unihertz Shark 5G",
+    "cpu": "Dimensity 8200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 514,
+    "name": "Sharp Aquos sense8",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 515,
+    "name": "UleFone Armor 9",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 516,
+    "name": "Nokia E66",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 517,
+    "name": "Realme 12 5G",
+    "cpu": "Dimensity 6100+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 518,
+    "name": "Samsung Galaxy M14",
+    "cpu": "Exynos 1330",
+    "ram": "4 GB"
+  },
+  {
+    "id": 519,
+    "name": "Oscal Modern 8",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 520,
+    "name": "Ergo E241",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 521,
+    "name": "Fossibot F105",
+    "cpu": "MediaTek MT8768",
+    "ram": "4 GB"
+  },
+  {
+    "id": 522,
+    "name": "Asus ROG Phone 6",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 523,
+    "name": "Oukitel G3",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "4 GB"
+  },
+  {
+    "id": 524,
+    "name": "Blackview BV8200",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 525,
+    "name": "Xiaomi Redmi 10A",
+    "cpu": "Helio G25",
+    "ram": "6 GB"
+  },
+  {
+    "id": 526,
+    "name": "UleFone Armor 29 Pro Thermal",
+    "cpu": "Dimensity 7400",
+    "ram": "16 GB"
+  },
+  {
+    "id": 527,
+    "name": "Oukitel WP38",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 528,
+    "name": "CUBOT X30 P",
+    "cpu": "MediaTek MT8788",
+    "ram": "8 GB"
+  },
+  {
+    "id": 529,
+    "name": "Hotwav Hyper 7",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 530,
+    "name": "Meizu Note 21",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 531,
+    "name": "UleFone Armor 8",
+    "cpu": "Helio P60",
+    "ram": "4 GB"
+  },
+  {
+    "id": 532,
+    "name": "UleFone Armor 34",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 533,
+    "name": "UleFone Power Armor 18 Ultra",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 534,
+    "name": "UleFone Armor Mini 20T Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 535,
+    "name": "Doogee V Max Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 536,
+    "name": "Nokia 6700 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 537,
+    "name": "Realme 14x",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 538,
+    "name": "Unihertz Tank Mini",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 539,
+    "name": "Samsung Galaxy S24 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 540,
+    "name": "Tecno Spark 30",
+    "cpu": "Helio G91",
+    "ram": "8 GB"
+  },
+  {
+    "id": 541,
+    "name": "OPPO A73 5G",
+    "cpu": "Dimensity 720",
+    "ram": "8 GB"
+  },
+  {
+    "id": 542,
+    "name": "Samsung Galaxy S10 Plus",
+    "cpu": "Samsung Exynos 9820",
+    "ram": "8 GB"
+  },
+  {
+    "id": 543,
+    "name": "Apple iPhone 15 Pro Max",
+    "cpu": "Apple A17 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 544,
+    "name": "Nubia V60",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 545,
+    "name": "Tecno Spark Go 2",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 546,
+    "name": "Doogee V20S",
+    "cpu": "Dimensity 6020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 547,
+    "name": "Poco F4",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 548,
+    "name": "Gigaset GS5",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 549,
+    "name": "Huawei P30 Lite",
+    "cpu": "Kirin 710",
+    "ram": "4 GB"
+  },
+  {
+    "id": 550,
+    "name": "Nubia Z80 Ultra",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 551,
+    "name": "OnePlus 11",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 552,
+    "name": "Honor 8",
+    "cpu": "Hisilicon Kirin 950",
+    "ram": "4 GB"
+  },
+  {
+    "id": 553,
+    "name": "Blackview BV8900 Pro",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 554,
+    "name": "UleFone Armor X16",
+    "cpu": "Helio G91",
+    "ram": "6 GB"
+  },
+  {
+    "id": 555,
+    "name": "Poco F5 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 556,
+    "name": "Nomi i2440",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 557,
+    "name": "Land Rover Q9",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 558,
+    "name": "Xiaomi Redmi 13C",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 559,
+    "name": "Google Pixel 3 XL",
+    "cpu": "Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 560,
+    "name": "Huawei Enjoy 9 Plus",
+    "cpu": "Hisilicon Kirin 710",
+    "ram": "4 GB"
+  },
+  {
+    "id": 561,
+    "name": "Nubia V70",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 562,
+    "name": "iiiF150 Air1 Ultra",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 563,
+    "name": "Nubia Red Magic 11 Pro Plus",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 564,
+    "name": "Blackview Shark 8",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 565,
+    "name": "Blackview BV9300 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 566,
+    "name": "Sony Xperia XZ1 Compact",
+    "cpu": "Qualcomm MSM8998 Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 567,
+    "name": "OPPO Find X5 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 568,
+    "name": "Nokia N95",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 569,
+    "name": "Oscal S60 Pro",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 570,
+    "name": "Doogee Blade GT Play",
+    "cpu": "Dimensity 7025",
+    "ram": "8 GB"
+  },
+  {
+    "id": 571,
+    "name": "Realme GT 5G",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 572,
+    "name": "Infinix Note 30 5G",
+    "cpu": "Dimensity 6080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 573,
+    "name": "Honor Magic V5",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 574,
+    "name": "UleFone Armor Mini 4",
+    "cpu": "Unisoc T117",
+    "ram": null
+  },
+  {
+    "id": 575,
+    "name": "Panasonic TU550",
+    "cpu": "Unisoc Tiger T117",
+    "ram": null
+  },
+  {
+    "id": 576,
+    "name": "Sharp Aquos Wish5",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 577,
+    "name": "Unihertz Tank 3",
+    "cpu": "Dimensity 8200",
+    "ram": "16 GB"
+  },
+  {
+    "id": 578,
+    "name": "Huawei Pura 80 Pro",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 579,
+    "name": "Doogee V20 Pro",
+    "cpu": "Dimensity 700",
+    "ram": "12 GB"
+  },
+  {
+    "id": 580,
+    "name": "Samsung Galaxy Fold5",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 581,
+    "name": "Motorola Moto G35",
+    "cpu": "Unisoc Tiger T760",
+    "ram": "4 GB"
+  },
+  {
+    "id": 582,
+    "name": "Blackview A70",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 583,
+    "name": "Oukitel WP23 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 584,
+    "name": "Samsung Galaxy S23",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 585,
+    "name": "Vivo X80 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 586,
+    "name": "Google Pixel 9",
+    "cpu": "Tensor G4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 587,
+    "name": "Google Pixel 4a",
+    "cpu": "Snapdragon 730G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 588,
+    "name": "Samsung Galaxy S21",
+    "cpu": "Exynos 2100 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 589,
+    "name": "CUBOT King Kong Star",
+    "cpu": "Dimensity 700",
+    "ram": "12 GB"
+  },
+  {
+    "id": 590,
+    "name": "Sony Xperia 10 VII",
+    "cpu": "Snapdragon 6 Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 591,
+    "name": "Samsung Galaxy S10e",
+    "cpu": "Samsung Exynos 9820",
+    "ram": "8 GB"
+  },
+  {
+    "id": 592,
+    "name": "Xiaomi Redmi 15 5G",
+    "cpu": "Snapdragon 6s Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 593,
+    "name": "Fossibot F109S",
+    "cpu": "Helio G81",
+    "ram": "6 GB"
+  },
+  {
+    "id": 594,
+    "name": "Xiaomi 15",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 595,
+    "name": "Nomi i1880",
+    "cpu": "Unisoc SC6533",
+    "ram": null
+  },
+  {
+    "id": 596,
+    "name": "Xiaomi 15 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 597,
+    "name": "Oukitel C35",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "12 GB"
+  },
+  {
+    "id": 598,
+    "name": "Apple iPhone 14 Pro",
+    "cpu": "Apple A16",
+    "ram": "6 GB"
+  },
+  {
+    "id": 599,
+    "name": "Nokia 105",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 600,
+    "name": "Nothing Phone 3a",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 601,
+    "name": "Vivo Y55 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 602,
+    "name": "Google Pixel 8 Pro",
+    "cpu": "Tensor G3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 603,
+    "name": "Sigma mobile X-treme PQ55",
+    "cpu": "Helio P22",
+    "ram": "6 GB"
+  },
+  {
+    "id": 604,
+    "name": "Samsung Galaxy A35",
+    "cpu": "Exynos 1380",
+    "ram": "8 GB"
+  },
+  {
+    "id": 605,
+    "name": "HMD 150 Music",
+    "cpu": "Unisoc 6531F",
+    "ram": null
+  },
+  {
+    "id": 606,
+    "name": "Asus ROG Phone 9 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 607,
+    "name": "iiiF150 B3 Pro",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 608,
+    "name": "Google Pixel 7",
+    "cpu": "Tensor G2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 609,
+    "name": "Oscal Marine 1",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 610,
+    "name": "OnePlus Ace 6",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 611,
+    "name": "UleFone Armor 17 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 612,
+    "name": "Samsung Galaxy A07",
+    "cpu": "Helio G99",
+    "ram": "4 GB"
+  },
+  {
+    "id": 613,
+    "name": "Google Pixel 4a 5G",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 614,
+    "name": "Samsung Galaxy S25 FE",
+    "cpu": "Exynos 2400",
+    "ram": "8 GB"
+  },
+  {
+    "id": 615,
+    "name": "Vivo V29",
+    "cpu": "Snapdragon 778G+ 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 616,
+    "name": "Samsung Galaxy A17 4G",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 617,
+    "name": "Honor 20i",
+    "cpu": "Hisilicon Kirin 710",
+    "ram": "4 GB"
+  },
+  {
+    "id": 618,
+    "name": "Xiaomi Redmi 14C",
+    "cpu": "Helio G81-Ultra",
+    "ram": "4 GB"
+  },
+  {
+    "id": 619,
+    "name": "Doogee Fire 6",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 620,
+    "name": "Samsung Galaxy S21 Ultra",
+    "cpu": "Exynos 2100 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 621,
+    "name": "Realme GT Neo6",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 622,
+    "name": "Google Pixel 8a",
+    "cpu": "Tensor G3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 623,
+    "name": "UMIDIGI A13 Pro Max 5G",
+    "cpu": "Dimensity 900",
+    "ram": "12 GB"
+  },
+  {
+    "id": 624,
+    "name": "Xiaomi Redmi Note 13 5G",
+    "cpu": "Dimensity 6080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 625,
+    "name": "Blackview BV5300 Plus",
+    "cpu": "Helio G72",
+    "ram": "8 GB"
+  },
+  {
+    "id": 626,
+    "name": "Xiaomi 14T Pro",
+    "cpu": "Dimensity 9300+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 627,
+    "name": "Doogee Blade GT Ultra",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 628,
+    "name": "Xiaomi 13T",
+    "cpu": "Dimensity 8200 Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 629,
+    "name": "Doogee Blade 10 Energy",
+    "cpu": "Unisoc Tiger T620",
+    "ram": "4 GB"
+  },
+  {
+    "id": 630,
+    "name": "OnePlus Nord CE5",
+    "cpu": "Dimensity 8350",
+    "ram": "8 GB"
+  },
+  {
+    "id": 631,
+    "name": "Blackview BV5300 Pro",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 632,
+    "name": "Motorola Edge 60 Fusion",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 633,
+    "name": "Doogee S90",
+    "cpu": "MediaTek MT6771 Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 634,
+    "name": "Samsung Galaxy S23 Plus",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 635,
+    "name": "Realme 9 Pro",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 636,
+    "name": "Nubia Neo 2",
+    "cpu": "Unisoc T820",
+    "ram": "8 GB"
+  },
+  {
+    "id": 637,
+    "name": "Huawei P40 Lite",
+    "cpu": "HiSilicon Kirin 810",
+    "ram": "6 GB"
+  },
+  {
+    "id": 638,
+    "name": "Xiaomi 15T Pro",
+    "cpu": "Dimensity 9400+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 639,
+    "name": "Doogee S119",
+    "cpu": "MediaTek MT8788",
+    "ram": "8 GB"
+  },
+  {
+    "id": 640,
+    "name": "Xiaomi 12 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 641,
+    "name": "AGM M7",
+    "cpu": "MediaTek MT6739",
+    "ram": "1 GB"
+  },
+  {
+    "id": 642,
+    "name": "Samsung Galaxy A36",
+    "cpu": "Snapdragon 6 Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 643,
+    "name": "Oscal Pilot 2",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 644,
+    "name": "Google Pixel 9a",
+    "cpu": "Tensor G4",
+    "ram": "8 GB"
+  },
+  {
+    "id": 645,
+    "name": "Honor 70",
+    "cpu": "Snapdragon 778G+ 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 646,
+    "name": "Samsung Galaxy S24 Plus",
+    "cpu": "Exynos 2400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 647,
+    "name": "Realme 7 5G",
+    "cpu": "Dimensity 800U",
+    "ram": "6 GB"
+  },
+  {
+    "id": 648,
+    "name": "Motorola Moto G15 Power",
+    "cpu": "Helio G81 Extreme",
+    "ram": "8 GB"
+  },
+  {
+    "id": 649,
+    "name": "Hotwav T7 Pro",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 650,
+    "name": "Google Pixel 10 Pro XL",
+    "cpu": "Tensor G5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 651,
+    "name": "Infinix Note 12 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 652,
+    "name": "IQOO Z10 Turbo Pro",
+    "cpu": "Snapdragon 8s Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 653,
+    "name": "Samsung Galaxy Xcover 5",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 654,
+    "name": "Poco F6",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 655,
+    "name": "Nokia 8",
+    "cpu": "Qualcomm MSM8998 Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 656,
+    "name": "Motorola Moto G05",
+    "cpu": "Helio G81 Extreme",
+    "ram": "8 GB"
+  },
+  {
+    "id": 657,
+    "name": "ZTE Blade V70",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 658,
+    "name": "OnePlus Ace 5 Ultra",
+    "cpu": "Dimensity 9400+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 659,
+    "name": "UleFone Note 16 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 660,
+    "name": "Infinix Hot 60 Pro Plus",
+    "cpu": "Helio G200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 661,
+    "name": "OPPO Find X3 Lite",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 662,
+    "name": "Xiaomi Redmi 15C",
+    "cpu": "Helio G81 Ultra",
+    "ram": "4 GB"
+  },
+  {
+    "id": 663,
+    "name": "Oukitel WP53 S",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 664,
+    "name": "Apple iPhone 12",
+    "cpu": "Apple A14",
+    "ram": "4 GB"
+  },
+  {
+    "id": 665,
+    "name": "Nokia 6230",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 666,
+    "name": "Samsung Galaxy A16 4G",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 667,
+    "name": "OPPO A74 5G",
+    "cpu": "Snapdragon 480 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 668,
+    "name": "Sony Xperia 1 VII",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 669,
+    "name": "Xiaomi Redmi Note 11 Pro",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 670,
+    "name": "Blackview Xplore 1",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 671,
+    "name": "Apple iPhone 15 Plus",
+    "cpu": "Apple A16",
+    "ram": "6 GB"
+  },
+  {
+    "id": 672,
+    "name": "Tecno Spark 10 Pro",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 673,
+    "name": "Infinix Note 50 Pro 4G",
+    "cpu": "Helio G100 Ultimate",
+    "ram": "12 GB"
+  },
+  {
+    "id": 674,
+    "name": "Tecno Pop 2F",
+    "cpu": "MediaTek MT6580M",
+    "ram": "1 GB"
+  },
+  {
+    "id": 675,
+    "name": "OnePlus Ace 5 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 676,
+    "name": "Doogee V Max Play",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 677,
+    "name": "Samsung Galaxy A06",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 678,
+    "name": "Realme C65 4G",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 679,
+    "name": "Nubia Focus Pro",
+    "cpu": "Unisoc T760",
+    "ram": "8 GB"
+  },
+  {
+    "id": 680,
+    "name": "Honor X6c",
+    "cpu": "Helio G81 Ultra",
+    "ram": "6 GB"
+  },
+  {
+    "id": 681,
+    "name": "Xiaomi Redmi 13 4G",
+    "cpu": "Helio G91 Ultra",
+    "ram": "6 GB"
+  },
+  {
+    "id": 682,
+    "name": "Xiaomi Mi 11 Lite",
+    "cpu": "Snapdragon 732G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 683,
+    "name": "OPPO Reno10 5G",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 684,
+    "name": "Infinix GT 30 Pro",
+    "cpu": "Dimensity 8350 Ultimate",
+    "ram": "12 GB"
+  },
+  {
+    "id": 685,
+    "name": "Motorola Moto G4",
+    "cpu": "Qualcomm MSM8952 Snapdragon 617",
+    "ram": "2 GB"
+  },
+  {
+    "id": 686,
+    "name": "Xiaomi Redmi Note 11 Pro Plus",
+    "cpu": "Dimensity 920",
+    "ram": "6 GB"
+  },
+  {
+    "id": 687,
+    "name": "Realme GT7 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 688,
+    "name": "UleFone Power Armor X11 Pro",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 689,
+    "name": "Xiaomi Mi 11 Lite 5G",
+    "cpu": "Snapdragon 780G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 690,
+    "name": "Motorola Moto G86",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 691,
+    "name": "UleFone Note 18 Ultra",
+    "cpu": "Dimensity 720",
+    "ram": "6 GB"
+  },
+  {
+    "id": 692,
+    "name": "Hotwav Cyber 15",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 693,
+    "name": "Samsung Galaxy M35 5G",
+    "cpu": "Exynos 1380",
+    "ram": "6 GB"
+  },
+  {
+    "id": 694,
+    "name": "Honor 9X",
+    "cpu": "HiSilicon Kirin 710F",
+    "ram": "6 GB"
+  },
+  {
+    "id": 695,
+    "name": "Xiaomi Mix Flip",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 696,
+    "name": "OPPO A6 Pro",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 697,
+    "name": "Oukitel C37",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 698,
+    "name": "Nomi i2841",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 699,
+    "name": "Realme GT 7T",
+    "cpu": "Dimensity 8400 Max",
+    "ram": "12 GB"
+  },
+  {
+    "id": 700,
+    "name": "CATerpillar S62",
+    "cpu": "Snapdragon 660",
+    "ram": "4 GB"
+  },
+  {
+    "id": 701,
+    "name": "Doogee S118",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 702,
+    "name": "OPPO Reno13",
+    "cpu": "Dimensity 8350",
+    "ram": "12 GB"
+  },
+  {
+    "id": 703,
+    "name": "Realme GT Neo3",
+    "cpu": "Dimensity 8100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 704,
+    "name": "Apple iPhone 16 Plus",
+    "cpu": "Apple A18",
+    "ram": "8 GB"
+  },
+  {
+    "id": 705,
+    "name": "CATerpillar S62 Pro",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 706,
+    "name": "Poco F7 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 707,
+    "name": "Doogee S89",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 708,
+    "name": "Honor Magic7 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 709,
+    "name": "Honor X9a",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 710,
+    "name": "Xiaomi Redmi 15",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 711,
+    "name": "Nokia 1100",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 712,
+    "name": "Motorola Edge 60",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 713,
+    "name": "Xiaomi Mi 11i",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 714,
+    "name": "Xiaomi Redmi Note 13 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 715,
+    "name": "Motorola Razr 60",
+    "cpu": "Dimensity 7400X",
+    "ram": "8 GB"
+  },
+  {
+    "id": 716,
+    "name": "Apple iPhone 16 Pro",
+    "cpu": "Apple A18 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 717,
+    "name": "Xiaomi Redmi 10C",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 718,
+    "name": "Xiaomi 13T Pro",
+    "cpu": "Dimensity 9200+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 719,
+    "name": "Xiaomi Redmi Note 14 5G",
+    "cpu": "Dimensity 7025-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 720,
+    "name": "Ergo E281",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 721,
+    "name": "Xiaomi Redmi Note 13 Pro 4G",
+    "cpu": "Helio G99-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 722,
+    "name": "Panasonic TU110",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 723,
+    "name": "Xiaomi 13",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 724,
+    "name": "2E R240",
+    "cpu": null,
+    "ram": "0.03 GB"
+  },
+  {
+    "id": 725,
+    "name": "Xiaomi Redmi Note 12 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "4 GB"
+  },
+  {
+    "id": 726,
+    "name": "Oukitel WP56",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 727,
+    "name": "Nomi i1820",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 728,
+    "name": "Asus Zenfone 9",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 729,
+    "name": "Nokia 2700 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 730,
+    "name": "Samsung Galaxy A26",
+    "cpu": "Exynos 1380",
+    "ram": "8 GB"
+  },
+  {
+    "id": 731,
+    "name": "Motorola Edge 40 Neo",
+    "cpu": "Dimensity 7030",
+    "ram": "12 GB"
+  },
+  {
+    "id": 732,
+    "name": "OnePlus Nord2",
+    "cpu": "Dimensity 1200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 733,
+    "name": "Motorola Moto G06 Power",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 734,
+    "name": "Apple iPhone 14",
+    "cpu": "Apple A15",
+    "ram": "6 GB"
+  },
+  {
+    "id": 735,
+    "name": "Blackview A52 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 736,
+    "name": "AGM M6",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 737,
+    "name": "OPPO Reno14 F",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 738,
+    "name": "Samsung Galaxy S20 Plus",
+    "cpu": "Exynos 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 739,
+    "name": "Realme GT 7",
+    "cpu": "Dimensity 9400e",
+    "ram": "12 GB"
+  },
+  {
+    "id": 740,
+    "name": "Blackview A53 Pro",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 741,
+    "name": "Honor 400",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 742,
+    "name": "Infinix Smart 8",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "2 GB"
+  },
+  {
+    "id": 743,
+    "name": "Asus ROG Phone 8",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 744,
+    "name": "Realme C71",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "6 GB"
+  },
+  {
+    "id": 745,
+    "name": "Hotwav Cyber 13",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 746,
+    "name": "Poco F7 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 747,
+    "name": "Doogee Blade 20 Play",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 748,
+    "name": "Blackview Hero 10",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 749,
+    "name": "Motorola Moto G55",
+    "cpu": "Dimensity 7025",
+    "ram": "8 GB"
+  },
+  {
+    "id": 750,
+    "name": "Sony Xperia Ace III",
+    "cpu": "Snapdragon 480 5G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 751,
+    "name": "Nubia Neo 3 GT",
+    "cpu": "Unisoc T9100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 752,
+    "name": "Nokia 3310",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 753,
+    "name": "Honor 90",
+    "cpu": "Snapdragon 7 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 754,
+    "name": "Apple iPhone 13",
+    "cpu": "Apple A15",
+    "ram": "4 GB"
+  },
+  {
+    "id": 755,
+    "name": "Doogee S200",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 756,
+    "name": "Samsung Galaxy S22",
+    "cpu": "Exynos 2200 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 757,
+    "name": "CoolPAD Cool 30 Play",
+    "cpu": "Helio G99 Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 758,
+    "name": "Hotwav Cyber 16 Pro",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 759,
+    "name": "Apple iPhone 14 Pro Max",
+    "cpu": "Apple A16",
+    "ram": "6 GB"
+  },
+  {
+    "id": 760,
+    "name": "Blackview A60 Pro",
+    "cpu": "MediaTek MT6761 Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 761,
+    "name": "OnePlus 15",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 762,
+    "name": "Fossibot F114",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 763,
+    "name": "LG G7",
+    "cpu": "Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 764,
+    "name": "Samsung Galaxy S25 Plus",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 765,
+    "name": "OPPO Reno8 T",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 766,
+    "name": "Google Pixel 8",
+    "cpu": "Tensor G3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 767,
+    "name": "ZTE Blade V40",
+    "cpu": "Unisoc Tiger T618",
+    "ram": "6 GB"
+  },
+  {
+    "id": 768,
+    "name": "Doogee Note 59 Pro Plus",
+    "cpu": "Unisoc Tiger T765",
+    "ram": "12 GB"
+  },
+  {
+    "id": 769,
+    "name": "Infinix Hot 50",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 770,
+    "name": "Unihertz Tank 4 Pro",
+    "cpu": "Dimensity 8300",
+    "ram": "18 GB"
+  },
+  {
+    "id": 771,
+    "name": "OnePlus Nord 5",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 772,
+    "name": "ZTE Axon 30 Ultra 5G",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 773,
+    "name": "Huawei Pura 80 Ultra",
+    "cpu": "Kirin 9020",
+    "ram": "16 GB"
+  },
+  {
+    "id": 774,
+    "name": "CMF Phone 1",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 775,
+    "name": "Honor Magic V3",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 776,
+    "name": "Motorola Moto G54 Power",
+    "cpu": "Dimensity 7020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 777,
+    "name": "Nomi i2420",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 778,
+    "name": "Oukitel WP23 Plus",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 779,
+    "name": "Apple iPhone 11",
+    "cpu": "Apple A13",
+    "ram": "4 GB"
+  },
+  {
+    "id": 780,
+    "name": "AGM G2 Guardian",
+    "cpu": "Qualcomm QCM6490",
+    "ram": "12 GB"
+  },
+  {
+    "id": 781,
+    "name": "Xiaomi 11T",
+    "cpu": "Dimensity 1200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 782,
+    "name": "OPPO Reno14",
+    "cpu": "Dimensity 8350",
+    "ram": "12 GB"
+  },
+  {
+    "id": 783,
+    "name": "UleFone Armor 25T Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "6 GB"
+  },
+  {
+    "id": 784,
+    "name": "Xiaomi Redmi Note 13 Pro Plus",
+    "cpu": "Dimensity 7200 Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 785,
+    "name": "Sony Xperia 10 Plus",
+    "cpu": "Qualcomm SDM636 Snapdragon 636",
+    "ram": "4 GB"
+  },
+  {
+    "id": 786,
+    "name": "Sigma mobile X-style 171 Mini",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 787,
+    "name": "Poco X7",
+    "cpu": "Dimensity 7300-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 788,
+    "name": "Nokia 6300",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 789,
+    "name": "OnePlus Ace 3 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 790,
+    "name": "OnePlus 9R",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 791,
+    "name": "Samsung Galaxy M13",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 792,
+    "name": "Google Pixel 10",
+    "cpu": "Tensor G5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 793,
+    "name": "Nubia Red Magic 8S Pro",
+    "cpu": "Snapdragon 8+ Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 794,
+    "name": "Motorola Edge 50 Ultra",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 795,
+    "name": "Doogee Fire 3",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 796,
+    "name": "OPPO A40m",
+    "cpu": "Snapdragon 6s 4G Gen1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 797,
+    "name": "Poco M7 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "6 GB"
+  },
+  {
+    "id": 798,
+    "name": "Blackview A100",
+    "cpu": "Helio P70",
+    "ram": "6 GB"
+  },
+  {
+    "id": 799,
+    "name": "Realme 15T",
+    "cpu": "Dimensity 6400 Max",
+    "ram": "12 GB"
+  },
+  {
+    "id": 800,
+    "name": "CUBOT King Kong 11",
+    "cpu": "Dimensity 7025",
+    "ram": "16 GB"
+  },
+  {
+    "id": 801,
+    "name": "Oukitel WP100",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 802,
+    "name": "Infinix Note 50 Pro Plus 5G",
+    "cpu": "Dimensity 8350 Ultimate",
+    "ram": "12 GB"
+  },
+  {
+    "id": 803,
+    "name": "Samsung Galaxy A13",
+    "cpu": "Exynos 850",
+    "ram": "3 GB"
+  },
+  {
+    "id": 804,
+    "name": "Apple iPhone 15 Pro",
+    "cpu": "Apple A17 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 805,
+    "name": "Tecno Camon 19 Neo",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 806,
+    "name": "Oukitel WP19 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 807,
+    "name": "Samsung Galaxy Fold7",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 808,
+    "name": "Fossibot F112 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 809,
+    "name": "Samsung Galaxy S23 FE",
+    "cpu": "Exynos 2200 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 810,
+    "name": "Blackview A52",
+    "cpu": "Unisoc SC9863A1",
+    "ram": "2 GB"
+  },
+  {
+    "id": 811,
+    "name": "Oukitel WP60",
+    "cpu": "Dimensity 7025",
+    "ram": "16 GB"
+  },
+  {
+    "id": 812,
+    "name": "Samsung Galaxy A17 5G",
+    "cpu": "Exynos 1330",
+    "ram": "4 GB"
+  },
+  {
+    "id": 813,
+    "name": "Apple iPhone Air",
+    "cpu": "Apple A19 Pro",
+    "ram": "12 GB"
+  },
+  {
+    "id": 814,
+    "name": "Samsung Galaxy A14",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 815,
+    "name": "Apple iPhone 11 Pro Max",
+    "cpu": "Apple A13",
+    "ram": "4 GB"
+  },
+  {
+    "id": 816,
+    "name": "Oscal Tiger 12",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 817,
+    "name": "Sony Xperia 5",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 818,
+    "name": "iiiF150 Air2 Ultra",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 819,
+    "name": "Honor 400 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 820,
+    "name": "Oscal C30",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 821,
+    "name": "Sigma mobile X-style 353 Trend",
+    "cpu": "MediaTek MT6260А",
+    "ram": null
+  },
+  {
+    "id": 822,
+    "name": "Oukitel WP28S",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 823,
+    "name": "OnePlus 10T",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 824,
+    "name": "Samsung Galaxy S21 FE 5G",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 825,
+    "name": "Nubia Red Magic 9S Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 826,
+    "name": "Motorola Moto E14",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 827,
+    "name": "Nokia 1110i",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 828,
+    "name": "Tkexun M2",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 829,
+    "name": "Motorola Edge 60 Pro",
+    "cpu": "Dimensity 8350 Extreme",
+    "ram": "12 GB"
+  },
+  {
+    "id": 830,
+    "name": "Doogee V Max Play Vip Edition",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 831,
+    "name": "OnePlus Ace",
+    "cpu": "Dimensity 8100-Max",
+    "ram": "12 GB"
+  },
+  {
+    "id": 832,
+    "name": "Realme 14 Pro Plus",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 833,
+    "name": "OnePlus Nord",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 834,
+    "name": "UleFone Power Armor 16S",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 835,
+    "name": "ZTE Blade A56",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 836,
+    "name": "Blackview BV9900E",
+    "cpu": "Helio P90",
+    "ram": "6 GB"
+  },
+  {
+    "id": 837,
+    "name": "Sigma mobile Comfort 50 Grace",
+    "cpu": "MediaTek МТ6261D",
+    "ram": null
+  },
+  {
+    "id": 838,
+    "name": "Xiaomi 14T",
+    "cpu": "Dimensity 8300-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 839,
+    "name": "Emporia ActiveGlam",
+    "cpu": null,
+    "ram": "0.5 GB"
+  },
+  {
+    "id": 840,
+    "name": "Xiaomi Redmi K40 Gaming",
+    "cpu": "Dimensity 1200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 841,
+    "name": "Motorola Edge 50 Pro",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 842,
+    "name": "Realme GT 2",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 843,
+    "name": "Infinix Hot 50 Pro Plus",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 844,
+    "name": "Xiaomi Redmi Note 14 Pro 5G",
+    "cpu": "Dimensity 7300-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 845,
+    "name": "Honor X6b",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 846,
+    "name": "Nokia G22",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 847,
+    "name": "Xiaomi Redmi A5",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "3 GB"
+  },
+  {
+    "id": 848,
+    "name": "Ergo E282",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 849,
+    "name": "Oukitel WP35",
+    "cpu": "Dimensity 6100+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 850,
+    "name": "Samsung Galaxy S10",
+    "cpu": "Samsung Exynos 9820",
+    "ram": "8 GB"
+  },
+  {
+    "id": 851,
+    "name": "OPPO Reno10 Pro",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 852,
+    "name": "Oukitel WP53 Pro",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 853,
+    "name": "Samsung Galaxy A05",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 854,
+    "name": "Google Pixel 4 XL",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 855,
+    "name": "Realme C67 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "6 GB"
+  },
+  {
+    "id": 856,
+    "name": "Google Pixel 7 Pro",
+    "cpu": "Tensor G2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 857,
+    "name": "Sharp Aquos R8 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 858,
+    "name": "Blackview BV4900 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 859,
+    "name": "Infinix Hot 60 Pro",
+    "cpu": "Helio G200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 860,
+    "name": "HMD Arc",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 861,
+    "name": "Oukitel WP52",
+    "cpu": "Dimensity 6100+",
+    "ram": "4 GB"
+  },
+  {
+    "id": 862,
+    "name": "Realme 15 Pro",
+    "cpu": "Snapdragon 7 Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 863,
+    "name": "Xiaomi Redmi 15C 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "4 GB"
+  },
+  {
+    "id": 864,
+    "name": "Sigma mobile X-style 31 Power Type-C",
+    "cpu": "MediaTek MTK6261",
+    "ram": null
+  },
+  {
+    "id": 865,
+    "name": "Motorola Edge 40 5G",
+    "cpu": "Dimensity 8020",
+    "ram": "8 GB"
+  },
+  {
+    "id": 866,
+    "name": "CUBOT X70",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 867,
+    "name": "Realme Note 60x",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "3 GB"
+  },
+  {
+    "id": 868,
+    "name": "Sony Xperia 5 IV",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 869,
+    "name": "Samsung Galaxy S24",
+    "cpu": "Exynos 2400",
+    "ram": "8 GB"
+  },
+  {
+    "id": 870,
+    "name": "Nokia 5130 XpressMusic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 871,
+    "name": "BlackBerry DTEK50",
+    "cpu": null,
+    "ram": "3 GB"
+  },
+  {
+    "id": 872,
+    "name": "Google Pixel 5a",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 873,
+    "name": "Xiaomi Redmi Note 14 Pro Plus",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 874,
+    "name": "OnePlus Nord N200 5G",
+    "cpu": "Snapdragon 480 5G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 875,
+    "name": "Nokia 6500 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 876,
+    "name": "Poco M3",
+    "cpu": "Snapdragon 662",
+    "ram": "4 GB"
+  },
+  {
+    "id": 877,
+    "name": "Apple iPhone 13 Pro",
+    "cpu": "Apple A15",
+    "ram": "6 GB"
+  },
+  {
+    "id": 878,
+    "name": "Samsung Galaxy A01 Core",
+    "cpu": "Mediatek MT6739",
+    "ram": "1 GB"
+  },
+  {
+    "id": 879,
+    "name": "HMD Skyline",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 880,
+    "name": "Xiaomi Redmi Note 14S",
+    "cpu": "Helio G99-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 881,
+    "name": "Huawei Nova Y90",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 882,
+    "name": "Nokia 230",
+    "cpu": "Unisoc 6531F",
+    "ram": null
+  },
+  {
+    "id": 883,
+    "name": "Xiaomi 14",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 884,
+    "name": "VERTU Signature S",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 885,
+    "name": "OPPO A98 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 886,
+    "name": "UleFone Armor 27T",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 887,
+    "name": "Emporia Smart 5 mini",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 888,
+    "name": "Asus ROG Phone 9 FE",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 889,
+    "name": "OPPO Find X9",
+    "cpu": "Dimensity 9500",
+    "ram": "12 GB"
+  },
+  {
+    "id": 890,
+    "name": "UleFone Armor 26 Ultra",
+    "cpu": "Dimensity 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 891,
+    "name": "Blackview A85",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 892,
+    "name": "Oukitel WP39",
+    "cpu": "Dimensity 6100+",
+    "ram": "6 GB"
+  },
+  {
+    "id": 893,
+    "name": "OnePlus Nord 2T",
+    "cpu": "Dimensity 1300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 894,
+    "name": "Blackview A95",
+    "cpu": "Helio P70",
+    "ram": "8 GB"
+  },
+  {
+    "id": 895,
+    "name": "iiiF150 B1",
+    "cpu": "Helio G37",
+    "ram": "6 GB"
+  },
+  {
+    "id": 896,
+    "name": "OnePlus 13T",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 897,
+    "name": "Alcatel 1",
+    "cpu": "MediaTek MT6739",
+    "ram": "1 GB"
+  },
+  {
+    "id": 898,
+    "name": "Doogee Blade 10 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 899,
+    "name": "Realme C35",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "4 GB"
+  },
+  {
+    "id": 900,
+    "name": "UMIDIGI G9 5G",
+    "cpu": "Unisoc Tiger T765",
+    "ram": "6 GB"
+  },
+  {
+    "id": 901,
+    "name": "IQOO 12 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 902,
+    "name": "iiiF150 Air3",
+    "cpu": "Helio G96",
+    "ram": "12 GB"
+  },
+  {
+    "id": 903,
+    "name": "Oscal Tiger 10",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 904,
+    "name": "Hotwav Note 12",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 905,
+    "name": "Nomi i2403",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 906,
+    "name": "OPPO A80 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 907,
+    "name": "Gigaset GX290 Plus",
+    "cpu": "Helio P23",
+    "ram": "4 GB"
+  },
+  {
+    "id": 908,
+    "name": "Nokia 6131",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 909,
+    "name": "Realme C51",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 910,
+    "name": "Nokia 8210 4G",
+    "cpu": "Unisoc T107",
+    "ram": "0.04 GB"
+  },
+  {
+    "id": 911,
+    "name": "LG V20",
+    "cpu": "Qualcomm MSM8996 Snapdragon 820",
+    "ram": "4 GB"
+  },
+  {
+    "id": 912,
+    "name": "UleFone Power Armor 19T",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 913,
+    "name": "Nokia 2610",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 914,
+    "name": "Apple iPhone 16",
+    "cpu": "Apple A18",
+    "ram": "8 GB"
+  },
+  {
+    "id": 915,
+    "name": "Motorola CLIQ MB220",
+    "cpu": null,
+    "ram": "0.2 GB"
+  },
+  {
+    "id": 916,
+    "name": "Sharp Aquos R9",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 917,
+    "name": "Doogee S punk Pro",
+    "cpu": "Unisoc Tiger T620",
+    "ram": "8 GB"
+  },
+  {
+    "id": 918,
+    "name": "Samsung Galaxy M12",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 919,
+    "name": "Samsung Galaxy A12 Nacho",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 920,
+    "name": "Blackview A55",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 921,
+    "name": "Samsung Galaxy Note10",
+    "cpu": "Snapdragon 855",
+    "ram": "8 GB"
+  },
+  {
+    "id": 922,
+    "name": "iRidium Extreme",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 923,
+    "name": "Samsung Galaxy Fold4",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 924,
+    "name": "Huawei P20 Lite",
+    "cpu": "HiSilicon Kirin 659",
+    "ram": "4 GB"
+  },
+  {
+    "id": 925,
+    "name": "UleFone Power Armor 18T Ultra",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 926,
+    "name": "UMIDIGI A15",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 927,
+    "name": "Sharp Aquos R8s Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 928,
+    "name": "CUBOT X90",
+    "cpu": "Helio G99",
+    "ram": "16 GB"
+  },
+  {
+    "id": 929,
+    "name": "Realme 8i",
+    "cpu": "Helio G96",
+    "ram": "4 GB"
+  },
+  {
+    "id": 930,
+    "name": "Sigma mobile X-style 351 LIDER",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 931,
+    "name": "Honor 10 Lite",
+    "cpu": "Hisilicon Kirin 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 932,
+    "name": "Oukitel G1",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 933,
+    "name": "Infinix Zero Ultra",
+    "cpu": "Dimensity 920",
+    "ram": "8 GB"
+  },
+  {
+    "id": 934,
+    "name": "Vivo Y76 5G",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 935,
+    "name": "Sony Xperia XZ2 Premium",
+    "cpu": "Qualcomm SDM845 Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 936,
+    "name": "Doogee Blade 20",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 937,
+    "name": "HTC Exodus 1s",
+    "cpu": "Qualcomm SDM845 Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 938,
+    "name": "Samsung Galaxy Fold3 5G",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 939,
+    "name": "Samsung Galaxy A11",
+    "cpu": "Snapdragon 450",
+    "ram": "2 GB"
+  },
+  {
+    "id": 940,
+    "name": "Xiaomi 15T",
+    "cpu": "Dimensity 8400-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 941,
+    "name": "Realme Note 50",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 942,
+    "name": "Xiaomi Redmi K50",
+    "cpu": "Dimensity 8100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 943,
+    "name": "Nokia 6100",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 944,
+    "name": "OnePlus 11R",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 945,
+    "name": "AGM M5",
+    "cpu": "Snapdragon 210",
+    "ram": "1 GB"
+  },
+  {
+    "id": 946,
+    "name": "iiiF150 B2 Pro",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 947,
+    "name": "2E E280",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 948,
+    "name": "CUBOT King Kong X",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 949,
+    "name": "Realme C25Y",
+    "cpu": "Unisoc Tiger T618",
+    "ram": "4 GB"
+  },
+  {
+    "id": 950,
+    "name": "Blackview Shark 9",
+    "cpu": "Unisoc Tiger T820",
+    "ram": "8 GB"
+  },
+  {
+    "id": 951,
+    "name": "Realme C30",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "3 GB"
+  },
+  {
+    "id": 952,
+    "name": "Unihertz Titan Slim",
+    "cpu": "Helio P70",
+    "ram": "6 GB"
+  },
+  {
+    "id": 953,
+    "name": "Realme 6S",
+    "cpu": "Helio G90T",
+    "ram": "4 GB"
+  },
+  {
+    "id": 954,
+    "name": "Nokia 515",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 955,
+    "name": "Fossibot F102",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 956,
+    "name": "Samsung Galaxy Note10 Plus",
+    "cpu": "Snapdragon 855",
+    "ram": "12 GB"
+  },
+  {
+    "id": 957,
+    "name": "Doogee S200 Plus",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 958,
+    "name": "Nokia 7.2",
+    "cpu": "Qualcomm SDM660 Snapdragon 660",
+    "ram": "4 GB"
+  },
+  {
+    "id": 959,
+    "name": "OPPO Find X9 Pro",
+    "cpu": "Dimensity 9500",
+    "ram": "16 GB"
+  },
+  {
+    "id": 960,
+    "name": "Nokia 5310 XpressMusic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 961,
+    "name": "Panasonic KX-TF400",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 962,
+    "name": "OPPO Reno4",
+    "cpu": "Snapdragon 720G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 963,
+    "name": "CUBOT King Kong Power 5",
+    "cpu": "Helio G100",
+    "ram": "6 GB"
+  },
+  {
+    "id": 964,
+    "name": "Nokia X2-02",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 965,
+    "name": "Honor 20",
+    "cpu": "HiSilicon Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 966,
+    "name": "Realme 13 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 967,
+    "name": "TCL 10 Plus",
+    "cpu": "Snapdragon 665",
+    "ram": "6 GB"
+  },
+  {
+    "id": 968,
+    "name": "Xiaomi 12 Lite",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 969,
+    "name": "Realme C33",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 970,
+    "name": "Nubia Flip",
+    "cpu": "Snapdragon 7 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 971,
+    "name": "Sony Xperia 1 III",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 972,
+    "name": "Nokia 2730 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 973,
+    "name": "Xiaomi Redmi Note 9T",
+    "cpu": "Dimensity 800U",
+    "ram": "4 GB"
+  },
+  {
+    "id": 974,
+    "name": "Doogee V Max S",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 975,
+    "name": "Tkexun F18",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 976,
+    "name": "Realme 14T",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 977,
+    "name": "2E T180 Max",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 978,
+    "name": "Sigma mobile X-treme AZ68",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 979,
+    "name": "Sigma mobile X-treme PQ56",
+    "cpu": "Helio P22",
+    "ram": "6 GB"
+  },
+  {
+    "id": 980,
+    "name": "Blackview BV6300 Pro",
+    "cpu": "Helio P70",
+    "ram": "6 GB"
+  },
+  {
+    "id": 981,
+    "name": "Xiaomi Redmi Note 8",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 982,
+    "name": "Oukitel G2",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 983,
+    "name": "Xiaomi Redmi Note 10 Pro CN",
+    "cpu": "Dimensity 1100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 984,
+    "name": "Motorola Moto G75 5G",
+    "cpu": "Snapdragon 6 Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 985,
+    "name": "OPPO Reno11 F",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 986,
+    "name": "Google Pixel 2",
+    "cpu": "Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 987,
+    "name": "Nomi i220",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 988,
+    "name": "Sony Xperia Z3 Plus",
+    "cpu": "Qualcomm MSM8994 Snapdragon 810",
+    "ram": "3 GB"
+  },
+  {
+    "id": 989,
+    "name": "Oukitel WP55 Ultra",
+    "cpu": "Dimensity 7025",
+    "ram": "16 GB"
+  },
+  {
+    "id": 990,
+    "name": "Doogee X97",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 991,
+    "name": "Unihertz Tank 3 Pro",
+    "cpu": "Dimensity 8200",
+    "ram": "16 GB"
+  },
+  {
+    "id": 992,
+    "name": "Blackview BV8900",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 993,
+    "name": "Nokia 2660",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 994,
+    "name": "OPPO A74",
+    "cpu": "Snapdragon 662",
+    "ram": "6 GB"
+  },
+  {
+    "id": 995,
+    "name": "Gigaset GX4",
+    "cpu": "Helio G99",
+    "ram": "4 GB"
+  },
+  {
+    "id": 996,
+    "name": "Oscal Tiger 13",
+    "cpu": "Unisoc Tiger T760",
+    "ram": "8 GB"
+  },
+  {
+    "id": 997,
+    "name": "Apple iPhone Xs Max",
+    "cpu": "Apple A12 Bionic",
+    "ram": "4 GB"
+  },
+  {
+    "id": 998,
+    "name": "Realme 8",
+    "cpu": "Helio G95",
+    "ram": "4 GB"
+  },
+  {
+    "id": 999,
+    "name": "Samsung Galaxy A04s",
+    "cpu": "Exynos 850",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1000,
+    "name": "Unihertz Jelly Star",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1001,
+    "name": "Oukitel WP55",
+    "cpu": "Dimensity 7025",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1002,
+    "name": "Alcatel 3",
+    "cpu": "Qualcomm SDM439 Snapdragon 439",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1003,
+    "name": "OPPO A3x 4G",
+    "cpu": "Snapdragon 6s 4G Gen 1",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1004,
+    "name": "OnePlus Nord CE 5G",
+    "cpu": "Snapdragon 750G 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1005,
+    "name": "UleFone Armor 22",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1006,
+    "name": "Sigma mobile X-treme PK68",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 1007,
+    "name": "Doogee X95",
+    "cpu": "MediaTek MT6737V",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1008,
+    "name": "iiiF150 Action A5Pro",
+    "cpu": "Unisoc Tiger T603",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1009,
+    "name": "Nokia 6310",
+    "cpu": "Unisoc 6531F",
+    "ram": null
+  },
+  {
+    "id": 1010,
+    "name": "Samsung Galaxy S25",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1011,
+    "name": "Honor 200",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1012,
+    "name": "Hotwav Cyber 13 Pro",
+    "cpu": "Unisoc Tiger T619",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1013,
+    "name": "Motorola Edge 50 Neo",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1014,
+    "name": "Fossibot F109 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1015,
+    "name": "Motorola Moto G84",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1016,
+    "name": "Samsung Galaxy Flip4",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1017,
+    "name": "Nokia 5800",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 1018,
+    "name": "Nokia 130",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1019,
+    "name": "Blackview BL9000 Pro",
+    "cpu": "Dimensity 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1020,
+    "name": "Motorola Edge 30",
+    "cpu": "Snapdragon 778G+ 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1021,
+    "name": "OPPO Find X3 Neo",
+    "cpu": "Snapdragon 865 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1022,
+    "name": "OPPO A5x",
+    "cpu": "Snapdragon 6s 4G Gen 1",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1023,
+    "name": "Huawei Mate Xs 2",
+    "cpu": "Snapdragon 888 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1024,
+    "name": "Samsung Galaxy A23 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1025,
+    "name": "Infinix Note 50 4G",
+    "cpu": "Helio G100 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1026,
+    "name": "CUBOT King Kong ES 3",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1027,
+    "name": "OPPO Reno13 F 4G",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1028,
+    "name": "Blackview A50",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1029,
+    "name": "CATerpillar S75",
+    "cpu": "Dimensity 930",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1030,
+    "name": "OnePlus 13R",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1031,
+    "name": "Realme GT Neo2",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1032,
+    "name": "Ergo F241",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1033,
+    "name": "Honor Magic7 Lite",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1034,
+    "name": "Poco M7 Pro 5G",
+    "cpu": "Dimensity 7025-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1035,
+    "name": "IQOO Z9 Turbo",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1036,
+    "name": "Xiaomi Mi 9 SE",
+    "cpu": "Qualcomm SDM712 Snapdragon 712",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1037,
+    "name": "ZTE Axon 30 5G",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1038,
+    "name": "Infinix Smart 10 Plus",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1039,
+    "name": "Realme 9",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1040,
+    "name": "Samsung Galaxy Flip6",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1041,
+    "name": "OnePlus Ace 5",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1042,
+    "name": "Oscal C30 Pro",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1043,
+    "name": "Doogee Blade 20 Turbo",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1044,
+    "name": "Xiaomi Redmi Note 14 Pro",
+    "cpu": "Helio G100-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1045,
+    "name": "Xiaomi Redmi Note 14",
+    "cpu": "Helio G99-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1046,
+    "name": "Xiaomi Redmi Note 12 Pro Plus",
+    "cpu": "Dimensity 1080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1047,
+    "name": "Tecno Spark 30C",
+    "cpu": "Helio G81",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1048,
+    "name": "Unihertz TickTock-S",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1049,
+    "name": "iiiF150 Raptor 5G",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1050,
+    "name": "IQOO Neo10 Pro Plus",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1051,
+    "name": "OnePlus 9",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1052,
+    "name": "Huawei Mate X7",
+    "cpu": "Kirin 9030 Pro",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1053,
+    "name": "Servo Flilo4 Flip",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1054,
+    "name": "Tecno Spark 40 Pro Plus",
+    "cpu": "Helio G200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1055,
+    "name": "OPPO A6 Plus",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1056,
+    "name": "Samsung Galaxy S21 Plus",
+    "cpu": "Exynos 2100 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1057,
+    "name": "UMIDIGI A15C",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1058,
+    "name": "UleFone Armor 9E",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1059,
+    "name": "Oukitel C33",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1060,
+    "name": "Realme GT7 Pro Racing Edition",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1061,
+    "name": "CUBOT King Kong Mini 3",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1062,
+    "name": "Samsung Galaxy Flip5",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1063,
+    "name": "Apple iPhone 13 mini",
+    "cpu": "Apple A15",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1064,
+    "name": "MyPhone N23 Lite",
+    "cpu": "Unisoc SC9863",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1065,
+    "name": "HTC U24 Pro",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1066,
+    "name": "Realme GT 6 CN",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1067,
+    "name": "Samsung Galaxy S22 Ultra",
+    "cpu": "Exynos 2200 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1068,
+    "name": "Nokia 6610",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1069,
+    "name": "UleFone Armor 24",
+    "cpu": "Helio G96",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1070,
+    "name": "Nubia Red Magic 10S Pro",
+    "cpu": "Snapdragon 8 Elite Leading Version",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1071,
+    "name": "Oukitel C68",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1072,
+    "name": "Nokia 150",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1073,
+    "name": "Nubia Z60 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1074,
+    "name": "Google Pixel 7a",
+    "cpu": "Tensor G2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1075,
+    "name": "Doro Primo 368",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1076,
+    "name": "ZTE Blade A36",
+    "cpu": "Unisoc T7200",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1077,
+    "name": "Huawei Mate 80",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1078,
+    "name": "Realme C30s",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1079,
+    "name": "Samsung Galaxy A54",
+    "cpu": "Exynos 1380",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1080,
+    "name": "CUBOT King Kong 5",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1081,
+    "name": "Tecno Spark 40C",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1082,
+    "name": "OnePlus Nord CE4 Lite",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1083,
+    "name": "IQOO Neo11 CN",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1084,
+    "name": "HMD Barbie",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1085,
+    "name": "Honor 90 Lite",
+    "cpu": "Dimensity 6020",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1086,
+    "name": "Motorola Moto G15",
+    "cpu": "Helio G81 Extreme",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1087,
+    "name": "UMIDIGI F3",
+    "cpu": "Helio P70",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1088,
+    "name": "UleFone Armor X32",
+    "cpu": "Helio G91",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1089,
+    "name": "Wiko View4",
+    "cpu": "Helio A25",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1090,
+    "name": "UleFone Armor 15",
+    "cpu": "Helio G35",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1091,
+    "name": "Infinix Smart 10",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1092,
+    "name": "Samsung Galaxy Xcover7",
+    "cpu": "Dimensity 6100+",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1093,
+    "name": "Blackview BV5100",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1094,
+    "name": "OnePlus Nord 4",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1095,
+    "name": "Honor 500 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1096,
+    "name": "Fossibot S3 Pro",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1097,
+    "name": "Motorola Moto G67 Power",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1098,
+    "name": "Oukitel WP58 Pro",
+    "cpu": "Unisoc T8200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1099,
+    "name": "Tecno Spark Go 1",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1100,
+    "name": "Maxcom MM730",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1101,
+    "name": "Nokia 1600",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1102,
+    "name": "OPPO A5 Pro 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1103,
+    "name": "Motorola Moto X70 Air",
+    "cpu": "Snapdragon 7 Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1104,
+    "name": "IQOO 11S",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1105,
+    "name": "Samsung Galaxy A25",
+    "cpu": "Exynos 1280",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1106,
+    "name": "Honor Magic8",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1107,
+    "name": "UleFone Note 12P",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1108,
+    "name": "Nokia 235 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1109,
+    "name": "Motorola Moto G85 5G",
+    "cpu": "Snapdragon 6s Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1110,
+    "name": "Huawei Mate 80 RS Ultimate",
+    "cpu": "Kirin 9030 Pro",
+    "ram": "20 GB"
+  },
+  {
+    "id": 1111,
+    "name": "Maxcom MM244",
+    "cpu": "Mediatek МТ6260А",
+    "ram": null
+  },
+  {
+    "id": 1112,
+    "name": "Realme Neo7",
+    "cpu": "Dimensity 9300+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1113,
+    "name": "Vivo Y19s 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1114,
+    "name": "Nokia 2220 Slide",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1115,
+    "name": "Apple iPhone 12 Pro Max",
+    "cpu": "Apple A14",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1116,
+    "name": "Meizu Mblu 21",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1117,
+    "name": "Nubia V80 Pro",
+    "cpu": "Unisoc T7280 (T620)",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1118,
+    "name": "Maxcom MM426",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1119,
+    "name": "Xiaomi 13 Lite",
+    "cpu": "Snapdragon 7 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1120,
+    "name": "Poco F6 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1121,
+    "name": "Xiaomi 11 Lite 5G NE",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1122,
+    "name": "Oukitel C38",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1123,
+    "name": "OnePlus 10 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1124,
+    "name": "Samsung Galaxy M55s 5G",
+    "cpu": "Snapdragon 7 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1125,
+    "name": "Motorola Moto G04",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1126,
+    "name": "Huawei Mate 80 Pro Max",
+    "cpu": "Kirin 9030 Pro",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1127,
+    "name": "Nokia N82",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 1128,
+    "name": "OPPO Reno13 Pro",
+    "cpu": "Dimensity 8350",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1129,
+    "name": "Realme GT 6T",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1130,
+    "name": "Huawei Mate 80 Pro",
+    "cpu": "Kirin 9030 Pro",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1131,
+    "name": "RugGear Traveller RG150",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1132,
+    "name": "Oscal Marine 2",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1133,
+    "name": "Infinix GT 30 5G Plus",
+    "cpu": "Dimensity 7400",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1134,
+    "name": "Poco C71",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1135,
+    "name": "Nokia 6030",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1136,
+    "name": "OPPO A40",
+    "cpu": "Snapdragon 6s 4G Gen1",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1137,
+    "name": "Samsung Galaxy A73 5G",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1138,
+    "name": "Tecno Spark Slim",
+    "cpu": "Helio G200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1139,
+    "name": "Oukitel WP5",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1140,
+    "name": "Apple iPhone 14 Plus",
+    "cpu": "Apple A15",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1141,
+    "name": "Realme 13 Pro Plus",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1142,
+    "name": "Oscal S80",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1143,
+    "name": "Realme Note 70",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1144,
+    "name": "Tecno Pova 6 Neo",
+    "cpu": "Helio G99 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1145,
+    "name": "Motorola Moto G Play",
+    "cpu": "Dimensity 6300",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1146,
+    "name": "MyPhone Hammer 6 LTE",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1147,
+    "name": "Nubia V60 Design",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1148,
+    "name": "OnePlus 12",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1149,
+    "name": "Honor Magic8 Pro",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1150,
+    "name": "Nokia C2-05",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1151,
+    "name": "Honor Magic6 Lite",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1152,
+    "name": "Realme C85 Pro",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1153,
+    "name": "CUBOT J20",
+    "cpu": "MediaTek MT6739WA",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1154,
+    "name": "Samsung Galaxy A9",
+    "cpu": "Qualcomm SDM660 Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1155,
+    "name": "Infinix Hot 60i",
+    "cpu": "Helio G81 Ultimate",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1156,
+    "name": "Apple iPhone 13 Pro Max",
+    "cpu": "Apple A15",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1157,
+    "name": "Realme C85 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1158,
+    "name": "2E E240",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1159,
+    "name": "OPPO Reno13 F 5G",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1160,
+    "name": "Google Pixel 6a",
+    "cpu": "Google Tensor",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1161,
+    "name": "Infinix Hot 11",
+    "cpu": "Helio G70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1162,
+    "name": "Tecno Spark 8",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1163,
+    "name": "Blackview BV6200 Plus",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1164,
+    "name": "Nubia Red Magic 10 Air",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1165,
+    "name": "Motorola Moto G",
+    "cpu": "Dimensity 6300",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1166,
+    "name": "CUBOT A20",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1167,
+    "name": "Nokia 1202",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1168,
+    "name": "Oukitel WP23",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1169,
+    "name": "OPPO A5",
+    "cpu": "Snapdragon 6s 4G Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1170,
+    "name": "Apple iPhone 11 Pro",
+    "cpu": "Apple A13",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1171,
+    "name": "Nubia Neo 3",
+    "cpu": "Unisoc Tiger T8300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1172,
+    "name": "Gigaset GS6",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1173,
+    "name": "Nokia 7230",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1174,
+    "name": "Xiaomi Redmi K60 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1175,
+    "name": "Nokia 2690",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1176,
+    "name": "Sigma mobile X-style 18 Track",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1177,
+    "name": "OPPO Reno13 FS 5G",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1178,
+    "name": "Xiaomi Redmi Note 9 Pro",
+    "cpu": "Snapdragon 720G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1179,
+    "name": "Nomi i2830",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1180,
+    "name": "Poco X6 Pro",
+    "cpu": "Dimensity 8300 Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1181,
+    "name": "Samsung Galaxy M07",
+    "cpu": "Helio G99",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1182,
+    "name": "Doogee N40 Pro",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1183,
+    "name": "Oukitel WP300",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1184,
+    "name": "Motorola Moto G24 Power",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1185,
+    "name": "Gigaset GS6 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1186,
+    "name": "OPPO Reno5 Z",
+    "cpu": "Dimensity 800U",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1187,
+    "name": "Oukitel WP100 Titan",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1188,
+    "name": "Realme 15",
+    "cpu": "Dimensity 7300 Plus",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1189,
+    "name": "Oukitel WP8 Pro",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1190,
+    "name": "Nokia Lumia 1320",
+    "cpu": null,
+    "ram": "1 GB"
+  },
+  {
+    "id": 1191,
+    "name": "UleFone Armor 28 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1192,
+    "name": "Honor X9d",
+    "cpu": "Snapdragon 6 Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1193,
+    "name": "Maxcom MM334",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1194,
+    "name": "Blackview A5",
+    "cpu": null,
+    "ram": "1 GB"
+  },
+  {
+    "id": 1195,
+    "name": "OPPO A5 Pro 4G",
+    "cpu": "Snapdragon 6s 4G Gen1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1196,
+    "name": "Xiaomi Redmi K90 Pro Max",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1197,
+    "name": "Doogee V10",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1198,
+    "name": "UleFone Armor 34 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1199,
+    "name": "Maxcom MM135",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1200,
+    "name": "AGM H Max",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1201,
+    "name": "Samsung Galaxy Note9",
+    "cpu": "Samsung Exynos 9810",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1202,
+    "name": "Honor X9c",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1203,
+    "name": "Oukitel C19 Pro",
+    "cpu": "MediaTek MT6727D",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1204,
+    "name": "Tecno T301",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1205,
+    "name": "Blackview BL7000",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1206,
+    "name": "iiiF150 B1 Pro",
+    "cpu": "Helio G37",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1207,
+    "name": "Samsung Galaxy Fold6",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1208,
+    "name": "HMD Pulse Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1209,
+    "name": "Oukitel WP55 S",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1210,
+    "name": "Honor X8",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1211,
+    "name": "OnePlus Nord 3",
+    "cpu": "Dimensity 9000",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1212,
+    "name": "OPPO Reno15",
+    "cpu": "Dimensity 8450",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1213,
+    "name": "Nokia 3109 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1214,
+    "name": "ZTE Blade A75",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1215,
+    "name": "Realme GT Neo6 SE",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1216,
+    "name": "Nokia 105",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1217,
+    "name": "Unihertz Golden Eye",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1218,
+    "name": "Doogee V20",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1219,
+    "name": "Xiaomi Redmi 9T",
+    "cpu": "Snapdragon 662",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1220,
+    "name": "Samsung Galaxy S20 FE",
+    "cpu": "Exynos 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1221,
+    "name": "Maxcom MM827",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1222,
+    "name": "Alcatel 1 5033D",
+    "cpu": "MediaTek MT6739",
+    "ram": "1 GB"
+  },
+  {
+    "id": 1223,
+    "name": "Samsung Galaxy Note20",
+    "cpu": "Exynos 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1224,
+    "name": "Oscal C20 Pro",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1225,
+    "name": "Samsung Galaxy A16 5G",
+    "cpu": "Exynos 1330",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1226,
+    "name": "Samsung Galaxy S25 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1227,
+    "name": "Maxcom MM918",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1228,
+    "name": "UleFone Armor X6",
+    "cpu": "MediaTek MT6580",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1229,
+    "name": "Samsung Galaxy A15",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1230,
+    "name": "Vivo V60e",
+    "cpu": "Dimensity 7360-Turbo",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1231,
+    "name": "OnePlus Nord CE 2 Lite 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1232,
+    "name": "Apple iPhone SE",
+    "cpu": "Apple A15",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1233,
+    "name": "Realme 12 Pro Plus",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1234,
+    "name": "UleFone Armor Mini 2",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1235,
+    "name": "iiiF150 B3",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1236,
+    "name": "Google Pixel 6",
+    "cpu": "Google Tensor",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1237,
+    "name": "CROSSCALL Core-M5",
+    "cpu": "Snapdragon 662",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1238,
+    "name": "Samsung Galaxy S22 Plus",
+    "cpu": "Exynos 2200 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1239,
+    "name": "Poco M6 Pro",
+    "cpu": "Helio G99-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1240,
+    "name": "UleFone Armor 12",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1241,
+    "name": "Infinix Hot 50 Pro",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1242,
+    "name": "CUBOT Max 5",
+    "cpu": "Dimensity 8200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1243,
+    "name": "Doogee Note 56",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1244,
+    "name": "iiiF150 Air1 Pro",
+    "cpu": "Helio G37",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1245,
+    "name": "2E E180",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1246,
+    "name": "Oscal Pilot 3",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1247,
+    "name": "Nothing Phone 3",
+    "cpu": "Snapdragon 8s Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1248,
+    "name": "MyPhone Rumba 2",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 1249,
+    "name": "Nokia 1209",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1250,
+    "name": "Nokia 8600 Luna",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1251,
+    "name": "Realme 10",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1252,
+    "name": "Realme 14 Pro 5G",
+    "cpu": "Dimensity 7300 Energy",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1253,
+    "name": "Realme 15x",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1254,
+    "name": "LG G8s ThinQ",
+    "cpu": "Qualcomm SDM855 Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1255,
+    "name": "Unihertz Tank 3S",
+    "cpu": "Dimensity 8200",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1256,
+    "name": "Realme 12 Pro",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1257,
+    "name": "Samsung Galaxy A53 5G",
+    "cpu": "Exynos 1280",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1258,
+    "name": "Honor X6b Plus",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1259,
+    "name": "OPPO Reno6 5G",
+    "cpu": "Dimensity 900",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1260,
+    "name": "Nubia Red Magic 6R",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1261,
+    "name": "Honor X8c",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1262,
+    "name": "Doro 5516",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1263,
+    "name": "Realme C11",
+    "cpu": "Helio G35",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1264,
+    "name": "Blackview A96",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1265,
+    "name": "OnePlus 12R",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1266,
+    "name": "Poco M5s",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1267,
+    "name": "OnePlus Ace 3V",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1268,
+    "name": "Doogee Note 56 Pro",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1269,
+    "name": "Sony Xperia X",
+    "cpu": "Qualcomm MSM8956 Snapdragon 650",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1270,
+    "name": "Blackview BV9600E",
+    "cpu": "Helio P70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1271,
+    "name": "Nubia Red Magic 10 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1272,
+    "name": "BLU Bold N4",
+    "cpu": "Dimensity 7300X",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1273,
+    "name": "Doro 2424",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1274,
+    "name": "Nomi i2412",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1275,
+    "name": "Sigma mobile X-style 34 NRG Type-C",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 1276,
+    "name": "Poco C75",
+    "cpu": "Helio G81 Ultra",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1277,
+    "name": "Maxcom MM428",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1278,
+    "name": "OPPO A57s",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1279,
+    "name": "Maxcom MM35D",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1280,
+    "name": "OPPO Reno14 FS",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1281,
+    "name": "Xiaomi 12",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1282,
+    "name": "CoolPAD Cool 10A",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1283,
+    "name": "CUBOT P60",
+    "cpu": "Helio P35",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1284,
+    "name": "Gigaset GS4",
+    "cpu": "Helio P70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1285,
+    "name": "OPPO A9",
+    "cpu": "Qualcomm SDM665 Snapdragon 665",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1286,
+    "name": "Sigma mobile Comfort 50 Easy",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 1287,
+    "name": "Google Pixel 9 Pro XL",
+    "cpu": "Tensor G4",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1288,
+    "name": "Blackview Xplore 1 Walkie Talkie",
+    "cpu": "Dimensity 7050",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1289,
+    "name": "Doogee N50 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1290,
+    "name": "Tkexun Q8",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1291,
+    "name": "Samsung Galaxy A05s",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1292,
+    "name": "OPPO Reno4 Pro",
+    "cpu": "Snapdragon 765G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1293,
+    "name": "Meizu M6",
+    "cpu": "MediaTek MT6750",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1294,
+    "name": "CUBOT Max 3",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1295,
+    "name": "Apple iPhone SE",
+    "cpu": "Apple A13",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1296,
+    "name": "Tecno Spark 8C",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1297,
+    "name": "CROSSCALL Stellar-X5",
+    "cpu": "Qualcomm QCM5430",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1298,
+    "name": "Realme P3",
+    "cpu": "Snapdragon 6 Gen 4",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1299,
+    "name": "MyPhone Hammer Iron 6 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1300,
+    "name": "Asus ROG Phone 3 Strix",
+    "cpu": "Snapdragon 865 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1301,
+    "name": "Nokia 110 4G",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1302,
+    "name": "UleFone Armor X8",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1303,
+    "name": "Oukitel WP9",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1304,
+    "name": "Doro 6820",
+    "cpu": null,
+    "ram": "0.06 GB"
+  },
+  {
+    "id": 1305,
+    "name": "Blackview P2",
+    "cpu": "MediaTek MT6750T",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1306,
+    "name": "AGM H6",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1307,
+    "name": "IQOO Neo10 CN",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1308,
+    "name": "MyPhone Halo C",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1309,
+    "name": "Nokia 1200",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1310,
+    "name": "Fossibot F113",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1311,
+    "name": "Samsung Galaxy A33 5G",
+    "cpu": "Exynos 1280",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1312,
+    "name": "Nomi i189",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1313,
+    "name": "Realme GT Master Edition",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1314,
+    "name": "Google Pixel 9 Pro",
+    "cpu": "Tensor G4",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1315,
+    "name": "Itel A90",
+    "cpu": "Unisoc T7100",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1316,
+    "name": "Maxcom MM720",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1317,
+    "name": "OnePlus Nord N10 5G",
+    "cpu": "Snapdragon 690 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1318,
+    "name": "OnePlus Ace 2",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1319,
+    "name": "Huawei Nova 14i",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1320,
+    "name": "Doogee N20 Pro",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1321,
+    "name": "Doogee S cyber",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1322,
+    "name": "OnePlus 9 Pro",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1323,
+    "name": "Doogee N30",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1324,
+    "name": "2E S180",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1325,
+    "name": "CUBOT King Kong 8",
+    "cpu": "MediaTek MT8788/WA",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1326,
+    "name": "Poco C85",
+    "cpu": "Helio G81 Ultra",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1327,
+    "name": "Huawei Enjoy 70X Premium",
+    "cpu": "Kirin 8000",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1328,
+    "name": "Nokia 130",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1329,
+    "name": "UMIDIGI X",
+    "cpu": "MediaTek MT6771 Helio P60",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1330,
+    "name": "Samsung Galaxy M15",
+    "cpu": "Dimensity 6100+",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1331,
+    "name": "MyPhone Hammer Rock",
+    "cpu": "MediaTek MT6261",
+    "ram": null
+  },
+  {
+    "id": 1332,
+    "name": "iiiF150 Air3s",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1333,
+    "name": "Samsung Galaxy M36 5G",
+    "cpu": "Exynos 1380",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1334,
+    "name": "Honor X6b 5G",
+    "cpu": "Snapdragon 4 Gen 2",
+    "ram": null
+  },
+  {
+    "id": 1335,
+    "name": "Nokia 1208",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1336,
+    "name": "Maxcom MM920",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1337,
+    "name": "Vivo X200",
+    "cpu": "Dimensity 9400",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1338,
+    "name": "Nubia Red Magic 11 Pro",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1339,
+    "name": "TCL 403",
+    "cpu": "Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1340,
+    "name": "Nokia C1-02",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1341,
+    "name": "Blackview BV7300",
+    "cpu": "Helio G81",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1342,
+    "name": "Honor 500",
+    "cpu": "Snapdragon 8s Gen 4",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1343,
+    "name": "Oukitel C32",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1344,
+    "name": "Blackview BV8100",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1345,
+    "name": "Samsung Galaxy M55 5G",
+    "cpu": "Snapdragon 7 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1346,
+    "name": "Samsung Galaxy M17 5G",
+    "cpu": "Exynos 1330",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1347,
+    "name": "CUBOT King Kong Ace 2",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1348,
+    "name": "MyPhone Halo 4 LTE",
+    "cpu": "Unisoc T117",
+    "ram": null
+  },
+  {
+    "id": 1349,
+    "name": "Motorola Razr 60 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1350,
+    "name": "Hotwav Note 13",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1351,
+    "name": "Huawei P Smart",
+    "cpu": "Kirin 710F",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1352,
+    "name": "CMF Phone 2 Pro",
+    "cpu": "Dimensity 7300 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1353,
+    "name": "Motorola Moto G57 Power",
+    "cpu": "Snapdragon 6s Gen 4",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1354,
+    "name": "Wiko 10",
+    "cpu": "Helio G37",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1355,
+    "name": "UleFone Power Armor 18T",
+    "cpu": "Dimensity 900",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1356,
+    "name": "Poco F8 Ultra",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1357,
+    "name": "ZTE Blade A76",
+    "cpu": "Unisoc T7250",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1358,
+    "name": "Huawei Nova Flip S",
+    "cpu": "Kirin 8030",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1359,
+    "name": "Nokia 1616",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1360,
+    "name": "Blackview Wave 6C",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1361,
+    "name": "OPPO Reno12",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1362,
+    "name": "Poco F5",
+    "cpu": "Snapdragon 7+ Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1363,
+    "name": "Doogee Note 56 Plus",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1364,
+    "name": "CROSSCALL Stellar-M6",
+    "cpu": "Qualcomm QCM4490",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1365,
+    "name": "Sony Xperia XZ Dual",
+    "cpu": "Qualcomm MSM8996 Snapdragon 820",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1366,
+    "name": "Oukitel WP210",
+    "cpu": "Dimensity 8200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1367,
+    "name": "Samsung Galaxy A52 4G",
+    "cpu": "Snapdragon 720G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1368,
+    "name": "Nokia 110",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1369,
+    "name": "Doro 8050",
+    "cpu": "Qualcomm 215",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1370,
+    "name": "Doogee Fire 3 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1371,
+    "name": "Apple iPhone 12 Pro",
+    "cpu": "Apple A14",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1372,
+    "name": "Motorola Moto G57",
+    "cpu": "Snapdragon 6s Gen 4",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1373,
+    "name": "Tecno Camon 19",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1374,
+    "name": "Nokia 3120 Old",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1375,
+    "name": "UleFone Armor X16 Pro",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1376,
+    "name": "IQOO 15",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1377,
+    "name": "Google Pixel 3a XL",
+    "cpu": "Snapdragon 670",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1378,
+    "name": "iiiF150 H2022",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1379,
+    "name": "Samsung Galaxy Note20 Ultra",
+    "cpu": "Exynos 990 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1380,
+    "name": "Nubia Focus",
+    "cpu": "Unisoc T760",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1381,
+    "name": "Huawei Mate 70 Air",
+    "cpu": "Kirin 9020A",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1382,
+    "name": "Blackview BV9800",
+    "cpu": "Helio P60",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1383,
+    "name": "Maxcom MM835",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1384,
+    "name": "ZTE Blade A55",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1385,
+    "name": "ZTE Optus X Value 5G",
+    "cpu": "Unisoc T780",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1386,
+    "name": "MyPhone Hammer Blade V 5G",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1387,
+    "name": "Nokia 6.2",
+    "cpu": "Qualcomm SDM636 Snapdragon 636",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1388,
+    "name": "Samsung Galaxy S23 Ultra",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1389,
+    "name": "Emporia JOY LTE",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1390,
+    "name": "RugGear RG310 Voyager",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1391,
+    "name": "OnePlus 8T",
+    "cpu": "Snapdragon 865 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1392,
+    "name": "Huawei Nova 14 Vitality Edition",
+    "cpu": "Kirin 8000A",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1393,
+    "name": "Doogee Note 59 5G",
+    "cpu": "Unisoc T765",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1394,
+    "name": "Nokia 3110 Classic",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1395,
+    "name": "Google Pixel 5",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1396,
+    "name": "Realme GT8 Pro",
+    "cpu": "Snapdragon 8 Elite Gen 5",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1397,
+    "name": "Oukitel WP1",
+    "cpu": "MediaTek MT 6763T Helio P23",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1398,
+    "name": "Nokia 3100",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1399,
+    "name": "Motorola Moto G56",
+    "cpu": "Dimensity 7060",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1400,
+    "name": "Vivo Y500 Pro",
+    "cpu": "Dimensity 7400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1401,
+    "name": "Globex Neon A1",
+    "cpu": null,
+    "ram": "0.12 GB"
+  },
+  {
+    "id": 1402,
+    "name": "Hotwav T7S",
+    "cpu": "MediaTek MT8788",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1403,
+    "name": "UleFone Armor 11 5G",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1404,
+    "name": "Realme Narzo 50",
+    "cpu": "Helio G96",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1405,
+    "name": "UleFone Power Armor X11",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1406,
+    "name": "Oukitel WP55 Pro",
+    "cpu": "Dimensity 7025",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1407,
+    "name": "Doro 5860",
+    "cpu": "Unisoc UMS9117",
+    "ram": null
+  },
+  {
+    "id": 1408,
+    "name": "LG Prada 3.0",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1409,
+    "name": "Samsung Galaxy A34",
+    "cpu": "Dimensity 1080",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1410,
+    "name": "Tecno Camon 30",
+    "cpu": "Helio G99 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1411,
+    "name": "CUBOT King Kong Mini 2 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1412,
+    "name": "UleFone Note 8",
+    "cpu": "MediaTek MT6580",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1413,
+    "name": "CUBOT A40",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1414,
+    "name": "Honor 8X",
+    "cpu": "Hisilicon Kirin 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1415,
+    "name": "Infinix Hot 20i",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1416,
+    "name": "Maxcom MS571",
+    "cpu": "MediaTek MT6739V/WW",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1417,
+    "name": "Doogee S110",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1418,
+    "name": "Apple iPhone 12 mini",
+    "cpu": "Apple A14",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1419,
+    "name": "UleFone Note 10P",
+    "cpu": "Unisoc Tiger T310",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1420,
+    "name": "Nokia 301",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1421,
+    "name": "Blackview BV5200 Pro",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1422,
+    "name": "Nubia Red Magic 10S Pro Plus",
+    "cpu": "Snapdragon 8 Elite Leading Version",
+    "ram": "24 GB"
+  },
+  {
+    "id": 1423,
+    "name": "iHunt S24 Ultra",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1424,
+    "name": "Sony Xperia Z5 Premium",
+    "cpu": "Qualcomm MSM8994 Snapdragon 810",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1425,
+    "name": "Oukitel C68 Plus",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1426,
+    "name": "MyPhone Harmony LTE",
+    "cpu": "Unisoc Tiger T107",
+    "ram": null
+  },
+  {
+    "id": 1427,
+    "name": "Oscal S70",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1428,
+    "name": "Motorola ThinkPhone",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1429,
+    "name": "Emporia Euphoria",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1430,
+    "name": "UleFone Note 13P",
+    "cpu": "MediaTek MT6765V/WB",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1431,
+    "name": "IQOO 10",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1432,
+    "name": "Motorola Moto G06",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1433,
+    "name": "Poco M4 Pro",
+    "cpu": "Helio G96",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1434,
+    "name": "iHunt S22 Ultra",
+    "cpu": "Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1435,
+    "name": "Sony Xperia XZ3",
+    "cpu": "Qualcomm MSM8998 Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1436,
+    "name": "Realme 12 4G",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1437,
+    "name": "Oscal S60 Pro Night Vision",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1438,
+    "name": "UleFone Power Armor 19",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1439,
+    "name": "Oukitel WP7",
+    "cpu": "Helio P90",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1440,
+    "name": "OPPO Reno15 Pro",
+    "cpu": "Dimensity 8450",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1441,
+    "name": "Sony Xperia Z5",
+    "cpu": "Qualcomm MSM8994 Snapdragon 810",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1442,
+    "name": "Realme 9 5G",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1443,
+    "name": "Honor 400 Lite",
+    "cpu": "Dimensity 7025-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1444,
+    "name": "Oscal S70 Pro",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1445,
+    "name": "AGM M10 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1446,
+    "name": "Nokia 215 4G",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1447,
+    "name": "MyPhone Halo 2",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1448,
+    "name": "Honor X5c Plus",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1449,
+    "name": "Oukitel WP18",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1450,
+    "name": "Nothing Phone 2a",
+    "cpu": "Dimensity 7200 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1451,
+    "name": "OPPO A96",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1452,
+    "name": "Mann ZUG 5S",
+    "cpu": null,
+    "ram": "1 GB"
+  },
+  {
+    "id": 1453,
+    "name": "OPPO A77 5G",
+    "cpu": "Dimensity 810",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1454,
+    "name": "Samsung Galaxy A70",
+    "cpu": "Snapdragon 675",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1455,
+    "name": "Land Rover T20",
+    "cpu": "MediaTek MT6735A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1456,
+    "name": "MyPhone Tango LTE",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1457,
+    "name": "UleFone Armor X5 Pro",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1458,
+    "name": "Realme C75",
+    "cpu": "Helio G92 Max",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1459,
+    "name": "UMIDIGI F3S",
+    "cpu": "Unisoc Tiger T610",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1460,
+    "name": "OPPO A16",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1461,
+    "name": "CUBOT Note 21",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1462,
+    "name": "Honor 200 Lite",
+    "cpu": "Dimensity 6080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1463,
+    "name": "Doro Primo 401",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1464,
+    "name": "Hotwav Cyber 9 Pro",
+    "cpu": "Helio P60",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1465,
+    "name": "Telefunken TM360",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1466,
+    "name": "Nubia Red Magic 10 Pro Plus",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1467,
+    "name": "Samsung Galaxy A55",
+    "cpu": "Exynos 1480",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1468,
+    "name": "Hotwav Note 13 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1469,
+    "name": "Sony Xperia XZ2",
+    "cpu": "Qualcomm MSM8998 Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1470,
+    "name": "Samsung Galaxy S20 Ultra",
+    "cpu": "Exynos 990 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1471,
+    "name": "Doro 6040",
+    "cpu": "MediaTek MT6260A",
+    "ram": null
+  },
+  {
+    "id": 1472,
+    "name": "Hotwav Note 15",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1473,
+    "name": "Blackview A80",
+    "cpu": "MediaTek MT6737V",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1474,
+    "name": "Apple iPhone Xr",
+    "cpu": "Apple A12 Bionic",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1475,
+    "name": "Vivo Y02t",
+    "cpu": "Helio P35",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1476,
+    "name": "UleFone Armor 10 5G",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1477,
+    "name": "Oscal S60",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1478,
+    "name": "Poco M6 4G",
+    "cpu": "Helio G91 Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1479,
+    "name": "Doro Primo 418",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1480,
+    "name": "Emporia Smart 5",
+    "cpu": "Helio P22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1481,
+    "name": "ZTE Blade L8",
+    "cpu": "Unisoc SC7731E",
+    "ram": "1 GB"
+  },
+  {
+    "id": 1482,
+    "name": "ZTE Blade V70 Max",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1483,
+    "name": "MyPhone N23",
+    "cpu": "Helio G36",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1484,
+    "name": "CUBOT A10",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1485,
+    "name": "Google Pixel 6 Pro",
+    "cpu": "Google Tensor",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1486,
+    "name": "Nokia 1112",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1487,
+    "name": "Itel S25 Ultra",
+    "cpu": "Unisoc Tiger T620",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1488,
+    "name": "Nubia V80 Design",
+    "cpu": "Unisoc T7280 (T620)",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1489,
+    "name": "Oukitel WP12",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1490,
+    "name": "UleFone Power Armor 18",
+    "cpu": "Dimensity 900",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1491,
+    "name": "Realme GT8",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1492,
+    "name": "OPPO Reno4 Pro 5G",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1493,
+    "name": "UleFone Armor X12",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1494,
+    "name": "Nothing Phone 3a Pro",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1495,
+    "name": "Alcatel 1SE",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1496,
+    "name": "OPPO Reno5 Lite",
+    "cpu": "Helio P95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1497,
+    "name": "OPPO Find X5",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1498,
+    "name": "Asus ROG Phone 9",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1499,
+    "name": "Doro Primo 366",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1500,
+    "name": "MyPhone Hammer Energy X",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1501,
+    "name": "CUBOT X19",
+    "cpu": "MediaTek MT6763T Helio P23",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1502,
+    "name": "Samsung Galaxy Flip7",
+    "cpu": "Exynos 2500",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1503,
+    "name": "Nokia G21",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1504,
+    "name": "Meizu Mblu 22",
+    "cpu": "Unisoc SC9863A",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1505,
+    "name": "Samsung Galaxy S25 Edge",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1506,
+    "name": "Blackview Fort 2",
+    "cpu": "Helio G81",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1507,
+    "name": "ZTE Blade A54",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1508,
+    "name": "Conquest S6",
+    "cpu": null,
+    "ram": "1 GB"
+  },
+  {
+    "id": 1509,
+    "name": "Tecno Spark 30 Pro",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1510,
+    "name": "Google Pixel 10 Pro",
+    "cpu": "Tensor G5",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1511,
+    "name": "Xiaomi Redmi K90",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1512,
+    "name": "Nomi i1441m",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1513,
+    "name": "Doogee S99",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1514,
+    "name": "Motorola Moto E15",
+    "cpu": "Helio G81 Extreme",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1515,
+    "name": "Motorola Edge 50",
+    "cpu": "Snapdragon 7 Gen 1 AE",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1516,
+    "name": "LG Wing 5G",
+    "cpu": "Snapdragon 765G 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1517,
+    "name": "Doogee S97 Pro",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1518,
+    "name": "Motorola Moto G34",
+    "cpu": "Snapdragon 695 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1519,
+    "name": "CUBOT A1",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1520,
+    "name": "OnePlus Ace 2 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1521,
+    "name": "Xiaomi Redmi 13C 5G",
+    "cpu": "Dimensity 6100+",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1522,
+    "name": "Panasonic TU400",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1523,
+    "name": "Apple iPhone 17",
+    "cpu": "Apple A19",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1524,
+    "name": "UleFone Armor X10",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1525,
+    "name": "Sigma mobile X-treme PA68",
+    "cpu": "MediaTek MTK6261D",
+    "ram": null
+  },
+  {
+    "id": 1526,
+    "name": "OPPO Reno8 Pro",
+    "cpu": "Dimensity 8100-Max",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1527,
+    "name": "Doogee Note 58",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1528,
+    "name": "Nokia 5310",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1529,
+    "name": "CUBOT P80",
+    "cpu": "MediaTek MT8788V/WA",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1530,
+    "name": "Blackview Wave 8C",
+    "cpu": "Unisoc SC9863A",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1531,
+    "name": "Apple iPhone 17 Pro",
+    "cpu": "Apple A19 Pro",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1532,
+    "name": "AGM G3",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1533,
+    "name": "UleFone Armor X13",
+    "cpu": "Helio G36",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1534,
+    "name": "Sony Xperia XA",
+    "cpu": "MediaTek MT6755 Helio P10",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1535,
+    "name": "Infinix Note 12 Pro 5G",
+    "cpu": "Dimensity 810",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1536,
+    "name": "ZTE Blade A73",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1537,
+    "name": "UMIDIGI G5",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1538,
+    "name": "Honor 8A",
+    "cpu": "MediaTek MT6765 Helio P35",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1539,
+    "name": "UleFone Armor X5",
+    "cpu": "MediaTek MT6763",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1540,
+    "name": "Infinix Hot 40i",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1541,
+    "name": "MyPhone Hammer Construction 2",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1542,
+    "name": "OPPO Reno4 Z",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1543,
+    "name": "Xiaomi Redmi 12C",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1544,
+    "name": "Blackview N6000",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1545,
+    "name": "Samsung Galaxy A52s 5G",
+    "cpu": "Snapdragon 778G 5G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1546,
+    "name": "Sony Xperia Z3",
+    "cpu": "Qualcomm MSM8974AC Snapdragon 801",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1547,
+    "name": "Oukitel C31 Pro",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1548,
+    "name": "Nokia 110",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1549,
+    "name": "CUBOT King Kong ES",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1550,
+    "name": "Fossibot F101P",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1551,
+    "name": "CoolPAD CP12",
+    "cpu": "Unisoc SC9863A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1552,
+    "name": "Panasonic TU155",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1553,
+    "name": "Samsung Galaxy S20",
+    "cpu": "Exynos 990 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1554,
+    "name": "Nokia 106",
+    "cpu": "Mediatek MT6261D",
+    "ram": "0.04 GB"
+  },
+  {
+    "id": 1555,
+    "name": "Poco F7",
+    "cpu": "Snapdragon 8s Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1556,
+    "name": "Unihertz Tank",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1557,
+    "name": "Oukitel C59 Pro",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1558,
+    "name": "Honor X7",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1559,
+    "name": "Vivo V50 Lite 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1560,
+    "name": "2E E182",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1561,
+    "name": "Realme Narzo 30 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1562,
+    "name": "UleFone Armor X7 Pro",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1563,
+    "name": "Doogee S100",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1564,
+    "name": "TCL 60 SE NxtPaper 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1565,
+    "name": "Oukitel C65",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1566,
+    "name": "Hotwav Cyber 8",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1567,
+    "name": "Emporia Comfort",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1568,
+    "name": "Xiaomi Redmi 10",
+    "cpu": "Helio G88",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1569,
+    "name": "Xiaomi Redmi K40",
+    "cpu": "Snapdragon 870 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1570,
+    "name": "Hotwav H1",
+    "cpu": "MediaTek MT6580",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1571,
+    "name": "OPPO A73",
+    "cpu": "Snapdragon 662",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1572,
+    "name": "Nomi i2860",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1573,
+    "name": "Nokia C5",
+    "cpu": null,
+    "ram": "0.1 GB"
+  },
+  {
+    "id": 1574,
+    "name": "Infinix Hot 20 5G",
+    "cpu": "Dimensity 810",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1575,
+    "name": "Motorola Moto E6S",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1576,
+    "name": "Nokia 230",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1577,
+    "name": "Doogee V40",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1578,
+    "name": "CUBOT King Kong Ace 3",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1579,
+    "name": "CUBOT P50",
+    "cpu": "Helio P22",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1580,
+    "name": "Hotwav Hyper 8 Ultra",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1581,
+    "name": "CUBOT King Kong AX",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1582,
+    "name": "UMIDIGI A1 Pro",
+    "cpu": "MediaTek MT6739",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1583,
+    "name": "Sony Xperia XZ Premium Dual",
+    "cpu": "Qualcomm MSM8998 Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1584,
+    "name": "Oukitel WP36 Pro",
+    "cpu": "MediaTek MT8788",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1585,
+    "name": "AGM H3",
+    "cpu": "Helio A25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1586,
+    "name": "UleFone Armor 30",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1587,
+    "name": "Uniwa F2720",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1588,
+    "name": "CUBOT J10",
+    "cpu": "Unisoc SC7731E",
+    "ram": "1 GB"
+  },
+  {
+    "id": 1589,
+    "name": "CATerpillar B30",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1590,
+    "name": "Geemarc CL8600",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1591,
+    "name": "Honor X7c",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1592,
+    "name": "CUBOT King Kong Power",
+    "cpu": "MediaTek MT8788V",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1593,
+    "name": "Doogee V Max",
+    "cpu": "Dimensity 1080",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1594,
+    "name": "Nothing Phone 3a Lite",
+    "cpu": "Dimensity 7300 Pro",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1595,
+    "name": "Sony Xperia Z5 Dual",
+    "cpu": "Snapdragon 810",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1596,
+    "name": "Sony Xperia L1 Dual",
+    "cpu": "Mediatek MT6737T",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1597,
+    "name": "Nokia 7610 Supernova",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1598,
+    "name": "Blackview BV4800",
+    "cpu": "Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 1599,
+    "name": "Doogee S98",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1600,
+    "name": "Maxcom MS572",
+    "cpu": "MediaTek MT6739V/WW",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1601,
+    "name": "Realme C25s",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1602,
+    "name": "Asus ROG Phone 5",
+    "cpu": "Snapdragon 888 5G",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1603,
+    "name": "Oukitel WP32",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1604,
+    "name": "Motorola Moto E13",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1605,
+    "name": "Huawei Nova 8i",
+    "cpu": "Snapdragon 662",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1606,
+    "name": "Doogee Blade GT",
+    "cpu": "Dimensity 7050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1607,
+    "name": "Google Pixel Fold",
+    "cpu": "Tensor G2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1608,
+    "name": "AGM Glory G1 SE",
+    "cpu": "Snapdragon 480 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1609,
+    "name": "Honor Magic6 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1610,
+    "name": "Xiaomi Redmi 9",
+    "cpu": "Helio G80",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1611,
+    "name": "Ergo R181",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 1612,
+    "name": "Sigma mobile Comfort 50 Optima Type-C",
+    "cpu": "MediaTek MT6260A",
+    "ram": null
+  },
+  {
+    "id": 1613,
+    "name": "Poco C61",
+    "cpu": "Helio G36",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1614,
+    "name": "Nokia 225 4G",
+    "cpu": null,
+    "ram": null
+  },
+  {
+    "id": 1615,
+    "name": "Motorola Razr",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1616,
+    "name": "Realme Note 60",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1617,
+    "name": "OnePlus Ace 3",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1618,
+    "name": "Tecno Camon 40",
+    "cpu": "Helio G100 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1619,
+    "name": "UleFone Armor 28 Ultra",
+    "cpu": "Dimensity 9300+",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1620,
+    "name": "OPPO Reno12 F 5G",
+    "cpu": "Dimensity 6300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1621,
+    "name": "Infinix Note 40",
+    "cpu": "Helio G99 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1622,
+    "name": "Doogee Blade 10 Pro Energy",
+    "cpu": "Unisoc Tiger T620",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1623,
+    "name": "Motorola Moto G42",
+    "cpu": "Snapdragon 680 4G",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1624,
+    "name": "Samsung Galaxy Flip7 FE",
+    "cpu": "Exynos 2400",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1625,
+    "name": "UleFone Armor 30 Pro",
+    "cpu": "Dimensity 7300X",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1626,
+    "name": "AGM G3 Pro",
+    "cpu": "Dimensity 7300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1627,
+    "name": "Oscal Pilot 1",
+    "cpu": "Helio G81",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1628,
+    "name": "Xiaomi 13 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1629,
+    "name": "Oukitel WP200 Pro",
+    "cpu": "Dimensity 8200",
+    "ram": "24 GB"
+  },
+  {
+    "id": 1630,
+    "name": "Doogee N55 Plus",
+    "cpu": "Unisoc Tiger T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1631,
+    "name": "Realme 12 Plus",
+    "cpu": "Dimensity 7050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1632,
+    "name": "Realme 13 Plus 5G",
+    "cpu": "Dimensity 7300",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1633,
+    "name": "CUBOT King Kong X Pro",
+    "cpu": "Dimensity 8200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1634,
+    "name": "Xiaomi Redmi A3",
+    "cpu": "Helio G36",
+    "ram": "3 GB"
+  },
+  {
+    "id": 1635,
+    "name": "Honor 200 Smart",
+    "cpu": "Snapdragon 4 Gen 2",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1636,
+    "name": "Blackview BV7200",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1637,
+    "name": "Doogee Blade 20 Ultra",
+    "cpu": "Unisoc Tiger T615",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1638,
+    "name": "Realme Narzo 50A Prime",
+    "cpu": "Unisoc Tiger T612",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1639,
+    "name": "UleFone Armor 29 Ultra",
+    "cpu": "Dimensity 9300+",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1640,
+    "name": "Tecno Camon 18P",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1641,
+    "name": "Nomi i1441",
+    "cpu": "MediaTek MT6261D",
+    "ram": null
+  },
+  {
+    "id": 1642,
+    "name": "Asus Zenfone 12 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1643,
+    "name": "Nubia Z70S Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1644,
+    "name": "UMIDIGI Bison 2",
+    "cpu": "Helio P90",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1645,
+    "name": "HMD 2660 Flip",
+    "cpu": "Unisoc T107",
+    "ram": null
+  },
+  {
+    "id": 1646,
+    "name": "Oscal C20",
+    "cpu": "Unisoc SC7731E",
+    "ram": "1 GB"
+  },
+  {
+    "id": 1647,
+    "name": "Tecno Spark 40",
+    "cpu": "Helio G81",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1648,
+    "name": "Infinix Hot 50i",
+    "cpu": "Helio G81",
+    "ram": "4 GB"
+  },
+  {
+    "id": 1649,
+    "name": "Nomi i1850",
+    "cpu": "Unisoc SC6531E",
+    "ram": null
+  },
+  {
+    "id": 1650,
+    "name": "Blackview Color 8",
+    "cpu": "Unisoc Tiger T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1651,
+    "name": "UleFone Power Armor 13",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 1652,
+    "name": "Xiaomi Redmi Note 8 Pro",
+    "cpu": "Helio G90T",
+    "ram": "6 GB"
+  },
+  {
+    "id": 1653,
+    "name": "Nubia Red Magic 9 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1654,
+    "name": "OnePlus Open",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 1655,
+    "name": "Doogee Blade 20 Max",
+    "cpu": "Helio G100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 1656,
+    "name": "Tkexun S5630",
+    "cpu": null,
+    "ram": null
+  }
+]

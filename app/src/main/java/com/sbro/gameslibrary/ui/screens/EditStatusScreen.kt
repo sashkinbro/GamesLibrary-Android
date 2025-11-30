@@ -2,6 +2,7 @@ package com.sbro.gameslibrary.ui.screens
 
 import android.annotation.SuppressLint
 import android.os.Build
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
@@ -22,6 +25,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.PhoneAndroid
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -57,6 +65,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.EmulatorBuildType
 import com.sbro.gameslibrary.components.Game
@@ -64,7 +74,30 @@ import com.sbro.gameslibrary.components.IssueType
 import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.viewmodel.GameViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.InputStreamReader
+import java.util.Locale
+
+data class PhoneDbItem(
+    val id: Int = 0,
+    val name: String? = null,
+    val cpu: String? = null,
+    val ram: String? = null
+)
+
+private suspend fun loadPhonesFromAssets(context: android.content.Context): List<PhoneDbItem> =
+    withContext(Dispatchers.IO) {
+        runCatching {
+            context.assets.open("phone.json").use { input ->
+                InputStreamReader(input).use { reader ->
+                    val type = object : TypeToken<List<PhoneDbItem>>() {}.type
+                    Gson().fromJson<List<PhoneDbItem>>(reader, type) ?: emptyList()
+                }
+            }
+        }.getOrElse { emptyList() }
+    }
 
 data class EditDialogResult(
     val status: WorkStatus,
@@ -111,7 +144,7 @@ fun EditStatusScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Edit status") },
+                    title = { Text(stringResource(R.string.edit_status_title)) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
@@ -121,7 +154,7 @@ fun EditStatusScreen(
             }
         ) { pv ->
             Box(Modifier.fillMaxSize().padding(pv), contentAlignment = Alignment.Center) {
-                Text("Game not found")
+                Text(stringResource(R.string.edit_status_game_not_found))
             }
         }
         return
@@ -172,6 +205,14 @@ private fun EditStatusContent(
     onBack: () -> Unit,
     onSave: (EditDialogResult) -> Unit
 ) {
+    val context = LocalContext.current
+    var phoneDb by remember { mutableStateOf<List<PhoneDbItem>>(emptyList()) }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        phoneDb = loadPhonesFromAssets(context)
+    }
+
     var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
     val otherLabel = stringResource(R.string.option_other)
     val customLabel = stringResource(R.string.option_custom)
@@ -189,16 +230,12 @@ private fun EditStatusContent(
     val androidMajor = remember {
         Build.VERSION.RELEASE?.substringBefore(".") ?: ""
     }
-    val deviceModelAuto = remember {
-        val manu = Build.MANUFACTURER.orEmpty().trim()
-        val model = Build.MODEL.orEmpty().trim()
-        if (manu.isNotBlank()) "$manu $model" else model
-    }
+
 
     var androidVersionSelected by remember { mutableStateOf(androidMajor) }
     var androidVersionCustom by remember { mutableStateOf(if (androidMajor.isBlank()) androidMajor else "") }
 
-    var deviceModelText by remember { mutableStateOf(deviceModelAuto) }
+    var deviceModelText by remember { mutableStateOf("") }
     var gpuModelText by remember { mutableStateOf("") }
 
     var ramSelected by remember { mutableStateOf("") }
@@ -254,8 +291,8 @@ private fun EditStatusContent(
 
     var mediaLinkText by remember { mutableStateOf("") }
 
-    val androidVersions = listOf("16","15", "14", "13", "12", "11", "10", "9","8","7", otherLabel)
-    val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB","24 GB", otherLabel)
+    val androidVersions = listOf("16", "15", "14", "13", "12", "11", "10", "9", "8", "7", otherLabel)
+    val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", otherLabel)
 
     val wrapperOptions = when {
         isPcPlatform -> listOf("DXVK", "VKD3D", "WineD3D", "OpenGL", otherLabel)
@@ -264,7 +301,7 @@ private fun EditStatusContent(
 
     val perfModeOptions = listOf("Extreme performance", "Performance", "Balanced", "Quality", otherLabel)
     val accuracyOptions = listOf("Performance", "Balanced", "Accuracy", otherLabel)
-    val scaleOptions = listOf("0.5x","0.75x", "1x","1.25x", "1.5x","1.75x", "2x","2.25x","2.5x","2.75x","3x", otherLabel)
+    val scaleOptions = listOf("0.5x", "0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.25x", "2.5x", "2.75x", "3x", otherLabel)
     val frameSkipOptions = listOf("0", "1", "2", otherLabel)
 
     val showEmulatorSettings = !isPcPlatform
@@ -354,8 +391,169 @@ private fun EditStatusContent(
     val configuration = LocalConfiguration.current
     val maxHeight = configuration.screenHeightDp.dp * 0.95f
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
+
+    var showSearchDialog by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
+
+    val filteredPhones = remember(phoneDb, searchQuery) {
+        val q = searchQuery.trim().lowercase(Locale.getDefault())
+        if (q.length < 2) emptyList()
+        else phoneDb.asSequence()
+            .filter { it.name.orEmpty().lowercase(Locale.getDefault()).contains(q) }
+            .take(40)
+            .toList()
+    }
+
+    fun applyPhoneSpec(spec: PhoneDbItem) {
+        val name = spec.name.orEmpty().trim()
+        val cpu = spec.cpu.orEmpty().trim()
+        val ram = spec.ram.orEmpty().trim()
+
+        if (name.isNotBlank()) deviceModelText = name
+        if (cpu.isNotBlank()) gpuModelText = cpu
+
+        if (ram.isNotBlank()) {
+            if (ramOptions.contains(ram)) {
+                ramSelected = ram
+                ramCustom = ""
+            } else {
+                ramSelected = otherLabel
+                ramCustom = ram
+            }
+        }
+    }
+
+
+    if (showSearchDialog) {
+        AlertDialog(
+            onDismissRequest = { showSearchDialog = false },
+            title = {
+                Column(Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(R.string.search_device_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showSearchDialog = false }) {
+                    Text(stringResource(R.string.action_close))
+                }
+            },
+            text = {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp)
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text(stringResource(R.string.search_device_input_hint)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Search,
+                                contentDescription = null
+                            )
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
+                        )
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+
+                    if (searchQuery.trim().length < 2) {
+                        Text(
+                            text = stringResource(R.string.search_device_start_typing),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(vertical = 12.dp, horizontal = 4.dp)
+                        )
+                    } else if (filteredPhones.isEmpty()) {
+                        Text(
+                            text = stringResource(R.string.search_device_no_matches),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(vertical = 12.dp, horizontal = 4.dp)
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(max = 360.dp)
+                        ) {
+                            items(filteredPhones) { spec ->
+                                val safeName = spec.name.orEmpty()
+                                val safeCpu = spec.cpu.orEmpty()
+                                val safeRam = spec.ram.orEmpty()
+
+                                Card(
+                                    shape = RoundedCornerShape(16.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 6.dp, vertical = 4.dp)
+                                        .clickable {
+                                            applyPhoneSpec(spec)
+                                            searchQuery = safeName
+                                            showSearchDialog = false
+                                        }
+                                ) {
+                                    Row(
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(14.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.PhoneAndroid,
+                                            contentDescription = null
+                                        )
+                                        Spacer(Modifier.width(10.dp))
+                                        Column(Modifier.weight(1f)) {
+                                            Text(
+                                                text = safeName,
+                                                style = MaterialTheme.typography.titleMedium,
+                                                fontWeight = FontWeight.SemiBold
+                                            )
+                                            Spacer(Modifier.height(2.dp))
+                                            if (safeCpu.isNotBlank()) {
+                                                Text(
+                                                    text = stringResource(R.string.search_device_cpu_prefix, safeCpu),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                            if (safeRam.isNotBlank()) {
+                                                Text(
+                                                    text = stringResource(R.string.search_device_ram_prefix, safeRam),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = 12.dp),
+                                    color = MaterialTheme.colorScheme.outlineVariant
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -397,6 +595,20 @@ private fun EditStatusContent(
 
             Spacer(modifier = Modifier.height(16.dp))
             SectionHeader(stringResource(R.string.section_device_env))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(onClick = {
+                    searchQuery = ""
+                    showSearchDialog = true
+                }) {
+                    Text(stringResource(R.string.search_in_db_button))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             DropdownWithCustom(
                 labelRes = R.string.label_android_version,
