@@ -116,7 +116,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="section_media">Media</string>
     <string name="label_android_version">Android version</string>
     <string name="label_device_model">Device model</string>
-    <string name="label_gpu_model">GPU model</string>
+    <string name="label_gpu_model">СPU model</string>
     <string name="label_ram">RAM</string>
     <string name="label_wrapper">Vulkan / OpenGL / D3D wrapper</string>
     <string name="label_performance_mode">Performance mode</string>

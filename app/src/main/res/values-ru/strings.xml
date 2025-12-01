@@ -116,7 +116,7 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="section_media">Медиа</string>
     <string name="label_android_version">Версия Android</string>
     <string name="label_device_model">Модель устройства</string>
-    <string name="label_gpu_model">Модель GPU</string>
+    <string name="label_gpu_model">Модель СPU</string>
     <string name="label_ram">Оперативная память (RAM)</string>
     <string name="label_wrapper">Обёртка Vulkan / OpenGL / D3D</string>
     <string name="label_performance_mode">Режим производительности</string>
