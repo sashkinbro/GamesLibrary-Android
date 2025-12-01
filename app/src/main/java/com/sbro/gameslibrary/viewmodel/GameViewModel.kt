@@ -1,15 +1,23 @@
 package com.sbro.gameslibrary.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.util.JsonParser
 import com.sbro.gameslibrary.components.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -19,6 +27,7 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
+import androidx.core.content.edit
 
 enum class SortOption {
     TITLE,
@@ -35,7 +44,12 @@ data class TestComment(
     val testMillis: Long = 0L,
     val text: String = "",
     val authorDevice: String = "",
-    val createdAt: com.google.firebase.Timestamp? = null
+    val createdAt: com.google.firebase.Timestamp? = null,
+    val authorUid: String? = null,
+    val authorName: String? = null,
+    val authorEmail: String? = null,
+    val authorPhotoUrl: String? = null,
+    val fromAccount: Boolean = false
 )
 
 enum class PlatformFilter {
@@ -85,7 +99,15 @@ data class RemoteTestResult(
 
     val mediaLink: String = "",
 
-    val updatedAt: com.google.firebase.Timestamp? = null
+    val updatedAt: com.google.firebase.Timestamp? = null,
+
+
+    val authorUid: String? = null,
+    val authorName: String? = null,
+    val authorEmail: String? = null,
+    val authorPhotoUrl: String? = null,
+    val fromAccount: Boolean = false,
+    val updatedAtMillis: Long? = null
 )
 
 class GameViewModel : ViewModel() {
@@ -109,12 +131,158 @@ class GameViewModel : ViewModel() {
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val testsCollection = firestore.collection("gameTests")
-
     private val commentsCollection = firestore.collection("testComments")
+
+    private val favoritesCollection = firestore.collection("userFavorites")
 
     private val _commentsByTest =
         MutableStateFlow<Map<Long, List<TestComment>>>(emptyMap())
     val commentsByTest = _commentsByTest.asStateFlow()
+
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    private val _currentUser = MutableStateFlow(auth.currentUser)
+    val currentUser: StateFlow<FirebaseUser?> = _currentUser.asStateFlow()
+
+    private val _isLoggedIn = MutableStateFlow(auth.currentUser != null)
+
+    private var appContext: Context? = null
+
+
+    private val PENDING_FAVS_PREF = "pending_favorites"
+    private val PENDING_FAVS_KEY = "pending_game_ids"
+
+    private fun getPendingFavorites(context: Context): Set<String> {
+        val prefs = context.getSharedPreferences(PENDING_FAVS_PREF, Context.MODE_PRIVATE)
+        return prefs.getStringSet(PENDING_FAVS_KEY, emptySet()) ?: emptySet()
+    }
+
+    private fun savePendingFavorites(context: Context, ids: Set<String>) {
+        val prefs = context.getSharedPreferences(PENDING_FAVS_PREF, Context.MODE_PRIVATE)
+        prefs.edit { putStringSet(PENDING_FAVS_KEY, ids) }
+    }
+
+    private fun clearPendingFavorites(context: Context) {
+        val prefs = context.getSharedPreferences(PENDING_FAVS_PREF, Context.MODE_PRIVATE)
+        prefs.edit { remove(PENDING_FAVS_KEY) }
+    }
+
+    private fun mergePendingFavoritesIntoRemote(context: Context) {
+        val user = auth.currentUser ?: return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val pending = getPendingFavorites(context)
+                if (pending.isEmpty()) {
+                    syncFavoritesFromRemote()
+                    return@launch
+                }
+
+                val docRef = favoritesCollection.document(user.uid)
+                val snap = docRef.get().await()
+                val remoteIds =
+                    (snap.get("gameIds") as? List<*>)?.filterIsInstance<String>().orEmpty()
+
+                val mergedIds = (remoteIds + pending).toSet().toList()
+
+                docRef.set(mapOf("gameIds" to mergedIds)).await()
+
+                clearPendingFavorites(context)
+
+                val mergedGames = _games.value.map { g ->
+                    g.copy(isFavorite = mergedIds.contains(g.id))
+                }
+
+                withContext(Dispatchers.Main) {
+                    _games.value = mergedGames
+                    recomputeFiltered()
+                    saveToCache(context, mergedGames)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                syncFavoritesFromRemote()
+            }
+        }
+    }
+
+    init {
+        auth.addAuthStateListener { fa ->
+            _currentUser.value = fa.currentUser
+            _isLoggedIn.value = fa.currentUser != null
+
+            val ctx = appContext
+            if (fa.currentUser != null) {
+                if (ctx != null) mergePendingFavoritesIntoRemote(ctx)
+                else syncFavoritesFromRemote()
+            } else {
+                val cleared = _games.value.map { it.copy(isFavorite = false) }
+                _games.value = cleared
+                recomputeFiltered()
+            }
+        }
+    }
+
+    fun getGoogleSignInIntent(context: Context): Intent {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        val client = GoogleSignIn.getClient(context, gso)
+        return client.signInIntent
+    }
+
+    fun handleGoogleResult(
+        context: Context,
+        data: Intent?,
+        onError: (String) -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            try {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                val account = task.getResult(ApiException::class.java)
+                val credential =
+                    GoogleAuthProvider.getCredential(account.idToken, null)
+
+                auth.signInWithCredential(credential).await()
+
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.auth_success),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                mergePendingFavoritesIntoRemote(context)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onError(e.message ?: "Auth failed")
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.auth_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    fun signOut(context: Context) {
+        viewModelScope.launch {
+            auth.signOut()
+            GoogleSignIn.getClient(
+                context,
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            ).signOut()
+
+            Toast.makeText(
+                context,
+                context.getString(R.string.auth_signed_out),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     sealed class UiState {
         object Idle : UiState()
@@ -128,6 +296,8 @@ class GameViewModel : ViewModel() {
     val filteredGames = _filteredGames.asStateFlow()
 
     fun init(context: Context) {
+        if (appContext == null) appContext = context.applicationContext
+
         if (_games.value.isNotEmpty() || _uiState.value is UiState.Loading) return
         _uiState.value = UiState.Loading
         loadFromCache(context)
@@ -170,6 +340,11 @@ class GameViewModel : ViewModel() {
                         withContext(Dispatchers.Main) {
                             syncFromRemote(context)
                         }
+
+                        if (auth.currentUser != null) {
+                            mergePendingFavoritesIntoRemote(context)
+                        }
+
                     } else {
                         withContext(Dispatchers.Main) { loadFromAssets(context) }
                     }
@@ -195,6 +370,10 @@ class GameViewModel : ViewModel() {
                     saveToCache(context, parsedGames)
                     _uiState.value = UiState.Success(parsedGames.size)
                     syncFromRemote(context)
+
+                    if (auth.currentUser != null) {
+                        mergePendingFavoritesIntoRemote(context)
+                    }
                 }
             }.onFailure {
                 _games.value = emptyList()
@@ -277,15 +456,71 @@ class GameViewModel : ViewModel() {
     }
 
     fun toggleFavorite(context: Context, gameId: String) {
-        val currentList = _games.value
-        val updatedList = currentList.map { game ->
+        val user = auth.currentUser
+
+        val current = _games.value
+        val newFavState = current.firstOrNull { it.id == gameId }?.isFavorite?.not() ?: true
+
+        val updatedList = current.map { game ->
             if (game.id == gameId) {
-                game.copy(isFavorite = !game.isFavorite)
+                game.copy(isFavorite = newFavState)
             } else game
         }
+
         _games.value = updatedList
         recomputeFiltered()
         saveToCache(context, updatedList)
+
+        if (user == null) {
+            val pending = getPendingFavorites(context).toMutableSet()
+            if (newFavState) pending.add(gameId) else pending.remove(gameId)
+            savePendingFavorites(context, pending)
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val docRef = favoritesCollection.document(user.uid)
+                val snap = docRef.get().await()
+                val currentIds =
+                    (snap.get("gameIds") as? List<*>)?.filterIsInstance<String>().orEmpty()
+
+                val newIds =
+                    if (currentIds.contains(gameId)) currentIds - gameId
+                    else currentIds + gameId
+
+                docRef.set(mapOf("gameIds" to newIds)).await()
+
+                val pending = getPendingFavorites(context).toMutableSet()
+                pending.remove(gameId)
+                savePendingFavorites(context, pending)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun syncFavoritesFromRemote() {
+        val user = auth.currentUser ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val snap = favoritesCollection.document(user.uid).get().await()
+                val favIds =
+                    (snap.get("gameIds") as? List<*>)?.filterIsInstance<String>().orEmpty().toSet()
+
+                val merged = _games.value.map { g ->
+                    g.copy(isFavorite = favIds.contains(g.id))
+                }
+
+                withContext(Dispatchers.Main) {
+                    _games.value = merged
+                    recomputeFiltered()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun syncFromRemote(context: Context) {
@@ -313,23 +548,35 @@ class GameViewModel : ViewModel() {
                         val testedGameVersionOrBuild = doc.getString("testedGameVersionOrBuild") ?: ""
 
                         val issueType = doc.getString("issueType") ?: IssueType.CRASH.firestoreValue
-                        val reproducibility = doc.getString("reproducibility") ?: Reproducibility.ALWAYS.firestoreValue
+                        val reproducibility =
+                            doc.getString("reproducibility")
+                                ?: Reproducibility.ALWAYS.firestoreValue
                         val workaround = doc.getString("workaround") ?: ""
                         val issueNote = doc.getString("issueNote") ?: ""
 
-                        val emulatorBuildType = doc.getString("emulatorBuildType") ?: EmulatorBuildType.STABLE.firestoreValue
+                        val emulatorBuildType =
+                            doc.getString("emulatorBuildType")
+                                ?: EmulatorBuildType.STABLE.firestoreValue
                         val accuracyLevel = doc.getString("accuracyLevel") ?: ""
                         val resolutionScale = doc.getString("resolutionScale") ?: ""
                         val asyncShaderEnabled = doc.getBoolean("asyncShaderEnabled") ?: false
                         val frameSkip = doc.getString("frameSkip") ?: ""
 
                         val updatedAt = doc.getTimestamp("updatedAt")
+                        val updatedAtMillis = doc.getLong("updatedAtMillis")
                         val resolutionWidth = doc.getString("resolutionWidth") ?: ""
                         val resolutionHeight = doc.getString("resolutionHeight") ?: ""
                         val fpsMin = doc.getString("fpsMin") ?: ""
                         val fpsMax = doc.getString("fpsMax") ?: ""
 
                         val mediaLink = doc.getString("mediaLink") ?: ""
+
+
+                        val authorUid = doc.getString("authorUid")
+                        val authorName = doc.getString("authorName")
+                        val authorEmail = doc.getString("authorEmail")
+                        val authorPhotoUrl = doc.getString("authorPhotoUrl")
+                        val fromAccount = doc.getBoolean("fromAccount") ?: false
 
                         if (gameId.isBlank()) null else {
                             RemoteTestResult(
@@ -365,7 +612,14 @@ class GameViewModel : ViewModel() {
                                 fpsMax = fpsMax,
 
                                 mediaLink = mediaLink,
-                                updatedAt = updatedAt
+                                updatedAt = updatedAt,
+
+                                authorUid = authorUid,
+                                authorName = authorName,
+                                authorEmail = authorEmail,
+                                authorPhotoUrl = authorPhotoUrl,
+                                fromAccount = fromAccount,
+                                updatedAtMillis = updatedAtMillis
                             )
                         }
                     } catch (e: Exception) {
@@ -379,9 +633,14 @@ class GameViewModel : ViewModel() {
                 val updated = _games.value.map { game ->
                     val testsForGame = grouped[game.id].orEmpty()
                         .map { remote ->
-                            val millis = remote.updatedAt?.toDate()?.time ?: 0L
+                            val millis =
+                                remote.updatedAtMillis
+                                    ?: remote.updatedAt?.toDate()?.time
+                                    ?: 0L
+
                             val formattedDate = remote.updatedAt?.toDate()?.let { date ->
-                                val formatter = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
+                                val formatter =
+                                    SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
                                 formatter.format(date)
                             } ?: ""
 
@@ -422,7 +681,14 @@ class GameViewModel : ViewModel() {
                                 mediaLink = remote.mediaLink,
 
                                 testedDateFormatted = formattedDate,
-                                updatedAtMillis = millis
+                                updatedAtMillis = millis,
+
+
+                                authorUid = remote.authorUid,
+                                authorName = remote.authorName,
+                                authorEmail = remote.authorEmail,
+                                authorPhotoUrl = remote.authorPhotoUrl,
+                                fromAccount = remote.fromAccount
                             )
                         }
                         .sortedByDescending { it.updatedAtMillis }
@@ -433,6 +699,10 @@ class GameViewModel : ViewModel() {
                 _games.value = updated
                 recomputeFiltered()
                 saveToCache(context, updated)
+
+                if (auth.currentUser != null) {
+                    mergePendingFavoritesIntoRemote(context)
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -467,7 +737,13 @@ class GameViewModel : ViewModel() {
                         testMillis = millis,
                         text = text,
                         authorDevice = d.getString("authorDevice") ?: "",
-                        createdAt = d.getTimestamp("createdAt")
+                        createdAt = d.getTimestamp("createdAt"),
+
+                        authorUid = d.getString("authorUid"),
+                        authorName = d.getString("authorName"),
+                        authorEmail = d.getString("authorEmail"),
+                        authorPhotoUrl = d.getString("authorPhotoUrl"),
+                        fromAccount = d.getBoolean("fromAccount") ?: false
                     )
                 }
 
@@ -497,13 +773,22 @@ class GameViewModel : ViewModel() {
         val deviceName =
             "${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}".trim()
 
+        val user = auth.currentUser
+        val fromAccount = user != null
+
         val newLocal = TestComment(
             id = "local_${now.toDate().time}",
             gameId = gameId,
             testMillis = testMillis,
             text = trimmed,
             authorDevice = deviceName,
-            createdAt = now
+            createdAt = now,
+
+            authorUid = user?.uid,
+            authorName = user?.displayName,
+            authorEmail = user?.email,
+            authorPhotoUrl = user?.photoUrl?.toString(),
+            fromAccount = fromAccount
         )
 
         val currentMap = _commentsByTest.value.toMutableMap()
@@ -514,12 +799,21 @@ class GameViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                val user = currentUser.value
+                val fromAccount = user != null
+
                 val data = mapOf(
                     "gameId" to gameId,
                     "testMillis" to testMillis,
                     "text" to trimmed,
                     "authorDevice" to deviceName,
-                    "createdAt" to now
+                    "createdAt" to now,
+
+                    "authorUid" to user?.uid,
+                    "authorName" to user?.displayName,
+                    "authorEmail" to user?.email,
+                    "authorPhotoUrl" to user?.photoUrl?.toString(),
+                    "fromAccount" to fromAccount
                 )
                 commentsCollection.add(data).await()
 
@@ -541,6 +835,82 @@ class GameViewModel : ViewModel() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+        }
+    }
+
+    fun editComment(
+        context: Context,
+        commentId: String,
+        newText: String
+    ) {
+        val user = auth.currentUser ?: return
+        val trimmed = newText.trim()
+        if (trimmed.isBlank()) return
+
+        val map = _commentsByTest.value.toMutableMap()
+        map.forEach { (testMillis, list) ->
+            val updated = list.map { c ->
+                if (c.id == commentId && c.authorUid == user.uid) c.copy(text = trimmed)
+                else c
+            }
+            map[testMillis] = updated
+        }
+        _commentsByTest.value = map
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val docRef = commentsCollection.document(commentId)
+                val snap = docRef.get().await()
+                if (snap.getString("authorUid") != user.uid) return@launch
+
+                docRef.update("text", trimmed).await()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.comment_updated),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (_: Exception) {}
+        }
+    }
+
+    fun loadAllComments() {
+        viewModelScope.launch {
+            try {
+                val snapshot = withContext(Dispatchers.IO) {
+                    commentsCollection.get().await()
+                }
+
+                val comments = snapshot.documents.mapNotNull { d ->
+                    val text = d.getString("text") ?: return@mapNotNull null
+                    val millis = d.getLong("testMillis") ?: return@mapNotNull null
+
+                    TestComment(
+                        id = d.id,
+                        gameId = d.getString("gameId") ?: "",
+                        testMillis = millis,
+                        text = text,
+                        authorDevice = d.getString("authorDevice") ?: "",
+                        createdAt = d.getTimestamp("createdAt"),
+                        authorUid = d.getString("authorUid"),
+                        authorName = d.getString("authorName"),
+                        authorEmail = d.getString("authorEmail"),
+                        authorPhotoUrl = d.getString("authorPhotoUrl"),
+                        fromAccount = d.getBoolean("fromAccount") ?: false
+                    )
+                }
+
+                val grouped = comments
+                    .groupBy { it.testMillis }
+                    .mapValues { (_, list) ->
+                        list.sortedBy { it.createdAt?.toDate()?.time ?: 0L }
+                    }
+
+                _commentsByTest.value = grouped
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -588,6 +958,7 @@ class GameViewModel : ViewModel() {
         }
 
         val currentGameTitle = _games.value.firstOrNull { it.id == gameId }?.title.orEmpty()
+        val user = auth.currentUser
 
         val newTest = GameTestResult(
             status = newStatus,
@@ -623,7 +994,13 @@ class GameViewModel : ViewModel() {
             mediaLink = mediaLink,
 
             testedDateFormatted = formattedDate,
-            updatedAtMillis = now.toDate().time
+            updatedAtMillis = now.toDate().time,
+
+            authorUid = user?.uid,
+            authorName = user?.displayName,
+            authorEmail = user?.email,
+            authorPhotoUrl = user?.photoUrl?.toString(),
+            fromAccount = user != null
         )
 
         val updated = _games.value.map { game ->
@@ -670,12 +1047,20 @@ class GameViewModel : ViewModel() {
                     "frameSkip" to frameSkip,
 
                     "updatedAt" to now,
+                    "updatedAtMillis" to now.toDate().time,
+
                     "resolutionWidth" to resolutionWidth,
                     "resolutionHeight" to resolutionHeight,
                     "fpsMin" to fpsMin,
                     "fpsMax" to fpsMax,
 
-                    "mediaLink" to mediaLink
+                    "mediaLink" to mediaLink,
+
+                    "authorUid" to user?.uid,
+                    "authorName" to user?.displayName,
+                    "authorEmail" to user?.email,
+                    "authorPhotoUrl" to user?.photoUrl?.toString(),
+                    "fromAccount" to (user != null)
                 )
                 testsCollection.add(data).await()
                 withContext(Dispatchers.Main) {
@@ -694,6 +1079,90 @@ class GameViewModel : ViewModel() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+        }
+    }
+
+    fun editTestResult(
+        context: Context,
+        gameId: String,
+        testMillis: Long,
+        newResult: GameTestResult
+    ) {
+        val user = auth.currentUser ?: return
+        val game = _games.value.firstOrNull { it.id == gameId } ?: return
+        val old = game.testResults.firstOrNull { it.updatedAtMillis == testMillis } ?: return
+
+        if (old.authorUid != user.uid) return
+
+        val updatedTests = game.testResults.map {
+            if (it.updatedAtMillis == testMillis) {
+                newResult.copy(
+                    updatedAtMillis = old.updatedAtMillis,
+                    testedDateFormatted = old.testedDateFormatted,
+                    authorUid = old.authorUid,
+                    authorName = old.authorName,
+                    authorEmail = old.authorEmail,
+                    authorPhotoUrl = old.authorPhotoUrl,
+                    fromAccount = old.fromAccount
+                )
+            } else it
+        }
+
+        val updatedGames = _games.value.map { g ->
+            if (g.id == gameId) g.copy(testResults = updatedTests) else g
+        }
+        _games.value = updatedGames
+        recomputeFiltered()
+        saveToCache(context, updatedGames)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val snap = testsCollection
+                    .whereEqualTo("gameId", gameId)
+                    .whereEqualTo("updatedAtMillis", testMillis)
+                    .get()
+                    .await()
+
+                val doc = snap.documents.firstOrNull() ?: return@launch
+                doc.reference.update(
+                    mapOf(
+                        "status" to newResult.status.name,
+                        "testedAndroidVersion" to newResult.testedAndroidVersion,
+                        "testedDeviceModel" to newResult.testedDeviceModel,
+                        "testedGpuModel" to newResult.testedGpuModel,
+                        "testedRam" to newResult.testedRam,
+                        "testedWrapper" to newResult.testedWrapper,
+                        "testedPerformanceMode" to newResult.testedPerformanceMode,
+                        "testedApp" to newResult.testedApp,
+                        "testedAppVersion" to newResult.testedAppVersion,
+                        "testedGameVersionOrBuild" to newResult.testedGameVersionOrBuild,
+                        "issueType" to newResult.issueType.firestoreValue,
+                        "reproducibility" to newResult.reproducibility.firestoreValue,
+                        "workaround" to newResult.workaround,
+                        "issueNote" to newResult.issueNote,
+                        "emulatorBuildType" to newResult.emulatorBuildType.firestoreValue,
+                        "accuracyLevel" to newResult.accuracyLevel,
+                        "resolutionScale" to newResult.resolutionScale,
+                        "asyncShaderEnabled" to newResult.asyncShaderEnabled,
+                        "frameSkip" to newResult.frameSkip,
+                        "resolutionWidth" to newResult.resolutionWidth,
+                        "resolutionHeight" to newResult.resolutionHeight,
+                        "fpsMin" to newResult.fpsMin,
+                        "fpsMax" to newResult.fpsMax,
+                        "mediaLink" to newResult.mediaLink
+                    )
+                ).await()
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.test_updated),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

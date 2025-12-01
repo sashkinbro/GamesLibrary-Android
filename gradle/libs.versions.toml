@@ -16,6 +16,7 @@ googleServices = "4.4.4"
 media3ExoplayerVersion = "1.8.0"
 media3UiVersion = "1.8.0"
 navigationComposeVersion = "2.9.6"
+playServicesAuthVersion = "21.4.0"
 
 [libraries]
 androidx-activity-compose-v182 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -36,7 +37,9 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 coil-compose-v250 = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 
 [plugins]

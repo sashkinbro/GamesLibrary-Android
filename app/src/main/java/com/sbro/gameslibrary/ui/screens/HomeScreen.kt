@@ -20,10 +20,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.Games
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -61,7 +61,7 @@ fun HomeScreen(
     onOpenPs3Games: () -> Unit,
     onOpenPcGames: () -> Unit,
     onOpenSwitchGames: () -> Unit,
-    onOpenAbout: () -> Unit,
+    onOpenProfile: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val orientation = configuration.orientation
@@ -109,10 +109,10 @@ fun HomeScreen(
                             )
                         },
                         actions = {
-                            IconButton(onClick = { safeClick(onOpenAbout) }) {
+                            IconButton(onClick = { safeClick(onOpenProfile) }) {
                                 Icon(
-                                    imageVector = Icons.Filled.Info,
-                                    contentDescription = stringResource(R.string.cd_open_about)
+                                    imageVector = Icons.Filled.AccountCircle,
+                                    contentDescription = stringResource(R.string.main_button_profile)
                                 )
                             }
                         },

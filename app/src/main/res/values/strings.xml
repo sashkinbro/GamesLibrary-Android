@@ -229,5 +229,50 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="search_device_no_matches">No matches. You can close and type model manually.</string>
     <string name="search_device_cpu_prefix">CPU: %1$s</string>
     <string name="search_device_ram_prefix">RAM: %1$s</string>
+    <string name="profile_title">Profile</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="sign_out">Sign out</string>
+    <string name="my_tests">My tests</string>
+    <string name="my_comments">My comments</string>
+    <string name="my_favorites">My favorites</string>
+    <string name="need_login">To see this page, sign in to your account</string>
+    <string name="need_login_favorites">Favorites sync only through an account</string>
+    <string name="profile_guest_hint">You are currently a guest. Signing in enables favorites sync and editing your own tests/comments.</string>
+    <string name="auth_success">Signed in successfully</string>
+    <string name="auth_failed">Failed to sign in</string>
+    <string name="auth_signed_out">Signed out</string>
+    <string name="test_updated">Test updated</string>
+    <string name="comment_updated">Comment updated</string>
+    <string name="edit">Edit</string>
+    <string name="edit_comment_title">Edit comment</string>
+    <string name="action_edit_test">Edit test</string>
+    <string name="edit_test_title">Edit test</string>
+    <string name="edit_test_note_hint">Problem description / note</string>
+    <string name="my_comments_empty">You don’t have any comments yet</string>
+    <string name="my_favorites_empty">You don’t have any favorite games yet</string>
+    <string name="my_tests_empty">You don’t have any submitted tests yet</string>
+    <string name="main_button_profile">Profile</string>
+    <string name="main_button_profile_sub">Sign in, my tests, comments, favorites</string>
+    <string name="profile_guest_title">Sign in to your account</string>
+    <string name="profile_guest_body">To see your tests, comments, and favorites</string>
+    <string name="profile_signed_in_as">Signed in as</string>
+    <string name="profile_menu_tests_sub">List of your tests</string>
+    <string name="profile_menu_comments_sub">All your comments</string>
+    <string name="profile_menu_favorites_sub">Favorite games</string>
+    <string name="favorite_badge">In favorites</string>
+    <string name="label_status">Status</string>
+    <string name="label_issue_note">Note / problem description</string>
+    <string name="main_button_last_tests_sub_20">Last 20 tests</string>
+    <string name="sign_out_confirm_title">Sign out?</string>
+    <string name="sign_out_confirm_body">Are you sure you want to sign out? Some features will be unavailable.</string>
+    <string name="sign_out_confirm_yes">Sign out</string>
+    <string name="sign_out_confirm_no">Cancel</string>
+    <string name="profile_stats_tests">My tests</string>
+    <string name="profile_stats_comments">My comments</string>
+    <string name="profile_stats_favorites">Favorites</string>
+    <string name="profile_stats_title">Statistics</string>
+
+
+
 
 </resources>

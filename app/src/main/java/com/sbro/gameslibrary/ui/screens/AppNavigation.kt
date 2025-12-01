@@ -1,5 +1,6 @@
 package com.sbro.gameslibrary.ui.screens
 
+
 import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
@@ -45,10 +46,15 @@ object Routes {
     const val LIBRARY = "library"
     const val LIBRARY_PLATFORM = "library/{platform}"
     const val ABOUT = "about"
+    const val PROFILE = "profile"
+    const val MY_TESTS = "my_tests"
+    const val MY_COMMENTS = "my_comments"
+    const val MY_FAVORITES = "my_favorites"
 
     const val DETAILS = "details/{gameId}"
 
     const val EDIT_STATUS = "edit_status/{gameId}"
+    const val EDIT_STATUS_DETAIL = "edit_status/{gameId}/{testMillis}"
     const val TEST_HISTORY = "test_history/{gameId}"
 
     const val TEST_HISTORY_DETAIL = "test_history_detail/{gameId}/{testMillis}"
@@ -57,7 +63,11 @@ object Routes {
 
     fun libraryPlatformRoute(platform: String) = "library/$platform"
     fun detailsRoute(gameId: String) = "details/$gameId"
+
     fun editStatusRoute(gameId: String) = "edit_status/$gameId"
+    fun editStatusRoute(gameId: String, testMillis: Long) =
+        "edit_status/$gameId/$testMillis"
+
     fun testHistoryRoute(gameId: String) = "test_history/$gameId"
 
     fun testHistoryDetailRoute(gameId: String, testMillis: Long) =
@@ -107,7 +117,8 @@ fun PSGamesApp() {
                 viewModel = vm,
                 onOpenPlatforms = { navController.navigate(Routes.HOME) },
                 onOpenLastTests = { navController.navigate(Routes.LAST_TESTS) },
-                onOpenAbout = { navController.navigate(Routes.ABOUT) }
+                onOpenAbout = { navController.navigate(Routes.ABOUT) },
+                onOpenProfile = { navController.navigate(Routes.PROFILE) }
             )
         }
 
@@ -128,7 +139,7 @@ fun PSGamesApp() {
                 onOpenPs3Games = { navController.navigate(Routes.libraryPlatformRoute("ps3")) },
                 onOpenPcGames = { navController.navigate(Routes.libraryPlatformRoute("pc")) },
                 onOpenSwitchGames = { navController.navigate(Routes.libraryPlatformRoute("switch")) },
-                onOpenAbout = { navController.navigate(Routes.ABOUT) }
+                onOpenProfile = { navController.navigate(Routes.PROFILE) }
             )
         }
 
@@ -210,6 +221,25 @@ fun PSGamesApp() {
             EditStatusScreen(
                 viewModel = vm,
                 gameId = gameId,
+                testMillis = null,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = Routes.EDIT_STATUS_DETAIL,
+            arguments = listOf(
+                navArgument("gameId") { type = NavType.StringType },
+                navArgument("testMillis") { type = NavType.LongType }
+            )
+        ) { entry ->
+            val gameId = entry.arguments?.getString("gameId") ?: return@composable
+            val testMillis = entry.arguments?.getLong("testMillis") ?: return@composable
+
+            EditStatusScreen(
+                viewModel = vm,
+                gameId = gameId,
+                testMillis = testMillis,
                 onBack = { navController.popBackStack() }
             )
         }
@@ -242,7 +272,10 @@ fun PSGamesApp() {
                 viewModel = vm,
                 gameId = gameId,
                 testMillis = testMillis,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onEditGame = { id ->
+                    navController.navigate(Routes.editStatusRoute(id, testMillis))
+                }
             )
         }
 
@@ -269,6 +302,42 @@ fun PSGamesApp() {
                         }
                     }
                 }
+            )
+        }
+
+        composable(Routes.PROFILE) {
+            ProfileScreen(
+                viewModel = vm,
+                onBack = { navController.popBackStack() },
+                onOpenMyTests = { navController.navigate(Routes.MY_TESTS) },
+                onOpenMyComments = { navController.navigate(Routes.MY_COMMENTS) },
+                onOpenMyFavorites = { navController.navigate(Routes.MY_FAVORITES) }
+            )
+        }
+
+        composable(Routes.MY_TESTS) {
+            MyTestsScreen(
+                viewModel = vm,
+                onBack = { navController.popBackStack() },
+                onOpenTestDetails = { gameId, testMillis ->
+                    navController.navigate(Routes.testHistoryDetailRoute(gameId, testMillis))
+                }
+            )
+        }
+        composable(Routes.MY_COMMENTS) {
+            MyCommentsScreen(
+                viewModel = vm,
+                onBack = { navController.popBackStack() },
+                onOpenComment = { gameId, _ ->
+                    navController.navigate(Routes.testHistoryRoute(gameId))
+                }
+            )
+        }
+        composable(Routes.MY_FAVORITES) {
+            MyFavoritesScreen(
+                viewModel = vm,
+                onBack = { navController.popBackStack() },
+                onOpenGame = { gameId -> navController.navigate(Routes.detailsRoute(gameId)) }
             )
         }
     }

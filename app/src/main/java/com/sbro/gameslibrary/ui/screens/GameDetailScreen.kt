@@ -326,15 +326,40 @@ fun GameDetailScreen(
                             ) {
                                 WorkStatusBadge(status = latestStatus)
 
-                                latestTest?.testedDateFormatted
-                                    ?.takeIf { it.isNotBlank() }
-                                    ?.let { date ->
+                                Column(horizontalAlignment = Alignment.End) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        latestTest?.testedDateFormatted
+                                            ?.takeIf { it.isNotBlank() }
+                                            ?.let { date ->
+                                                Text(
+                                                    text = date,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    color = cs.onSurfaceVariant
+                                                )
+                                            }
+
+                                        if (latestTest?.fromAccount == true) {
+                                            Spacer(Modifier.width(6.dp))
+                                            Icon(
+                                                Icons.Filled.CheckCircle,
+                                                contentDescription = "From account",
+                                                tint = cs.primary,
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                        }
+                                    }
+
+                                    val authorName = latestTest?.authorName?.trim().orEmpty()
+                                    if (latestTest?.fromAccount == true && authorName.isNotBlank()) {
+                                        Spacer(Modifier.height(2.dp))
                                         Text(
-                                            text = date,
+                                            text = authorName,
                                             style = MaterialTheme.typography.labelMedium,
-                                            color = cs.onSurfaceVariant
+                                            fontWeight = FontWeight.SemiBold,
+                                            color = cs.onSurface.copy(alpha = 0.85f)
                                         )
                                     }
+                                }
                             }
 
                             if (latestTest != null) {

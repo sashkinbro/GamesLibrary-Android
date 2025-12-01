@@ -65,7 +65,9 @@ private data class LatestTestItem(
     val testedDate: String?,
     val deviceModel: String?,
     val updatedAtMillis: Long,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val authorName: String?,
+    val fromAccount: Boolean
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +104,9 @@ fun LastTestsScreen(
                         testedDate = tr.testedDateFormatted,
                         deviceModel = tr.testedDeviceModel,
                         updatedAtMillis = tr.updatedAtMillis,
-                        imageUrl = game.imageUrl
+                        imageUrl = game.imageUrl,
+                        authorName = tr.authorName,
+                        fromAccount = tr.fromAccount
                     )
                 }
             }
@@ -264,6 +268,7 @@ private fun LatestTestCard(
             }
 
             Column(modifier = Modifier.weight(1f)) {
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = item.gameTitle,
@@ -285,8 +290,13 @@ private fun LatestTestCard(
 
                 Spacer(Modifier.height(4.dp))
 
+                val author = item.authorName?.trim().takeIf {
+                    item.fromAccount && !it.isNullOrBlank()
+                }
+
                 val meta = listOfNotNull(
                     item.testedDate?.takeIf { it.isNotBlank() },
+                    author,
                     item.deviceModel?.takeIf { it.isNotBlank() },
                     statusText
                 ).joinToString(" • ")

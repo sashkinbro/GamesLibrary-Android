@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -34,7 +35,8 @@ fun MainScreen(
     viewModel: GameViewModel,
     onOpenPlatforms: () -> Unit,
     onOpenLastTests: () -> Unit,
-    onOpenAbout: () -> Unit
+    onOpenAbout: () -> Unit,
+    onOpenProfile: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val orientation = configuration.orientation
@@ -132,10 +134,20 @@ fun MainScreen(
 
                         MainMenuButton(
                             title = stringResource(R.string.main_button_last_tests),
-                            subtitle = "",
+                            subtitle = stringResource(R.string.main_button_last_tests_sub_20),
                             icon = Icons.Filled.History,
                             baseColor = MaterialTheme.colorScheme.secondary,
                             onClick = { safeClick(onOpenLastTests) }
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        MainMenuButton(
+                            title = stringResource(R.string.main_button_profile),
+                            subtitle = stringResource(R.string.main_button_profile_sub),
+                            icon = Icons.Filled.Person,
+                            baseColor = MaterialTheme.colorScheme.tertiary,
+                            onClick = { safeClick(onOpenProfile) }
                         )
                     }
                 }
@@ -166,10 +178,20 @@ fun MainScreen(
 
                     MainMenuButton(
                         title = stringResource(R.string.main_button_last_tests),
-                        subtitle = "",
+                        subtitle = stringResource(R.string.main_button_last_tests_sub_20),
                         icon = Icons.Filled.History,
                         baseColor = MaterialTheme.colorScheme.secondary,
                         onClick = { safeClick(onOpenLastTests) }
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    MainMenuButton(
+                        title = stringResource(R.string.main_button_profile),
+                        subtitle = stringResource(R.string.main_button_profile_sub),
+                        icon = Icons.Filled.Person,
+                        baseColor = MaterialTheme.colorScheme.tertiary,
+                        onClick = { safeClick(onOpenProfile) }
                     )
                 }
             }

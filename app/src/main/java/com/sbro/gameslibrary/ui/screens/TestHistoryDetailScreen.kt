@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,15 +26,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.GameViewModel
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +43,8 @@ fun TestHistoryDetailScreen(
     viewModel: GameViewModel,
     gameId: String,
     testMillis: Long,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onEditGame: (String) -> Unit
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
@@ -51,6 +54,8 @@ fun TestHistoryDetailScreen(
     LaunchedEffect(Unit) { viewModel.init(context) }
 
     val games by viewModel.games.collectAsState()
+    val currentUser by viewModel.currentUser.collectAsState()
+
     val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
     val test = remember(game, testMillis) {
         game?.testResults?.firstOrNull { it.updatedAtMillis == testMillis }
@@ -73,11 +78,19 @@ fun TestHistoryDetailScreen(
     ) { pv ->
         if (game == null || test == null) {
             Box(
-                Modifier.fillMaxSize().padding(pv),
+                Modifier
+                    .fillMaxSize()
+                    .padding(pv),
                 contentAlignment = Alignment.Center
             ) { Text(stringResource(R.string.error_test_not_found)) }
             return@Scaffold
         }
+
+        val userUid = currentUser?.uid
+        val canEditTest =
+            userUid != null &&
+                    test.fromAccount &&
+                    test.authorUid == userUid
 
         Column(
             modifier = Modifier
@@ -93,17 +106,56 @@ fun TestHistoryDetailScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(Modifier.padding(14.dp)) {
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
                         WorkStatusBadge(status = test.status)
-                        Text(
-                            text = test.testedDateFormatted.ifBlank { "—" },
-                            style = MaterialTheme.typography.labelMedium,
-                            color = cs.onSurfaceVariant
-                        )
+
+                        Column(horizontalAlignment = Alignment.End) {
+
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = test.testedDateFormatted.ifBlank { "—" },
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = cs.onSurfaceVariant
+                                )
+
+                                if (test.fromAccount) {
+                                    Spacer(Modifier.width(6.dp))
+                                    Icon(
+                                        Icons.Filled.CheckCircle,
+                                        contentDescription = "From account",
+                                        tint = cs.primary,
+                                        modifier = Modifier.size(22.dp)
+                                    )
+                                }
+
+                                if (canEditTest) {
+                                    Spacer(Modifier.width(10.dp))
+                                    IconButton(onClick = { onEditGame(gameId) }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Edit,
+                                            contentDescription = stringResource(R.string.edit),
+                                            tint = cs.primary
+                                        )
+                                    }
+                                }
+                            }
+                            val authorName = test.authorName?.trim().orEmpty()
+                            if (test.fromAccount && authorName.isNotBlank()) {
+                                Spacer(Modifier.height(2.dp))
+                                Text(
+                                    text = authorName,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = cs.onSurface.copy(alpha = 0.85f)
+                                )
+                            }
+                        }
                     }
 
                     HorizontalDivider(
@@ -396,7 +448,6 @@ private fun extractYouTubeId(url: String): String? {
         else -> null
     }?.takeIf { it.isNotBlank() }
 }
-
 
 @Composable
 private fun SectionTitle(text: String) {

@@ -90,7 +90,13 @@ data class GameTestResult(
 
 
     val testedDateFormatted: String = "",
-    val updatedAtMillis: Long = 0L
+    val updatedAtMillis: Long = 0L,
+    val authorUid: String? = null,
+    val authorName: String? = null,
+    val authorEmail: String? = null,
+    val authorPhotoUrl: String? = null,
+    val fromAccount: Boolean = false,
+
 ) : Serializable
 
 data class Game(
@@ -103,7 +109,6 @@ data class Game(
     val telegramLink: String = "",
     val description: String,
     val platform: String,
-
     val testResults: List<GameTestResult> = emptyList(),
     val isFavorite: Boolean = false
 ) : Serializable {

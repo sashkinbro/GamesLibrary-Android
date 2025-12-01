@@ -73,6 +73,7 @@ import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.IssueType
 import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
+import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.viewmodel.GameViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -132,6 +133,7 @@ data class EditDialogResult(
 fun EditStatusScreen(
     viewModel: GameViewModel = viewModel(),
     gameId: String,
+    testMillis: Long? = null,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -162,36 +164,84 @@ fun EditStatusScreen(
 
     EditStatusContent(
         game = game,
+        testMillis = testMillis,
         onBack = onBack,
         onSave = { result ->
-            viewModel.updateGameStatus(
-                context = context,
-                gameId = game.id,
-                newStatus = result.status,
-                testedAndroidVersion = result.testedAndroidVersion,
-                testedDeviceModel = result.testedDeviceModel,
-                testedGpuModel = result.testedGpuModel,
-                testedRam = result.testedRam,
-                testedWrapper = result.testedWrapper,
-                testedPerformanceMode = result.testedPerformanceMode,
-                testedApp = result.testedApp,
-                testedAppVersion = result.testedAppVersion,
-                testedGameVersionOrBuild = result.testedGameVersionOrBuild,
-                issueType = result.issueType,
-                reproducibility = result.reproducibility,
-                workaround = result.workaround,
-                issueNote = result.issueNote,
-                emulatorBuildType = result.emulatorBuildType,
-                accuracyLevel = result.accuracyLevel,
-                resolutionScale = result.resolutionScale,
-                asyncShaderEnabled = result.asyncShaderEnabled,
-                frameSkip = result.frameSkip,
-                resolutionWidth = result.resolutionWidth,
-                resolutionHeight = result.resolutionHeight,
-                fpsMin = result.fpsMin,
-                fpsMax = result.fpsMax,
-                mediaLink = result.mediaLink
-            )
+
+            if (testMillis == null) {
+                viewModel.updateGameStatus(
+                    context = context,
+                    gameId = game.id,
+                    newStatus = result.status,
+                    testedAndroidVersion = result.testedAndroidVersion,
+                    testedDeviceModel = result.testedDeviceModel,
+                    testedGpuModel = result.testedGpuModel,
+                    testedRam = result.testedRam,
+                    testedWrapper = result.testedWrapper,
+                    testedPerformanceMode = result.testedPerformanceMode,
+                    testedApp = result.testedApp,
+                    testedAppVersion = result.testedAppVersion,
+                    testedGameVersionOrBuild = result.testedGameVersionOrBuild,
+                    issueType = result.issueType,
+                    reproducibility = result.reproducibility,
+                    workaround = result.workaround,
+                    issueNote = result.issueNote,
+                    emulatorBuildType = result.emulatorBuildType,
+                    accuracyLevel = result.accuracyLevel,
+                    resolutionScale = result.resolutionScale,
+                    asyncShaderEnabled = result.asyncShaderEnabled,
+                    frameSkip = result.frameSkip,
+                    resolutionWidth = result.resolutionWidth,
+                    resolutionHeight = result.resolutionHeight,
+                    fpsMin = result.fpsMin,
+                    fpsMax = result.fpsMax,
+                    mediaLink = result.mediaLink
+                )
+            } else {
+                val updated = GameTestResult(
+                    status = result.status,
+
+                    testedAndroidVersion = result.testedAndroidVersion,
+                    testedDeviceModel = result.testedDeviceModel,
+                    testedGpuModel = result.testedGpuModel,
+                    testedRam = result.testedRam,
+                    testedWrapper = result.testedWrapper,
+                    testedPerformanceMode = result.testedPerformanceMode,
+
+                    testedApp = result.testedApp,
+                    testedAppVersion = result.testedAppVersion,
+                    testedGameVersionOrBuild = result.testedGameVersionOrBuild,
+
+                    issueType = result.issueType,
+                    reproducibility = result.reproducibility,
+                    workaround = result.workaround,
+                    issueNote = result.issueNote,
+
+                    emulatorBuildType = result.emulatorBuildType,
+                    accuracyLevel = result.accuracyLevel,
+                    resolutionScale = result.resolutionScale,
+                    asyncShaderEnabled = result.asyncShaderEnabled,
+                    frameSkip = result.frameSkip,
+
+                    resolutionWidth = result.resolutionWidth,
+                    resolutionHeight = result.resolutionHeight,
+                    fpsMin = result.fpsMin,
+                    fpsMax = result.fpsMax,
+
+                    mediaLink = result.mediaLink,
+
+                    testedDateFormatted = "",
+                    updatedAtMillis = testMillis
+                )
+
+                viewModel.editTestResult(
+                    context = context,
+                    gameId = game.id,
+                    testMillis = testMillis,
+                    newResult = updated
+                )
+            }
+
             onBack()
         }
     )
@@ -202,6 +252,7 @@ fun EditStatusScreen(
 @Composable
 private fun EditStatusContent(
     game: Game,
+    testMillis: Long?,
     onBack: () -> Unit,
     onSave: (EditDialogResult) -> Unit
 ) {
@@ -230,7 +281,6 @@ private fun EditStatusContent(
     val androidMajor = remember {
         Build.VERSION.RELEASE?.substringBefore(".") ?: ""
     }
-
 
     var androidVersionSelected by remember { mutableStateOf(androidMajor) }
     var androidVersionCustom by remember { mutableStateOf(if (androidMajor.isBlank()) androidMajor else "") }
@@ -336,6 +386,79 @@ private fun EditStatusContent(
         if (frameSkipSelected == otherLabel) frameSkipCustom.trim()
         else frameSkipSelected.trim()
 
+    LaunchedEffect(testMillis, game.id) {
+        if (testMillis != null) {
+            val t = game.testResults.firstOrNull { it.updatedAtMillis == testMillis }
+            if (t != null) {
+                currentStatus = t.status
+
+                // device/env
+                androidVersionSelected =
+                    if (androidVersions.contains(t.testedAndroidVersion)) t.testedAndroidVersion else otherLabel
+                androidVersionCustom =
+                    if (androidVersionSelected == otherLabel) t.testedAndroidVersion else ""
+
+                deviceModelText = t.testedDeviceModel
+                gpuModelText = t.testedGpuModel
+
+                ramSelected =
+                    if (ramOptions.contains(t.testedRam)) t.testedRam else otherLabel
+                ramCustom =
+                    if (ramSelected == otherLabel) t.testedRam else ""
+
+                wrapperSelected =
+                    if (wrapperOptions.contains(t.testedWrapper)) t.testedWrapper else otherLabel
+                wrapperCustom =
+                    if (wrapperSelected == otherLabel) t.testedWrapper else ""
+
+                perfModeSelected =
+                    if (perfModeOptions.contains(t.testedPerformanceMode)) t.testedPerformanceMode else otherLabel
+                perfModeCustom =
+                    if (perfModeSelected == otherLabel) t.testedPerformanceMode else ""
+
+                // app/game
+                selectedApp =
+                    if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
+                appVersionText = t.testedAppVersion
+                gameVersionText = t.testedGameVersionOrBuild
+
+                // issue
+                selectedIssueType = t.issueType
+                selectedRepro = t.reproducibility
+                workaroundText = t.workaround
+                issueNoteText = t.issueNote
+
+                // emulator
+                selectedEmuBuild = t.emulatorBuildType
+                accuracySelected =
+                    if (accuracyOptions.contains(t.accuracyLevel)) t.accuracyLevel else otherLabel
+                accuracyCustom =
+                    if (accuracySelected == otherLabel) t.accuracyLevel else ""
+
+                scaleSelected =
+                    if (scaleOptions.contains(t.resolutionScale)) t.resolutionScale else otherLabel
+                scaleCustom =
+                    if (scaleSelected == otherLabel) t.resolutionScale else ""
+
+                asyncShaderEnabled = t.asyncShaderEnabled
+
+                frameSkipSelected =
+                    if (frameSkipOptions.contains(t.frameSkip)) t.frameSkip else otherLabel
+                frameSkipCustom =
+                    if (frameSkipSelected == otherLabel) t.frameSkip else ""
+
+                // metrics
+                resW = t.resolutionWidth
+                resH = t.resolutionHeight
+                fpsFrom = t.fpsMin
+                fpsTo = t.fpsMax
+
+                // media
+                mediaLinkText = t.mediaLink
+            }
+        }
+    }
+
     LaunchedEffect(resolutionPresetSelected) {
         if (resolutionPresetSelected.isNotBlank() &&
             resolutionPresetSelected != customLabel
@@ -423,7 +546,6 @@ private fun EditStatusContent(
             }
         }
     }
-
 
     if (showSearchDialog) {
         AlertDialog(
