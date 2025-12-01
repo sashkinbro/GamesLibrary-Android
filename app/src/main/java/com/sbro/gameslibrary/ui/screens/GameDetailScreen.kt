@@ -35,6 +35,10 @@ import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.viewmodel.GameViewModel
 import com.sbro.gameslibrary.components.*
 import com.sbro.gameslibrary.components.GameTestResult
+import com.sbro.gameslibrary.viewmodel.TestComment
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -55,6 +59,13 @@ fun GameDetailScreen(
 
     var expandedDesc by remember { mutableStateOf(false) }
 
+    val commentsByTest by viewModel.commentsByTest.collectAsState()
+    var isLoadingMoreComments by remember { mutableStateOf(false) }
+
+    LaunchedEffect(gameId) {
+        viewModel.loadCommentsForGame(gameId)
+    }
+
     if (game == null) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -71,6 +82,13 @@ fun GameDetailScreen(
     val latestTest = game.latestTestOrNull()
     val latestStatus = game.overallStatus()
     val descText = game.description.ifBlank { stringResource(R.string.no_description) }
+
+    val allCommentsForGame = remember(commentsByTest, gameId) {
+        commentsByTest.values
+            .flatten()
+            .filter { it.gameId == gameId }
+            .sortedByDescending { it.createdAt?.toDate()?.time ?: 0L }
+    }
 
     Scaffold(
         containerColor = cs.background,
@@ -479,6 +497,65 @@ fun GameDetailScreen(
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Text(
+                        text = stringResource(R.string.comments_section_title, allCommentsForGame.size),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = cs.onBackground
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    if (allCommentsForGame.isEmpty()) {
+                        Surface(
+                            shape = RoundedCornerShape(14.dp),
+                            color = cs.surfaceVariant.copy(alpha = 0.45f),
+                            border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = stringResource(R.string.comments_empty),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = cs.onSurface.copy(alpha = 0.7f),
+                                modifier = Modifier.padding(14.dp)
+                            )
+                        }
+                    } else {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            allCommentsForGame.forEach { comment ->
+                                CommentCard(comment)
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        OutlinedButton(
+                            onClick = {
+                                isLoadingMoreComments = true
+                                viewModel.loadMoreCommentsForGame(game.id)
+                                // Simple UI flag reset after recomposition
+                                isLoadingMoreComments = false
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(14.dp),
+                            enabled = !isLoadingMoreComments
+                        ) {
+                            if (isLoadingMoreComments) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    strokeWidth = 2.dp
+                                )
+                                Spacer(Modifier.width(8.dp))
+                            }
+                            Text(stringResource(R.string.comments_load_more))
+                        }
+                    }
+
                     Spacer(Modifier.height(24.dp))
                 }
             }
@@ -655,6 +732,60 @@ private fun TestVideoCard(
     }
 }
 
+@Composable
+private fun CommentCard(comment: TestComment) {
+    val cs = MaterialTheme.colorScheme
+
+    val dateStr = remember(comment.createdAt) {
+        val millis = comment.createdAt?.toDate()?.time ?: 0L
+        if (millis == 0L) "" else {
+            val fmt = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
+            fmt.format(Date(millis))
+        }
+    }
+
+    Surface(
+        shape = RoundedCornerShape(14.dp),
+        color = cs.surfaceVariant.copy(alpha = 0.45f),
+        border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val author = comment.authorName?.takeIf { it.isNotBlank() }
+                    ?: comment.authorDevice.takeIf { it.isNotBlank() }
+                    ?: stringResource(R.string.comments_unknown_author)
+
+                Text(
+                    text = author,
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = cs.onSurface
+                )
+
+                if (dateStr.isNotBlank()) {
+                    Text(
+                        text = dateStr,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = cs.onSurface.copy(alpha = 0.7f)
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(6.dp))
+
+            Text(
+                text = comment.text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = cs.onSurface.copy(alpha = 0.9f)
+            )
+        }
+    }
+}
 
 private fun youtubeThumbnailUrl(url: String): String? {
     val u = url.trim()

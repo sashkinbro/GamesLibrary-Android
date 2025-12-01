@@ -271,6 +271,10 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="profile_stats_comments">Мої коментарі</string>
     <string name="profile_stats_favorites">Улюблені</string>
     <string name="profile_stats_title">Статистика</string>
+    <string name="comments_section_title">Коментарі (%1$d)</string>
+    <string name="comments_empty">Коментарів ще немає</string>
+    <string name="comments_load_more">Завантажити ще коментарі</string>
+    <string name="comments_unknown_author">Невідомий автор</string>
 
 
 </resources>

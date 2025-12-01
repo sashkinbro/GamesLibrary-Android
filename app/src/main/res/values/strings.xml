@@ -271,6 +271,10 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="profile_stats_comments">My comments</string>
     <string name="profile_stats_favorites">Favorites</string>
     <string name="profile_stats_title">Statistics</string>
+    <string name="comments_section_title">Comments (%1$d)</string>
+    <string name="comments_empty">No comments yet</string>
+    <string name="comments_load_more">Load more comments</string>
+    <string name="comments_unknown_author">Unknown author</string>
 
 
 
