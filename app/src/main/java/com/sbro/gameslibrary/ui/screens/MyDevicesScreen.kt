@@ -3,6 +3,7 @@ package com.sbro.gameslibrary.ui.screens
 import android.os.SystemClock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -51,7 +52,7 @@ fun MyDevicesScreen(
 
     var showSearchDialog by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
-    val filteredPhones = remember(searchQuery, state.isLoading) {
+    val filteredPhones = remember(searchQuery) {
         viewModel.searchPhones(searchQuery)
     }
 
@@ -187,6 +188,7 @@ fun MyDevicesScreen(
                 .fillMaxSize()
                 .background(background)
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -205,7 +207,7 @@ fun MyDevicesScreen(
 
                 Button(
                     onClick = { safeClick { showSearchDialog = true; searchQuery = "" } },
-                    enabled = state.devices.size < 5,
+                    enabled = state.devices.size < 5 && !state.isLoading,
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -215,79 +217,92 @@ fun MyDevicesScreen(
                 }
 
                 Spacer(Modifier.height(12.dp))
-
-                if (state.devices.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.my_devices_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = cs.onSurfaceVariant
-                    )
-                } else {
-                    LazyColumn(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        items(state.devices) { d ->
-                            ElevatedCard(
-                                shape = RoundedCornerShape(20.dp),
-                                colors = CardDefaults.elevatedCardColors(
-                                    containerColor = cs.surfaceContainerHigh
-                                ),
-                                elevation = CardDefaults.elevatedCardElevation(3.dp),
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Row(
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically
+                if (!state.isLoading) {
+                    if (state.devices.isEmpty()) {
+                        Text(
+                            text = stringResource(R.string.my_devices_empty),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = cs.onSurfaceVariant
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(state.devices) { d ->
+                                ElevatedCard(
+                                    shape = RoundedCornerShape(20.dp),
+                                    colors = CardDefaults.elevatedCardColors(
+                                        containerColor = cs.surfaceContainerHigh
+                                    ),
+                                    elevation = CardDefaults.elevatedCardElevation(3.dp),
+                                    modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Icon(
-                                        Icons.Outlined.PhoneAndroid,
-                                        null,
-                                        tint = cs.primary
-                                    )
-                                    Spacer(Modifier.width(12.dp))
-                                    Column(Modifier.weight(1f)) {
-                                        Text(
-                                            text = d.name.orEmpty(),
-                                            style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                        if (!d.cpu.isNullOrBlank()) {
-                                            Text(
-                                                text = stringResource(
-                                                    R.string.search_device_cpu_prefix,
-                                                    d.cpu
-                                                ),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = cs.onSurfaceVariant
-                                            )
-                                        }
-                                        if (!d.ram.isNullOrBlank()) {
-                                            Text(
-                                                text = stringResource(
-                                                    R.string.search_device_ram_prefix,
-                                                    d.ram
-                                                ),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = cs.onSurfaceVariant
-                                            )
-                                        }
-                                    }
-
-                                    IconButton(
-                                        onClick = { safeClick { viewModel.removeDevice(d.id) } }
+                                    Row(
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp),
+                                        verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Icon(
-                                            Icons.Filled.Delete,
-                                            contentDescription = null
+                                            Icons.Outlined.PhoneAndroid,
+                                            null,
+                                            tint = cs.primary
                                         )
+                                        Spacer(Modifier.width(12.dp))
+                                        Column(Modifier.weight(1f)) {
+                                            Text(
+                                                text = d.name.orEmpty(),
+                                                style = MaterialTheme.typography.titleMedium,
+                                                fontWeight = FontWeight.SemiBold
+                                            )
+                                            if (!d.cpu.isNullOrBlank()) {
+                                                Text(
+                                                    text = stringResource(
+                                                        R.string.search_device_cpu_prefix,
+                                                        d.cpu
+                                                    ),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = cs.onSurfaceVariant
+                                                )
+                                            }
+                                            if (!d.ram.isNullOrBlank()) {
+                                                Text(
+                                                    text = stringResource(
+                                                        R.string.search_device_ram_prefix,
+                                                        d.ram
+                                                    ),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = cs.onSurfaceVariant
+                                                )
+                                            }
+                                        }
+
+                                        IconButton(
+                                            onClick = { safeClick { viewModel.removeDevice(d.id) } }
+                                        ) {
+                                            Icon(
+                                                Icons.Filled.Delete,
+                                                contentDescription = null
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                }
+            }
+
+            if (state.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(cs.background.copy(alpha = 0.35f))
+                        .clickable(enabled = true, indication = null, interactionSource = remember { MutableInteractionSource() }) {},
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
             }
         }

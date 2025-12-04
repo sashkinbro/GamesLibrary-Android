@@ -16,10 +16,13 @@ import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.util.JsonParser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -86,6 +89,7 @@ class GameViewModel : ViewModel() {
     private var appContext: Context? = null
 
     private var favoritesJob: Job? = null
+    private var searchJob: Job? = null
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -116,6 +120,7 @@ class GameViewModel : ViewModel() {
         }
 
         observeFavorites()
+        observeSearch()
 
         if (_games.value.isNotEmpty() || _uiState.value is UiState.Loading) return
 
@@ -124,6 +129,19 @@ class GameViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             flushPendingTests(context)
+        }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearch() {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            _searchText
+                .debounce(300)
+                .distinctUntilChanged()
+                .collectLatest {
+                    recomputeFiltered()
+                }
         }
     }
 
@@ -224,7 +242,6 @@ class GameViewModel : ViewModel() {
 
     fun onSearchChange(text: String) {
         _searchText.value = text
-        recomputeFiltered()
     }
 
     fun onSortChange(option: SortOption) {
