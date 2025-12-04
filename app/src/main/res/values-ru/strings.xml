@@ -275,5 +275,15 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="comments_empty">Комментариев пока нет</string>
     <string name="comments_load_more">Загрузить еще комментарии</string>
     <string name="comments_unknown_author">Неизвестный автор</string>
+    <string name="sort_original">Исходный порядок</string>
+    <string name="sort_rating_high">Рейтинг (по убыванию)</string>
+    <string name="sort_genre_az">Жанр A–Z</string>
+    <string name="my_devices_title">Мои устройства</string>
+    <string name="profile_menu_devices_sub">Выбери до 5 своих смартфонов</string>
+    <string name="my_devices_add_from_db">Добавить из базы</string>
+    <string name="my_devices_empty">Ты ещё не добавил ни одного устройства</string>
+    <string name="my_devices_limit_hint">Добавлено %1$d/5 устройств</string>
+    <string name="my_devices_need_login">Войди в аккаунт, чтобы добавлять свои устройства</string>
+    <string name="pick_from_my_devices">Выбрать из своих</string>
 
 </resources>

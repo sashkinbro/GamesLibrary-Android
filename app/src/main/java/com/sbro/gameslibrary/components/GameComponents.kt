@@ -72,7 +72,8 @@ fun GameCard(
     onEditStatus: (Game) -> Unit,
     onToggleFavorite: (Game) -> Unit,
     onShowTestHistory: (Game) -> Unit,
-    onOpenDetails: (Game) -> Unit
+    onOpenDetails: (Game) -> Unit,
+    showTestBadges: Boolean = true
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
@@ -111,10 +112,7 @@ fun GameCard(
     val cardColor = cs.surface
     val latestTest = game.latestTestOrNull()
     val latestStatus = game.overallStatus()
-
-
     val testedCount = game.testResults.size
-
 
     val last3Devices = remember(game.testResults) {
         game.testResults
@@ -259,46 +257,48 @@ fun GameCard(
 
                     Spacer(modifier = Modifier.height(betweenBlocks))
 
-                    WorkStatusBadge(
-                        status = latestStatus,
-                        onClick = {
-                            if (latestStatus == WorkStatus.NOT_WORKING &&
-                                latestTest?.issueNote?.isNotBlank() == true
-                            ) {
-                                showIssueDialog = true
-                            }
-                        },
-                        isTabletOrWide = isTabletOrWide,
-                        iconSize = statusIcon,
-                        horizontalPadding = statusHPadding,
-                        verticalPadding = statusVPadding
-                    )
+                    if (showTestBadges) {
+                        WorkStatusBadge(
+                            status = latestStatus,
+                            onClick = {
+                                if (latestStatus == WorkStatus.NOT_WORKING &&
+                                    latestTest?.issueNote?.isNotBlank() == true
+                                ) {
+                                    showIssueDialog = true
+                                }
+                            },
+                            isTabletOrWide = isTabletOrWide,
+                            iconSize = statusIcon,
+                            horizontalPadding = statusHPadding,
+                            verticalPadding = statusVPadding
+                        )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    TestedCountBadge(
-                        count = testedCount,
-                        isTabletOrWide = isTabletOrWide,
-                        iconSize = testedIcon,
-                        horizontalPadding = testedHPadding,
-                        verticalPadding = testedVPadding
-                    )
-
-                    if (last3Devices.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                            verticalArrangement = Arrangement.spacedBy(6.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            last3Devices.forEach { device ->
-                                DeviceChip(
-                                    text = device,
-                                    isTabletOrWide = isTabletOrWide,
-                                    iconSize = deviceChipIcon,
-                                    radius = deviceChipRadius
-                                )
+                        TestedCountBadge(
+                            count = testedCount,
+                            isTabletOrWide = isTabletOrWide,
+                            iconSize = testedIcon,
+                            horizontalPadding = testedHPadding,
+                            verticalPadding = testedVPadding
+                        )
+
+                        if (last3Devices.isNotEmpty()) {
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                last3Devices.forEach { device ->
+                                    DeviceChip(
+                                        text = device,
+                                        isTabletOrWide = isTabletOrWide,
+                                        iconSize = deviceChipIcon,
+                                        radius = deviceChipRadius
+                                    )
+                                }
                             }
                         }
                     }
@@ -372,7 +372,7 @@ fun GameCard(
                         }
                     }
 
-                    if (game.testResults.isNotEmpty()) {
+                    if (showTestBadges && game.testResults.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(6.dp))
 
                         TextButton(onClick = { onShowTestHistory(game) }) {

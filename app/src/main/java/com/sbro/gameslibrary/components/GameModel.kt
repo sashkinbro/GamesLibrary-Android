@@ -50,28 +50,25 @@ enum class EmulatorBuildType(val firestoreValue: String) {
 }
 
 data class GameTestResult(
+    val testId: String = "",
     val status: WorkStatus = WorkStatus.UNTESTED,
 
     val testedAndroidVersion: String = "",
     val testedDeviceModel: String = "",
-
 
     val testedGpuModel: String = "",
     val testedRam: String = "",
     val testedWrapper: String = "",
     val testedPerformanceMode: String = "",
 
-
     val testedApp: String = "",
     val testedAppVersion: String = "",
     val testedGameVersionOrBuild: String = "",
-
 
     val issueType: IssueType = IssueType.CRASH,
     val reproducibility: Reproducibility = Reproducibility.ALWAYS,
     val workaround: String = "",
     val issueNote: String = "",
-
 
     val emulatorBuildType: EmulatorBuildType = EmulatorBuildType.STABLE,
     val accuracyLevel: String = "",
@@ -79,15 +76,12 @@ data class GameTestResult(
     val asyncShaderEnabled: Boolean = false,
     val frameSkip: String = "",
 
-
     val resolutionWidth: String = "",
     val resolutionHeight: String = "",
     val fpsMin: String = "",
     val fpsMax: String = "",
 
-
     val mediaLink: String = "",
-
 
     val testedDateFormatted: String = "",
     val updatedAtMillis: Long = 0L,
@@ -95,8 +89,7 @@ data class GameTestResult(
     val authorName: String? = null,
     val authorEmail: String? = null,
     val authorPhotoUrl: String? = null,
-    val fromAccount: Boolean = false,
-
+    val fromAccount: Boolean = false
 ) : Serializable
 
 data class Game(

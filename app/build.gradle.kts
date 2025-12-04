@@ -25,8 +25,8 @@ android {
         applicationId = "com.sbro.gameslibrary"
         minSdk = 24
         targetSdk = 55
-        versionCode = 98
-        versionName = "1.1.3"
+        versionCode = 109
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -111,4 +111,6 @@ dependencies {
     // Google Sign-In
     implementation(libs.play.services.auth)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.kotlinx.serialization.json)
+    
 }

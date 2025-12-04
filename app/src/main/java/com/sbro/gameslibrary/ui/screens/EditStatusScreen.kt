@@ -65,8 +65,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.EmulatorBuildType
 import com.sbro.gameslibrary.components.Game
@@ -74,31 +72,13 @@ import com.sbro.gameslibrary.components.IssueType
 import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.components.GameTestResult
+import com.sbro.gameslibrary.util.PhoneDbItem
+import com.sbro.gameslibrary.util.loadPhonesFromAssets
 import com.sbro.gameslibrary.viewmodel.GameViewModel
-import kotlinx.coroutines.Dispatchers
+import com.sbro.gameslibrary.viewmodel.MyDevicesViewModel
+import com.sbro.gameslibrary.viewmodel.MyDevicesState
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.InputStreamReader
 import java.util.Locale
-
-data class PhoneDbItem(
-    val id: Int = 0,
-    val name: String? = null,
-    val cpu: String? = null,
-    val ram: String? = null
-)
-
-private suspend fun loadPhonesFromAssets(context: android.content.Context): List<PhoneDbItem> =
-    withContext(Dispatchers.IO) {
-        runCatching {
-            context.assets.open("phone.json").use { input ->
-                InputStreamReader(input).use { reader ->
-                    val type = object : TypeToken<List<PhoneDbItem>>() {}.type
-                    Gson().fromJson<List<PhoneDbItem>>(reader, type) ?: emptyList()
-                }
-            }
-        }.getOrElse { emptyList() }
-    }
 
 data class EditDialogResult(
     val status: WorkStatus,
@@ -137,6 +117,11 @@ fun EditStatusScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+
+    val devicesVm: MyDevicesViewModel = viewModel()
+    LaunchedEffect(Unit) { devicesVm.init(context) }
+    val devicesState by devicesVm.state.collectAsState()
+
     val games by viewModel.games.collectAsState()
     val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
 
@@ -155,7 +140,12 @@ fun EditStatusScreen(
                 )
             }
         ) { pv ->
-            Box(Modifier.fillMaxSize().padding(pv), contentAlignment = Alignment.Center) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(pv),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(stringResource(R.string.edit_status_game_not_found))
             }
         }
@@ -165,71 +155,77 @@ fun EditStatusScreen(
     EditStatusContent(
         game = game,
         testMillis = testMillis,
+        devicesState = devicesState,
         onBack = onBack,
         onSave = { result ->
 
             if (testMillis == null) {
+
+                val payload = GameViewModel.NewTestPayload(
+                    newStatus = result.status,
+
+                    testedAndroidVersion = result.testedAndroidVersion,
+                    testedDeviceModel = result.testedDeviceModel,
+                    testedGpuModel = result.testedGpuModel,
+                    testedRam = result.testedRam,
+                    testedWrapper = result.testedWrapper,
+                    testedPerformanceMode = result.testedPerformanceMode,
+
+                    testedApp = result.testedApp,
+                    testedAppVersion = result.testedAppVersion,
+                    testedGameVersionOrBuild = result.testedGameVersionOrBuild,
+
+                    issueType = result.issueType,
+                    reproducibility = result.reproducibility,
+                    workaround = result.workaround,
+                    issueNote = result.issueNote,
+
+                    emulatorBuildType = result.emulatorBuildType,
+                    accuracyLevel = result.accuracyLevel,
+                    resolutionScale = result.resolutionScale,
+                    asyncShaderEnabled = result.asyncShaderEnabled,
+                    frameSkip = result.frameSkip,
+
+                    resolutionWidth = result.resolutionWidth,
+                    resolutionHeight = result.resolutionHeight,
+                    fpsMin = result.fpsMin,
+                    fpsMax = result.fpsMax,
+
+                    mediaLink = result.mediaLink
+                )
+
                 viewModel.updateGameStatus(
                     context = context,
                     gameId = game.id,
-                    newStatus = result.status,
-                    testedAndroidVersion = result.testedAndroidVersion,
-                    testedDeviceModel = result.testedDeviceModel,
-                    testedGpuModel = result.testedGpuModel,
-                    testedRam = result.testedRam,
-                    testedWrapper = result.testedWrapper,
-                    testedPerformanceMode = result.testedPerformanceMode,
-                    testedApp = result.testedApp,
-                    testedAppVersion = result.testedAppVersion,
-                    testedGameVersionOrBuild = result.testedGameVersionOrBuild,
-                    issueType = result.issueType,
-                    reproducibility = result.reproducibility,
-                    workaround = result.workaround,
-                    issueNote = result.issueNote,
-                    emulatorBuildType = result.emulatorBuildType,
-                    accuracyLevel = result.accuracyLevel,
-                    resolutionScale = result.resolutionScale,
-                    asyncShaderEnabled = result.asyncShaderEnabled,
-                    frameSkip = result.frameSkip,
-                    resolutionWidth = result.resolutionWidth,
-                    resolutionHeight = result.resolutionHeight,
-                    fpsMin = result.fpsMin,
-                    fpsMax = result.fpsMax,
-                    mediaLink = result.mediaLink
+                    payload = payload
                 )
+
             } else {
                 val updated = GameTestResult(
                     status = result.status,
-
                     testedAndroidVersion = result.testedAndroidVersion,
                     testedDeviceModel = result.testedDeviceModel,
                     testedGpuModel = result.testedGpuModel,
                     testedRam = result.testedRam,
                     testedWrapper = result.testedWrapper,
                     testedPerformanceMode = result.testedPerformanceMode,
-
                     testedApp = result.testedApp,
                     testedAppVersion = result.testedAppVersion,
                     testedGameVersionOrBuild = result.testedGameVersionOrBuild,
-
                     issueType = result.issueType,
                     reproducibility = result.reproducibility,
                     workaround = result.workaround,
                     issueNote = result.issueNote,
-
                     emulatorBuildType = result.emulatorBuildType,
                     accuracyLevel = result.accuracyLevel,
                     resolutionScale = result.resolutionScale,
                     asyncShaderEnabled = result.asyncShaderEnabled,
                     frameSkip = result.frameSkip,
-
                     resolutionWidth = result.resolutionWidth,
                     resolutionHeight = result.resolutionHeight,
                     fpsMin = result.fpsMin,
                     fpsMax = result.fpsMax,
-
                     mediaLink = result.mediaLink,
-
                     testedDateFormatted = "",
                     updatedAtMillis = testMillis
                 )
@@ -253,6 +249,7 @@ fun EditStatusScreen(
 private fun EditStatusContent(
     game: Game,
     testMillis: Long?,
+    devicesState: MyDevicesState,
     onBack: () -> Unit,
     onSave: (EditDialogResult) -> Unit
 ) {
@@ -392,7 +389,6 @@ private fun EditStatusContent(
             if (t != null) {
                 currentStatus = t.status
 
-                // device/env
                 androidVersionSelected =
                     if (androidVersions.contains(t.testedAndroidVersion)) t.testedAndroidVersion else otherLabel
                 androidVersionCustom =
@@ -416,19 +412,16 @@ private fun EditStatusContent(
                 perfModeCustom =
                     if (perfModeSelected == otherLabel) t.testedPerformanceMode else ""
 
-                // app/game
                 selectedApp =
                     if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
                 appVersionText = t.testedAppVersion
                 gameVersionText = t.testedGameVersionOrBuild
 
-                // issue
                 selectedIssueType = t.issueType
                 selectedRepro = t.reproducibility
                 workaroundText = t.workaround
                 issueNoteText = t.issueNote
 
-                // emulator
                 selectedEmuBuild = t.emulatorBuildType
                 accuracySelected =
                     if (accuracyOptions.contains(t.accuracyLevel)) t.accuracyLevel else otherLabel
@@ -447,13 +440,11 @@ private fun EditStatusContent(
                 frameSkipCustom =
                     if (frameSkipSelected == otherLabel) t.frameSkip else ""
 
-                // metrics
                 resW = t.resolutionWidth
                 resH = t.resolutionHeight
                 fpsFrom = t.fpsMin
                 fpsTo = t.fpsMax
 
-                // media
                 mediaLinkText = t.mediaLink
             }
         }
@@ -518,6 +509,8 @@ private fun EditStatusContent(
 
     var showSearchDialog by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
+
+    var showMyDevicesDialog by remember { mutableStateOf(false) }
 
     val filteredPhones = remember(phoneDb, searchQuery) {
         val q = searchQuery.trim().lowercase(Locale.getDefault())
@@ -677,6 +670,67 @@ private fun EditStatusContent(
         )
     }
 
+    if (showMyDevicesDialog) {
+        AlertDialog(
+            onDismissRequest = { showMyDevicesDialog = false },
+            title = {
+                Text(
+                    text = stringResource(R.string.pick_from_my_devices),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { showMyDevicesDialog = false }) {
+                    Text(stringResource(R.string.action_close))
+                }
+            },
+            text = {
+                LazyColumn(Modifier.heightIn(max = 360.dp)) {
+                    items(devicesState.devices) { d ->
+                        Card(
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .clickable {
+                                    applyPhoneSpec(d)
+                                    showMyDevicesDialog = false
+                                }
+                        ) {
+                            Row(
+                                Modifier.padding(14.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(Icons.Outlined.PhoneAndroid, null)
+                                Spacer(Modifier.width(10.dp))
+                                Column {
+                                    Text(d.name.orEmpty(), fontWeight = FontWeight.SemiBold)
+                                    if (!d.cpu.isNullOrBlank()) {
+                                        Text(
+                                            text = stringResource(R.string.search_device_cpu_prefix,
+                                                d.cpu
+                                            ),
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                    }
+                                    if (!d.ram.isNullOrBlank()) {
+                                        Text(
+                                            text = stringResource(R.string.search_device_ram_prefix,
+                                                d.ram
+                                            ),
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             Column {
@@ -727,6 +781,15 @@ private fun EditStatusContent(
                     showSearchDialog = true
                 }) {
                     Text(stringResource(R.string.search_in_db_button))
+                }
+
+                Spacer(Modifier.width(8.dp))
+
+                Button(
+                    onClick = { showMyDevicesDialog = true },
+                    enabled = devicesState.isLoggedIn && devicesState.devices.isNotEmpty()
+                ) {
+                    Text(stringResource(R.string.pick_from_my_devices))
                 }
             }
 

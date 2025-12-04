@@ -25,20 +25,25 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.Game
-import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.MyFavoritesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyFavoritesScreen(
-    viewModel: GameViewModel,
+    viewModel: MyFavoritesViewModel,
     onBack: () -> Unit,
     onOpenGame: (String) -> Unit
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
 
+    LaunchedEffect(Unit) {
+        viewModel.init(context)
+    }
+
     val user by viewModel.currentUser.collectAsState()
-    val games by viewModel.games.collectAsState()
+    val favorites by viewModel.favorites.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
@@ -47,8 +52,6 @@ fun MyFavoritesScreen(
         lastClickTime.longValue = now
         action()
     }
-
-    val favorites = remember(games) { games.filter { it.isFavorite } }
 
     val background = Brush.verticalGradient(
         listOf(cs.background, cs.surfaceContainer)
@@ -77,7 +80,6 @@ fun MyFavoritesScreen(
             }
         }
     ) { pv ->
-
         if (user == null) {
             Box(
                 Modifier
@@ -86,6 +88,33 @@ fun MyFavoritesScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(stringResource(R.string.need_login_favorites))
+            }
+            return@Scaffold
+        }
+
+        if (uiState is MyFavoritesViewModel.UiState.Loading ||
+            uiState is MyFavoritesViewModel.UiState.Idle
+        ) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(pv),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+            return@Scaffold
+        }
+
+        if (uiState is MyFavoritesViewModel.UiState.Error) {
+            val msg = (uiState as MyFavoritesViewModel.UiState.Error).message
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(pv),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(msg)
             }
             return@Scaffold
         }
@@ -116,9 +145,7 @@ fun MyFavoritesScreen(
                     game = g,
                     onClick = { safeClick { onOpenGame(g.id) } },
                     onRemoveFavorite = {
-                        safeClick {
-                            viewModel.toggleFavorite(context, g.id)
-                        }
+                        safeClick { viewModel.toggleFavorite(g.id) }
                     }
                 )
             }
@@ -207,11 +234,7 @@ private fun FavoriteGameCard(
                         content = cs.onTertiaryContainer
                     )
 
-                    val ratingText = try {
-                        game.rating
-                    } catch (_: Exception) {
-                        ""
-                    }
+                    val ratingText = game.rating
                     if (ratingText.isNotBlank() && ratingText != "0") {
                         SmartChip(
                             text = "★ $ratingText",
@@ -222,7 +245,6 @@ private fun FavoriteGameCard(
                 }
 
                 Spacer(Modifier.height(10.dp))
-
                 FavoriteBadge()
             }
         }

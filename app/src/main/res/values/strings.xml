@@ -275,6 +275,16 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="comments_empty">No comments yet</string>
     <string name="comments_load_more">Load more comments</string>
     <string name="comments_unknown_author">Unknown author</string>
+    <string name="sort_original">Original order</string>
+    <string name="sort_rating_high">Rating (high → low)</string>
+    <string name="sort_genre_az">Genre A–Z</string>
+    <string name="my_devices_title">My devices</string>
+    <string name="profile_menu_devices_sub">Choose up to 5 of your smartphones</string>
+    <string name="my_devices_add_from_db">Add from database</string>
+    <string name="my_devices_empty">You haven’t added any devices yet</string>
+    <string name="my_devices_limit_hint">Added %1$d/5 devices</string>
+    <string name="my_devices_need_login">Sign in to add your devices</string>
+    <string name="pick_from_my_devices">Pick from mine</string>
 
 
 

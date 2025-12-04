@@ -1,13 +1,14 @@
 package com.sbro.gameslibrary.ui.screens
 
-
 import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -17,8 +18,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.MyFavoritesViewModel
+import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
 import com.sbro.gameslibrary.viewmodel.PlatformFilter
+import com.sbro.gameslibrary.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -57,7 +62,8 @@ object Routes {
     const val EDIT_STATUS_DETAIL = "edit_status/{gameId}/{testMillis}"
     const val TEST_HISTORY = "test_history/{gameId}"
 
-    const val TEST_HISTORY_DETAIL = "test_history_detail/{gameId}/{testMillis}"
+    const val TEST_HISTORY_DETAIL = "test_history_detail/{gameId}/{testId}"
+
     const val SPLASH = "splash"
     const val ONBOARDING = "onboarding"
 
@@ -70,8 +76,8 @@ object Routes {
 
     fun testHistoryRoute(gameId: String) = "test_history/$gameId"
 
-    fun testHistoryDetailRoute(gameId: String, testMillis: Long) =
-        "test_history_detail/$gameId/$testMillis"
+    fun testHistoryDetailRoute(gameId: String, testId: String) =
+        "test_history_detail/$gameId/$testId"
 }
 
 @Composable
@@ -79,7 +85,7 @@ fun PSGamesApp() {
     val navController = rememberNavController()
     val vm: GameViewModel = viewModel()
     val scope = rememberCoroutineScope()
-    val context = androidx.compose.ui.platform.LocalContext.current
+    val context = LocalContext.current
     val hasSeenOnboarding by produceState<Boolean?>(initialValue = null) {
         onboardingShownFlow(context).collect { value = it }
     }
@@ -112,9 +118,9 @@ fun PSGamesApp() {
             )
         }
     ) {
+
         composable(Routes.MAIN) {
             MainScreen(
-                viewModel = vm,
                 onOpenPlatforms = { navController.navigate(Routes.HOME) },
                 onOpenLastTests = { navController.navigate(Routes.LAST_TESTS) },
                 onOpenAbout = { navController.navigate(Routes.ABOUT) },
@@ -124,7 +130,6 @@ fun PSGamesApp() {
 
         composable(Routes.LAST_TESTS) {
             LastTestsScreen(
-                viewModel = vm,
                 onBack = { navController.popBackStack() },
                 onOpenLastTestDetails = { gameId ->
                     navController.navigate(Routes.detailsRoute(gameId))
@@ -200,8 +205,10 @@ fun PSGamesApp() {
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("gameId") ?: return@composable
 
+            val detailVm: GameDetailViewModel = viewModel()
+
             GameDetailScreen(
-                viewModel = vm,
+                viewModel = detailVm,
                 gameId = id,
                 onBack = { navController.popBackStack() },
                 onOpenEditStatus = { gameId2 ->
@@ -249,27 +256,36 @@ fun PSGamesApp() {
             arguments = listOf(navArgument("gameId") { type = NavType.StringType })
         ) { entry ->
             val gameId = entry.arguments?.getString("gameId") ?: return@composable
+            val detailVm: GameDetailViewModel = viewModel()
+
             TestHistoryScreen(
-                viewModel = vm,
+                viewModel = detailVm,
                 gameId = gameId,
                 onBack = { navController.popBackStack() },
                 onOpenTestDetails = { millis ->
-                    navController.navigate(Routes.testHistoryDetailRoute(gameId, millis))
+                    val testId = "${gameId}_$millis"
+                    navController.navigate(
+                        Routes.testHistoryDetailRoute(gameId, testId)
+                    )
                 }
             )
         }
+
         composable(
             route = Routes.TEST_HISTORY_DETAIL,
             arguments = listOf(
                 navArgument("gameId") { type = NavType.StringType },
-                navArgument("testMillis") { type = NavType.LongType }
+                navArgument("testId") { type = NavType.StringType }
             )
         ) { entry ->
             val gameId = entry.arguments?.getString("gameId") ?: return@composable
-            val testMillis = entry.arguments?.getLong("testMillis") ?: 0L
+            val testId = entry.arguments?.getString("testId") ?: return@composable
+            val testMillis = testId.substringAfterLast("_").toLongOrNull() ?: 0L
+
+            val detailVm: GameDetailViewModel = viewModel()
 
             TestHistoryDetailScreen(
-                viewModel = vm,
+                viewModel = detailVm,
                 gameId = gameId,
                 testMillis = testMillis,
                 onBack = { navController.popBackStack() },
@@ -306,38 +322,61 @@ fun PSGamesApp() {
         }
 
         composable(Routes.PROFILE) {
+            val profileVm: ProfileViewModel = viewModel()
+            val state by profileVm.state.collectAsState()  // читання тільки тут
+
             ProfileScreen(
-                viewModel = vm,
+                viewModel = profileVm,
+                user = state.user, // <-- ОЦЬОГО не вистачає
                 onBack = { navController.popBackStack() },
                 onOpenMyTests = { navController.navigate(Routes.MY_TESTS) },
                 onOpenMyComments = { navController.navigate(Routes.MY_COMMENTS) },
-                onOpenMyFavorites = { navController.navigate(Routes.MY_FAVORITES) }
+                onOpenMyFavorites = { navController.navigate(Routes.MY_FAVORITES) },
+                onOpenMyDevices = { navController.navigate("my_devices") }
             )
         }
 
         composable(Routes.MY_TESTS) {
+            val ctx = LocalContext.current
+            val myTestsVm: MyTestsViewModel = viewModel(
+                factory = MyTestsViewModel.factory(ctx)
+            )
+
             MyTestsScreen(
-                viewModel = vm,
+                viewModel = myTestsVm,
                 onBack = { navController.popBackStack() },
-                onOpenTestDetails = { gameId, testMillis ->
-                    navController.navigate(Routes.testHistoryDetailRoute(gameId, testMillis))
+                onOpenTestDetails = { gameId, testId ->
+                    navController.navigate(
+                        Routes.testHistoryDetailRoute(gameId, testId)
+                    )
                 }
             )
         }
+
         composable(Routes.MY_COMMENTS) {
             MyCommentsScreen(
-                viewModel = vm,
                 onBack = { navController.popBackStack() },
                 onOpenComment = { gameId, _ ->
                     navController.navigate(Routes.testHistoryRoute(gameId))
                 }
             )
         }
+
         composable(Routes.MY_FAVORITES) {
+            val favVm: MyFavoritesViewModel = viewModel()
+
             MyFavoritesScreen(
-                viewModel = vm,
+                viewModel = favVm,
                 onBack = { navController.popBackStack() },
-                onOpenGame = { gameId -> navController.navigate(Routes.detailsRoute(gameId)) }
+                onOpenGame = { gameId ->
+                    navController.navigate(Routes.detailsRoute(gameId))
+                }
+            )
+        }
+
+        composable("my_devices") {
+            MyDevicesScreen(
+                onBack = { navController.popBackStack() }
             )
         }
     }

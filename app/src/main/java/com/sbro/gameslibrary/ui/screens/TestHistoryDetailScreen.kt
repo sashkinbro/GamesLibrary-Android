@@ -34,13 +34,13 @@ import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.components.WorkStatusBadge
-import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestHistoryDetailScreen(
-    viewModel: GameViewModel,
+    viewModel: GameDetailViewModel,
     gameId: String,
     testMillis: Long,
     onBack: () -> Unit,
@@ -51,14 +51,21 @@ fun TestHistoryDetailScreen(
     val uriHandler = LocalUriHandler.current
     val scroll = rememberScrollState()
 
-    LaunchedEffect(Unit) { viewModel.init(context) }
+    LaunchedEffect(gameId) {
+        viewModel.init(context, gameId)
+    }
 
-    val games by viewModel.games.collectAsState()
+    val game by viewModel.game.collectAsState()
     val currentUser by viewModel.currentUser.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
-    val test = remember(game, testMillis) {
+    val canonicalTestId = remember(gameId, testMillis) {
+        "${gameId}_${testMillis}"
+    }
+
+    val test = remember(game, testMillis, canonicalTestId) {
         game?.testResults?.firstOrNull { it.updatedAtMillis == testMillis }
+            ?: game?.testResults?.firstOrNull { it.testId == canonicalTestId }
     }
 
     Scaffold(
@@ -76,14 +83,31 @@ fun TestHistoryDetailScreen(
             }
         }
     ) { pv ->
-        if (game == null || test == null) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .padding(pv),
-                contentAlignment = Alignment.Center
-            ) { Text(stringResource(R.string.error_test_not_found)) }
-            return@Scaffold
+
+        when {
+            isLoading -> {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(pv),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+                return@Scaffold
+            }
+
+            game == null || test == null -> {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(pv),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(stringResource(R.string.error_test_not_found))
+                }
+                return@Scaffold
+            }
         }
 
         val userUid = currentUser?.uid
@@ -145,6 +169,7 @@ fun TestHistoryDetailScreen(
                                     }
                                 }
                             }
+
                             val authorName = test.authorName?.trim().orEmpty()
                             if (test.fromAccount && authorName.isNotBlank()) {
                                 Spacer(Modifier.height(2.dp))
@@ -274,7 +299,6 @@ private fun MediaBlock(
     when {
         youtubeId != null -> {
             MediaPreviewCard(
-                url = url,
                 thumbOverride = "https://img.youtube.com/vi/$youtubeId/hqdefault.jpg",
                 label = stringResource(R.string.media_type_youtube),
                 onOpenExternal = onOpenExternal
@@ -288,7 +312,6 @@ private fun MediaBlock(
         }
         else -> {
             MediaPreviewCard(
-                url = url,
                 thumbOverride = null,
                 label = stringResource(R.string.media_type_video),
                 onOpenExternal = onOpenExternal
@@ -356,7 +379,6 @@ private fun ImagePreview(url: String, onOpenExternal: () -> Unit) {
 
 @Composable
 private fun MediaPreviewCard(
-    url: String,
     thumbOverride: String?,
     label: String,
     onOpenExternal: () -> Unit

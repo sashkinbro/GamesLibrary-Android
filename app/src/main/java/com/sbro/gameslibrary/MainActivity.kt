@@ -8,12 +8,15 @@ import androidx.activity.enableEdgeToEdge
 import com.google.firebase.FirebaseApp
 import com.sbro.gameslibrary.ui.screens.PSGamesApp
 import com.sbro.gameslibrary.ui.theme.PSGamesTheme
+import com.sbro.gameslibrary.viewmodel.FavoritesRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         FirebaseApp.initializeApp(this)
+
+        FavoritesRepository.init(this)
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(

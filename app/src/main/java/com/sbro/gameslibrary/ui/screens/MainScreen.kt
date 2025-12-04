@@ -27,12 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbro.gameslibrary.R
-import com.sbro.gameslibrary.viewmodel.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    viewModel: GameViewModel,
     onOpenPlatforms: () -> Unit,
     onOpenLastTests: () -> Unit,
     onOpenAbout: () -> Unit,
@@ -41,10 +39,6 @@ fun MainScreen(
     val configuration = LocalConfiguration.current
     val orientation = configuration.orientation
 
-    val context = androidx.compose.ui.platform.LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.init(context)
-    }
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {

@@ -2,54 +2,17 @@ package com.sbro.gameslibrary.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Android
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Memory
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Smartphone
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -66,14 +29,14 @@ import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.components.WorkStatusBadge
-import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestHistoryScreen(
-    viewModel: GameViewModel,
+    viewModel: GameDetailViewModel,
     gameId: String,
     onBack: () -> Unit,
     onOpenTestDetails: (Long) -> Unit
@@ -81,46 +44,76 @@ fun TestHistoryScreen(
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
 
-    LaunchedEffect(Unit) { viewModel.init(context) }
+    LaunchedEffect(gameId) {
+        viewModel.init(context, gameId)
+    }
 
-    val games by viewModel.games.collectAsState()
+    val game by viewModel.game.collectAsState()
     val commentsByTest by viewModel.commentsByTest.collectAsState()
     val currentUser by viewModel.currentUser.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
-
-    LaunchedEffect(gameId, game?.id) {
-        if (game != null) viewModel.loadCommentsForGame(gameId)
-    }
-
-    if (game == null) {
-        Scaffold(
-            topBar = {
-                Column {
-                    TopAppBar(
-                        title = { Text(stringResource(R.string.test_history_title)) },
-                        navigationIcon = {
-                            IconButton(onClick = onBack) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+    when {
+        isLoading -> {
+            Scaffold(
+                topBar = {
+                    Column {
+                        TopAppBar(
+                            title = { Text(stringResource(R.string.test_history_title)) },
+                            navigationIcon = {
+                                IconButton(onClick = onBack) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+                                }
                             }
-                        }
-                    )
-                    HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
+                        )
+                        HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
+                    }
+                }
+            ) { pv ->
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(pv),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
             }
-        ) { pv ->
-            Box(
-                Modifier.fillMaxSize().padding(pv),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(stringResource(R.string.error_game_not_found))
-            }
+            return
         }
-        return
+
+        game == null -> {
+            Scaffold(
+                topBar = {
+                    Column {
+                        TopAppBar(
+                            title = { Text(stringResource(R.string.test_history_title)) },
+                            navigationIcon = {
+                                IconButton(onClick = onBack) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+                                }
+                            }
+                        )
+                        HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
+                    }
+                }
+            ) { pv ->
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(pv),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(stringResource(R.string.error_game_not_found))
+                }
+            }
+            return
+        }
     }
 
-    val sortedTests = remember(game.testResults) {
-        game.testResults.sortedByDescending { it.updatedAtMillis }
+    val g = game!!
+    val sortedTests = remember(g.testResults) {
+        g.testResults.sortedByDescending { it.updatedAtMillis }
     }
 
     Scaffold(
@@ -159,7 +152,7 @@ fun TestHistoryScreen(
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(context)
-                            .data(game.imageUrl)
+                            .data(g.imageUrl)
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -172,7 +165,7 @@ fun TestHistoryScreen(
 
                     AsyncImage(
                         model = ImageRequest.Builder(context)
-                            .data(game.imageUrl)
+                            .data(g.imageUrl)
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -245,8 +238,18 @@ fun TestHistoryScreen(
                     }
                 }
             } else {
-                items(sortedTests, key = { it.updatedAtMillis }) { test ->
-                    val testComments = commentsByTest[test.updatedAtMillis].orEmpty()
+                items(
+                    items = sortedTests,
+                    key = { test ->
+                        test.testId.takeIf { it.isNotBlank() }
+                            ?: "legacy_${test.updatedAtMillis}"
+                    }
+                ) { test ->
+                    val commentsKey =
+                        test.testId.takeIf { it.isNotBlank() }
+                            ?: "legacy_${test.updatedAtMillis}"
+
+                    val testComments = commentsByTest[commentsKey].orEmpty()
 
                     TestHistoryCard(
                         viewModel = viewModel,
@@ -254,9 +257,14 @@ fun TestHistoryScreen(
                         comments = testComments,
                         currentUserUid = currentUser?.uid,
                         onAddComment = { text ->
+                            val tid =
+                                test.testId.takeIf { it.isNotBlank() }
+                                    ?: "${gameId}_${test.updatedAtMillis}"
+
                             viewModel.addTestComment(
                                 context = context,
                                 gameId = gameId,
+                                testId = tid,
                                 testMillis = test.updatedAtMillis,
                                 text = text
                             )
@@ -271,7 +279,7 @@ fun TestHistoryScreen(
 
 @Composable
 private fun TestHistoryCard(
-    viewModel: GameViewModel,
+    viewModel: GameDetailViewModel,
     test: GameTestResult,
     comments: List<TestComment>,
     currentUserUid: String?,
@@ -528,9 +536,7 @@ private fun TestHistoryCard(
                         viewModel.editComment(context, c.id, editText)
                         editingComment = null
                     }
-                ) {
-                    Text(stringResource(R.string.button_save))
-                }
+                ) { Text(stringResource(R.string.button_save)) }
             },
             dismissButton = {
                 TextButton(onClick = { editingComment = null }) {

@@ -1,5 +1,6 @@
 package com.sbro.gameslibrary.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.*
@@ -38,6 +39,7 @@ private data class OnboardPage(
     val bodyRes: Int
 )
 
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @OptIn( ExperimentalAnimationApi::class)
 @Composable
 fun OnboardingScreen(

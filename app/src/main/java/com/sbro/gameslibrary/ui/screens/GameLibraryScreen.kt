@@ -10,8 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.grid.items as gridItems
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Sort
@@ -34,7 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sbro.gameslibrary.R
-import com.sbro.gameslibrary.components.*
+import com.sbro.gameslibrary.components.Game
+import com.sbro.gameslibrary.components.GameCard
 import com.sbro.gameslibrary.viewmodel.ErrorType
 import com.sbro.gameslibrary.viewmodel.GameViewModel
 import com.sbro.gameslibrary.viewmodel.PlatformFilter
@@ -69,7 +70,6 @@ fun GameLibraryScreen(
         else -> 16.dp
     }
     val verticalPadding = if (isTablet) 12.dp else 8.dp
-
     val actionIconSize = if (isTablet) 28.dp else 24.dp
 
     LaunchedEffect(Unit) {
@@ -78,7 +78,6 @@ fun GameLibraryScreen(
 
     LaunchedEffect(lockedPlatform) {
         if (lockedPlatform != null) {
-            viewModel.syncFromRemote(context)
             viewModel.onPlatformFilterChange(lockedPlatform)
         } else {
             viewModel.onPlatformFilterChange(PlatformFilter.ALL)
@@ -96,7 +95,6 @@ fun GameLibraryScreen(
     var isSearchActive by remember { mutableStateOf(false) }
 
     var showFavoritesOnly by rememberSaveable { mutableStateOf(false) }
-
     var lastNonFavIndex by rememberSaveable { mutableIntStateOf(0) }
     var lastNonFavOffset by rememberSaveable { mutableIntStateOf(0) }
     var pendingRestore by rememberSaveable { mutableStateOf(false) }
@@ -111,7 +109,6 @@ fun GameLibraryScreen(
 
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-
     val topBarLastClick = remember { mutableLongStateOf(0L) }
 
     Scaffold(
@@ -131,7 +128,9 @@ fun GameLibraryScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .focusRequester(focusRequester),
-                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(imeAction = ImeAction.Search),
+                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                                    imeAction = ImeAction.Search
+                                ),
                                 keyboardActions = androidx.compose.foundation.text.KeyboardActions(
                                     onSearch = { focusManager.clearFocus() }
                                 ),
@@ -218,10 +217,12 @@ fun GameLibraryScreen(
                     },
                     actions = {
                         if (isSearchActive) {
-                            IconButton(onClick = {
-                                isSearchActive = false
-                                viewModel.onSearchChange("")
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    isSearchActive = false
+                                    viewModel.onSearchChange("")
+                                }
+                            ) {
                                 Icon(
                                     Icons.Filled.Close,
                                     contentDescription = stringResource(R.string.cd_close_search),
@@ -229,12 +230,14 @@ fun GameLibraryScreen(
                                 )
                             }
                         } else {
-                            IconButton(onClick = {
-                                val current = SystemClock.elapsedRealtime()
-                                if (current - topBarLastClick.longValue < 400L) return@IconButton
-                                topBarLastClick.longValue = current
-                                isSearchActive = true
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    val current = SystemClock.elapsedRealtime()
+                                    if (current - topBarLastClick.longValue < 400L) return@IconButton
+                                    topBarLastClick.longValue = current
+                                    isSearchActive = true
+                                }
+                            ) {
                                 Icon(
                                     Icons.Filled.Search,
                                     contentDescription = stringResource(R.string.cd_open_search),
@@ -242,12 +245,14 @@ fun GameLibraryScreen(
                                 )
                             }
 
-                            IconButton(onClick = {
-                                val current = SystemClock.elapsedRealtime()
-                                if (current - topBarLastClick.longValue < 400L) return@IconButton
-                                topBarLastClick.longValue = current
-                                showSortMenu = true
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    val current = SystemClock.elapsedRealtime()
+                                    if (current - topBarLastClick.longValue < 400L) return@IconButton
+                                    topBarLastClick.longValue = current
+                                    showSortMenu = true
+                                }
+                            ) {
                                 Icon(
                                     Icons.AutoMirrored.Filled.Sort,
                                     contentDescription = stringResource(R.string.cd_open_sort),
@@ -260,29 +265,32 @@ fun GameLibraryScreen(
                                 onDismissRequest = { showSortMenu = false }
                             ) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sort_status_working_first)) },
+                                    text = { Text(stringResource(R.string.sort_original)) },
                                     onClick = {
-                                        viewModel.onSortChange(SortOption.STATUS_WORKING)
+                                        viewModel.onSortChange(SortOption.ORIGINAL)
                                         coroutineScope.launch { listState.scrollToItem(0) }
                                         showSortMenu = false
                                     }
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sort_status_not_working_first)) },
+                                    text = { Text(stringResource(R.string.sort_rating_high)) },
                                     onClick = {
-                                        viewModel.onSortChange(SortOption.STATUS_NOT_WORKING)
+                                        viewModel.onSortChange(SortOption.RATING_HIGH)
                                         coroutineScope.launch { listState.scrollToItem(0) }
                                         showSortMenu = false
                                     }
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sort_status_untested_first)) },
+                                    text = { Text(stringResource(R.string.sort_genre_az)) },
                                     onClick = {
-                                        viewModel.onSortChange(SortOption.STATUS_UNTESTED)
+                                        viewModel.onSortChange(SortOption.GENRE_AZ)
                                         coroutineScope.launch { listState.scrollToItem(0) }
                                         showSortMenu = false
                                     }
                                 )
+
+                                HorizontalDivider()
+
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.sort_name_az)) },
                                     onClick = {
@@ -338,38 +346,33 @@ fun GameLibraryScreen(
                                 }
                             }
 
-                            IconButton(onClick = {
-                                val current = SystemClock.elapsedRealtime()
-                                if (current - topBarLastClick.longValue < 400L) return@IconButton
-                                topBarLastClick.longValue = current
-                                viewModel.syncFromRemote(context)
-                            }) {
-                                Icon(
-                                    Icons.Filled.Sync,
-                                    contentDescription = stringResource(R.string.cd_sync_remote),
-                                    modifier = Modifier.size(actionIconSize)
-                                )
-                            }
+                            IconButton(
+                                onClick = {
+                                    val current = SystemClock.elapsedRealtime()
+                                    if (current - topBarLastClick.longValue < 400L) return@IconButton
+                                    topBarLastClick.longValue = current
 
-                            IconButton(onClick = {
-                                val current = SystemClock.elapsedRealtime()
-                                if (current - topBarLastClick.longValue < 400L) return@IconButton
-                                topBarLastClick.longValue = current
-
-                                val turningOn = !showFavoritesOnly
-                                if (turningOn) {
-                                    lastNonFavIndex = listState.firstVisibleItemIndex
-                                    lastNonFavOffset = listState.firstVisibleItemScrollOffset
-                                    showFavoritesOnly = true
-                                } else {
-                                    pendingRestore = true
-                                    showFavoritesOnly = false
+                                    val turningOn = !showFavoritesOnly
+                                    if (turningOn) {
+                                        lastNonFavIndex = listState.firstVisibleItemIndex
+                                        lastNonFavOffset = listState.firstVisibleItemScrollOffset
+                                        showFavoritesOnly = true
+                                    } else {
+                                        pendingRestore = true
+                                        showFavoritesOnly = false
+                                    }
                                 }
-                            }) {
+                            ) {
                                 Icon(
-                                    imageVector = if (showFavoritesOnly) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                    imageVector = if (showFavoritesOnly)
+                                        Icons.Filled.Favorite
+                                    else
+                                        Icons.Filled.FavoriteBorder,
                                     contentDescription = stringResource(R.string.cd_show_favorites),
-                                    tint = if (showFavoritesOnly) Color(0xFFE91E63) else MaterialTheme.colorScheme.onSurface,
+                                    tint = if (showFavoritesOnly)
+                                        Color(0xFFE91E63)
+                                    else
+                                        MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.size(actionIconSize)
                                 )
                             }
@@ -482,10 +485,11 @@ fun GameLibraryScreen(
                                         game = game,
                                         onEditStatus = { g -> onOpenEditStatus(g) },
                                         onToggleFavorite = { g ->
-                                            viewModel.toggleFavorite(context, g.id)
+                                            viewModel.toggleFavorite(g.id)
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
-                                        onOpenDetails = onOpenDetails
+                                        onOpenDetails = onOpenDetails,
+                                        showTestBadges = false
                                     )
                                 }
                             }
@@ -512,10 +516,11 @@ fun GameLibraryScreen(
                                             game = game,
                                             onEditStatus = { g -> onOpenEditStatus(g) },
                                             onToggleFavorite = { g ->
-                                                viewModel.toggleFavorite(context, g.id)
+                                                viewModel.toggleFavorite(g.id)
                                             },
                                             onShowTestHistory = { g -> onOpenTestHistory(g) },
-                                            onOpenDetails = onOpenDetails
+                                            onOpenDetails = onOpenDetails,
+                                            showTestBadges = false
                                         )
                                     }
                                 }

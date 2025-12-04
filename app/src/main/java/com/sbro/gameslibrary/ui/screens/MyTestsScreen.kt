@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,20 +29,25 @@ import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.components.WorkStatusBadge
-import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTestsScreen(
-    viewModel: GameViewModel,
+    viewModel: MyTestsViewModel,
     onBack: () -> Unit,
-    onOpenTestDetails: (gameId: String, testMillis: Long) -> Unit
+    onOpenTestDetails: (gameId: String, testId: String) -> Unit
 ) {
-    LocalContext.current
     val cs = MaterialTheme.colorScheme
 
     val user by viewModel.currentUser.collectAsState()
-    val games by viewModel.games.collectAsState()
+    val myTests by viewModel.myTests.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val hasLoadedTests by viewModel.hasLoadedTests.collectAsState()
+    val hasMoreTests by viewModel.hasMoreTests.collectAsState()
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
@@ -51,19 +57,26 @@ fun MyTestsScreen(
         action()
     }
 
-    val myTests: List<Pair<Game, GameTestResult>> = remember(user, games) {
-        val uid = user?.uid
-        if (uid == null) emptyList()
-        else games.flatMap { g ->
-            g.testResults
-                .filter { it.authorUid == uid }
-                .map { test -> g to test }
-        }.sortedByDescending { (_, test) -> test.updatedAtMillis }
-    }
-
     val background = Brush.verticalGradient(
         listOf(cs.background, cs.surfaceContainer)
     )
+
+    val listState = rememberLazyListState()
+    LaunchedEffect(listState, myTests.size, hasMoreTests, hasLoadedTests) {
+        snapshotFlow { listState.layoutInfo }
+            .map { info ->
+                val lastVisible = info.visibleItemsInfo.lastOrNull()?.index ?: 0
+                val total = info.totalItemsCount
+                lastVisible to total
+            }
+            .distinctUntilChanged()
+            .filter { (lastVisible, total) ->
+                hasLoadedTests && hasMoreTests && total > 0 && lastVisible >= total - 3
+            }
+            .collect {
+                viewModel.loadMoreMyTests()
+            }
+    }
 
     Scaffold(
         containerColor = cs.background,
@@ -101,6 +114,18 @@ fun MyTestsScreen(
             return@Scaffold
         }
 
+        if (isLoading && !hasLoadedTests) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(pv),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+            return@Scaffold
+        }
+
         if (myTests.isEmpty()) {
             Box(
                 Modifier
@@ -126,6 +151,7 @@ fun MyTestsScreen(
         }
 
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .background(background)
@@ -138,15 +164,38 @@ fun MyTestsScreen(
                 myTests,
                 key = { (game, test) -> "${game.id}_${test.updatedAtMillis}" }
             ) { (game, test) ->
+
+                val testId = "${game.id}_${test.updatedAtMillis}"
+
                 MyTestCard(
                     game = game,
                     test = test,
                     onClick = {
                         safeClick {
-                            onOpenTestDetails(game.id, test.updatedAtMillis)
+                            onOpenTestDetails(game.id, testId)
                         }
                     }
                 )
+            }
+
+            item(key = "footer") {
+                Spacer(Modifier.height(6.dp))
+                if (hasMoreTests) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (isLoading) {
+                            CircularProgressIndicator(modifier = Modifier.size(22.dp))
+                        } else {
+                            Spacer(Modifier.height(22.dp))
+                        }
+                    }
+                } else {
+                    Spacer(Modifier.height(8.dp))
+                }
             }
         }
     }
@@ -227,24 +276,18 @@ private fun MyTestCard(
                 Text(
                     text = test.testedDateFormatted.ifBlank { "—" },
                     style = MaterialTheme.typography.labelMedium,
-                    color = cs.onSurfaceVariant
+                    color = cs.onSurface.copy(alpha = 0.7f)
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(6.dp))
 
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                if (test.testedDeviceModel.isNotBlank()
+                    || test.testedAndroidVersion.isNotBlank()
                 ) {
-                    SmartChip(
-                        text = game.platform,
-                        container = cs.secondaryContainer,
-                        content = cs.onSecondaryContainer
-                    )
-                    SmartChip(
-                        text = game.year,
-                        container = cs.tertiaryContainer,
-                        content = cs.onTertiaryContainer
+                    Text(
+                        text = "${test.testedDeviceModel} • Android ${test.testedAndroidVersion}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = cs.onSurfaceVariant
                     )
                 }
 
@@ -253,33 +296,10 @@ private fun MyTestCard(
                     Text(
                         text = test.issueNote,
                         style = MaterialTheme.typography.bodySmall,
-                        color = cs.onSurface.copy(alpha = 0.8f),
-                        maxLines = 2
+                        color = cs.onSurface.copy(alpha = 0.85f)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun SmartChip(
-    text: String,
-    container: androidx.compose.ui.graphics.Color,
-    content: androidx.compose.ui.graphics.Color
-) {
-    if (text.isBlank()) return
-
-    Surface(
-        shape = RoundedCornerShape(999.dp),
-        color = container,
-        tonalElevation = 0.dp
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            color = content,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        )
     }
 }

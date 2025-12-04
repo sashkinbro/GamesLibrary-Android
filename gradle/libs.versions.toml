@@ -7,6 +7,7 @@ coreKtxVersion = "1.17.0"
 datastorePreferencesVersion = "1.2.0"
 gsonVersion = "2.13.2"
 kotlin = "2.2.21"
+kotlinxSerializationJsonVersion = "1.9.0"
 lifecycleRuntimeKtxVersion = "2.10.0"
 lifecycleViewmodelComposeVersion = "2.10.0"
 materialIconsExtendedVersion = "1.7.8"
@@ -39,6 +40,7 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 

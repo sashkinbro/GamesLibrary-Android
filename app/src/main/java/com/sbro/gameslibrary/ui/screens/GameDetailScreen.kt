@@ -32,9 +32,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
-import com.sbro.gameslibrary.viewmodel.GameViewModel
 import com.sbro.gameslibrary.components.*
-import com.sbro.gameslibrary.components.GameTestResult
+import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,7 +43,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun GameDetailScreen(
-    viewModel: GameViewModel,
+    viewModel: GameDetailViewModel,
     gameId: String,
     onBack: () -> Unit,
     onOpenEditStatus: (String) -> Unit,
@@ -54,16 +53,27 @@ fun GameDetailScreen(
     val uriHandler = LocalUriHandler.current
     val cs = MaterialTheme.colorScheme
 
-    val games by viewModel.games.collectAsState()
-    val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
+    LaunchedEffect(gameId) {
+        viewModel.init(context, gameId)
+    }
+
+    val game by viewModel.game.collectAsState()
+    val commentsByTest by viewModel.commentsByTest.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val isLoadingMoreComments by viewModel.isLoadingMoreComments.collectAsState()
 
     var expandedDesc by remember { mutableStateOf(false) }
 
-    val commentsByTest by viewModel.commentsByTest.collectAsState()
-    var isLoadingMoreComments by remember { mutableStateOf(false) }
-
-    LaunchedEffect(gameId) {
-        viewModel.loadCommentsForGame(gameId)
+    if (isLoading && game == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
     }
 
     if (game == null) {
@@ -79,9 +89,10 @@ fun GameDetailScreen(
         return
     }
 
-    val latestTest = game.latestTestOrNull()
-    val latestStatus = game.overallStatus()
-    val descText = game.description.ifBlank { stringResource(R.string.no_description) }
+    val g = game!!
+    val latestTest = g.latestTestOrNull()
+    val latestStatus = g.overallStatus()
+    val descText = g.description.ifBlank { stringResource(R.string.no_description) }
 
     val allCommentsForGame = remember(commentsByTest, gameId) {
         commentsByTest.values
@@ -115,7 +126,7 @@ fun GameDetailScreen(
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(context)
-                            .data(game.imageUrl)
+                            .data(g.imageUrl)
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -128,7 +139,7 @@ fun GameDetailScreen(
 
                     AsyncImage(
                         model = ImageRequest.Builder(context)
-                            .data(game.imageUrl)
+                            .data(g.imageUrl)
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -176,7 +187,7 @@ fun GameDetailScreen(
                         .padding(horizontal = 20.dp)
                         .offset(y = (-40).dp)
                 ) {
-                    if (game.platform.isNotBlank()) {
+                    if (g.platform.isNotBlank()) {
                         Surface(
                             shape = RoundedCornerShape(8.dp),
                             color = cs.primary.copy(alpha = 0.2f),
@@ -184,7 +195,7 @@ fun GameDetailScreen(
                             modifier = Modifier.padding(bottom = 12.dp)
                         ) {
                             Text(
-                                text = game.platform,
+                                text = g.platform,
                                 color = cs.primary,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
@@ -193,7 +204,7 @@ fun GameDetailScreen(
                     }
 
                     Text(
-                        text = game.title,
+                        text = g.title,
                         style = MaterialTheme.typography.displaySmall,
                         fontWeight = FontWeight.Bold,
                         color = cs.onBackground
@@ -205,7 +216,7 @@ fun GameDetailScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        if (game.year.isNotBlank()) {
+                        if (g.year.isNotBlank()) {
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
                                 color = cs.surfaceVariant.copy(alpha = 0.7f),
@@ -222,7 +233,7 @@ fun GameDetailScreen(
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     Text(
-                                        game.year,
+                                        g.year,
                                         style = MaterialTheme.typography.labelLarge,
                                         color = cs.onSurfaceVariant
                                     )
@@ -230,7 +241,7 @@ fun GameDetailScreen(
                             }
                         }
 
-                        if (game.genre.isNotBlank()) {
+                        if (g.genre.isNotBlank()) {
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
                                 color = cs.surfaceVariant.copy(alpha = 0.7f),
@@ -247,7 +258,7 @@ fun GameDetailScreen(
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     Text(
-                                        game.genre,
+                                        g.genre,
                                         style = MaterialTheme.typography.labelLarge,
                                         color = cs.onSurfaceVariant
                                     )
@@ -255,7 +266,7 @@ fun GameDetailScreen(
                             }
                         }
 
-                        if (game.rating.isNotBlank()) {
+                        if (g.rating.isNotBlank()) {
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
                                 color = Color(0xFF2E2512),
@@ -276,7 +287,7 @@ fun GameDetailScreen(
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     Text(
-                                        game.rating,
+                                        g.rating,
                                         style = MaterialTheme.typography.labelLarge,
                                         color = Color(0xFFFFE082),
                                         fontWeight = FontWeight.Bold
@@ -289,7 +300,7 @@ fun GameDetailScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
-                        onClick = { onOpenEditStatus(game.id) },
+                        onClick = { onOpenEditStatus(g.id) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(54.dp),
@@ -304,11 +315,11 @@ fun GameDetailScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     FilledTonalButton(
-                        onClick = { onOpenTestHistory(game.id) },
+                        onClick = { onOpenTestHistory(g.id) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(54.dp),
-                        enabled = game.testResults.isNotEmpty(),
+                        enabled = g.testResults.isNotEmpty(),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Icon(Icons.Filled.History, null)
@@ -466,8 +477,8 @@ fun GameDetailScreen(
                         )
                     }
 
-                    val videoTests = remember(game.testResults) {
-                        game.testResults.filter { it.mediaLink.isNotBlank() }
+                    val videoTests = remember(g.testResults) {
+                        g.testResults.filter { it.mediaLink.isNotBlank() }
                     }
 
                     if (videoTests.isNotEmpty()) {
@@ -500,7 +511,10 @@ fun GameDetailScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        text = stringResource(R.string.comments_section_title, allCommentsForGame.size),
+                        text = stringResource(
+                            R.string.comments_section_title,
+                            allCommentsForGame.size
+                        ),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = cs.onBackground
@@ -533,14 +547,8 @@ fun GameDetailScreen(
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
-
                         OutlinedButton(
-                            onClick = {
-                                isLoadingMoreComments = true
-                                viewModel.loadMoreCommentsForGame(game.id)
-                                // Simple UI flag reset after recomposition
-                                isLoadingMoreComments = false
-                            },
+                            onClick = { viewModel.loadMoreCommentsForGame(g.id) },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(14.dp),
                             enabled = !isLoadingMoreComments
@@ -583,19 +591,17 @@ fun GameDetailScreen(
                 }
 
                 IconButton(
-                    onClick = { viewModel.toggleFavorite(context, game.id) },
+                    onClick = { viewModel.toggleFavorite() },
                     modifier = Modifier
                         .clip(CircleShape)
                         .background(Color.Black.copy(alpha = 0.5f))
                         .size(44.dp)
                 ) {
                     Icon(
-                        imageVector = if (game.isFavorite)
-                            Icons.Filled.Favorite
-                        else
-                            Icons.Filled.FavoriteBorder,
+                        imageVector = if (g.isFavorite)
+                            Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                         contentDescription = "Favorite",
-                        tint = if (game.isFavorite) Color(0xFFFF4081) else Color.White
+                        tint = if (g.isFavorite) Color(0xFFFF4081) else Color.White
                     )
                 }
             }
@@ -663,9 +669,7 @@ private fun TestVideoCard(
                 Spacer(Modifier.width(8.dp))
 
                 val header = buildString {
-                    if (test.testedDateFormatted.isNotBlank()) {
-                        append(test.testedDateFormatted)
-                    }
+                    if (test.testedDateFormatted.isNotBlank()) append(test.testedDateFormatted)
                     if (test.testedDeviceModel.isNotBlank()) {
                         if (isNotEmpty()) append(" • ")
                         append(test.testedDeviceModel)
@@ -709,7 +713,9 @@ private fun TestVideoCard(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = if (thumbUrl == null) 0.35f else 0.15f)),
+                        .background(
+                            Color.Black.copy(alpha = if (thumbUrl == null) 0.35f else 0.15f)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
