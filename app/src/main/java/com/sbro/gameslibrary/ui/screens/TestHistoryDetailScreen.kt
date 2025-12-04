@@ -3,17 +3,42 @@ package com.sbro.gameslibrary.ui.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayCircle
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,8 +68,7 @@ fun TestHistoryDetailScreen(
     viewModel: GameDetailViewModel,
     gameId: String,
     testMillis: Long,
-    onBack: () -> Unit,
-    onEditGame: (String) -> Unit
+    onBack: () -> Unit
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
@@ -111,10 +135,9 @@ fun TestHistoryDetailScreen(
         }
 
         val userUid = currentUser?.uid
-        val canEditTest =
-            userUid != null &&
-                    test.fromAccount &&
-                    test.authorUid == userUid
+        userUid != null &&
+                test.fromAccount &&
+                test.authorUid == userUid
 
         Column(
             modifier = Modifier
@@ -156,17 +179,6 @@ fun TestHistoryDetailScreen(
                                         tint = cs.primary,
                                         modifier = Modifier.size(22.dp)
                                     )
-                                }
-
-                                if (canEditTest) {
-                                    Spacer(Modifier.width(10.dp))
-                                    IconButton(onClick = { onEditGame(gameId) }) {
-                                        Icon(
-                                            imageVector = Icons.Filled.Edit,
-                                            contentDescription = stringResource(R.string.edit),
-                                            tint = cs.primary
-                                        )
-                                    }
                                 }
                             }
 

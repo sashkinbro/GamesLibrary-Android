@@ -288,10 +288,7 @@ fun PSGamesApp() {
                 viewModel = detailVm,
                 gameId = gameId,
                 testMillis = testMillis,
-                onBack = { navController.popBackStack() },
-                onEditGame = { id ->
-                    navController.navigate(Routes.editStatusRoute(id, testMillis))
-                }
+                onBack = { navController.popBackStack() }
             )
         }
 
