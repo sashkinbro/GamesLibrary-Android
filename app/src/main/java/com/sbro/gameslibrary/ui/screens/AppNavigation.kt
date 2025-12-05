@@ -225,8 +225,10 @@ fun PSGamesApp() {
             arguments = listOf(navArgument("gameId") { type = NavType.StringType })
         ) { entry ->
             val gameId = entry.arguments?.getString("gameId") ?: return@composable
+            val detailVm: GameDetailViewModel = viewModel()
+
             EditStatusScreen(
-                viewModel = vm,
+                viewModel = detailVm,
                 gameId = gameId,
                 testMillis = null,
                 onBack = { navController.popBackStack() }
@@ -242,9 +244,10 @@ fun PSGamesApp() {
         ) { entry ->
             val gameId = entry.arguments?.getString("gameId") ?: return@composable
             val testMillis = entry.arguments?.getLong("testMillis") ?: return@composable
+            val detailVm: GameDetailViewModel = viewModel()
 
             EditStatusScreen(
-                viewModel = vm,
+                viewModel = detailVm,
                 gameId = gameId,
                 testMillis = testMillis,
                 onBack = { navController.popBackStack() }
@@ -288,7 +291,10 @@ fun PSGamesApp() {
                 viewModel = detailVm,
                 gameId = gameId,
                 testMillis = testMillis,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onEditTest = { millis ->
+                    navController.navigate(Routes.editStatusRoute(gameId, millis))
+                }
             )
         }
 
@@ -320,11 +326,11 @@ fun PSGamesApp() {
 
         composable(Routes.PROFILE) {
             val profileVm: ProfileViewModel = viewModel()
-            val state by profileVm.state.collectAsState()  // читання тільки тут
+            val state by profileVm.state.collectAsState()
 
             ProfileScreen(
                 viewModel = profileVm,
-                user = state.user, // <-- ОЦЬОГО не вистачає
+                user = state.user,
                 onBack = { navController.popBackStack() },
                 onOpenMyTests = { navController.navigate(Routes.MY_TESTS) },
                 onOpenMyComments = { navController.navigate(Routes.MY_COMMENTS) },

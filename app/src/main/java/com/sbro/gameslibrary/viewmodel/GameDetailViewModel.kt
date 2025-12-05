@@ -341,6 +341,285 @@ class GameDetailViewModel : ViewModel() {
         }
     }
 
+    data class NewTestPayload(
+        val newStatus: WorkStatus,
+
+        val testedAndroidVersion: String,
+        val testedDeviceModel: String,
+        val testedGpuModel: String,
+        val testedRam: String,
+        val testedWrapper: String,
+        val testedPerformanceMode: String,
+
+        val testedApp: String,
+        val testedAppVersion: String,
+        val testedGameVersionOrBuild: String,
+
+        val issueType: IssueType,
+        val reproducibility: Reproducibility,
+        val workaround: String,
+        val issueNote: String,
+
+        val emulatorBuildType: EmulatorBuildType,
+        val accuracyLevel: String,
+        val resolutionScale: String,
+        val asyncShaderEnabled: Boolean,
+        val frameSkip: String,
+
+        val resolutionWidth: String,
+        val resolutionHeight: String,
+        val fpsMin: String,
+        val fpsMax: String,
+
+        val mediaLink: String
+    )
+
+    fun updateGameStatus(
+        context: Context,
+        gameId: String,
+        payload: NewTestPayload
+    ) {
+        val now = Timestamp.now()
+        val nowMillis = now.toDate().time
+        val testId = "${gameId}_${nowMillis}"
+
+        val formattedDate = now.toDate().let { date ->
+            val formatter = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
+            formatter.format(date)
+        }
+
+        val currentGameTitle = _game.value?.title.orEmpty()
+        val user = currentUser.value
+
+        val newTest = GameTestResult(
+            testId = testId,
+            status = payload.newStatus,
+
+            testedAndroidVersion = payload.testedAndroidVersion,
+            testedDeviceModel = payload.testedDeviceModel,
+            testedGpuModel = payload.testedGpuModel,
+            testedRam = payload.testedRam,
+            testedWrapper = payload.testedWrapper,
+            testedPerformanceMode = payload.testedPerformanceMode,
+
+            testedApp = payload.testedApp,
+            testedAppVersion = payload.testedAppVersion,
+            testedGameVersionOrBuild = payload.testedGameVersionOrBuild,
+
+            issueType = payload.issueType,
+            reproducibility = payload.reproducibility,
+            workaround = payload.workaround,
+            issueNote = payload.issueNote,
+
+            emulatorBuildType = payload.emulatorBuildType,
+            accuracyLevel = payload.accuracyLevel,
+            resolutionScale = payload.resolutionScale,
+            asyncShaderEnabled = payload.asyncShaderEnabled,
+            frameSkip = payload.frameSkip,
+
+            resolutionWidth = payload.resolutionWidth,
+            resolutionHeight = payload.resolutionHeight,
+            fpsMin = payload.fpsMin,
+            fpsMax = payload.fpsMax,
+
+            mediaLink = payload.mediaLink,
+
+            testedDateFormatted = formattedDate,
+            updatedAtMillis = nowMillis,
+
+            authorUid = user?.uid,
+            authorName = user?.displayName,
+            authorEmail = user?.email,
+            authorPhotoUrl = user?.photoUrl?.toString(),
+            fromAccount = user != null
+        )
+
+        val current = _game.value
+        if (current != null && current.id == gameId) {
+            val updatedLocal = current.copy(
+                testResults = (current.testResults + newTest)
+                    .sortedByDescending { it.updatedAtMillis }
+            )
+            _game.value = updatedLocal
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val data = newTest.toFirestoreMap(
+                gameId = gameId,
+                title = currentGameTitle,
+                now = now,
+                nowMillis = nowMillis,
+                user = user
+            )
+
+            try {
+                testsCollection.add(data).await()
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_status_saved),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_status_saved_offline),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun editTestResult(
+        context: Context,
+        gameId: String,
+        testMillis: Long,
+        newResult: GameTestResult
+    ) {
+        val user = currentUser.value ?: return
+        val current = _game.value ?: return
+        if (current.id != gameId) return
+
+        val old = current.testResults.firstOrNull { it.updatedAtMillis == testMillis } ?: return
+        if (old.authorUid != user.uid) return
+
+        val updatedTests = current.testResults.map {
+            if (it.updatedAtMillis == testMillis) {
+                newResult.copy(
+                    testId = old.testId,
+                    updatedAtMillis = old.updatedAtMillis,
+                    testedDateFormatted = old.testedDateFormatted,
+                    authorUid = old.authorUid,
+                    authorName = old.authorName,
+                    authorEmail = old.authorEmail,
+                    authorPhotoUrl = old.authorPhotoUrl,
+                    fromAccount = old.fromAccount
+                )
+            } else it
+        }
+
+        _game.value = current.copy(testResults = updatedTests)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val snap = if (old.testId.isNotBlank()) {
+                    testsCollection
+                        .whereEqualTo("testId", old.testId)
+                        .limit(1)
+                        .get()
+                        .await()
+                } else {
+                    testsCollection
+                        .whereEqualTo("gameId", gameId)
+                        .whereEqualTo("updatedAtMillis", testMillis)
+                        .limit(1)
+                        .get()
+                        .await()
+                }
+
+                val doc = snap.documents.firstOrNull() ?: return@launch
+                doc.reference.update(
+                    mapOf(
+                        "testId" to old.testId,
+                        "status" to newResult.status.name,
+                        "testedAndroidVersion" to newResult.testedAndroidVersion,
+                        "testedDeviceModel" to newResult.testedDeviceModel,
+                        "testedGpuModel" to newResult.testedGpuModel,
+                        "testedRam" to newResult.testedRam,
+                        "testedWrapper" to newResult.testedWrapper,
+                        "testedPerformanceMode" to newResult.testedPerformanceMode,
+                        "testedApp" to newResult.testedApp,
+                        "testedAppVersion" to newResult.testedAppVersion,
+                        "testedGameVersionOrBuild" to newResult.testedGameVersionOrBuild,
+                        "issueType" to newResult.issueType.firestoreValue,
+                        "reproducibility" to newResult.reproducibility.firestoreValue,
+                        "workaround" to newResult.workaround,
+                        "issueNote" to newResult.issueNote,
+                        "emulatorBuildType" to newResult.emulatorBuildType.firestoreValue,
+                        "accuracyLevel" to newResult.accuracyLevel,
+                        "resolutionScale" to newResult.resolutionScale,
+                        "asyncShaderEnabled" to newResult.asyncShaderEnabled,
+                        "frameSkip" to newResult.frameSkip,
+                        "resolutionWidth" to newResult.resolutionWidth,
+                        "resolutionHeight" to newResult.resolutionHeight,
+                        "fpsMin" to newResult.fpsMin,
+                        "fpsMax" to newResult.fpsMax,
+                        "mediaLink" to newResult.mediaLink
+                    )
+                ).await()
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.test_updated),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun GameTestResult.toFirestoreMap(
+        gameId: String,
+        title: String,
+        now: Timestamp,
+        nowMillis: Long,
+        user: com.google.firebase.auth.FirebaseUser?
+    ): Map<String, Any?> {
+        return mapOf(
+            "testId" to testId,
+            "gameId" to gameId,
+            "title" to title,
+            "status" to status.name,
+
+            "testedAndroidVersion" to testedAndroidVersion,
+            "testedDeviceModel" to testedDeviceModel,
+
+            "testedGpuModel" to testedGpuModel,
+            "testedRam" to testedRam,
+            "testedWrapper" to testedWrapper,
+            "testedPerformanceMode" to testedPerformanceMode,
+
+            "testedApp" to testedApp,
+            "testedAppVersion" to testedAppVersion,
+            "testedGameVersionOrBuild" to testedGameVersionOrBuild,
+
+            "issueType" to issueType.firestoreValue,
+            "reproducibility" to reproducibility.firestoreValue,
+            "workaround" to workaround,
+            "issueNote" to issueNote,
+
+            "emulatorBuildType" to emulatorBuildType.firestoreValue,
+            "accuracyLevel" to accuracyLevel,
+            "resolutionScale" to resolutionScale,
+            "asyncShaderEnabled" to asyncShaderEnabled,
+            "frameSkip" to frameSkip,
+
+            "updatedAt" to now,
+            "updatedAtMillis" to nowMillis,
+
+            "resolutionWidth" to resolutionWidth,
+            "resolutionHeight" to resolutionHeight,
+            "fpsMin" to fpsMin,
+            "fpsMax" to fpsMax,
+
+            "mediaLink" to mediaLink,
+
+            "authorUid" to user?.uid,
+            "authorName" to user?.displayName,
+            "authorEmail" to user?.email,
+            "authorPhotoUrl" to user?.photoUrl?.toString(),
+            "fromAccount" to (user != null)
+        )
+    }
+
     private fun DocumentSnapshot.toGameTestResult(gameId: String): GameTestResult? {
         return try {
             val statusStr = getString("status") ?: WorkStatus.UNTESTED.name

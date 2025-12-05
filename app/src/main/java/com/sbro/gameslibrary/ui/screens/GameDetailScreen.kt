@@ -741,6 +741,7 @@ private fun TestVideoCard(
 @Composable
 private fun CommentCard(comment: TestComment) {
     val cs = MaterialTheme.colorScheme
+    val context = LocalContext.current
 
     val dateStr = remember(comment.createdAt) {
         val millis = comment.createdAt?.toDate()?.time ?: 0L
@@ -750,45 +751,86 @@ private fun CommentCard(comment: TestComment) {
         }
     }
 
+    val photoUrl = comment.authorPhotoUrl
+
     Surface(
         shape = RoundedCornerShape(14.dp),
         color = cs.surfaceVariant.copy(alpha = 0.45f),
         border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                val author = comment.authorName?.takeIf { it.isNotBlank() }
-                    ?: comment.authorDevice.takeIf { it.isNotBlank() }
-                    ?: stringResource(R.string.comments_unknown_author)
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.Top
+        ) {
 
-                Text(
-                    text = author,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = cs.onSurface
+            if (comment.fromAccount && !photoUrl.isNullOrBlank()) {
+                AsyncImage(
+                    model = ImageRequest.Builder(context)
+                        .data(photoUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(cs.surface)
                 )
-
-                if (dateStr.isNotBlank()) {
-                    Text(
-                        text = dateStr,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = cs.onSurface.copy(alpha = 0.7f)
+            } else {
+                Box(
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(cs.surface),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Filled.Person,
+                        contentDescription = null,
+                        tint = cs.onSurface.copy(alpha = 0.55f),
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }
 
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.width(10.dp))
 
-            Text(
-                text = comment.text,
-                style = MaterialTheme.typography.bodyMedium,
-                color = cs.onSurface.copy(alpha = 0.9f)
-            )
+            Column(Modifier.weight(1f)) {
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    val author = comment.authorName?.takeIf { it.isNotBlank() }
+                        ?: comment.authorDevice.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.comments_unknown_author)
+
+                    Text(
+                        text = author,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = cs.onSurface
+                    )
+
+                    if (dateStr.isNotBlank()) {
+                        Text(
+                            text = dateStr,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = cs.onSurface.copy(alpha = 0.7f)
+                        )
+                    }
+                }
+
+                Spacer(Modifier.height(6.dp))
+
+                Text(
+                    text = comment.text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = cs.onSurface.copy(alpha = 0.9f)
+                )
+            }
         }
     }
 }

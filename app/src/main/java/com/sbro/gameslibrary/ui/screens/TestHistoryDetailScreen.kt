@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -68,7 +69,8 @@ fun TestHistoryDetailScreen(
     viewModel: GameDetailViewModel,
     gameId: String,
     testMillis: Long,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onEditTest: (Long) -> Unit
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
@@ -92,6 +94,14 @@ fun TestHistoryDetailScreen(
             ?: game?.testResults?.firstOrNull { it.testId == canonicalTestId }
     }
 
+    val canEdit = remember(test, currentUser) {
+        val userUid = currentUser?.uid
+        userUid != null &&
+                test != null &&
+                test.fromAccount &&
+                test.authorUid == userUid
+    }
+
     Scaffold(
         topBar = {
             Column {
@@ -100,6 +110,17 @@ fun TestHistoryDetailScreen(
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+                        }
+                    },
+                    actions = {
+                        if (canEdit) {
+                            IconButton(onClick = { onEditTest(testMillis) }) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Edit,
+                                    contentDescription = "Edit test",
+                                    tint = cs.primary
+                                )
+                            }
                         }
                     }
                 )
@@ -133,11 +154,6 @@ fun TestHistoryDetailScreen(
                 return@Scaffold
             }
         }
-
-        val userUid = currentUser?.uid
-        userUid != null &&
-                test.fromAccount &&
-                test.authorUid == userUid
 
         Column(
             modifier = Modifier

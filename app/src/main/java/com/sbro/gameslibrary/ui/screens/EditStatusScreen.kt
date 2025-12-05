@@ -2,6 +2,7 @@ package com.sbro.gameslibrary.ui.screens
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,7 +65,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.EmulatorBuildType
 import com.sbro.gameslibrary.components.Game
@@ -74,7 +74,7 @@ import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.util.PhoneDbItem
 import com.sbro.gameslibrary.util.loadPhonesFromAssets
-import com.sbro.gameslibrary.viewmodel.GameViewModel
+import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.MyDevicesViewModel
 import com.sbro.gameslibrary.viewmodel.MyDevicesState
 import kotlinx.coroutines.launch
@@ -111,21 +111,24 @@ data class EditDialogResult(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditStatusScreen(
-    viewModel: GameViewModel = viewModel(),
+    viewModel: GameDetailViewModel,
     gameId: String,
     testMillis: Long? = null,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
 
-    val devicesVm: MyDevicesViewModel = viewModel()
+    val devicesVm: MyDevicesViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     LaunchedEffect(Unit) { devicesVm.init(context) }
     val devicesState by devicesVm.state.collectAsState()
 
-    val games by viewModel.games.collectAsState()
-    val game = remember(games, gameId) { games.firstOrNull { it.id == gameId } }
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    LaunchedEffect(Unit) { viewModel.init(context) }
+    LaunchedEffect(gameId) {
+        viewModel.init(context, gameId)
+    }
+
+    val game by viewModel.game.collectAsState()
 
     if (game == null) {
         Scaffold(
@@ -146,14 +149,18 @@ fun EditStatusScreen(
                     .padding(pv),
                 contentAlignment = Alignment.Center
             ) {
-                Text(stringResource(R.string.edit_status_game_not_found))
+                if (isLoading) {
+                    androidx.compose.material3.CircularProgressIndicator()
+                } else {
+                    Text(stringResource(R.string.edit_status_game_not_found))
+                }
             }
         }
         return
     }
 
     EditStatusContent(
-        game = game,
+        game = game!!,
         testMillis = testMillis,
         devicesState = devicesState,
         onBack = onBack,
@@ -161,7 +168,7 @@ fun EditStatusScreen(
 
             if (testMillis == null) {
 
-                val payload = GameViewModel.NewTestPayload(
+                val payload = GameDetailViewModel.NewTestPayload(
                     newStatus = result.status,
 
                     testedAndroidVersion = result.testedAndroidVersion,
@@ -196,9 +203,14 @@ fun EditStatusScreen(
 
                 viewModel.updateGameStatus(
                     context = context,
-                    gameId = game.id,
+                    gameId = gameId,
                     payload = payload
                 )
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.toast_status_saved),
+                    Toast.LENGTH_SHORT
+                ).show()
 
             } else {
                 val updated = GameTestResult(
@@ -232,10 +244,15 @@ fun EditStatusScreen(
 
                 viewModel.editTestResult(
                     context = context,
-                    gameId = game.id,
+                    gameId = gameId,
                     testMillis = testMillis,
                     newResult = updated
                 )
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.test_updated),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             onBack()
@@ -383,70 +400,78 @@ private fun EditStatusContent(
         if (frameSkipSelected == otherLabel) frameSkipCustom.trim()
         else frameSkipSelected.trim()
 
-    LaunchedEffect(testMillis, game.id) {
-        if (testMillis != null) {
-            val t = game.testResults.firstOrNull { it.updatedAtMillis == testMillis }
-            if (t != null) {
-                currentStatus = t.status
+    // -------- FIX: Prefill must wait for tests from Firebase and run once --------
+    var didPrefill by remember(testMillis) { mutableStateOf(false) }
 
-                androidVersionSelected =
-                    if (androidVersions.contains(t.testedAndroidVersion)) t.testedAndroidVersion else otherLabel
-                androidVersionCustom =
-                    if (androidVersionSelected == otherLabel) t.testedAndroidVersion else ""
+    LaunchedEffect(testMillis, game.testResults) {
+        if (testMillis == null || didPrefill) return@LaunchedEffect
 
-                deviceModelText = t.testedDeviceModel
-                gpuModelText = t.testedGpuModel
+        val canonicalId = "${game.id}_${testMillis}"
+        val t = game.testResults.firstOrNull { it.updatedAtMillis == testMillis }
+            ?: game.testResults.firstOrNull { it.testId == canonicalId }
 
-                ramSelected =
-                    if (ramOptions.contains(t.testedRam)) t.testedRam else otherLabel
-                ramCustom =
-                    if (ramSelected == otherLabel) t.testedRam else ""
+        if (t != null) {
+            didPrefill = true
 
-                wrapperSelected =
-                    if (wrapperOptions.contains(t.testedWrapper)) t.testedWrapper else otherLabel
-                wrapperCustom =
-                    if (wrapperSelected == otherLabel) t.testedWrapper else ""
+            currentStatus = t.status
 
-                perfModeSelected =
-                    if (perfModeOptions.contains(t.testedPerformanceMode)) t.testedPerformanceMode else otherLabel
-                perfModeCustom =
-                    if (perfModeSelected == otherLabel) t.testedPerformanceMode else ""
+            androidVersionSelected =
+                if (androidVersions.contains(t.testedAndroidVersion)) t.testedAndroidVersion else otherLabel
+            androidVersionCustom =
+                if (androidVersionSelected == otherLabel) t.testedAndroidVersion else ""
 
-                selectedApp =
-                    if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
-                appVersionText = t.testedAppVersion
-                gameVersionText = t.testedGameVersionOrBuild
+            deviceModelText = t.testedDeviceModel
+            gpuModelText = t.testedGpuModel
 
-                selectedIssueType = t.issueType
-                selectedRepro = t.reproducibility
-                workaroundText = t.workaround
-                issueNoteText = t.issueNote
+            ramSelected =
+                if (ramOptions.contains(t.testedRam)) t.testedRam else otherLabel
+            ramCustom =
+                if (ramSelected == otherLabel) t.testedRam else ""
 
-                selectedEmuBuild = t.emulatorBuildType
-                accuracySelected =
-                    if (accuracyOptions.contains(t.accuracyLevel)) t.accuracyLevel else otherLabel
-                accuracyCustom =
-                    if (accuracySelected == otherLabel) t.accuracyLevel else ""
+            wrapperSelected =
+                if (wrapperOptions.contains(t.testedWrapper)) t.testedWrapper else otherLabel
+            wrapperCustom =
+                if (wrapperSelected == otherLabel) t.testedWrapper else ""
 
-                scaleSelected =
-                    if (scaleOptions.contains(t.resolutionScale)) t.resolutionScale else otherLabel
-                scaleCustom =
-                    if (scaleSelected == otherLabel) t.resolutionScale else ""
+            perfModeSelected =
+                if (perfModeOptions.contains(t.testedPerformanceMode)) t.testedPerformanceMode else otherLabel
+            perfModeCustom =
+                if (perfModeSelected == otherLabel) t.testedPerformanceMode else ""
 
-                asyncShaderEnabled = t.asyncShaderEnabled
+            selectedApp =
+                if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
+            appVersionText = t.testedAppVersion
+            gameVersionText = t.testedGameVersionOrBuild
 
-                frameSkipSelected =
-                    if (frameSkipOptions.contains(t.frameSkip)) t.frameSkip else otherLabel
-                frameSkipCustom =
-                    if (frameSkipSelected == otherLabel) t.frameSkip else ""
+            selectedIssueType = t.issueType
+            selectedRepro = t.reproducibility
+            workaroundText = t.workaround
+            issueNoteText = t.issueNote
 
-                resW = t.resolutionWidth
-                resH = t.resolutionHeight
-                fpsFrom = t.fpsMin
-                fpsTo = t.fpsMax
+            selectedEmuBuild = t.emulatorBuildType
+            accuracySelected =
+                if (accuracyOptions.contains(t.accuracyLevel)) t.accuracyLevel else otherLabel
+            accuracyCustom =
+                if (accuracySelected == otherLabel) t.accuracyLevel else ""
 
-                mediaLinkText = t.mediaLink
-            }
+            scaleSelected =
+                if (scaleOptions.contains(t.resolutionScale)) t.resolutionScale else otherLabel
+            scaleCustom =
+                if (scaleSelected == otherLabel) t.resolutionScale else ""
+
+            asyncShaderEnabled = t.asyncShaderEnabled
+
+            frameSkipSelected =
+                if (frameSkipOptions.contains(t.frameSkip)) t.frameSkip else otherLabel
+            frameSkipCustom =
+                if (frameSkipSelected == otherLabel) t.frameSkip else ""
+
+            resW = t.resolutionWidth
+            resH = t.resolutionHeight
+            fpsFrom = t.fpsMin
+            fpsTo = t.fpsMax
+
+            mediaLinkText = t.mediaLink
         }
     }
 
@@ -708,7 +733,8 @@ private fun EditStatusContent(
                                     Text(d.name.orEmpty(), fontWeight = FontWeight.SemiBold)
                                     if (!d.cpu.isNullOrBlank()) {
                                         Text(
-                                            text = stringResource(R.string.search_device_cpu_prefix,
+                                            text = stringResource(
+                                                R.string.search_device_cpu_prefix,
                                                 d.cpu
                                             ),
                                             style = MaterialTheme.typography.bodySmall
@@ -716,7 +742,8 @@ private fun EditStatusContent(
                                     }
                                     if (!d.ram.isNullOrBlank()) {
                                         Text(
-                                            text = stringResource(R.string.search_device_ram_prefix,
+                                            text = stringResource(
+                                                R.string.search_device_ram_prefix,
                                                 d.ram
                                             ),
                                             style = MaterialTheme.typography.bodySmall

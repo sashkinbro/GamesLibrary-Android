@@ -24,9 +24,9 @@ android {
     defaultConfig {
         applicationId = "com.sbro.gameslibrary"
         minSdk = 24
-        targetSdk = 55
-        versionCode = 109
-        versionName = "1.2.0"
+        targetSdk = 36
+        versionCode = 111
+        versionName = "1.2.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
