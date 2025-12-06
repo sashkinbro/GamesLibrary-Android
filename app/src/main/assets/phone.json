@@ -3055,7 +3055,7 @@
   },
   {
     "id": 510,
-    "name": "Google Pixel 4a 5G",
+    "name": "Google Pixel 4a",
     "cpu": "Snapdragon 765G",
     "ram": "6 GB"
   },
@@ -12694,6 +12694,295 @@
     "name": "Xiaomi Mi Note Pro",
     "cpu": "Snapdragon 810",
     "ram": "4 GB"
+  },
+  {
+    "id": 2117,
+    "name": "Google Pixel 2 XL",
+    "cpu": "Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2118,
+    "name": "Google Pixel XL",
+    "cpu": "Snapdragon 821",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2119,
+    "name": "Google Pixel",
+    "cpu": "Snapdragon 821",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2120,
+    "name": "LG Nexus 5X",
+    "cpu": "Snapdragon 808",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2121,
+    "name": "Huawei Nexus 6P",
+    "cpu": "Snapdragon 810",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2122,
+    "name": "Motorola Nexus 6",
+    "cpu": "Snapdragon 805",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2123,
+    "name": "LG Nexus 5",
+    "cpu": "Snapdragon 800",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2124,
+    "name": "HONOR 400",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2125,
+    "name": "HONOR Magic7 RSR Porsche Design",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "24 GB"
+  },
+  {
+    "id": 2126,
+    "name": "HONOR Magic7",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2127,
+    "name": "HONOR 200 Pro",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2128,
+    "name": "HONOR X8b",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2129,
+    "name": "HONOR Magic6 Ultimate",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2130,
+    "name": "HONOR X9b",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2131,
+    "name": "HONOR X8a",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2132,
+    "name": "HONOR Magic5",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2133,
+    "name": "HONOR 90 GT",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "24 GB"
+  },
+  {
+    "id": 2134,
+    "name": "HONOR 100",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2135,
+    "name": "HONOR 100 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2136,
+    "name": "HONOR X7b",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2137,
+    "name": "HONOR 90 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2138,
+    "name": "HONOR Magic4 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2139,
+    "name": "HONOR 80",
+    "cpu": "Snapdragon 782G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2140,
+    "name": "HONOR 70 Pro+",
+    "cpu": "Dimensity 9000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2141,
+    "name": "HONOR 70 Pro",
+    "cpu": "Dimensity 8000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2142,
+    "name": "HONOR 50",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2143,
+    "name": "HONOR X10 Max",
+    "cpu": "Dimensity 800",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2144,
+    "name": "HONOR 20S",
+    "cpu": "Kirin 810",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2145,
+    "name": "HONOR View40",
+    "cpu": "Dimensity 1000+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2146,
+    "name": "HONOR 20e",
+    "cpu": "Kirin 710F",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2147,
+    "name": "HONOR 10X Lite",
+    "cpu": "Kirin 710A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2148,
+    "name": "HONOR 9A",
+    "cpu": "MediaTek Helio P22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2149,
+    "name": "HONOR 30i",
+    "cpu": "Kirin 710F",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2150,
+    "name": "HONOR 9S",
+    "cpu": "MediaTek Helio P22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2151,
+    "name": "HONOR 30S",
+    "cpu": "Kirin 820 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2152,
+    "name": "HONOR 30",
+    "cpu": "Kirin 985 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2153,
+    "name": "HONOR 30 Pro+",
+    "cpu": "Kirin 990 5G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2154,
+    "name": "HONOR 9C",
+    "cpu": "Kirin 710A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2155,
+    "name": "HONOR 20 Lite",
+    "cpu": "Kirin 710",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2156,
+    "name": "HONOR View 30 Pro",
+    "cpu": "Kirin 990 5G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2157,
+    "name": "HONOR 20 Pro",
+    "cpu": "Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2158,
+    "name": "HONOR 20",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2159,
+    "name": "HONOR View 20",
+    "cpu": "Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2160,
+    "name": "HONOR Magic 2",
+    "cpu": "Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2161,
+    "name": "HONOR 8X Max",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2162,
+    "name": "HONOR Note 10",
+    "cpu": "Kirin 970",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2163,
+    "name": "HONOR 8 Pro",
+    "cpu": "Kirin 960",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2164,
+    "name": "HONOR Note 8",
+    "cpu": "Kirin 955",
+    "ram": "4 GB"
   }
+
 
 ]
