@@ -12142,5 +12142,120 @@
     "name": "Retroid Pocket G2",
     "cpu": "Snapdragon G2 Gen 2",
     "ram": "8 GB"
+  },
+  {
+    "id": 2025,
+    "name": "Lenovo Legion Y90 (12/256)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2026,
+    "name": "Lenovo Legion Y90 (16/256)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2027,
+    "name": "Lenovo Legion Y90 (18/640)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "18 GB"
+  },
+  {
+    "id": 2028,
+    "name": "iQOO Neo 9S Pro+ (12/256)",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2029,
+    "name": "iQOO Neo 9S Pro+ (12/512)",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2030,
+    "name": "iQOO Neo 9S Pro+ (16/256)",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2031,
+    "name": "iQOO Neo 9S Pro+ (16/512)",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2032,
+    "name": "iQOO Neo 9S Pro+ (16/1TB)",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2033,
+    "name": "Xiaomi 17",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2034,
+    "name": "Xiaomi 14 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2035,
+    "name": "Xiaomi 14 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2036,
+    "name": "Xiaomi Mix Fold 3",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2037,
+    "name": "Xiaomi 13 Ultra",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2038,
+    "name": "Xiaomi 12S Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2039,
+    "name": "Xiaomi 12S",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2040,
+    "name": "Xiaomi Mix Fold 2",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2041,
+    "name": "Xiaomi 12T",
+    "cpu": "MediaTek Dimensity 8100-Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2042,
+    "name": "Xiaomi 12T Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2043,
+    "name": "Xiaomi 12S Ultra",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
   }
+
 ]
