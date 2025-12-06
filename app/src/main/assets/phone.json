@@ -12256,6 +12256,444 @@
     "name": "Xiaomi 12S Ultra",
     "cpu": "Snapdragon 8+ Gen 1",
     "ram": "12 GB"
+  },
+  {
+    "id": 2044,
+    "name": "Xiaomi 12X",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2045,
+    "name": "Xiaomi Mi 10S",
+    "cpu": "Snapdragon 870",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2046,
+    "name": "Xiaomi 11T Pro",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2047,
+    "name": "Xiaomi Mix 4",
+    "cpu": "Snapdragon 888+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2048,
+    "name": "Xiaomi Mi 11 Pro",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2049,
+    "name": "Xiaomi Mi 11 Ultra",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2050,
+    "name": "Xiaomi Mi 11",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2051,
+    "name": "Xiaomi Mi 10 Youth Edition",
+    "cpu": "Snapdragon 765G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2052,
+    "name": "Xiaomi Mi 10T Lite",
+    "cpu": "Snapdragon 750G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2053,
+    "name": "Xiaomi Mi 10T",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2054,
+    "name": "Xiaomi Mi 10T Pro",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2055,
+    "name": "Xiaomi Mi 10 Lite 5G",
+    "cpu": "Snapdragon 765G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2056,
+    "name": "Xiaomi Mi Note 10 Lite",
+    "cpu": "Snapdragon 730G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2057,
+    "name": "Xiaomi Mi 10 Pro",
+    "cpu": "Snapdragon 865",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2058,
+    "name": "Xiaomi Mi 10",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2059,
+    "name": "Xiaomi Mi Mix 3",
+    "cpu": "Snapdragon 845",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2060,
+    "name": "Xiaomi Mi Note 10",
+    "cpu": "Snapdragon 730G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2061,
+    "name": "Xiaomi Mi 9 Lite",
+    "cpu": "Snapdragon 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2062,
+    "name": "Xiaomi Mi 9T Pro",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2063,
+    "name": "Xiaomi Mi A3",
+    "cpu": "Snapdragon 665",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2064,
+    "name": "Xiaomi Mi 9T",
+    "cpu": "Snapdragon 730",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2065,
+    "name": "Xiaomi Mi 9",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2066,
+    "name": "Xiaomi Mi Play",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2067,
+    "name": "Xiaomi Mi 8 Lite",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2068,
+    "name": "Xiaomi Redmi Note 6 Pro",
+    "cpu": "Snapdragon 636",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2069,
+    "name": "Xiaomi Mi A2 Lite",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2070,
+    "name": "Xiaomi Mi 8 Pro",
+    "cpu": "Snapdragon 845",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2071,
+    "name": "Xiaomi Mi Max 3",
+    "cpu": "Snapdragon 636",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2072,
+    "name": "Xiaomi Redmi 6 Pro (3/32)",
+    "cpu": "Snapdragon 625",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2073,
+    "name": "Xiaomi Redmi 6A",
+    "cpu": "MediaTek Helio A22",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2074,
+    "name": "Xiaomi Redmi 6",
+    "cpu": "MediaTek Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2075,
+    "name": "Xiaomi Mi A2",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2076,
+    "name": "Xiaomi Mi 8",
+    "cpu": "Snapdragon 845",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2077,
+    "name": "Xiaomi Mi 6X",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2078,
+    "name": "Xiaomi Mi 8 SE",
+    "cpu": "Snapdragon 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2079,
+    "name": "Xiaomi Redmi S2",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2080,
+    "name": "Xiaomi Mi Mix 2S",
+    "cpu": "Snapdragon 845",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2081,
+    "name": "Xiaomi Redmi Note 5",
+    "cpu": "Snapdragon 636",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2082,
+    "name": "Xiaomi Redmi Note 5 Pro",
+    "cpu": "Snapdragon 636",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2083,
+    "name": "Xiaomi Redmi 5 Plus",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2084,
+    "name": "Xiaomi Redmi 5",
+    "cpu": "Snapdragon 450",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2085,
+    "name": "Xiaomi Redmi Y1 Lite",
+    "cpu": "Snapdragon 425",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2086,
+    "name": "Xiaomi Redmi Y1",
+    "cpu": "Snapdragon 435",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2087,
+    "name": "Xiaomi Redmi 5A",
+    "cpu": "Snapdragon 425",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2088,
+    "name": "Xiaomi Mi A1",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2089,
+    "name": "Xiaomi Mi Mix 2",
+    "cpu": "Snapdragon 835",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2090,
+    "name": "Xiaomi Mi Note 3",
+    "cpu": "Snapdragon 660",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2091,
+    "name": "Xiaomi Redmi Note 5A",
+    "cpu": "Snapdragon 425",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2092,
+    "name": "Xiaomi Mi 5X",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2093,
+    "name": "Xiaomi Mi Max 2",
+    "cpu": "Snapdragon 625",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2094,
+    "name": "Xiaomi Mi 6",
+    "cpu": "Snapdragon 835",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2095,
+    "name": "Xiaomi Redmi 4X",
+    "cpu": "Snapdragon 435",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2096,
+    "name": "Xiaomi Mi 5c",
+    "cpu": "Xiaomi Surge S1",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2097,
+    "name": "Xiaomi Redmi Note 4X",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2098,
+    "name": "Xiaomi Redmi 4A",
+    "cpu": "Snapdragon 425",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2099,
+    "name": "Xiaomi Redmi 4",
+    "cpu": "Snapdragon 430",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2100,
+    "name": "Xiaomi Mi Mix",
+    "cpu": "Snapdragon 821",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2101,
+    "name": "Xiaomi Mi Note 2",
+    "cpu": "Snapdragon 821",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2102,
+    "name": "Xiaomi Mi 5S Plus",
+    "cpu": "Snapdragon 821",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2103,
+    "name": "Xiaomi Mi 5S",
+    "cpu": "Snapdragon 821",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2104,
+    "name": "Xiaomi Redmi Note 4",
+    "cpu": "Snapdragon 625",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2105,
+    "name": "Xiaomi Redmi 3X",
+    "cpu": "Snapdragon 430",
+    "ram": "2 GB"
+  },
+  {
+    "id": 2106,
+    "name": "Xiaomi Redmi Pro",
+    "cpu": "MediaTek Helio X20",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2107,
+    "name": "Xiaomi Redmi 3S",
+    "cpu": "Snapdragon 430",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2108,
+    "name": "Xiaomi Mi Max",
+    "cpu": "Snapdragon 650",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2109,
+    "name": "Xiaomi Redmi 3 Pro",
+    "cpu": "Snapdragon 616",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2110,
+    "name": "Xiaomi Mi 4S",
+    "cpu": "Snapdragon 808",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2111,
+    "name": "Xiaomi Mi 5",
+    "cpu": "Snapdragon 820",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2112,
+    "name": "Xiaomi Redmi Note 3 Pro",
+    "cpu": "Snapdragon 650",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2113,
+    "name": "Xiaomi Redmi 3",
+    "cpu": "Snapdragon 616",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2114,
+    "name": "Xiaomi Redmi Note 3",
+    "cpu": "MediaTek Helio X10",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2115,
+    "name": "Xiaomi Mi Note",
+    "cpu": "Snapdragon 801",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2116,
+    "name": "Xiaomi Mi Note Pro",
+    "cpu": "Snapdragon 810",
+    "ram": "4 GB"
   }
 
 ]
