@@ -3384,12 +3384,6 @@
     "ram": "12 GB"
   },
   {
-    "id": 565,
-    "name": "Apple iPhone 15 Plus",
-    "cpu": "Apple A16",
-    "ram": "6 GB"
-  },
-  {
     "id": 566,
     "name": "Tecno Spark 10 Pro",
     "cpu": "Helio G88",
@@ -3706,12 +3700,6 @@
     "name": "Motorola Moto G06 Power",
     "cpu": "Helio G81",
     "ram": "4 GB"
-  },
-  {
-    "id": 619,
-    "name": "Apple iPhone 14",
-    "cpu": "Apple A15",
-    "ram": "6 GB"
   },
   {
     "id": 620,
@@ -5884,12 +5872,6 @@
     "name": "OPPO A5",
     "cpu": "Snapdragon 6s 4G Gen 1",
     "ram": "8 GB"
-  },
-  {
-    "id": 982,
-    "name": "Apple iPhone 11 Pro",
-    "cpu": "Apple A13",
-    "ram": "4 GB"
   },
   {
     "id": 983,
@@ -9311,12 +9293,7 @@
     "cpu": "Snapdragon 8 Gen 3 Leading Version",
     "ram": "12 GB"
   },
-  {
-    "id": 1553,
-    "name": "Apple iPad Pro 11",
-    "cpu": "Apple A12Z",
-    "ram": "6 GB"
-  },
+
   {
     "id": 1554,
     "name": "Blackview Active 8 Pro",
@@ -13486,6 +13463,1597 @@
     "name": "Infinix Hot 11s",
     "cpu": "Helio G88",
     "ram": "4 GB"
+  },
+  {
+    "id": 2251,
+    "name": "iQOO Z10R",
+    "cpu": "Dimensity 7400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2252,
+    "name": "iQOO Z10",
+    "cpu": "Snapdragon 7s Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2253,
+    "name": "iQOO Z9x",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2254,
+    "name": "iQOO Z9",
+    "cpu": "Dimensity 7200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2255,
+    "name": "iQOO Neo 9S Pro",
+    "cpu": "Dimensity 9300+",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2256,
+    "name": "iQOO Neo 9",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2257,
+    "name": "iQOO 12",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2258,
+    "name": "iQOO Neo 8",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2259,
+    "name": "iQOO 10 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2260,
+    "name": "iQOO Neo 5s",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2261,
+    "name": "iQOO Z1X",
+    "cpu": "Snapdragon 765G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2262,
+    "name": "OnePlus 13s",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2263,
+    "name": "OnePlus Nord CE4",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2264,
+    "name": "OnePlus Nord CE 3",
+    "cpu": "Snapdragon 782G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2265,
+    "name": "OnePlus Nord CE 3 Lite",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2266,
+    "name": "OnePlus Ace Racing Edition",
+    "cpu": "Dimensity 8100-Max",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2267,
+    "name": "OnePlus Nord CE 2",
+    "cpu": "Dimensity 900",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2268,
+    "name": "OnePlus 10R",
+    "cpu": "Dimensity 8100-Max",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2269,
+    "name": "OnePlus 10 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2270,
+    "name": "OnePlus 9RT",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2271,
+    "name": "OnePlus Nord 2",
+    "cpu": "Dimensity 1200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2272,
+    "name": "OnePlus Nord N100",
+    "cpu": "Snapdragon 460",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2273,
+    "name": "OnePlus 8 Pro",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2274,
+    "name": "OnePlus 8",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2275,
+    "name": "OnePlus 7T Pro",
+    "cpu": "Snapdragon 855+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2276,
+    "name": "OnePlus 7T",
+    "cpu": "Snapdragon 855+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2277,
+    "name": "OnePlus 7",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2278,
+    "name": "OnePlus 7 Pro",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2279,
+    "name": "OnePlus 6T",
+    "cpu": "Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2280,
+    "name": "OnePlus 6",
+    "cpu": "Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2281,
+    "name": "OnePlus 5T",
+    "cpu": "Snapdragon 835",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2282,
+    "name": "OnePlus 5",
+    "cpu": "Snapdragon 835",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2283,
+    "name": "OnePlus 3T",
+    "cpu": "Snapdragon 821",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2284,
+    "name": "OnePlus 3",
+    "cpu": "Snapdragon 820",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2285,
+    "name": "OPPO Reno14 Pro",
+    "cpu": "Dimensity 8450",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2286,
+    "name": "OPPO Reno14",
+    "cpu": "Dimensity 8350",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2287,
+    "name": "OPPO Find N5",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2288,
+    "name": "OPPO K12",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2289,
+    "name": "OPPO Find X7 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2290,
+    "name": "OPPO Find X7",
+    "cpu": "Dimensity 9300",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2291,
+    "name": "OPPO K11",
+    "cpu": "Snapdragon 782G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2292,
+    "name": "OPPO Find N3",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2293,
+    "name": "OPPO Find N2",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2294,
+    "name": "OPPO A78",
+    "cpu": "Dimensity 700",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2295,
+    "name": "OPPO Find X6",
+    "cpu": "Dimensity 9200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2296,
+    "name": "OPPO Find X6 Pro",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2297,
+    "name": "OPPO K10x",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2298,
+    "name": "OPPO K10 5G China",
+    "cpu": "Dimensity 8000",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2299,
+    "name": "OPPO Find N",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2300,
+    "name": "OPPO K9S",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2301,
+    "name": "OPPO A55",
+    "cpu": "Dimensity 700",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2302,
+    "name": "OPPO Find X3 Pro",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2303,
+    "name": "OPPO Find X3",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2304,
+    "name": "OPPO A15s",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2305,
+    "name": "OPPO Find X2 Pro 5G",
+    "cpu": "Snapdragon 865",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2306,
+    "name": "OPPO Find X2",
+    "cpu": "Snapdragon 865",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2307,
+    "name": "OPPO Reno3 Pro",
+    "cpu": "Helio P95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2308,
+    "name": "OPPO Reno3",
+    "cpu": "Dimensity 1000L",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2309,
+    "name": "OPPO A91",
+    "cpu": "Helio P70",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2310,
+    "name": "POCO X6 5G",
+    "cpu": "Snapdragon 7s Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2311,
+    "name": "POCO X5 5G",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2312,
+    "name": "POCO C40",
+    "cpu": "JLQ JR510",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2313,
+    "name": "POCO M5",
+    "cpu": "Helio G99",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2314,
+    "name": "POCO F4 GT",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2315,
+    "name": "POCO X4 GT",
+    "cpu": "Dimensity 8100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2316,
+    "name": "POCO C31",
+    "cpu": "Helio G35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2317,
+    "name": "POCO F3 GT",
+    "cpu": "Dimensity 1200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2318,
+    "name": "POCO X3 GT",
+    "cpu": "Dimensity 1100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2319,
+    "name": "POCO F3",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2320,
+    "name": "POCO X3 Pro",
+    "cpu": "Snapdragon 860",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2321,
+    "name": "POCO M2 Pro",
+    "cpu": "Snapdragon 720G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2322,
+    "name": "POCO M3",
+    "cpu": "Snapdragon 662",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2323,
+    "name": "POCO X3",
+    "cpu": "Snapdragon 732G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2324,
+    "name": "POCO F2 Pro",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2325,
+    "name": "POCO F1",
+    "cpu": "Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2326,
+    "name": "Realme 14",
+    "cpu": "Snapdragon 6 Gen 4",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2327,
+    "name": "Realme GT Neo 6",
+    "cpu": "Snapdragon 8s Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2328,
+    "name": "Realme Neo 6 SE",
+    "cpu": "Snapdragon 7+ Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2329,
+    "name": "Realme GT 7 Pro",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2330,
+    "name": "Realme GT Neo 5 240W",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2331,
+    "name": "Realme GT3",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2332,
+    "name": "Realme GT5 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2333,
+    "name": "Realme GT Neo5 SE",
+    "cpu": "Snapdragon 7+ Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2334,
+    "name": "Realme GT Neo 5 150W",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2335,
+    "name": "Realme Q5",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2336,
+    "name": "Realme 10 Pro",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2337,
+    "name": "Realme GT Neo 3 150W",
+    "cpu": "Dimensity 8100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2338,
+    "name": "Realme GT Neo 3",
+    "cpu": "Dimensity 8100",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2339,
+    "name": "Realme 10 Pro+",
+    "cpu": "Dimensity 1080",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2340,
+    "name": "Realme GT Neo 3T",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2341,
+    "name": "Realme GT 2 Master Explorer Edition",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2342,
+    "name": "Realme GT2 Pro",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2343,
+    "name": "Realme 9 Pro",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2344,
+    "name": "Realme Q3s",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2345,
+    "name": "Realme GT Neo 2T",
+    "cpu": "Dimensity 1200-AI",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2346,
+    "name": "Realme Narzo 30A",
+    "cpu": "Helio G85",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2347,
+    "name": "Realme GT Master Explorer Edition",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2348,
+    "name": "Realme GT NEO",
+    "cpu": "Dimensity 1200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2349,
+    "name": "Realme X7 Pro",
+    "cpu": "Dimensity 1000+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2350,
+    "name": "Realme X50 Pro 5G",
+    "cpu": "Snapdragon 865",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2351,
+    "name": "Realme X3 SuperZoom",
+    "cpu": "Snapdragon 855+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2352,
+    "name": "Realme 6 Pro",
+    "cpu": "Snapdragon 720G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2353,
+    "name": "Realme X2 Pro",
+    "cpu": "Snapdragon 855+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2354,
+    "name": "Realme X2",
+    "cpu": "Snapdragon 730G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2355,
+    "name": "Realme 3 Pro",
+    "cpu": "Snapdragon 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2356,
+    "name": "Redmi Turbo 4",
+    "cpu": "Dimensity 8400-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2357,
+    "name": "Redmi 14C",
+    "cpu": "Helio G81 Ultra",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2358,
+    "name": "Redmi 13 5G",
+    "cpu": "Snapdragon 4 Gen 2 Leading Edition",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2359,
+    "name": "Redmi A2 Plus",
+    "cpu": "Helio G36",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2360,
+    "name": "Redmi K70 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2361,
+    "name": "Redmi K70",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2362,
+    "name": "Redmi K60 Ultra",
+    "cpu": "Dimensity 9200+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2363,
+    "name": "Redmi Note 12S",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2364,
+    "name": "Redmi 12",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2365,
+    "name": "Redmi Note 11S 5G",
+    "cpu": "Dimensity 810",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2366,
+    "name": "Redmi Note 11 Pro+ 5G",
+    "cpu": "Dimensity 920",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2367,
+    "name": "Redmi Note 12 Pro+ 5G",
+    "cpu": "Dimensity 1080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2368,
+    "name": "Redmi K60",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2369,
+    "name": "Redmi Note 11 Pro 4G",
+    "cpu": "Helio G96",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2370,
+    "name": "Redmi K40S",
+    "cpu": "Snapdragon 870",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2371,
+    "name": "Redmi K50 Ultra",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2372,
+    "name": "Redmi Note 10T",
+    "cpu": "Dimensity 700",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2373,
+    "name": "Redmi Note 9 Pro 5G",
+    "cpu": "Snapdragon 750G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2374,
+    "name": "Redmi K30 Ultra",
+    "cpu": "Dimensity 1000+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2375,
+    "name": "Redmi Note 9S",
+    "cpu": "Snapdragon 720G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2376,
+    "name": "Redmi K30 Pro",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2377,
+    "name": "Redmi K30 5G",
+    "cpu": "Snapdragon 765G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2378,
+    "name": "Redmi K30",
+    "cpu": "Snapdragon 730G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2379,
+    "name": "Redmi Note 8T",
+    "cpu": "Snapdragon 665",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2380,
+    "name": "Redmi K20 Pro",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2381,
+    "name": "Redmi Note 7 Pro",
+    "cpu": "Snapdragon 675",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2382,
+    "name": "Redmi Note 7",
+    "cpu": "Snapdragon 660",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2383,
+    "name": "Samsung Galaxy S23 FE (Snapdragon)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2384,
+    "name": "Samsung Galaxy M54",
+    "cpu": "Exynos 1380",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2385,
+    "name": "Samsung Galaxy S22 Ultra (Snapdragon)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2386,
+    "name": "Samsung Galaxy S22+ (Snapdragon)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2387,
+    "name": "Samsung Galaxy S22 (Snapdragon)",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2388,
+    "name": "Samsung Galaxy S21 FE 5G (Exynos)",
+    "cpu": "Exynos 2100",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2389,
+    "name": "Samsung Galaxy Flip 3",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2390,
+    "name": "Samsung Galaxy A22 5G",
+    "cpu": "Dimensity 700",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2391,
+    "name": "Samsung Galaxy M62",
+    "cpu": "Exynos 9825",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2392,
+    "name": "Samsung Galaxy M22",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2393,
+    "name": "Samsung Galaxy A03s",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2394,
+    "name": "Samsung Galaxy M52 5G",
+    "cpu": "Snapdragon 778G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2395,
+    "name": "Samsung Galaxy A22",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2396,
+    "name": "Samsung Galaxy Z Flip3",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2397,
+    "name": "Samsung Galaxy A52 5G",
+    "cpu": "Snapdragon 750G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2398,
+    "name": "Samsung Galaxy A72 4G",
+    "cpu": "Snapdragon 720G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2399,
+    "name": "Samsung Galaxy A32",
+    "cpu": "Helio G80",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2400,
+    "name": "Samsung Galaxy S21 Ultra (Snapdragon)",
+    "cpu": "Snapdragon 888",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2401,
+    "name": "Samsung Galaxy S21+ (Snapdragon)",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2402,
+    "name": "Samsung Galaxy S21 (Snapdragon)",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2403,
+    "name": "Samsung Galaxy A02s",
+    "cpu": "Snapdragon 450",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2404,
+    "name": "Samsung Galaxy A41",
+    "cpu": "Helio P65",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2405,
+    "name": "Samsung Galaxy Flip",
+    "cpu": "Snapdragon 855+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2406,
+    "name": "Samsung Galaxy S20 FE (Snapdragon)",
+    "cpu": "Snapdragon 865",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2407,
+    "name": "Samsung Galaxy M51",
+    "cpu": "Snapdragon 730G",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2408,
+    "name": "Samsung Galaxy Z Fold2",
+    "cpu": "Snapdragon 865+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2409,
+    "name": "Samsung Galaxy Note20 (Snapdragon)",
+    "cpu": "Snapdragon 865+",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2410,
+    "name": "Samsung Galaxy M31s",
+    "cpu": "Exynos 9611",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2411,
+    "name": "Samsung Galaxy Note20 Ultra (Snapdragon)",
+    "cpu": "Snapdragon 865+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2412,
+    "name": "Samsung Galaxy M21",
+    "cpu": "Exynos 9611",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2413,
+    "name": "Samsung Galaxy A31",
+    "cpu": "Helio P65",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2414,
+    "name": "Samsung Galaxy A21s",
+    "cpu": "Exynos 850",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2415,
+    "name": "Samsung Galaxy Note10 Lite",
+    "cpu": "Exynos 9810",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2416,
+    "name": "Samsung Galaxy S20 Ultra (Snapdragon)",
+    "cpu": "Snapdragon 865",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2417,
+    "name": "Samsung Galaxy S20+ (Snapdragon)",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2418,
+    "name": "Samsung Galaxy S20 (Snapdragon)",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2419,
+    "name": "Samsung Galaxy A71",
+    "cpu": "Snapdragon 730",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2420,
+    "name": "Samsung Galaxy S10 Lite",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2421,
+    "name": "Samsung Galaxy Fold",
+    "cpu": "Exynos 9820",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2422,
+    "name": "Samsung Galaxy A80s",
+    "cpu": "Snapdragon 730",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2423,
+    "name": "Samsung Galaxy Note10+ (Exynos)",
+    "cpu": "Exynos 9825",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2424,
+    "name": "Samsung Galaxy Note10 (Exynos)",
+    "cpu": "Exynos 9825",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2425,
+    "name": "Samsung Galaxy A40",
+    "cpu": "Exynos 7904",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2426,
+    "name": "Samsung Galaxy A60",
+    "cpu": "Snapdragon 675",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2427,
+    "name": "Samsung Galaxy A80",
+    "cpu": "Snapdragon 730",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2428,
+    "name": "Samsung Galaxy A50",
+    "cpu": "Exynos 9610",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2429,
+    "name": "Samsung Galaxy S10 (Snapdragon)",
+    "cpu": "Snapdragon 855",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2430,
+    "name": "Samsung Galaxy S10e (Snapdragon)",
+    "cpu": "Snapdragon 855",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2431,
+    "name": "Samsung Galaxy S10+ (Snapdragon)",
+    "cpu": "Snapdragon 855",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2432,
+    "name": "Samsung Galaxy Note9 (Snapdragon)",
+    "cpu": "Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2433,
+    "name": "Samsung Galaxy S9 Plus (Snapdragon)",
+    "cpu": "Snapdragon 845",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2434,
+    "name": "Samsung Galaxy S9 Plus (Exynos)",
+    "cpu": "Exynos 9810",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2435,
+    "name": "Samsung Galaxy S9 (Exynos)",
+    "cpu": "Exynos 9810",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2436,
+    "name": "Samsung Galaxy S9 (Snapdragon)",
+    "cpu": "Snapdragon 845",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2437,
+    "name": "Samsung Galaxy Note8 (Snapdragon)",
+    "cpu": "Snapdragon 835",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2438,
+    "name": "Samsung Galaxy Note8 (Exynos)",
+    "cpu": "Exynos 8895",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2439,
+    "name": "Samsung Galaxy S8 Plus (Exynos)",
+    "cpu": "Exynos 8895",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2440,
+    "name": "Samsung Galaxy S8 Plus (Snapdragon)",
+    "cpu": "Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2441,
+    "name": "Samsung Galaxy S8 (Exynos)",
+    "cpu": "Exynos 8895",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2442,
+    "name": "Samsung Galaxy S8 (Snapdragon)",
+    "cpu": "Snapdragon 835",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2443,
+    "name": "TECNO Spark 40 Pro",
+    "cpu": "Helio G100 Ultimate",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2444,
+    "name": "TECNO Camon 40 Premier 5G",
+    "cpu": "Dimensity 8350",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2445,
+    "name": "TECNO Camon 30 Pro",
+    "cpu": "Dimensity 8200-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2446,
+    "name": "TECNO PHANTOM V Flip 2 5G",
+    "cpu": "Dimensity 8020",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2447,
+    "name": "TECNO Camon 30S",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2448,
+    "name": "TECNO PHANTOM V Fold2",
+    "cpu": "Dimensity 9000+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2449,
+    "name": "TECNO Pova 6",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2450,
+    "name": "TECNO Pova 6 Pro 5G",
+    "cpu": "Dimensity 6080",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2451,
+    "name": "TECNO Spark 20 Pro+",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2452,
+    "name": "TECNO Pova Neo 3",
+    "cpu": "Unisoc T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2453,
+    "name": "TECNO Camon 20",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2454,
+    "name": "TECNO Spark 20 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2455,
+    "name": "TECNO Phantom V Fold",
+    "cpu": "Dimensity 9000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2456,
+    "name": "TECNO Pova 5",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2457,
+    "name": "TECNO Pop 7",
+    "cpu": "Helio A22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2458,
+    "name": "TECNO Pova 5 Pro",
+    "cpu": "Dimensity 6080",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2459,
+    "name": "TECNO Phantom X2 Pro",
+    "cpu": "Dimensity 9000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2460,
+    "name": "TECNO Phantom X2",
+    "cpu": "Dimensity 9000",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2461,
+    "name": "TECNO Pova Neo 2",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2462,
+    "name": "TECNO Pova 4",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2463,
+    "name": "TECNO Pova 3",
+    "cpu": "Helio G88",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2464,
+    "name": "TECNO Pova 4 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2465,
+    "name": "TECNO Camon 19 Pro",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2466,
+    "name": "TECNO Pova Neo",
+    "cpu": "Helio G25",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2467,
+    "name": "TECNO Camon 18 Premier",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2468,
+    "name": "TECNO Camon 18",
+    "cpu": "Helio G88",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2469,
+    "name": "TECNO Camon 17P",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2470,
+    "name": "TECNO Camon 17 Pro",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2471,
+    "name": "TECNO Spark 6",
+    "cpu": "Helio G70",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2472,
+    "name": "TECNO Camon 15 Pro",
+    "cpu": "Helio P35",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2473,
+    "name": "TECNO Camon 15",
+    "cpu": "Helio P22",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2474,
+    "name": "TECNO Camon 12 Air",
+    "cpu": "Helio A22",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2475,
+    "name": "Vivo X200s",
+    "cpu": "Dimensity 9400+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2476,
+    "name": "Vivo X200 Ultra",
+    "cpu": "Snapdragon 8 Elite",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2477,
+    "name": "Vivo X200 Pro mini",
+    "cpu": "Dimensity 9400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2478,
+    "name": "Vivo Y28",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2479,
+    "name": "Vivo V40",
+    "cpu": "Snapdragon 7 Gen 3",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2480,
+    "name": "Vivo X200 Pro",
+    "cpu": "Dimensity 9400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2481,
+    "name": "Vivo Y300 Pro",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2482,
+    "name": "Vivo X Fold3 Pro",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2483,
+    "name": "Vivo X Fold3",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2484,
+    "name": "Vivo X100 Ultra",
+    "cpu": "Snapdragon 8 Gen 3",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2485,
+    "name": "Vivo V30e",
+    "cpu": "Snapdragon 6 Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2486,
+    "name": "Vivo V30 lite",
+    "cpu": "Snapdragon 685",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2487,
+    "name": "Vivo X100",
+    "cpu": "Dimensity 9300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2488,
+    "name": "Vivo Y27s",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2489,
+    "name": "Vivo X100 Pro",
+    "cpu": "Dimensity 9300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2490,
+    "name": "Vivo V29e",
+    "cpu": "Snapdragon 695",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2491,
+    "name": "Vivo Y36",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2492,
+    "name": "Vivo V27",
+    "cpu": "Dimensity 7200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2493,
+    "name": "Vivo V27e",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2494,
+    "name": "Vivo X Note",
+    "cpu": "Snapdragon 8 Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2495,
+    "name": "Vivo T1",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2496,
+    "name": "Vivo X Fold+",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2497,
+    "name": "Vivo X90 Pro",
+    "cpu": "Dimensity 9200",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2498,
+    "name": "Vivo X90 Pro+",
+    "cpu": "Snapdragon 8 Gen 2",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2499,
+    "name": "Vivo V25 Pro",
+    "cpu": "Dimensity 1300",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2500,
+    "name": "Vivo Y35",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2501,
+    "name": "Vivo V25",
+    "cpu": "Dimensity 900",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2502,
+    "name": "Vivo V23e",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2503,
+    "name": "Vivo V23",
+    "cpu": "Dimensity 920",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2504,
+    "name": "Vivo Y33s",
+    "cpu": "Helio G80",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2505,
+    "name": "Vivo X70",
+    "cpu": "Dimensity 1200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2506,
+    "name": "Vivo X70 Pro+",
+    "cpu": "Snapdragon 888+",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2507,
+    "name": "Vivo Y21",
+    "cpu": "Helio P35",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2508,
+    "name": "Vivo V21e",
+    "cpu": "Snapdragon 720G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2509,
+    "name": "Vivo X60 Pro",
+    "cpu": "Snapdragon 870",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2510,
+    "name": "Vivo Y20",
+    "cpu": "Snapdragon 460",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2511,
+    "name": "Vivo V20 SE",
+    "cpu": "Snapdragon 665",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2512,
+    "name": "Vivo V20",
+    "cpu": "Snapdragon 720G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2513,
+    "name": "Vivo X50 Pro",
+    "cpu": "Snapdragon 765G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2514,
+    "name": "iQOO Neo 3",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2515,
+    "name": "iQOO 7",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
   }
+
 
 ]
