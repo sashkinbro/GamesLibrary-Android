@@ -287,4 +287,56 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="pick_from_my_devices">Обрати з своїх</string>
 
 
+
+
+    <string name="auth_login_title">Вхід</string>
+    <string name="auth_login_button">Увійти</string>
+    <string name="auth_forgot_password">Забули пароль?</string>
+    <string name="auth_no_account">Немає акаунта?</string>
+    <string name="auth_go_register">Створити</string>
+    <string name="auth_register_title">Створити акаунт</string>
+    <string name="auth_register_button">Створити акаунт</string>
+    <string name="auth_have_account">Вже маєте акаунт?</string>
+    <string name="auth_go_login">Увійти</string>
+    <string name="auth_register_note_verify">Ми надішлемо лист для підтвердження. Тим часом ви можете продовжувати користуватися застосунком.</string>
+    <string name="auth_reset_title">Скидання пароля</string>
+    <string name="auth_reset_body">Введіть email, і ми надішлемо вам посилання для скидання пароля.</string>
+    <string name="auth_reset_button">Надіслати посилання для скидання</string>
+    <string name="auth_reset_sent_ui">Лист для скидання надіслано. Перевірте вхідні.</string>
+    <string name="auth_name_label">Ім’я (необов’язково)</string>
+    <string name="auth_name_hint">Ваше відображуване ім’я</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_email_hint">you@example.com</string>
+    <string name="auth_password_label">Пароль</string>
+    <string name="auth_password_hint">Щонайменше 6 символів</string>
+    <string name="auth_password_repeat_label">Повторіть пароль</string>
+    <string name="auth_password_repeat_hint">Повторіть ваш пароль</string>
+    <string name="auth_sign_in_email">Увійти через email</string>
+    <string name="auth_create_account">Створити акаунт</string>
+    <string name="auth_email_sign_in_success">Вхід виконано</string>
+    <string name="auth_email_sign_in_failed">Не вдалося увійти</string>
+    <string name="auth_register_success">Акаунт створено</string>
+    <string name="auth_register_failed">Не вдалося створити акаунт</string>
+    <string name="auth_reset_sent">Лист для скидання надіслано</string>
+    <string name="auth_reset_failed">Не вдалося надіслати лист для скидання</string>
+    <string name="auth_verify_sent">Лист для підтвердження надіслано</string>
+    <string name="auth_error_empty_email">Введіть email</string>
+    <string name="auth_error_bad_email">Введіть коректний email</string>
+    <string name="auth_error_empty_password">Введіть пароль</string>
+    <string name="auth_error_short_password">Пароль має бути щонайменше 6 символів</string>
+    <string name="auth_error_passwords_mismatch">Паролі не збігаються</string>
+    <string name="auth_error_user_not_found">Користувача з таким email не знайдено</string>
+    <string name="auth_error_user_disabled">Акаунт вимкнено</string>
+    <string name="auth_error_wrong_password">Невірний пароль</string>
+    <string name="auth_error_email_in_use">Цей email уже зареєстрований</string>
+    <string name="auth_error_too_many_requests">Забагато спроб. Спробуйте пізніше</string>
+    <string name="auth_error_generic">Не вдалося виконати авторизацію. Спробуйте ще раз</string>
+    <string name="profile_edit_name">Змінити імʼя</string>
+    <string name="profile_edit_name_title">Редагувати імʼя</string>
+    <string name="profile_name_updated">Імʼя оновлено</string>
+    <string name="common_save">Зберегти</string>
+    <string name="common_cancel">Скасувати</string>
+    <string name="auth_error_empty_name">Вкажіть імʼя</string>
+
+
 </resources>

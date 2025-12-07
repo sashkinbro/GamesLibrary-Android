@@ -286,4 +286,55 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="my_devices_need_login">Войди в аккаунт, чтобы добавлять свои устройства</string>
     <string name="pick_from_my_devices">Выбрать из своих</string>
 
+
+
+    <string name="auth_login_title">Вход</string>
+    <string name="auth_login_button">Войти</string>
+    <string name="auth_forgot_password">Забыли пароль?</string>
+    <string name="auth_no_account">Нет аккаунта?</string>
+    <string name="auth_go_register">Создать</string>
+    <string name="auth_register_title">Создать аккаунт</string>
+    <string name="auth_register_button">Создать аккаунт</string>
+    <string name="auth_have_account">Уже есть аккаунт?</string>
+    <string name="auth_go_login">Войти</string>
+    <string name="auth_register_note_verify">Мы отправим письмо для подтверждения. Вы можете продолжать пользоваться приложением тем временем.</string>
+    <string name="auth_reset_title">Сброс пароля</string>
+    <string name="auth_reset_body">Введите email, и мы отправим вам ссылку для сброса пароля.</string>
+    <string name="auth_reset_button">Отправить ссылку для сброса</string>
+    <string name="auth_reset_sent_ui">Письмо для сброса отправлено. Проверьте входящие.</string>
+    <string name="auth_name_label">Имя (необязательно)</string>
+    <string name="auth_name_hint">Отображаемое имя</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_email_hint">you@example.com</string>
+    <string name="auth_password_label">Пароль</string>
+    <string name="auth_password_hint">Минимум 6 символов</string>
+    <string name="auth_password_repeat_label">Повторите пароль</string>
+    <string name="auth_password_repeat_hint">Повторите ваш пароль</string>
+    <string name="auth_sign_in_email">Войти через email</string>
+    <string name="auth_create_account">Создать аккаунт</string>
+    <string name="auth_email_sign_in_success">Выполнен вход</string>
+    <string name="auth_email_sign_in_failed">Не удалось войти</string>
+    <string name="auth_register_success">Аккаунт создан</string>
+    <string name="auth_register_failed">Не удалось создать аккаунт</string>
+    <string name="auth_reset_sent">Письмо для сброса отправлено</string>
+    <string name="auth_reset_failed">Не удалось отправить письмо для сброса</string>
+    <string name="auth_verify_sent">Письмо для подтверждения отправлено</string>
+    <string name="auth_error_empty_email">Введите email</string>
+    <string name="auth_error_bad_email">Введите корректный email</string>
+    <string name="auth_error_empty_password">Введите пароль</string>
+    <string name="auth_error_short_password">Пароль должен быть не короче 6 символов</string>
+    <string name="auth_error_passwords_mismatch">Пароли не совпадают</string>
+    <string name="auth_error_user_not_found">Пользователь с таким email не найден</string>
+    <string name="auth_error_user_disabled">Аккаунт отключён</string>
+    <string name="auth_error_wrong_password">Неверный пароль</string>
+    <string name="auth_error_email_in_use">Этот email уже зарегистрирован</string>
+    <string name="auth_error_too_many_requests">Слишком много попыток. Попробуйте позже</string>
+    <string name="auth_error_generic">Не удалось выполнить авторизацию. Попробуйте ещё раз</string>
+    <string name="profile_edit_name">Изменить имя</string>
+    <string name="profile_edit_name_title">Редактировать имя</string>
+    <string name="profile_name_updated">Имя обновлено</string>
+    <string name="common_save">Сохранить</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="auth_error_empty_name">Укажите имя</string>
+
 </resources>

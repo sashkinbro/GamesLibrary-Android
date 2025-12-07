@@ -50,9 +50,7 @@ class ProfileViewModel : ViewModel() {
                 _state.value = _state.value.copy(user = user)
 
                 val ctx = appContext
-                if (ctx != null) {
-                    refresh(ctx)
-                }
+                if (ctx != null) refresh(ctx)
             }
         }
     }
@@ -137,9 +135,51 @@ class ProfileViewModel : ViewModel() {
         authManager.handleGoogleResult(context, data, onError)
     }
 
+    fun signInWithEmail(
+        context: Context,
+        email: String,
+        password: String,
+        onSuccess: () -> Unit = {},
+        onError: (String) -> Unit = {}
+    ) {
+        setContextIfNeeded(context)
+        authManager.signInWithEmail(context, email, password, onSuccess, onError)
+    }
+
+    fun registerWithEmail(
+        context: Context,
+        email: String,
+        password: String,
+        displayName: String?,
+        onSuccess: () -> Unit = {},
+        onError: (String) -> Unit = {}
+    ) {
+        setContextIfNeeded(context)
+        authManager.registerWithEmail(context, email, password, displayName, onSuccess, onError)
+    }
+
+    fun sendPasswordReset(
+        context: Context,
+        email: String,
+        onSuccess: () -> Unit = {},
+        onError: (String) -> Unit = {}
+    ) {
+        setContextIfNeeded(context)
+        authManager.sendPasswordReset(context, email, onSuccess, onError)
+    }
+
     fun signOut(context: Context) {
         setContextIfNeeded(context)
         authManager.signOut(context)
+    }
+    fun updateDisplayName(
+        context: Context,
+        newName: String,
+        onSuccess: () -> Unit = {},
+        onError: (String) -> Unit = {}
+    ) {
+        setContextIfNeeded(context)
+        authManager.updateDisplayName(context, newName, onSuccess, onError)
     }
 
     override fun onCleared() {

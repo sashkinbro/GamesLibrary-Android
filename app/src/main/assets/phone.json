@@ -12982,6 +12982,12 @@
     "name": "HONOR Note 8",
     "cpu": "Kirin 955",
     "ram": "4 GB"
+  },
+  {
+    "id": 2165,
+    "name": "Retroid Pocket Flip 2",
+    "cpu": "Snapdragon 865",
+    "ram": "8 GB"
   }
 
 

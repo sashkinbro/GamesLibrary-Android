@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,26 +35,22 @@ import com.google.firebase.auth.FirebaseUser
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.viewmodel.ProfileViewModel
 
-/**
- * Екран НЕ читає state з VM.
- * Усі дані заходять через параметри.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel,     // тільки для дій (sign-in/out)
-    user: FirebaseUser?,             // дані для UI приходять СЮДИ
-
+    viewModel: ProfileViewModel,
+    user: FirebaseUser?,
     onBack: () -> Unit,
     onOpenMyTests: () -> Unit,
     onOpenMyComments: () -> Unit,
     onOpenMyFavorites: () -> Unit,
     onOpenMyDevices: () -> Unit,
+    onOpenLogin: () -> Unit,
+    onOpenRegister: () -> Unit,
 ) {
     val context = LocalContext.current
     val cs = MaterialTheme.colorScheme
 
-    // throttling кліків
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
         val now = SystemClock.elapsedRealtime()
@@ -62,7 +59,6 @@ fun ProfileScreen(
         action()
     }
 
-    // Google sign-in launcher
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { res ->
@@ -73,6 +69,10 @@ fun ProfileScreen(
 
     val background = Brush.verticalGradient(listOf(cs.background, cs.surfaceContainer))
     var showLogoutDialog by remember { mutableStateOf(false) }
+    var showEditNameDialog by remember { mutableStateOf(false) }
+    var editNameText by rememberSaveable { mutableStateOf("") }
+    var editNameError by remember { mutableStateOf<String?>(null) }
+    var editNameLoading by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -93,7 +93,7 @@ fun ProfileScreen(
                         IconButton(onClick = { safeClick(onBack) }) {
                             Icon(
                                 Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = null
                             )
                         }
                     }
@@ -121,11 +121,13 @@ fun ProfileScreen(
 
                 if (user == null) {
                     GuestCard(
-                        onSignIn = {
+                        onGoogleSignIn = {
                             safeClick {
                                 launcher.launch(viewModel.getGoogleSignInIntent(context))
                             }
-                        }
+                        },
+                        onEmailSignIn = { safeClick(onOpenLogin) },
+                        onRegister = { safeClick(onOpenRegister) }
                     )
 
                     Spacer(Modifier.height(14.dp))
@@ -158,6 +160,29 @@ fun ProfileScreen(
                 )
 
                 Spacer(Modifier.height(12.dp))
+
+                OutlinedButton(
+                    onClick = {
+                        safeClick {
+                            editNameText = user.displayName.orEmpty()
+                            editNameError = null
+                            showEditNameDialog = true
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Icon(Icons.Filled.Edit, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.profile_edit_name),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp)
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
 
                 OutlinedButton(
                     onClick = { safeClick { showLogoutDialog = true } },
@@ -234,10 +259,91 @@ fun ProfileScreen(
             }
         )
     }
+    if (showEditNameDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                if (!editNameLoading) showEditNameDialog = false
+            },
+            title = { Text(stringResource(R.string.profile_edit_name_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = editNameText,
+                        onValueChange = {
+                            editNameText = it
+                            editNameError = null
+                        },
+                        singleLine = true,
+                        label = { Text(stringResource(R.string.auth_name_label)) },
+                        placeholder = { Text(stringResource(R.string.auth_name_hint)) },
+                        isError = editNameError != null,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    if (editNameError != null) {
+                        Text(
+                            text = editNameError!!,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = !editNameLoading,
+                    onClick = {
+                        safeClick {
+                            val newName = editNameText.trim()
+                            if (newName.isBlank()) {
+                                editNameError = context.getString(R.string.auth_error_empty_name)
+                                return@safeClick
+                            }
+
+                            editNameLoading = true
+                            viewModel.updateDisplayName(
+                                context = context,
+                                newName = newName,
+                                onSuccess = {
+                                    editNameLoading = false
+                                    showEditNameDialog = false
+                                },
+                                onError = {
+                                    editNameLoading = false
+                                    editNameError = it
+                                }
+                            )
+                        }
+                    }
+                ) {
+                    if (editNameLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            strokeWidth = 2.dp
+                        )
+                        Spacer(Modifier.width(8.dp))
+                    }
+                    Text(stringResource(R.string.common_save))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    enabled = !editNameLoading,
+                    onClick = { showEditNameDialog = false }
+                ) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
+    }
 }
 
 @Composable
-private fun GuestCard(onSignIn: () -> Unit) {
+private fun GuestCard(
+    onGoogleSignIn: () -> Unit,
+    onEmailSignIn: () -> Unit,
+    onRegister: () -> Unit
+) {
     val cs = MaterialTheme.colorScheme
 
     Surface(
@@ -281,7 +387,7 @@ private fun GuestCard(onSignIn: () -> Unit) {
             Spacer(Modifier.height(14.dp))
 
             Button(
-                onClick = onSignIn,
+                onClick = onGoogleSignIn,
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -297,6 +403,26 @@ private fun GuestCard(onSignIn: () -> Unit) {
                     text = stringResource(R.string.sign_in_google),
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp)
                 )
+            }
+
+            Spacer(Modifier.height(10.dp))
+
+            OutlinedButton(
+                onClick = onEmailSignIn,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                Icon(Icons.Filled.MailOutline, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.auth_sign_in_email))
+            }
+
+            Spacer(Modifier.height(6.dp))
+
+            TextButton(onClick = onRegister) {
+                Text(stringResource(R.string.auth_create_account))
             }
         }
     }

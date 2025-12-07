@@ -67,6 +67,10 @@ object Routes {
     const val SPLASH = "splash"
     const val ONBOARDING = "onboarding"
 
+    const val AUTH_LOGIN = "auth_login"
+    const val AUTH_REGISTER = "auth_register"
+    const val AUTH_RESET = "auth_reset"
+
     fun libraryPlatformRoute(platform: String) = "library/$platform"
     fun detailsRoute(gameId: String) = "details/$gameId"
 
@@ -84,6 +88,7 @@ object Routes {
 fun PSGamesApp() {
     val navController = rememberNavController()
     val vm: GameViewModel = viewModel()
+    val profileVm: ProfileViewModel = viewModel()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val hasSeenOnboarding by produceState<Boolean?>(initialValue = null) {
@@ -325,7 +330,6 @@ fun PSGamesApp() {
         }
 
         composable(Routes.PROFILE) {
-            val profileVm: ProfileViewModel = viewModel()
             val state by profileVm.state.collectAsState()
 
             ProfileScreen(
@@ -335,7 +339,44 @@ fun PSGamesApp() {
                 onOpenMyTests = { navController.navigate(Routes.MY_TESTS) },
                 onOpenMyComments = { navController.navigate(Routes.MY_COMMENTS) },
                 onOpenMyFavorites = { navController.navigate(Routes.MY_FAVORITES) },
-                onOpenMyDevices = { navController.navigate("my_devices") }
+                onOpenMyDevices = { navController.navigate("my_devices") },
+                onOpenLogin = { navController.navigate(Routes.AUTH_LOGIN) },
+                onOpenRegister = { navController.navigate(Routes.AUTH_REGISTER) }
+            )
+        }
+
+        // NEW auth screens
+        composable(Routes.AUTH_LOGIN) {
+            LoginScreen(
+                viewModel = profileVm,
+                onBack = { navController.popBackStack() },
+                onGoRegister = { navController.navigate(Routes.AUTH_REGISTER) },
+                onGoReset = { navController.navigate(Routes.AUTH_RESET) },
+                onLoggedIn = {
+                    navController.popBackStack(Routes.PROFILE, inclusive = false)
+                }
+            )
+        }
+
+        composable(Routes.AUTH_REGISTER) {
+            RegisterScreen(
+                viewModel = profileVm,
+                onBack = { navController.popBackStack() },
+                onGoLogin = {
+                    navController.navigate(Routes.AUTH_LOGIN) {
+                        popUpTo(Routes.AUTH_REGISTER) { inclusive = true }
+                    }
+                },
+                onRegistered = {
+                    navController.popBackStack(Routes.PROFILE, inclusive = false)
+                }
+            )
+        }
+
+        composable(Routes.AUTH_RESET) {
+            ResetPasswordScreen(
+                viewModel = profileVm,
+                onBack = { navController.popBackStack() }
             )
         }
 

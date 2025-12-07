@@ -289,4 +289,58 @@ You can also submit anonymous test results to keep your own testing history and 
 
 
 
+
+
+    <string name="auth_login_title">Sign in</string>
+    <string name="auth_login_button">Sign in</string>
+    <string name="auth_forgot_password">Forgot password?</string>
+    <string name="auth_no_account">Don’t have an account?</string>
+    <string name="auth_go_register">Create one</string>
+    <string name="auth_register_title">Create account</string>
+    <string name="auth_register_button">Create account</string>
+    <string name="auth_have_account">Already have an account?</string>
+    <string name="auth_go_login">Sign in</string>
+    <string name="auth_register_note_verify">We’ll send a verification email. You can continue using the app meanwhile.</string>
+    <string name="auth_reset_title">Reset password</string>
+    <string name="auth_reset_body">Enter your email and we’ll send you a link to reset your password.</string>
+    <string name="auth_reset_button">Send reset link</string>
+    <string name="auth_reset_sent_ui">Reset email sent. Check your inbox.</string>
+    <string name="auth_name_label">Name (optional)</string>
+    <string name="auth_name_hint">Your display name</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_email_hint">you@example.com</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_password_hint">At least 6 characters</string>
+    <string name="auth_password_repeat_label">Repeat password</string>
+    <string name="auth_password_repeat_hint">Repeat your password</string>
+    <string name="auth_sign_in_email">Sign in with email</string>
+    <string name="auth_create_account">Create account</string>
+    <string name="auth_email_sign_in_success">Signed in</string>
+    <string name="auth_email_sign_in_failed">Failed to sign in</string>
+    <string name="auth_register_success">Account created</string>
+    <string name="auth_register_failed">Failed to create account</string>
+    <string name="auth_reset_sent">Reset email sent</string>
+    <string name="auth_reset_failed">Failed to send reset email</string>
+    <string name="auth_verify_sent">Verification email sent</string>
+    <string name="auth_error_empty_email">Enter email</string>
+    <string name="auth_error_bad_email">Enter a valid email</string>
+    <string name="auth_error_empty_password">Enter password</string>
+    <string name="auth_error_short_password">Password must be at least 6 characters</string>
+    <string name="auth_error_passwords_mismatch">Passwords do not match</string>
+    <string name="auth_error_user_not_found">No user found with this email</string>
+    <string name="auth_error_user_disabled">Account disabled</string>
+    <string name="auth_error_wrong_password">Incorrect password</string>
+    <string name="auth_error_email_in_use">This email is already registered</string>
+    <string name="auth_error_too_many_requests">Too many attempts. Try again later</string>
+    <string name="auth_error_generic">Authorization failed. Please try again</string>
+    <string name="profile_edit_name">Change name</string>
+    <string name="profile_edit_name_title">Edit name</string>
+    <string name="profile_name_updated">Name updated</string>
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="auth_error_empty_name">Enter your name</string>
+
+
+
+
 </resources>
