@@ -12988,7 +12988,504 @@
     "name": "Retroid Pocket Flip 2",
     "cpu": "Snapdragon 865",
     "ram": "8 GB"
+  },
+  {
+    "id": 2166,
+    "name": "Huawei Nova 14",
+    "cpu": "Kirin 8000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2167,
+    "name": "Huawei Nova 14 Pro",
+    "cpu": "Kirin 8020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2168,
+    "name": "Huawei Mate 70",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2169,
+    "name": "Huawei Pura 80 Pro+",
+    "cpu": "Kirin 9020",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2170,
+    "name": "Huawei Pura 80",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2171,
+    "name": "Huawei Nova Y63",
+    "cpu": "Snapdragon 680",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2172,
+    "name": "Huawei Mate 70 Pro",
+    "cpu": "Kirin 9020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2173,
+    "name": "Huawei Nova 13",
+    "cpu": "Kirin 8000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2174,
+    "name": "Huawei Pura 70 Pro+",
+    "cpu": "Kirin 9010",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2175,
+    "name": "Huawei Pura 70 Ultra",
+    "cpu": "Kirin 9010",
+    "ram": "16 GB"
+  },
+  {
+    "id": 2176,
+    "name": "Huawei Pura 70 Pro",
+    "cpu": "Kirin 9010",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2177,
+    "name": "Huawei Pura 70",
+    "cpu": "Kirin 9000S1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2178,
+    "name": "Huawei Nova 12s",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2179,
+    "name": "Huawei Nova Y72",
+    "cpu": "Kirin 710A",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2180,
+    "name": "Huawei Mate 60 Pro",
+    "cpu": "Kirin 9000S",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2181,
+    "name": "Huawei Nova 11i",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2182,
+    "name": "Huawei Mate X3",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2183,
+    "name": "Huawei Enjoy 60X",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2184,
+    "name": "Huawei P60 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2185,
+    "name": "Huawei P60",
+    "cpu": "Snapdragon 8+ Gen 1 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2186,
+    "name": "Huawei P60 Art",
+    "cpu": "Snapdragon 8+ Gen 1 4G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2187,
+    "name": "Huawei Nova Y91",
+    "cpu": "Snapdragon 680",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2188,
+    "name": "Huawei Nova 11",
+    "cpu": "Snapdragon 778G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2189,
+    "name": "Huawei Nova Y61",
+    "cpu": "Kirin 710",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2190,
+    "name": "Huawei Nova Y70",
+    "cpu": "Kirin 710",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2191,
+    "name": "Huawei Mate 50 RS",
+    "cpu": "Snapdragon 8+ Gen 1 4G",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2192,
+    "name": "Huawei Mate 50 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2193,
+    "name": "Huawei Mate 50",
+    "cpu": "Snapdragon 8+ Gen 1 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2194,
+    "name": "Huawei Nova 10 Pro",
+    "cpu": "Snapdragon 778G 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2195,
+    "name": "Huawei P50",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2196,
+    "name": "Huawei P50 Pro",
+    "cpu": "Snapdragon 888 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2197,
+    "name": "Huawei Nova 9",
+    "cpu": "Snapdragon 778G 4G",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2198,
+    "name": "Huawei Nova 8",
+    "cpu": "Kirin 985",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2199,
+    "name": "Huawei Nova 8 4G",
+    "cpu": "Kirin 820E",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2200,
+    "name": "Huawei Mate 40 Porsche Design",
+    "cpu": "Kirin 9000",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2201,
+    "name": "Huawei P smart 2021",
+    "cpu": "Kirin 710A",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2202,
+    "name": "Huawei Mate 40 Pro",
+    "cpu": "Kirin 9000",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2203,
+    "name": "Huawei P40 Pro+",
+    "cpu": "Kirin 990",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2204,
+    "name": "Huawei Mate Xs",
+    "cpu": "Kirin 990",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2205,
+    "name": "Huawei P40 lite E",
+    "cpu": "Kirin 710F",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2207,
+    "name": "Huawei P40 Pro",
+    "cpu": "Kirin 990",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2208,
+    "name": "Huawei Mate 30",
+    "cpu": "Kirin 990",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2209,
+    "name": "Huawei Nova 5T",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2211,
+    "name": "Huawei Mate 30 Pro",
+    "cpu": "Kirin 990",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2212,
+    "name": "Huawei P30 Pro",
+    "cpu": "Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2213,
+    "name": "Huawei P30",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2214,
+    "name": "Huawei Y7 2019",
+    "cpu": "Snapdragon 450",
+    "ram": "3 GB"
+  },
+  {
+    "id": 2215,
+    "name": "Huawei Mate 20 RS Porsche Design",
+    "cpu": "Kirin 980",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2216,
+    "name": "Huawei Mate 20 X",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2217,
+    "name": "Huawei Mate 20",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2218,
+    "name": "Huawei Mate 20 Pro",
+    "cpu": "Kirin 980",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2219,
+    "name": "Huawei Nova 3",
+    "cpu": "Kirin 970",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2220,
+    "name": "Huawei P20 Pro",
+    "cpu": "Kirin 970",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2221,
+    "name": "Huawei P20",
+    "cpu": "Kirin 970",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2222,
+    "name": "Huawei Mate 10 Pro",
+    "cpu": "Kirin 970",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2223,
+    "name": "Huawei Mate 10",
+    "cpu": "Kirin 970",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2224,
+    "name": "Huawei P10 Plus",
+    "cpu": "Kirin 960",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2225,
+    "name": "Huawei P10",
+    "cpu": "Kirin 960",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2226,
+    "name": "Infinix GT 30",
+    "cpu": "Dimensity 7400",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2227,
+    "name": "Infinix Hot 60 Pro+",
+    "cpu": "Helio G200",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2228,
+    "name": "Infinix Note 40 Pro",
+    "cpu": "Helio G99",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2229,
+    "name": "Infinix Zero Flip",
+    "cpu": "Dimensity 8020",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2230,
+    "name": "Infinix ZERO 40",
+    "cpu": "Helio G100",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2231,
+    "name": "Infinix GT 20 Pro",
+    "cpu": "Dimensity 8200-Ultra",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2232,
+    "name": "Infinix Note 40 Pro+",
+    "cpu": "Dimensity 7020",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2233,
+    "name": "Infinix Note 30 VIP Racing Edition",
+    "cpu": "Dimensity 8050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2234,
+    "name": "Infinix HOT 30 Play",
+    "cpu": "Helio G37",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2235,
+    "name": "Infinix Smart 7 Plus",
+    "cpu": "Unisoc SC9863A1",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2236,
+    "name": "Infinix Zero 30",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2237,
+    "name": "Infinix Note 30 Pro",
+    "cpu": "Helio G99",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2238,
+    "name": "Infinix Note 30 VIP",
+    "cpu": "Dimensity 8050",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2239,
+    "name": "Infinix GT 10 Pro",
+    "cpu": "Dimensity 8050",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2240,
+    "name": "Infinix Note 30i",
+    "cpu": "Helio G85",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2241,
+    "name": "Infinix Hot 30i",
+    "cpu": "Unisoc T606",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2242,
+    "name": "Infinix Hot 30",
+    "cpu": "Helio G88",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2243,
+    "name": "Infinix Hot 20S",
+    "cpu": "Helio G96",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2244,
+    "name": "Infinix Hot 12 Pro",
+    "cpu": "Unisoc T616",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2245,
+    "name": "Infinix Zero X Pro",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2246,
+    "name": "Infinix Note 10 Pro",
+    "cpu": "Helio G95",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2247,
+    "name": "Infinix Note 8",
+    "cpu": "Helio G80",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2248,
+    "name": "Infinix Hot 10s",
+    "cpu": "Helio G85",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2249,
+    "name": "Infinix Note 11",
+    "cpu": "Helio G88",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2250,
+    "name": "Infinix Hot 11s",
+    "cpu": "Helio G88",
+    "ram": "4 GB"
   }
-
 
 ]
