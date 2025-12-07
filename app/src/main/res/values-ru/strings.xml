@@ -336,5 +336,6 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="common_save">Сохранить</string>
     <string name="common_cancel">Отмена</string>
     <string name="auth_error_empty_name">Укажите имя</string>
+    <string name="label_driver_version">Версия драйвера GPU</string>
 
 </resources>

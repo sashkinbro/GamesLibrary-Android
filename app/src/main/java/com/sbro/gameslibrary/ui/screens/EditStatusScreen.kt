@@ -85,6 +85,7 @@ data class EditDialogResult(
     val testedAndroidVersion: String,
     val testedDeviceModel: String,
     val testedGpuModel: String,
+    val testedDriverVersion: String,
     val testedRam: String,
     val testedWrapper: String,
     val testedPerformanceMode: String,
@@ -114,7 +115,8 @@ fun EditStatusScreen(
     viewModel: GameDetailViewModel,
     gameId: String,
     testMillis: Long? = null,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onTestSaved: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -174,6 +176,7 @@ fun EditStatusScreen(
                     testedAndroidVersion = result.testedAndroidVersion,
                     testedDeviceModel = result.testedDeviceModel,
                     testedGpuModel = result.testedGpuModel,
+                    testedDriverVersion = result.testedDriverVersion,
                     testedRam = result.testedRam,
                     testedWrapper = result.testedWrapper,
                     testedPerformanceMode = result.testedPerformanceMode,
@@ -218,6 +221,7 @@ fun EditStatusScreen(
                     testedAndroidVersion = result.testedAndroidVersion,
                     testedDeviceModel = result.testedDeviceModel,
                     testedGpuModel = result.testedGpuModel,
+                    testedDriverVersion = result.testedDriverVersion,
                     testedRam = result.testedRam,
                     testedWrapper = result.testedWrapper,
                     testedPerformanceMode = result.testedPerformanceMode,
@@ -255,6 +259,7 @@ fun EditStatusScreen(
                 ).show()
             }
 
+            onTestSaved()
             onBack()
         }
     )
@@ -281,7 +286,7 @@ private fun EditStatusContent(
     var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
     val otherLabel = stringResource(R.string.option_other)
     val customLabel = stringResource(R.string.option_custom)
-
+    var driverVersionText by remember { mutableStateOf("") }
     val platformLower = game.platform.lowercase()
     val isSwitchPlatform = platformLower.contains("switch") || platformLower.contains("nintendo")
     val isPcPlatform = platformLower.contains("pc") || platformLower.contains("windows")
@@ -422,6 +427,7 @@ private fun EditStatusContent(
 
             deviceModelText = t.testedDeviceModel
             gpuModelText = t.testedGpuModel
+            driverVersionText = t.testedDriverVersion
 
             ramSelected =
                 if (ramOptions.contains(t.testedRam)) t.testedRam else otherLabel
@@ -490,7 +496,7 @@ private fun EditStatusContent(
     val isFormValid by remember(
         currentStatus,
         androidVersionFinal,
-        deviceModelText, gpuModelText, ramFinal,
+        deviceModelText, gpuModelText, driverVersionText, ramFinal,
         wrapperFinal, perfModeFinal,
         selectedApp, appVersionText, gameVersionText,
         accuracyFinal, scaleFinal, frameSkipFinal,
@@ -502,6 +508,7 @@ private fun EditStatusContent(
                 androidVersionFinal.isNotEmpty() &&
                         deviceModelText.trim().isNotEmpty() &&
                         gpuModelText.trim().isNotEmpty() &&
+                        driverVersionText.trim().isNotEmpty() &&
                         ramFinal.isNotEmpty() &&
                         wrapperFinal.isNotEmpty() &&
                         perfModeFinal.isNotEmpty() &&
@@ -854,8 +861,19 @@ private fun EditStatusContent(
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = driverVersionText,
+                onValueChange = { driverVersionText = it },
+                label = { Text(stringResource(R.string.label_driver_version)) },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
 
             Spacer(modifier = Modifier.height(10.dp))
+
 
             DropdownWithCustom(
                 labelRes = R.string.label_ram,
@@ -1287,6 +1305,7 @@ private fun EditStatusContent(
                                 testedAndroidVersion = androidVersionFinal,
                                 testedDeviceModel = deviceModelText.trim(),
                                 testedGpuModel = gpuModelText.trim(),
+                                testedDriverVersion = driverVersionText.trim(),
                                 testedRam = ramFinal,
                                 testedWrapper = wrapperFinal,
                                 testedPerformanceMode = perfModeFinal,

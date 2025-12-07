@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -205,28 +206,34 @@ fun PSGamesApp() {
         }
 
         composable(
-            route = Routes.DETAILS,
+            Routes.DETAILS,
             arguments = listOf(navArgument("gameId") { type = NavType.StringType })
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("gameId") ?: return@composable
-
+            val gameId = backStackEntry.arguments?.getString("gameId") ?: return@composable
             val detailVm: GameDetailViewModel = viewModel()
+            val savedStateHandle = backStackEntry.savedStateHandle
+            val testSavedFlow = savedStateHandle.getStateFlow("test_saved", false)
+            val testSaved by testSavedFlow.collectAsState()
 
             GameDetailScreen(
                 viewModel = detailVm,
-                gameId = id,
+                gameId = gameId,
                 onBack = { navController.popBackStack() },
-                onOpenEditStatus = { gameId2 ->
-                    navController.navigate(Routes.editStatusRoute(gameId2))
+                onOpenEditStatus = { id ->
+                    navController.navigate(Routes.editStatusRoute(id))
                 },
-                onOpenTestHistory = { gameId2 ->
-                    navController.navigate(Routes.testHistoryRoute(gameId2))
-                }
+                onOpenTestHistory = { id ->
+                    navController.navigate(Routes.testHistoryRoute(id))
+                },
+                onTestSavedConsumed = {
+                    savedStateHandle["test_saved"] = false
+                },
+                testSaved = testSaved
             )
         }
 
         composable(
-            route = Routes.EDIT_STATUS,
+            Routes.EDIT_STATUS,
             arguments = listOf(navArgument("gameId") { type = NavType.StringType })
         ) { entry ->
             val gameId = entry.arguments?.getString("gameId") ?: return@composable
@@ -235,8 +242,12 @@ fun PSGamesApp() {
             EditStatusScreen(
                 viewModel = detailVm,
                 gameId = gameId,
-                testMillis = null,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onTestSaved = {
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("test_saved", true)
+                }
             )
         }
 
@@ -255,7 +266,12 @@ fun PSGamesApp() {
                 viewModel = detailVm,
                 gameId = gameId,
                 testMillis = testMillis,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onTestSaved = {
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("test_saved", true)
+                }
             )
         }
 
@@ -291,7 +307,18 @@ fun PSGamesApp() {
             val testMillis = testId.substringAfterLast("_").toLongOrNull() ?: 0L
 
             val detailVm: GameDetailViewModel = viewModel()
+            val context = LocalContext.current
 
+            val savedStateHandle = entry.savedStateHandle
+            val testSavedFlow = savedStateHandle.getStateFlow("test_saved", false)
+            val testSaved by testSavedFlow.collectAsState()
+
+            LaunchedEffect(testSaved) {
+                if (testSaved) {
+                    detailVm.refresh(context, gameId)
+                    savedStateHandle["test_saved"] = false
+                }
+            }
             TestHistoryDetailScreen(
                 viewModel = detailVm,
                 gameId = gameId,

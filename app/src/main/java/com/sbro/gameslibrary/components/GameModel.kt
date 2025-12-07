@@ -57,6 +57,7 @@ data class GameTestResult(
     val testedDeviceModel: String = "",
 
     val testedGpuModel: String = "",
+    val testedDriverVersion: String = "",
     val testedRam: String = "",
     val testedWrapper: String = "",
     val testedPerformanceMode: String = "",

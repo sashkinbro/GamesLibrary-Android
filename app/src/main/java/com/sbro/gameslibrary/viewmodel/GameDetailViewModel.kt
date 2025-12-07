@@ -87,7 +87,11 @@ class GameDetailViewModel : ViewModel() {
             coroutineScope {
                 val testsDeferred = async { syncTestsForGame(context, gameId) }
                 val commentsDeferred = async {
-                    loadCommentsForGameInternal(gameId, loadMore = false)
+                    loadCommentsForGameInternal(
+                        gameId = gameId,
+                        loadMore = false,
+                        showGlobalLoading = false
+                    )
                 }
 
                 testsDeferred.await()
@@ -176,9 +180,13 @@ class GameDetailViewModel : ViewModel() {
         }
     }
 
-    fun loadCommentsForGame(gameId: String) {
+    fun loadCommentsForGame(gameId: String, showGlobalLoading: Boolean = true) {
         viewModelScope.launch {
-            loadCommentsForGameInternal(gameId, loadMore = false)
+            loadCommentsForGameInternal(
+                gameId = gameId,
+                loadMore = false,
+                showGlobalLoading = showGlobalLoading
+            )
         }
     }
 
@@ -188,10 +196,14 @@ class GameDetailViewModel : ViewModel() {
         }
     }
 
-    private suspend fun loadCommentsForGameInternal(gameId: String, loadMore: Boolean) {
+    private suspend fun loadCommentsForGameInternal(
+        gameId: String,
+        loadMore: Boolean,
+        showGlobalLoading: Boolean = true
+    ) {
         if (loadMore) {
             _isLoadingMoreComments.value = true
-        } else {
+        } else if (showGlobalLoading) {
             _isLoading.value = true
         }
 
@@ -237,9 +249,7 @@ class GameDetailViewModel : ViewModel() {
             }
 
             val groupedNew = comments
-                .groupBy { c ->
-                    c.testId.ifBlank { "legacy_${c.testMillis}" }
-                }
+                .groupBy { c -> c.testId.ifBlank { "legacy_${c.testMillis}" } }
                 .mapValues { (_, list) ->
                     list.sortedBy { it.createdAt?.toDate()?.time ?: 0L }
                 }
@@ -254,11 +264,14 @@ class GameDetailViewModel : ViewModel() {
             } else groupedNew.toMutableMap()
 
             _commentsByTest.value = merged
+
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             _isLoadingMoreComments.value = false
-            if (!loadMore) _isLoading.value = false
+            if (!loadMore && showGlobalLoading) {
+                _isLoading.value = false
+            }
         }
     }
 
@@ -295,7 +308,7 @@ class GameDetailViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 commentsCollection.add(data).await()
-                loadCommentsForGame(gameId)
+                loadCommentsForGame(gameId, showGlobalLoading = false)
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
@@ -327,7 +340,7 @@ class GameDetailViewModel : ViewModel() {
                         )
                     )
                     .await()
-                currentGameId?.let { loadCommentsForGame(it) }
+                currentGameId?.let { loadCommentsForGame(it, showGlobalLoading = false) }
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
@@ -347,6 +360,7 @@ class GameDetailViewModel : ViewModel() {
         val testedAndroidVersion: String,
         val testedDeviceModel: String,
         val testedGpuModel: String,
+        val testedDriverVersion: String,
         val testedRam: String,
         val testedWrapper: String,
         val testedPerformanceMode: String,
@@ -398,6 +412,7 @@ class GameDetailViewModel : ViewModel() {
             testedAndroidVersion = payload.testedAndroidVersion,
             testedDeviceModel = payload.testedDeviceModel,
             testedGpuModel = payload.testedGpuModel,
+            testedDriverVersion = payload.testedDriverVersion,
             testedRam = payload.testedRam,
             testedWrapper = payload.testedWrapper,
             testedPerformanceMode = payload.testedPerformanceMode,
@@ -530,6 +545,7 @@ class GameDetailViewModel : ViewModel() {
                         "testedAndroidVersion" to newResult.testedAndroidVersion,
                         "testedDeviceModel" to newResult.testedDeviceModel,
                         "testedGpuModel" to newResult.testedGpuModel,
+                        "testedDriverVersion" to newResult.testedDriverVersion,
                         "testedRam" to newResult.testedRam,
                         "testedWrapper" to newResult.testedWrapper,
                         "testedPerformanceMode" to newResult.testedPerformanceMode,
@@ -583,6 +599,7 @@ class GameDetailViewModel : ViewModel() {
             "testedDeviceModel" to testedDeviceModel,
 
             "testedGpuModel" to testedGpuModel,
+            "testedDriverVersion" to testedDriverVersion,
             "testedRam" to testedRam,
             "testedWrapper" to testedWrapper,
             "testedPerformanceMode" to testedPerformanceMode,
@@ -620,6 +637,33 @@ class GameDetailViewModel : ViewModel() {
         )
     }
 
+    fun refresh(context: Context, gameId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            currentGameId = gameId
+
+            favoritesObserveJob?.cancel()
+            favoritesObserveJob = null
+            observeFavoritesForCurrentGame()
+
+            loadLocalGame(context, gameId)
+            coroutineScope {
+                val testsDeferred = async { syncTestsForGame(context, gameId) }
+                val commentsDeferred = async {
+                    loadCommentsForGameInternal(
+                        gameId = gameId,
+                        loadMore = false,
+                        showGlobalLoading = false
+                    )
+                }
+                testsDeferred.await()
+                commentsDeferred.await()
+            }
+
+            _isLoading.value = false
+        }
+    }
+
     private fun DocumentSnapshot.toGameTestResult(gameId: String): GameTestResult? {
         return try {
             val statusStr = getString("status") ?: WorkStatus.UNTESTED.name
@@ -627,6 +671,7 @@ class GameDetailViewModel : ViewModel() {
             val testedAndroidVersion = getString("testedAndroidVersion") ?: ""
             val testedDeviceModel = getString("testedDeviceModel") ?: ""
             val testedGpuModel = getString("testedGpuModel") ?: ""
+            val testedDriverVersion = getString("testedDriverVersion") ?: ""
             val testedRam = getString("testedRam") ?: ""
             val testedWrapper = getString("testedWrapper") ?: ""
             val testedPerformanceMode = getString("testedPerformanceMode") ?: ""
@@ -685,6 +730,7 @@ class GameDetailViewModel : ViewModel() {
                 testedAndroidVersion = testedAndroidVersion,
                 testedDeviceModel = testedDeviceModel,
                 testedGpuModel = testedGpuModel,
+                testedDriverVersion = testedDriverVersion,
                 testedRam = testedRam,
                 testedWrapper = testedWrapper,
                 testedPerformanceMode = testedPerformanceMode,
