@@ -62,22 +62,28 @@ fun RegisterScreen(
     Scaffold(
         containerColor = cs.background,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.auth_register_title),
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 22.sp
+            Column {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.auth_register_title),
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 22.sp
+                            )
                         )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { safeClick(onBack) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { safeClick(onBack) }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        }
                     }
-                }
-            )
+                )
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = cs.outline.copy(alpha = 0.4f)
+                )
+            }
         },
         bottomBar = {
             Surface(
