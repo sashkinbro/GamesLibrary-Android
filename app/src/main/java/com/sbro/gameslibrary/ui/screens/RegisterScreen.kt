@@ -16,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
@@ -54,29 +55,61 @@ fun RegisterScreen(
         action()
     }
 
-    val background = Brush.verticalGradient(listOf(cs.background, cs.surfaceContainer))
+    val background = Brush.verticalGradient(
+        listOf(cs.background, cs.surfaceContainerLow, cs.background)
+    )
 
     Scaffold(
         containerColor = cs.background,
         topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.auth_register_title),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 22.sp
-                            )
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.auth_register_title),
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 22.sp
                         )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { safeClick(onBack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                        }
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { safeClick(onBack) }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
-                )
-                HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
+                }
+            )
+        },
+        bottomBar = {
+            Surface(
+                color = cs.background,
+                tonalElevation = 2.dp,
+                shadowElevation = 6.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 10.dp)
+                        .navigationBarsPadding(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.auth_have_account),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = cs.onSurfaceVariant
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    TextButton(
+                        onClick = { safeClick(onGoLogin) },
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.auth_go_login),
+                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold)
+                        )
+                    }
+                }
             }
         }
     ) { pv ->
@@ -85,23 +118,33 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .background(background)
                 .padding(pv)
-                .navigationBarsPadding()
                 .verticalScroll(scroll)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(horizontal = 16.dp)
         ) {
 
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.auth_create_account),
+                style = MaterialTheme.typography.bodyMedium,
+                color = cs.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+
+            Spacer(Modifier.height(12.dp))
+
             ElevatedCard(
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh)
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh),
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(18.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it; error = null },
@@ -111,7 +154,8 @@ fun RegisterScreen(
                         leadingIcon = {
                             Icon(Icons.Filled.AccountCircle, contentDescription = null)
                         },
-                        singleLine = true
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     OutlinedTextField(
@@ -123,7 +167,8 @@ fun RegisterScreen(
                         leadingIcon = {
                             Icon(Icons.Filled.MailOutline, contentDescription = null)
                         },
-                        singleLine = true
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     OutlinedTextField(
@@ -136,7 +181,8 @@ fun RegisterScreen(
                             Icon(Icons.Filled.Lock, contentDescription = null)
                         },
                         visualTransformation = PasswordVisualTransformation(),
-                        singleLine = true
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     OutlinedTextField(
@@ -149,14 +195,19 @@ fun RegisterScreen(
                             Icon(Icons.Filled.Lock, contentDescription = null)
                         },
                         visualTransformation = PasswordVisualTransformation(),
-                        singleLine = true
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     if (error != null) {
-                        Text(
-                            text = error!!,
-                            color = cs.error,
-                            style = MaterialTheme.typography.bodySmall
+                        AssistChip(
+                            onClick = {},
+                            label = { Text(error!!) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                containerColor = cs.errorContainer,
+                                labelColor = cs.onErrorContainer
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
@@ -194,7 +245,7 @@ fun RegisterScreen(
                         enabled = !isLoading,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(52.dp),
+                            .height(54.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         if (isLoading) {
@@ -202,34 +253,22 @@ fun RegisterScreen(
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(10.dp))
                         }
-                        Text(stringResource(R.string.auth_register_button))
+                        Text(
+                            text = stringResource(R.string.auth_register_button),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
 
                     Text(
                         text = stringResource(R.string.auth_register_note_verify),
                         style = MaterialTheme.typography.bodySmall,
-                        color = cs.onSurface.copy(alpha = 0.7f)
+                        color = cs.onSurfaceVariant
                     )
                 }
             }
-
-            Spacer(Modifier.height(2.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.auth_have_account),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(Modifier.width(6.dp))
-                TextButton(onClick = { safeClick(onGoLogin) }) {
-                    Text(stringResource(R.string.auth_go_login))
-                }
-            }
+            Spacer(Modifier.height(80.dp))
         }
     }
 }

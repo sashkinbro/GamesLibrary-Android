@@ -47,30 +47,29 @@ fun ResetPasswordScreen(
         action()
     }
 
-    val background = Brush.verticalGradient(listOf(cs.background, cs.surfaceContainer))
+    val background = Brush.verticalGradient(
+        listOf(cs.background, cs.surfaceContainerLow, cs.background)
+    )
 
     Scaffold(
         containerColor = cs.background,
         topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.auth_reset_title),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 22.sp
-                            )
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.auth_reset_title),
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 22.sp
                         )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { safeClick(onBack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                        }
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { safeClick(onBack) }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
-                )
-                HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
-            }
+                }
+            )
         }
     ) { pv ->
         Column(
@@ -80,25 +79,32 @@ fun ResetPasswordScreen(
                 .padding(pv)
                 .navigationBarsPadding()
                 .verticalScroll(scroll)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(horizontal = 16.dp)
         ) {
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.auth_reset_body),
+                style = MaterialTheme.typography.bodyMedium,
+                color = cs.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+
+            Spacer(Modifier.height(12.dp))
+
             ElevatedCard(
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh)
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh),
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(18.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-
-                    Text(
-                        text = stringResource(R.string.auth_reset_body),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = cs.onSurface.copy(alpha = 0.8f)
-                    )
 
                     OutlinedTextField(
                         value = email,
@@ -109,22 +115,31 @@ fun ResetPasswordScreen(
                         leadingIcon = {
                             Icon(Icons.Filled.MailOutline, contentDescription = null)
                         },
-                        singleLine = true
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     if (error != null) {
-                        Text(
-                            text = error!!,
-                            color = cs.error,
-                            style = MaterialTheme.typography.bodySmall
+                        AssistChip(
+                            onClick = {},
+                            label = { Text(error!!) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                containerColor = cs.errorContainer,
+                                labelColor = cs.onErrorContainer
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
                     if (sent) {
-                        Text(
-                            text = stringResource(R.string.auth_reset_sent_ui),
-                            color = cs.primary,
-                            style = MaterialTheme.typography.bodySmall
+                        AssistChip(
+                            onClick = {},
+                            label = { Text(stringResource(R.string.auth_reset_sent_ui)) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                containerColor = cs.primaryContainer,
+                                labelColor = cs.onPrimaryContainer
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
@@ -157,7 +172,7 @@ fun ResetPasswordScreen(
                         enabled = !isLoading,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(52.dp),
+                            .height(54.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         if (isLoading) {
@@ -165,12 +180,17 @@ fun ResetPasswordScreen(
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(10.dp))
                         }
-                        Text(stringResource(R.string.auth_reset_button))
+                        Text(
+                            text = stringResource(R.string.auth_reset_button),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 }
             }
+
+            Spacer(Modifier.height(12.dp))
         }
     }
 }

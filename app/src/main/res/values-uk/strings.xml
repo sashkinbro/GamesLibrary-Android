@@ -338,6 +338,10 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="common_cancel">Скасувати</string>
     <string name="auth_error_empty_name">Вкажіть імʼя</string>
     <string name="label_driver_version">Версія драйвера GPU</string>
+    <string name="common_or">або</string>
+    <string name="profile_menu_section">Мої розділи</string>
+    <string name="profile_guest_hint_tests">Зберігайте історію пройдених тестів</string>
+    <string name="profile_guest_hint_comments">Пишіть коментарі та відповідайте іншим</string>
 
 
 </resources>

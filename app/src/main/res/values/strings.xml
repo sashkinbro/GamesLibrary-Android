@@ -340,6 +340,10 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="common_cancel">Cancel</string>
     <string name="auth_error_empty_name">Enter your name</string>
     <string name="label_driver_version">GPU version driver</string>
+    <string name="common_or">or</string>
+    <string name="profile_menu_section">My sections</string>
+    <string name="profile_guest_hint_tests">Save your test history</string>
+    <string name="profile_guest_hint_comments">Write comments and reply to others</string>
 
 
 

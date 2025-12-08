@@ -68,29 +68,63 @@ fun LoginScreen(
         }
     }
 
-    val background = Brush.verticalGradient(listOf(cs.background, cs.surfaceContainer))
+    val background = Brush.verticalGradient(
+        listOf(cs.background, cs.surfaceContainerLow, cs.background)
+    )
 
     Scaffold(
         containerColor = cs.background,
         topBar = {
-            Column {
-                TopAppBar(
-                    title = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.auth_login_title),
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 22.sp
+                        )
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { safeClick(onBack) }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    }
+                }
+            )
+        },
+        bottomBar = {
+            Surface(
+                color = cs.background,
+                tonalElevation = 2.dp,
+                shadowElevation = 6.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 10.dp)
+                        .navigationBarsPadding(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.auth_no_account),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = cs.onSurfaceVariant
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    TextButton(
+                        onClick = { safeClick(onGoRegister) },
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
                         Text(
-                            text = stringResource(R.string.auth_login_title),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 22.sp
+                            text = stringResource(R.string.auth_go_register),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.SemiBold
                             )
                         )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { safeClick(onBack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                        }
                     }
-                )
-                HorizontalDivider(color = cs.outline.copy(alpha = 0.4f))
+                }
             }
         }
     ) { pv ->
@@ -99,22 +133,30 @@ fun LoginScreen(
                 .fillMaxSize()
                 .background(background)
                 .padding(pv)
-                .navigationBarsPadding()
                 .verticalScroll(scroll)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(horizontal = 16.dp)
         ) {
 
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.auth_sign_in_email),
+                style = MaterialTheme.typography.bodyMedium,
+                color = cs.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+
+            Spacer(Modifier.height(12.dp))
 
             ElevatedCard(
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh)
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh),
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(18.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
 
@@ -128,7 +170,9 @@ fun LoginScreen(
                             Icon(Icons.Filled.MailOutline, contentDescription = null)
                         },
                         singleLine = true,
-                        isError = error != null && !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
+                        shape = RoundedCornerShape(14.dp),
+                        isError = error != null &&
+                                !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
                     )
 
                     OutlinedTextField(
@@ -142,14 +186,19 @@ fun LoginScreen(
                         },
                         visualTransformation = PasswordVisualTransformation(),
                         singleLine = true,
+                        shape = RoundedCornerShape(14.dp),
                         isError = error != null && pass.length < 6
                     )
 
                     if (error != null) {
-                        Text(
-                            text = error!!,
-                            color = cs.error,
-                            style = MaterialTheme.typography.bodySmall
+                        AssistChip(
+                            onClick = {},
+                            label = { Text(error!!) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                containerColor = cs.errorContainer,
+                                labelColor = cs.onErrorContainer
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
@@ -159,11 +208,14 @@ fun LoginScreen(
                                 val e = email.trim()
                                 val p = pass
                                 when {
-                                    e.isBlank() -> error = context.getString(R.string.auth_error_empty_email)
+                                    e.isBlank() ->
+                                        error = context.getString(R.string.auth_error_empty_email)
                                     !Patterns.EMAIL_ADDRESS.matcher(e).matches() ->
                                         error = context.getString(R.string.auth_error_bad_email)
-                                    p.isBlank() -> error = context.getString(R.string.auth_error_empty_password)
-                                    p.length < 6 -> error = context.getString(R.string.auth_error_short_password)
+                                    p.isBlank() ->
+                                        error = context.getString(R.string.auth_error_empty_password)
+                                    p.length < 6 ->
+                                        error = context.getString(R.string.auth_error_short_password)
                                     else -> {
                                         isLoading = true
                                         viewModel.signInWithEmail(
@@ -186,7 +238,7 @@ fun LoginScreen(
                         enabled = !isLoading,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(52.dp),
+                            .height(54.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         if (isLoading) {
@@ -194,19 +246,41 @@ fun LoginScreen(
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(10.dp))
                         }
-                        Text(stringResource(R.string.auth_login_button))
+                        Text(
+                            text = stringResource(R.string.auth_login_button),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
 
                     TextButton(
                         onClick = { safeClick(onGoReset) },
-                        modifier = Modifier.align(Alignment.End)
+                        modifier = Modifier.align(Alignment.End),
+                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)
                     ) {
                         Text(stringResource(R.string.auth_forgot_password))
                     }
                 }
             }
+
+            Spacer(Modifier.height(14.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(modifier = Modifier.weight(1f), color = cs.outlineVariant)
+                Text(
+                    text = stringResource(R.string.common_or).ifBlank { "or" },
+                    style = MaterialTheme.typography.labelMedium,
+                    color = cs.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
+                HorizontalDivider(modifier = Modifier.weight(1f), color = cs.outlineVariant)
+            }
+
+            Spacer(Modifier.height(10.dp))
 
             OutlinedButton(
                 onClick = {
@@ -216,7 +290,7 @@ fun LoginScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp),
+                    .height(54.dp),
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Image(
@@ -224,25 +298,13 @@ fun LoginScreen(
                     contentDescription = null,
                     modifier = Modifier.size(20.dp)
                 )
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.sign_in_google))
-            }
-
-            Spacer(Modifier.height(4.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
+                Spacer(Modifier.width(10.dp))
                 Text(
-                    text = stringResource(R.string.auth_no_account),
-                    style = MaterialTheme.typography.bodyMedium
+                    text = stringResource(R.string.sign_in_google),
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(Modifier.width(6.dp))
-                TextButton(onClick = { safeClick(onGoRegister) }) {
-                    Text(stringResource(R.string.auth_go_register))
-                }
             }
+            Spacer(Modifier.height(80.dp))
         }
     }
 }
