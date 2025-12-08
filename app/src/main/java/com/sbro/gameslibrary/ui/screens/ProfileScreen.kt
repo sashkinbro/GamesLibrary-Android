@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -490,24 +491,32 @@ private fun GuestBenefits() {
     val cs = MaterialTheme.colorScheme
 
     ElevatedCard(
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(22.dp),
         colors = CardDefaults.elevatedCardColors(containerColor = cs.surfaceContainerHigh),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.dp),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 14.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            BenefitRow(
+            GuestBenefitRow(
                 icon = Icons.Filled.FavoriteBorder,
                 text = stringResource(R.string.profile_guest_hint)
             )
-            BenefitRow(
+
+            GuestBenefitDivider()
+
+            GuestBenefitRow(
                 icon = Icons.Filled.History,
                 text = stringResource(R.string.profile_guest_hint_tests)
             )
-            BenefitRow(
+
+            GuestBenefitDivider()
+
+            GuestBenefitRow(
                 icon = Icons.AutoMirrored.Filled.Message,
                 text = stringResource(R.string.profile_guest_hint_comments)
             )
@@ -516,44 +525,52 @@ private fun GuestBenefits() {
 }
 
 @Composable
-private fun BenefitRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+private fun GuestBenefitRow(
+    icon: ImageVector,
     text: String
 ) {
     val cs = MaterialTheme.colorScheme
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Surface(
-            modifier = Modifier.size(34.dp),
-            shape = RoundedCornerShape(10.dp),
-            color = cs.surfaceVariant
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(cs.primary.copy(alpha = 0.12f)),
+            contentAlignment = Alignment.Center
         ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = cs.primary,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = cs.primary,
+                modifier = Modifier.size(22.dp)
+            )
         }
 
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(12.dp))
 
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                fontSize = 15.sp,
-                lineHeight = 20.sp
-            ),
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Medium,
             color = cs.onSurface,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.weight(1f)
+            lineHeight = MaterialTheme.typography.bodyLarge.lineHeight
         )
     }
+}
+
+@Composable
+private fun GuestBenefitDivider() {
+    HorizontalDivider(
+        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.18f),
+        thickness = 1.dp,
+        modifier = Modifier.fillMaxWidth()
+    )
 }
 
 @Composable
@@ -624,7 +641,7 @@ private fun UserHeaderCard(
 
 @Composable
 private fun ProfileMenuCard(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     title: String,
     subtitle: String,
     onClick: () -> Unit

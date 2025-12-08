@@ -237,7 +237,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="my_favorites">My favorites</string>
     <string name="need_login">To see this page, sign in to your account</string>
     <string name="need_login_favorites">Favorites sync only through an account</string>
-    <string name="profile_guest_hint">You are currently a guest. Signing in enables favorites sync and editing your own tests/comments.</string>
+    <string name="profile_guest_hint">Signing in enables favorites sync and editing your own tests/comments.</string>
     <string name="auth_success">Signed in successfully</string>
     <string name="auth_failed">Failed to sign in</string>
     <string name="auth_signed_out">Signed out</string>

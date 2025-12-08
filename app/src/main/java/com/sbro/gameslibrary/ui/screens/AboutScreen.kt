@@ -1,8 +1,8 @@
 package com.sbro.gameslibrary.ui.screens
 
 import android.content.Intent
-import android.os.Build
 import android.os.SystemClock
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -42,9 +43,11 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -78,29 +81,15 @@ fun AboutScreen(
         }
     }
 
-    val versionCode = remember {
-        try {
-            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                pInfo.longVersionCode
-            } else {
-                @Suppress("DEPRECATION")
-                pInfo.versionCode.toLong()
-            }
-        } catch (_: Exception) {
-            0L
-        }
-    }
-
     fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         context.startActivity(intent)
     }
 
-    val gradient = Brush.verticalGradient(
+    val backgroundGradient = Brush.verticalGradient(
         listOf(
             MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surfaceContainer,
+            MaterialTheme.colorScheme.surfaceContainerLowest,
             MaterialTheme.colorScheme.surface
         )
     )
@@ -133,7 +122,7 @@ fun AboutScreen(
                 )
                 HorizontalDivider(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.35f)
                 )
             }
         }
@@ -142,7 +131,7 @@ fun AboutScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(gradient)
+                .background(backgroundGradient)
                 .padding(padding)
                 .navigationBarsPadding()
         ) {
@@ -150,93 +139,110 @@ fun AboutScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                // Header card
+
                 Card(
-                    shape = RoundedCornerShape(24.dp),
+                    shape = RoundedCornerShape(26.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
-                        Text(
-                            text = stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
+                    val heroGradient = Brush.linearGradient(
+                        listOf(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.10f),
+                            MaterialTheme.colorScheme.tertiary.copy(alpha = 0.08f),
+                            Color.Transparent
                         )
-                        Spacer(Modifier.height(6.dp))
-                        Text(
-                            text = stringResource(
-                                R.string.about_subtitle,
-                                versionName,
-                                versionCode
-                            ),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f)
-                        )
-                        Spacer(Modifier.height(12.dp))
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(heroGradient)
+                            .padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.size(64.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.ic_icon),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(160.dp)
+                                )
+                            }
+
+
+                            Spacer(Modifier.width(14.dp))
+
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = stringResource(R.string.app_name),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(Modifier.height(4.dp))
+
+                                VersionChip(text = "v$versionName")
+                            }
+                        }
+
                         Text(
                             text = stringResource(R.string.about_description),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
                         )
                     }
                 }
 
-                Card(
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainer
+                SectionCard {
+                    AboutRow(
+                        icon = Icons.Filled.NewReleases,
+                        title = stringResource(R.string.about_feature_fast_title),
+                        body = stringResource(R.string.about_feature_fast_body)
                     )
-                ) {
-                    Column(modifier = Modifier.padding(18.dp)) {
-                        AboutRow(
-                            icon = Icons.Filled.NewReleases,
-                            title = stringResource(R.string.about_feature_fast_title),
-                            body = stringResource(R.string.about_feature_fast_body)
-                        )
-                        Spacer(Modifier.height(12.dp))
-                        AboutRow(
-                            icon = Icons.Filled.Security,
-                            title = stringResource(R.string.about_feature_anonymous_title),
-                            body = stringResource(R.string.about_feature_anonymous_body)
-                        )
-                        Spacer(Modifier.height(12.dp))
-                        AboutRow(
-                            icon = Icons.Filled.Code,
-                            title = stringResource(R.string.about_feature_open_title),
-                            body = stringResource(R.string.about_feature_open_body)
-                        )
-                    }
+
+                    DividerSoft()
+
+                    AboutRow(
+                        icon = Icons.Filled.Security,
+                        title = stringResource(R.string.about_feature_anonymous_title),
+                        body = stringResource(R.string.about_feature_anonymous_body)
+                    )
+
+                    DividerSoft()
+
+                    AboutRow(
+                        icon = Icons.Filled.Code,
+                        title = stringResource(R.string.about_feature_open_title),
+                        body = stringResource(R.string.about_feature_open_body)
+                    )
                 }
 
-                // Links
-                Card(
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                SectionCard {
+                    LinkButton(
+                        icon = Icons.Filled.Language,
+                        title = stringResource(R.string.about_link_site_title),
+                        subtitle = stringResource(R.string.about_link_site_subtitle),
+                        onClick = { openUrl(siteUrl) }
                     )
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
 
-                        LinkButton(
-                            icon = Icons.Filled.Language,
-                            title = stringResource(R.string.about_link_site_title),
-                            subtitle = stringResource(R.string.about_link_site_subtitle),
-                            onClick = { openUrl(siteUrl) }
-                        )
+                    Spacer(Modifier.height(10.dp))
 
-                        Spacer(Modifier.height(10.dp))
-
-                        LinkButton(
-                            icon = Icons.Filled.Code,
-                            title = stringResource(R.string.about_link_github_title),
-                            subtitle = stringResource(R.string.about_link_github_subtitle),
-                            onClick = { openUrl(githubUrl) }
-                        )
-                    }
+                    LinkButton(
+                        icon = Icons.Filled.Code,
+                        title = stringResource(R.string.about_link_github_title),
+                        subtitle = stringResource(R.string.about_link_github_subtitle),
+                        onClick = { openUrl(githubUrl) }
+                    )
                 }
 
                 Card(
@@ -268,16 +274,65 @@ fun AboutScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = stringResource(R.string.about_footer),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(top = 2.dp, bottom = 12.dp)
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun SectionCard(
+    content: @Composable () -> Unit
+) {
+    Card(
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+private fun DividerSoft() {
+    Spacer(Modifier.height(6.dp))
+    HorizontalDivider(
+        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f),
+        thickness = 1.dp,
+        modifier = Modifier.fillMaxWidth()
+    )
+    Spacer(Modifier.height(6.dp))
+}
+
+@Composable
+private fun VersionChip(text: String) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(999.dp))
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f))
+            .padding(horizontal = 14.dp, vertical = 6.dp)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -287,13 +342,17 @@ private fun AboutRow(
     title: String,
     body: String
 ) {
-    Row(verticalAlignment = Alignment.Top) {
+    Row(
+        verticalAlignment = Alignment.Top,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Card(
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(14.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
             ),
-            modifier = Modifier.size(44.dp)
+            modifier = Modifier.size(46.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
@@ -304,15 +363,17 @@ private fun AboutRow(
             }
         }
 
-        Spacer(Modifier.padding(8.dp))
+        Spacer(Modifier.width(12.dp))
 
-        Column {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(3.dp),
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = title,
                 fontWeight = FontWeight.SemiBold,
                 style = MaterialTheme.typography.titleMedium
             )
-            Spacer(Modifier.height(2.dp))
             Text(
                 text = body,
                 style = MaterialTheme.typography.bodyMedium,
@@ -335,7 +396,7 @@ private fun LinkButton(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(
@@ -347,7 +408,8 @@ private fun LinkButton(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.12f)
                 ),
-                modifier = Modifier.size(42.dp)
+                modifier = Modifier.size(42.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
@@ -358,13 +420,15 @@ private fun LinkButton(
                 }
             }
 
-            Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.width(10.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.bodyLarge
                 )
+                Spacer(Modifier.height(2.dp))
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.labelMedium,

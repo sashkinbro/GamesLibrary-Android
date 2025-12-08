@@ -237,7 +237,7 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="my_favorites">Мої улюблені</string>
     <string name="need_login">Щоб бачити цю сторінку — увійди в акаунт</string>
     <string name="need_login_favorites">Улюблені синхронізуються лише через акаунт</string>
-    <string name="profile_guest_hint">Ти зараз як гість. Авторизація дає синхронізацію улюблених та редагування своїх тестів/коментів.</string>
+    <string name="profile_guest_hint">Авторизація дає синхронізацію улюблених та редагування своїх тестів/коментів.</string>
     <string name="auth_success">Успішний вхід</string>
     <string name="auth_failed">Не вдалося увійти</string>
     <string name="auth_signed_out">Вийшли з акаунта</string>
