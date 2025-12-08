@@ -141,7 +141,7 @@ fun EditStatusScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.edit_status_title)) },
+                    title = { Text(stringResource(R.string.dialog_edit_status_title)) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, null)

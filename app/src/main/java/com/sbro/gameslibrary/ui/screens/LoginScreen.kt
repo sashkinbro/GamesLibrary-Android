@@ -90,7 +90,12 @@ fun LoginScreen(
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
                 }
+
             )
+            HorizontalDivider(
+                color = cs.outline.copy(alpha = 0.4f)
+            )
+
         },
         bottomBar = {
             Surface(
