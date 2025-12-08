@@ -284,7 +284,7 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="my_devices_empty">Ты ещё не добавил ни одного устройства</string>
     <string name="my_devices_limit_hint">Добавлено %1$d/5 устройств</string>
     <string name="my_devices_need_login">Войди в аккаунт, чтобы добавлять свои устройства</string>
-    <string name="pick_from_my_devices">Выбрать из своих</string>
+    <string name="pick_from_my_devices">С моих</string>
 
 
 

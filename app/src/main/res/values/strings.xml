@@ -284,7 +284,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="my_devices_empty">You haven’t added any devices yet</string>
     <string name="my_devices_limit_hint">Added %1$d/5 devices</string>
     <string name="my_devices_need_login">Sign in to add your devices</string>
-    <string name="pick_from_my_devices">Pick from mine</string>
+    <string name="pick_from_my_devices">From mine</string>
 
 
 
