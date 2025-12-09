@@ -4,19 +4,24 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.sbro.gameslibrary.auth.AuthManager
 import com.sbro.gameslibrary.components.Game
+import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.util.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -80,6 +85,99 @@ class GameViewModel : ViewModel() {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
+
+    data class BadgeInfo(
+        val gameId: String,
+        val latestStatus: WorkStatus,
+        val latestUpdatedAtMillis: Long
+    )
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val testsCollection = firestore.collection("gameTests")
+
+    private val _badgesByGameId = MutableStateFlow<Map<String, BadgeInfo>>(emptyMap())
+    val badgesByGameId = _badgesByGameId.asStateFlow()
+
+    private val _badgesLoadingIds = MutableStateFlow<Set<String>>(emptySet())
+    private val badgeSemaphore = kotlinx.coroutines.sync.Semaphore(permits = 6)
+
+    private val _decoratedGames = MutableStateFlow<List<Game>>(emptyList())
+    val decoratedGames = _decoratedGames.asStateFlow()
+
+    fun loadBadgesForGameIds(gameIds: List<String>) {
+        if (gameIds.isEmpty()) return
+
+        val alreadyHave = _badgesByGameId.value.keys
+        val inFlight = _badgesLoadingIds.value
+
+        val toLoad = gameIds.distinct()
+            .filter { it !in alreadyHave && it !in inFlight }
+
+        if (toLoad.isEmpty()) return
+
+        _badgesLoadingIds.value = inFlight + toLoad
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val deferred: List<kotlinx.coroutines.Deferred<BadgeInfo?>> =
+                    toLoad.map { gid ->
+                        async {
+                            badgeSemaphore.acquire()
+                            try {
+                                loadLatestBadgeForOneGame(gid)
+                            } finally {
+                                badgeSemaphore.release()
+                            }
+                        }
+                    }
+
+                val results: List<BadgeInfo> = deferred.mapNotNull { it.await() }
+
+                if (results.isNotEmpty()) {
+                    val merged = _badgesByGameId.value.toMutableMap()
+                    results.forEach { merged[it.gameId] = it }
+                    _badgesByGameId.value = merged
+                    recomputeFiltered()
+                }
+            } finally {
+                _badgesLoadingIds.value -= toLoad.toSet()
+            }
+        }
+    }
+
+    private suspend fun loadLatestBadgeForOneGame(gameId: String): BadgeInfo? {
+        return try {
+            val latestSnap = testsCollection
+                .whereEqualTo("gameId", gameId)
+                .orderBy("updatedAt", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .await()
+
+            val latestDoc = latestSnap.documents.firstOrNull()
+
+            val statusStr = latestDoc?.getString("status") ?: WorkStatus.UNTESTED.name
+            val latestMillis =
+                latestDoc?.getTimestamp("updatedAt")?.toDate()?.time
+                    ?: latestDoc?.getLong("updatedAtMillis")
+                    ?: 0L
+
+            val latestStatus = when (statusStr) {
+                WorkStatus.WORKING.name -> WorkStatus.WORKING
+                WorkStatus.NOT_WORKING.name -> WorkStatus.NOT_WORKING
+                else -> WorkStatus.UNTESTED
+            }
+
+            BadgeInfo(
+                gameId = gameId,
+                latestStatus = latestStatus,
+                latestUpdatedAtMillis = latestMillis
+            )
+        } catch (_: Exception) {
+            null
+        }
+    }
+
 
     fun onPlatformFilterChange(filter: PlatformFilter) {
         _platformFilter.value = filter
@@ -200,6 +298,7 @@ class GameViewModel : ViewModel() {
                 if (parsedGames.isEmpty()) {
                     _games.value = emptyList()
                     _filteredGames.value = emptyList()
+                    _decoratedGames.value = emptyList()
                     _uiState.value = UiState.Error(ErrorType.NO_GAMES)
                 } else {
                     val ids = FavoritesRepository.favoriteIds.value
@@ -216,6 +315,7 @@ class GameViewModel : ViewModel() {
             }.onFailure {
                 _games.value = emptyList()
                 _filteredGames.value = emptyList()
+                _decoratedGames.value = emptyList()
                 _uiState.value = UiState.Error(ErrorType.PARSE_ERROR)
             }
         }
@@ -280,27 +380,57 @@ class GameViewModel : ViewModel() {
             SortOption.ORIGINAL -> list
             SortOption.TITLE -> list.sortedBy { it.title.lowercase() }
             SortOption.RATING_HIGH ->
-                list.sortedWith(compareByDescending<Game> { ratingAsFloat(it.rating) }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareByDescending<Game> { ratingAsFloat(it.rating) }
+                        .thenBy { it.title.lowercase() }
+                )
             SortOption.GENRE_AZ ->
-                list.sortedWith(compareBy<Game> { it.genre.lowercase() }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareBy<Game> { it.genre.lowercase() }
+                        .thenBy { it.title.lowercase() }
+                )
             SortOption.STATUS_WORKING ->
-                list.sortedWith(compareBy<Game> { statusRankForWorkingFirst(it.overallStatus()) }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareBy<Game> { statusRankForWorkingFirst(it.overallStatus()) }
+                        .thenBy { it.title.lowercase() }
+                )
             SortOption.STATUS_NOT_WORKING ->
-                list.sortedWith(compareBy<Game> { statusRankForNotWorkingFirst(it.overallStatus()) }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareBy<Game> { statusRankForNotWorkingFirst(it.overallStatus()) }
+                        .thenBy { it.title.lowercase() }
+                )
             SortOption.STATUS_UNTESTED ->
-                list.sortedWith(compareBy<Game> { it.overallStatus() != WorkStatus.UNTESTED }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareBy<Game> { it.overallStatus() != WorkStatus.UNTESTED }
+                        .thenBy { it.title.lowercase() }
+                )
             SortOption.YEAR_NEW -> list.sortedByDescending { it.year }
             SortOption.PLATFORM ->
-                list.sortedWith(compareBy<Game> { it.platform.lowercase() }
-                    .thenBy { it.title.lowercase() })
+                list.sortedWith(
+                    compareBy<Game> { it.platform.lowercase() }
+                        .thenBy { it.title.lowercase() }
+                )
         }
 
         _filteredGames.value = list
+
+        val badgesSnapshot = _badgesByGameId.value
+        viewModelScope.launch(Dispatchers.Default) {
+            val decorated = list.map { g ->
+                val b = badgesSnapshot[g.id]
+                if (b == null) {
+                    g.copy(testResults = emptyList())
+                } else {
+                    val fakeLatest = GameTestResult(
+                        testId = "badge_${g.id}",
+                        status = b.latestStatus,
+                        updatedAtMillis = b.latestUpdatedAtMillis
+                    )
+                    g.copy(testResults = listOf(fakeLatest))
+                }
+            }
+            _decoratedGames.value = decorated
+        }
     }
 
     fun toggleFavorite(gameId: String) {

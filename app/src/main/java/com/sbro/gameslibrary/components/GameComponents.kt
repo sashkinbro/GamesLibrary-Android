@@ -7,6 +7,10 @@ import android.os.SystemClock
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +32,6 @@ import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Star
@@ -42,6 +45,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -95,10 +99,6 @@ fun GameCard(
     val statusHPadding = if (isTabletOrWide) 16.dp else 14.dp
     val statusVPadding = if (isTabletOrWide) 9.dp else 8.dp
 
-    val testedIcon = if (isTabletOrWide) 18.dp else 16.dp
-    val testedHPadding = if (isTabletOrWide) 14.dp else 12.dp
-    val testedVPadding = if (isTabletOrWide) 8.dp else 7.dp
-
     val deviceChipIcon = if (isTabletOrWide) 18.dp else 16.dp
     val deviceChipRadius = if (isTabletOrWide) 12.dp else 10.dp
 
@@ -112,7 +112,6 @@ fun GameCard(
     val cardColor = cs.surface
     val latestTest = game.latestTestOrNull()
     val latestStatus = game.overallStatus()
-    val testedCount = game.testResults.size
 
     val last3Devices = remember(game.testResults) {
         game.testResults
@@ -131,6 +130,13 @@ fun GameCard(
         if (now - lastClickTime.longValue < 500L) return
         lastClickTime.longValue = now
         action()
+    }
+
+    var animatedOnce by remember(game.id) { mutableStateOf(false) }
+    LaunchedEffect(game.testResults.size) {
+        if (game.testResults.isNotEmpty()) {
+            animatedOnce = true
+        }
     }
 
     Card(
@@ -258,30 +264,26 @@ fun GameCard(
                     Spacer(modifier = Modifier.height(betweenBlocks))
 
                     if (showTestBadges) {
-                        WorkStatusBadge(
-                            status = latestStatus,
-                            onClick = {
-                                if (latestStatus == WorkStatus.NOT_WORKING &&
-                                    latestTest?.issueNote?.isNotBlank() == true
-                                ) {
-                                    showIssueDialog = true
-                                }
-                            },
-                            isTabletOrWide = isTabletOrWide,
-                            iconSize = statusIcon,
-                            horizontalPadding = statusHPadding,
-                            verticalPadding = statusVPadding
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        TestedCountBadge(
-                            count = testedCount,
-                            isTabletOrWide = isTabletOrWide,
-                            iconSize = testedIcon,
-                            horizontalPadding = testedHPadding,
-                            verticalPadding = testedVPadding
-                        )
+                        AnimatedVisibility(
+                            visible = game.testResults.isNotEmpty(),
+                            enter = if (!animatedOnce) fadeIn() + expandVertically() else fadeIn(),
+                            exit = fadeOut() + shrinkVertically()
+                        ) {
+                            WorkStatusBadge(
+                                status = latestStatus,
+                                onClick = {
+                                    if (latestStatus == WorkStatus.NOT_WORKING &&
+                                        latestTest?.issueNote?.isNotBlank() == true
+                                    ) {
+                                        showIssueDialog = true
+                                    }
+                                },
+                                isTabletOrWide = isTabletOrWide,
+                                iconSize = statusIcon,
+                                horizontalPadding = statusHPadding,
+                                verticalPadding = statusVPadding
+                            )
+                        }
 
                         if (last3Devices.isNotEmpty()) {
                             Spacer(modifier = Modifier.height(8.dp))
@@ -510,55 +512,6 @@ fun WorkStatusBadge(
 
             Text(
                 text = stringResource(id = textResId),
-                style = if (isTabletOrWide)
-                    MaterialTheme.typography.labelLarge
-                else
-                    MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Bold,
-                color = contentColor
-            )
-        }
-    }
-}
-
-@Composable
-fun TestedCountBadge(
-    count: Int,
-    isTabletOrWide: Boolean = false,
-    iconSize: androidx.compose.ui.unit.Dp = 16.dp,
-    horizontalPadding: androidx.compose.ui.unit.Dp = 12.dp,
-    verticalPadding: androidx.compose.ui.unit.Dp = 7.dp
-) {
-    val cs = MaterialTheme.colorScheme
-
-    val bgColor =
-        if (count > 0) cs.primaryContainer
-        else cs.surfaceVariant
-
-    val contentColor =
-        if (count > 0) cs.onPrimaryContainer
-        else cs.onSurfaceVariant
-
-    Surface(
-        color = bgColor,
-        shape = RoundedCornerShape(50),
-        border = BorderStroke(1.dp, contentColor.copy(alpha = 0.25f))
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = horizontalPadding, vertical = verticalPadding),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Filled.History,
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(iconSize)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = stringResource(AppR.string.tests_badge_label, count),
                 style = if (isTabletOrWide)
                     MaterialTheme.typography.labelLarge
                 else

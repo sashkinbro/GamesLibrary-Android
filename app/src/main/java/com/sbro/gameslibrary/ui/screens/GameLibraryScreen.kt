@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items as gridItems
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -40,10 +41,12 @@ import com.sbro.gameslibrary.viewmodel.ErrorType
 import com.sbro.gameslibrary.viewmodel.GameViewModel
 import com.sbro.gameslibrary.viewmodel.PlatformFilter
 import com.sbro.gameslibrary.viewmodel.SortOption
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @SuppressLint("ConfigurationScreenWidthHeight")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
 fun GameLibraryScreen(
     viewModel: GameViewModel = viewModel(),
@@ -84,11 +87,13 @@ fun GameLibraryScreen(
         }
     }
 
-    val games by viewModel.filteredGames.collectAsState()
+    val games by viewModel.decoratedGames.collectAsState()
     val searchText by viewModel.searchText.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
 
     val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+
     val coroutineScope = rememberCoroutineScope()
 
     var showSortMenu by remember { mutableStateOf(false) }
@@ -466,16 +471,61 @@ fun GameLibraryScreen(
                             )
                         }
                     } else {
+
+                        val prefetchWindow = if (isTablet) 16 else 10
+
+                        if (!useGridLayout) {
+                            LaunchedEffect(gamesToDisplay, listState) {
+                                snapshotFlow { listState.layoutInfo.visibleItemsInfo }
+                                    .debounce(120)
+                                    .collect { visibleItems ->
+                                        if (visibleItems.isEmpty()) return@collect
+
+                                        val from = visibleItems.minOf { it.index }
+                                        val lastVisible = visibleItems.maxOf { it.index }
+                                        val to = (lastVisible + prefetchWindow)
+                                            .coerceAtMost(gamesToDisplay.lastIndex)
+
+                                        val idsToPrefetch = gamesToDisplay
+                                            .subList(from, to + 1)
+                                            .map { it.id }
+
+                                        viewModel.loadBadgesForGameIds(idsToPrefetch)
+                                    }
+                            }
+                        }
+
+                        if (useGridLayout) {
+                            LaunchedEffect(gamesToDisplay, gridState) {
+                                snapshotFlow { gridState.layoutInfo.visibleItemsInfo }
+                                    .debounce(120)
+                                    .collect { visibleItems ->
+                                        if (visibleItems.isEmpty()) return@collect
+
+                                        val from = visibleItems.minOf { it.index }
+                                        val lastVisible = visibleItems.maxOf { it.index }
+                                        val to = (lastVisible + prefetchWindow)
+                                            .coerceAtMost(gamesToDisplay.lastIndex)
+
+                                        val idsToPrefetch = gamesToDisplay
+                                            .subList(from, to + 1)
+                                            .map { it.id }
+
+                                        viewModel.loadBadgesForGameIds(idsToPrefetch)
+                                    }
+                            }
+                        }
+
                         if (useGridLayout) {
                             LazyVerticalGrid(
+                                state = gridState,
                                 columns = GridCells.Adaptive(minSize = 520.dp),
                                 contentPadding = PaddingValues(
                                     horizontal = horizontalPadding,
                                     vertical = verticalPadding
                                 ),
                                 horizontalArrangement = Arrangement.spacedBy(18.dp),
-                                verticalArrangement = Arrangement.spacedBy(10.dp),
-                                modifier = Modifier.fillMaxSize()
+                                verticalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 gridItems(
                                     items = gamesToDisplay,
@@ -489,40 +539,35 @@ fun GameLibraryScreen(
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
                                         onOpenDetails = onOpenDetails,
-                                        showTestBadges = false
+                                        showTestBadges = true
                                     )
                                 }
                             }
                         } else {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.TopCenter
+                            LazyColumn(
+                                state = listState,
+                                contentPadding = PaddingValues(
+                                    horizontal = horizontalPadding,
+                                    vertical = verticalPadding
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .widthIn(max = if (isTablet) 720.dp else 999.dp)
                             ) {
-                                LazyColumn(
-                                    state = listState,
-                                    contentPadding = PaddingValues(
-                                        horizontal = horizontalPadding,
-                                        vertical = verticalPadding
-                                    ),
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .widthIn(max = if (isTablet) 720.dp else 999.dp)
-                                ) {
-                                    items(
-                                        items = gamesToDisplay,
-                                        key = { it.id }
-                                    ) { game ->
-                                        GameCard(
-                                            game = game,
-                                            onEditStatus = { g -> onOpenEditStatus(g) },
-                                            onToggleFavorite = { g ->
-                                                viewModel.toggleFavorite(g.id)
-                                            },
-                                            onShowTestHistory = { g -> onOpenTestHistory(g) },
-                                            onOpenDetails = onOpenDetails,
-                                            showTestBadges = false
-                                        )
-                                    }
+                                items(
+                                    items = gamesToDisplay,
+                                    key = { it.id }
+                                ) { game ->
+                                    GameCard(
+                                        game = game,
+                                        onEditStatus = { g -> onOpenEditStatus(g) },
+                                        onToggleFavorite = { g ->
+                                            viewModel.toggleFavorite(g.id)
+                                        },
+                                        onShowTestHistory = { g -> onOpenTestHistory(g) },
+                                        onOpenDetails = onOpenDetails,
+                                        showTestBadges = true
+                                    )
                                 }
                             }
                         }
