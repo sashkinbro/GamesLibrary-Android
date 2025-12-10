@@ -15053,7 +15053,170 @@
     "name": "iQOO 7",
     "cpu": "Snapdragon 888",
     "ram": "8 GB"
+  },
+  {
+    "id": 2516,
+    "name": "Honor Pad X7",
+    "cpu": "Snapdragon 680",
+    "ram": "4–6 GB"
+  },
+  {
+    "id": 2517,
+    "name": "Honor Pad X8 LTE",
+    "cpu": "Helio P22T",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2518,
+    "name": "Honor Pad V6",
+    "cpu": "Kirin 985 5G",
+    "ram": "6–8 GB"
+  },
+  {
+    "id": 2519,
+    "name": "Huawei MatePad Pro 13.2 PaperMatte",
+    "cpu": "Kirin T92",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2520,
+    "name": "Huawei MatePad Air",
+    "cpu": "Snapdragon 888 4G",
+    "ram": "8–12 GB"
+  },
+  {
+    "id": 2521,
+    "name": "Huawei MatePad Pro 11",
+    "cpu": "Kirin 9000S",
+    "ram": "12 GB"
+  },
+  {
+    "id": 2522,
+    "name": "Huawei MatePad SE 10.4",
+    "cpu": "Snapdragon 680",
+    "ram": "3–4 GB"
+  },
+  {
+    "id": 2523,
+    "name": "Huawei MatePad 2022",
+    "cpu": "Kirin 710A",
+    "ram": "4–6 GB"
+  },
+  {
+    "id": 2524,
+    "name": "Huawei MatePad Pro 12.6",
+    "cpu": "Kirin 9000E",
+    "ram": "8–12 GB"
+  },
+  {
+    "id": 2525,
+    "name": "Huawei MatePad 11",
+    "cpu": "Snapdragon 865",
+    "ram": "6–8 GB"
+  },
+  {
+    "id": 2526,
+    "name": "Huawei MatePad 10.8",
+    "cpu": "Kirin 990",
+    "ram": "6 GB"
+  },
+  {
+    "id": 2529,
+    "name": "Infinix XPAD GT",
+    "cpu": "Snapdragon 888",
+    "ram": "8 GB"
+  },
+  {
+    "id": 2530,
+    "name": "Infinix XPAD 20",
+    "cpu": "Helio G88",
+    "ram": "4–8 GB"
+  },
+  {
+    "id": 2531,
+    "name": "Lenovo Legion Y700 (2023)",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "12–16 GB"
+  },
+  {
+    "id": 2532,
+    "name": "Lenovo Tab P11 Gen2",
+    "cpu": "Helio G99",
+    "ram": "4–6 GB"
+  },
+  {
+    "id": 2533,
+    "name": "Lenovo Tab P11 Pro Gen 2",
+    "cpu": "MediaTek Kompanio 1300T",
+    "ram": "4–8 GB"
+  },
+  {
+    "id": 2534,
+    "name": "Lenovo Xiaoxin Pad 2022",
+    "cpu": "Snapdragon 680",
+    "ram": "4–6 GB"
+  },
+  {
+    "id": 2535,
+    "name": "Lenovo Legion Y700 (2022)",
+    "cpu": "Snapdragon 870",
+    "ram": "8–12 GB"
+  },
+  {
+    "id": 2536,
+    "name": "Lenovo Xiaoxin Pad P11 Plus",
+    "cpu": "MediaTek Helio G90T",
+    "ram": "4–6 GB"
+  },
+  {
+    "id": 2537,
+    "name": "Xiaomi Pad 6 Max 14",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8–12 GB"
+  },
+  {
+    "id": 2538,
+    "name": "Xiaomi Pad 6 Pro",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "ram": "8–12 GB"
+  },
+  {
+    "id": 2539,
+    "name": "Xiaomi Pad 5 Pro 12.4",
+    "cpu": "Snapdragon 870",
+    "ram": "6–12 GB"
+  },
+  {
+    "id": 2540,
+    "name": "Xiaomi Pad 5 Pro",
+    "cpu": "Snapdragon 870",
+    "ram": "6–8 GB"
+  },
+  {
+    "id": 2541,
+    "name": "Xiaomi Mi Pad 4 Plus",
+    "cpu": "Snapdragon 660",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2542,
+    "name": "Xiaomi Mi Pad 4",
+    "cpu": "Snapdragon 660",
+    "ram": "3–4 GB"
+  },
+  {
+    "id": 2543,
+    "name": "Xiaomi Mi Pad 3",
+    "cpu": "MediaTek MT8176",
+    "ram": "4 GB"
+  },
+  {
+    "id": 2544,
+    "name": "Xiaomi Mi Pad 2",
+    "cpu": "Atom x5-Z8500",
+    "ram": "2 GB"
   }
+
 
 
 ]
