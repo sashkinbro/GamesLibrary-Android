@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -138,7 +139,7 @@ fun EditStatusScreen(
     val game by viewModel.game.collectAsState()
 
     if (game == null) {
-        Scaffold(
+        Scaffold( contentWindowInsets = WindowInsets(0),
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(R.string.dialog_edit_status_title)) },
@@ -763,7 +764,7 @@ private fun EditStatusContent(
         )
     }
 
-    Scaffold(
+    Scaffold(contentWindowInsets = WindowInsets(0),
         topBar = {
             Column {
                 TopAppBar(

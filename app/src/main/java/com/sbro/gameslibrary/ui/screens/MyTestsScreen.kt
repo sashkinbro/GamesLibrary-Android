@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -80,6 +81,7 @@ fun MyTestsScreen(
 
     Scaffold(
         containerColor = cs.background,
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             Column {
                 TopAppBar(
@@ -106,6 +108,7 @@ fun MyTestsScreen(
             Box(
                 Modifier
                     .fillMaxSize()
+                    .background(background)
                     .padding(pv),
                 contentAlignment = Alignment.Center
             ) {
@@ -155,8 +158,7 @@ fun MyTestsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(background)
-                .padding(pv)
-                .navigationBarsPadding(),
+                .padding(pv),
             contentPadding = PaddingValues(horizontal = 14.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {

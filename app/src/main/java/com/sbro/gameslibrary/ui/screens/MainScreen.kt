@@ -60,7 +60,7 @@ fun MainScreen(
             .fillMaxSize()
             .background(backgroundGradient)
     ) {
-        Scaffold(
+        Scaffold(contentWindowInsets = WindowInsets(0),
             containerColor = Color.Transparent,
             topBar = {
                 Column {
@@ -102,8 +102,7 @@ fun MainScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .navigationBarsPadding()
-                        .padding(horizontal = 24.dp, vertical = 16.dp),
+                        .padding(horizontal = 24.dp),
                     horizontalArrangement = Arrangement.spacedBy(24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -113,7 +112,8 @@ fun MainScreen(
                     Column(
                         modifier = Modifier
                             .weight(1f)
-                            .verticalScroll(rememberScrollState()),
+                            .verticalScroll(rememberScrollState())
+                            .padding(top = 16.dp, bottom = 16.dp),
                         verticalArrangement = Arrangement.Center
                     ) {
                         MainMenuButton(
@@ -150,7 +150,6 @@ fun MainScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .navigationBarsPadding()
                         .verticalScroll(rememberScrollState())
                         .padding(horizontal = 24.dp),
                     verticalArrangement = Arrangement.Center,

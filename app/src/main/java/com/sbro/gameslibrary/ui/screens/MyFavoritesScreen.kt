@@ -59,9 +59,10 @@ fun MyFavoritesScreen(
 
     Scaffold(
         containerColor = cs.background,
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             Column {
-                TopAppBar(
+                TopAppBar(modifier = Modifier.statusBarsPadding(),
                     title = {
                         Text(
                             text = stringResource(R.string.my_favorites),
@@ -135,9 +136,11 @@ fun MyFavoritesScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(background)
-                .padding(pv)
-                .navigationBarsPadding(),
-            contentPadding = PaddingValues(horizontal = 14.dp, vertical = 12.dp),
+                .padding(pv),
+            contentPadding = PaddingValues(
+                horizontal = 14.dp,
+                vertical = 16.dp
+            ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(favorites, key = { it.id }) { g ->

@@ -142,7 +142,7 @@ fun TestHistoryScreen(
                     top = pv.calculateTopPadding(),
                     bottom = pv.calculateBottomPadding()
                 )
-                .navigationBarsPadding()
+
         ) {
             item {
                 Box(

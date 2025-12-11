@@ -402,9 +402,8 @@ fun GameLibraryScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .navigationBarsPadding()
                 .background(MaterialTheme.colorScheme.background)
+                .padding(padding)
         ) {
             when (val state = uiState) {
                 is GameViewModel.UiState.Loading -> {

@@ -79,11 +79,11 @@ fun ProfileScreen(
     var editNameLoading by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
 
-    Scaffold(
+    Scaffold(contentWindowInsets = WindowInsets(0),
         containerColor = cs.background,
         topBar = {
             Column {
-                TopAppBar(
+                TopAppBar(modifier = Modifier.statusBarsPadding(),
                     title = {
                         Text(
                             text = stringResource(R.string.profile_title),
@@ -111,7 +111,6 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .background(background)
                 .padding(pv)
-                .navigationBarsPadding()
         ) {
             Column(
                 modifier = Modifier

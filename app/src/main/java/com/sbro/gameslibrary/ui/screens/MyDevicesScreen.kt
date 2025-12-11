@@ -160,9 +160,10 @@ fun MyDevicesScreen(
 
     Scaffold(
         containerColor = cs.background,
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             Column {
-                TopAppBar(
+                TopAppBar(modifier = Modifier.statusBarsPadding(),
                     title = {
                         Text(
                             text = stringResource(R.string.my_devices_title),
@@ -192,9 +193,8 @@ fun MyDevicesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(pv)
-                    .navigationBarsPadding()
-                    .padding(horizontal = 16.dp, vertical = 14.dp)
+                    .padding(top = pv.calculateTopPadding())
+                    .padding(start = 16.dp, end = 16.dp, top = 14.dp)
             ) {
                 if (!state.isLoggedIn) {
                     Text(
@@ -227,7 +227,8 @@ fun MyDevicesScreen(
                     } else {
                         LazyColumn(
                             modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            contentPadding = PaddingValues(bottom = 16.dp)
                         ) {
                             items(state.devices) { d ->
                                 ElevatedCard(
