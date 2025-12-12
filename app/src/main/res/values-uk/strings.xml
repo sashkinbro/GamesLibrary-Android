@@ -346,4 +346,10 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="profile_guest_hint_comments">Пишіть коментарі та відповідайте іншим</string>
 
 
+
+
+
+    <string name="details_data_source_igdb">Дані взяті з API IGDB</string>
+
+
 </resources>

@@ -395,6 +395,12 @@ fun GameDetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    DataSourceBadgeMaterial(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 10.dp)
+                    )
+
                     Button(
                         onClick = { onOpenEditStatus(g.id) },
                         modifier = Modifier
@@ -962,4 +968,38 @@ private fun youtubeThumbnailUrl(url: String): String? {
     val longId = longMatch?.groupValues?.getOrNull(1)
     val id = shortId ?: longId ?: return null
     return "https://img.youtube.com/vi/$id/hqdefault.jpg"
+}
+
+@Composable
+private fun DataSourceBadgeMaterial(
+    modifier: Modifier = Modifier
+) {
+    val cs = MaterialTheme.colorScheme
+
+    Surface(
+        shape = RoundedCornerShape(14.dp),
+        color = cs.surfaceVariant.copy(alpha = 0.55f),
+        border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.10f)),
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Android,
+                contentDescription = null,
+                tint = cs.primary,
+                modifier = Modifier.size(16.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = stringResource(R.string.details_data_source_igdb),
+                style = MaterialTheme.typography.labelMedium,
+                color = cs.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
 }

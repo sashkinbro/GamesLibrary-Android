@@ -350,4 +350,9 @@ You can also submit anonymous test results to keep your own testing history and 
 
 
 
+    <string name="details_data_source_igdb">Data taken from the IGDB API</string>
+
+
+
+
 </resources>

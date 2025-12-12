@@ -386,6 +386,12 @@ fun GameDetailScreen(
 
                         Spacer(modifier = Modifier.height(16.dp))
 
+                        DataSourceBadge(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp)
+                        )
+
                         CyberCutButton(
                             text = stringResource(R.string.button_edit_status),
                             icon = Icons.Filled.Edit,
@@ -1081,6 +1087,44 @@ private fun CyberCutButton(
                     .align(Alignment.CenterEnd)
                     .size(width = 24.dp, height = 2.dp)
                     .background(accent.copy(alpha = if (enabled) 0.7f else 0.25f))
+            )
+        }
+    }
+}
+
+@Composable
+private fun DataSourceBadge(
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = CutCornerShape(
+            topStart = 0.dp,
+            topEnd = 12.dp,
+            bottomEnd = 0.dp,
+            bottomStart = 12.dp
+        ),
+        color = CyberGray,
+        border = BorderStroke(1.dp, CyberBlue.copy(alpha = 0.45f)),
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Android,
+                contentDescription = null,
+                tint = CyberBlue,
+                modifier = Modifier.size(16.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = stringResource(R.string.details_data_source_igdb),
+                color = CyberYellow.copy(alpha = 0.9f),
+                fontFamily = FontFamily.Monospace,
+                fontSize = 12.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
