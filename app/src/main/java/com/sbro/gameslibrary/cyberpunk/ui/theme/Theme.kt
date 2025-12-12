@@ -1,4 +1,4 @@
-package com.sbro.gameslibrary.ui.theme
+package com.sbro.gameslibrary.cyberpunk.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -73,27 +73,20 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun PSGamesTheme(
+fun PSGamesThemeCyberpunk(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (useDarkTheme) DarkColorScheme else LightColorScheme
-    // Configure system bars to match the selected color scheme.  Without this, the
-    // status bar may become unreadable when the app draws behind system bars on
-    // light backgrounds.  The status and navigation bars use the surface color from
-    // the Material color scheme, and the icon appearance is toggled based on the
-    // current theme.
     val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            val surfaceColor = colorScheme.surface.toArgb()
-            window.statusBarColor = surfaceColor
-            window.navigationBarColor = surfaceColor
-            val controller = WindowCompat.getInsetsController(window, view)
-            controller?.isAppearanceLightStatusBars = !useDarkTheme
-            controller?.isAppearanceLightNavigationBars = !useDarkTheme
-        }
+
+    SideEffect {
+        val window = (view.context as Activity).window
+        window.statusBarColor = DarkSurface.toArgb()
+        window.navigationBarColor = DarkSurface.toArgb()
+        val controller = WindowCompat.getInsetsController(window, view)
+        controller?.isAppearanceLightStatusBars = false
+        controller?.isAppearanceLightNavigationBars = false
     }
 
     MaterialTheme(

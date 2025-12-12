@@ -1,4 +1,4 @@
-package com.sbro.gameslibrary.components
+package com.sbro.gameslibrary.cyberpunk.components
 
 //noinspection SuspiciousImport
 import android.R
@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
@@ -43,7 +44,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,19 +55,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R as AppR
+import com.sbro.gameslibrary.components.Game
+import com.sbro.gameslibrary.components.WorkStatus
+
+private val CyberYellow = Color(0xFFFCEE0A)
+private val CyberRed = Color(0xFFFF003C)
+private val CyberBlue = Color(0xFF00F0FF)
+private val CyberBlack = Color(0xFF050505)
+private val CyberDark = Color(0xFF0F0F0F)
+private val CyberGray = Color(0xFF202020)
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
@@ -75,13 +87,12 @@ fun GameCard(
     game: Game,
     onEditStatus: (Game) -> Unit,
     onToggleFavorite: (Game) -> Unit,
-    onShowTestHistory: (Game) -> Unit,
+    onShowTestHistory: (Game) -> Unit = {},
     onOpenDetails: (Game) -> Unit,
     showTestBadges: Boolean = true,
     showTestHistoryButton: Boolean = true
 ) {
     val context = LocalContext.current
-    val cs = MaterialTheme.colorScheme
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val isTabletOrWide = screenWidthDp >= 600
@@ -110,7 +121,6 @@ fun GameCard(
     var expanded by remember { mutableStateOf(false) }
     var showIssueDialog by remember { mutableStateOf(false) }
 
-    val cardColor = cs.surface
     val latestTest = game.latestTestOrNull()
     val latestStatus = game.overallStatus()
 
@@ -122,7 +132,13 @@ fun GameCard(
             .filter { it.isNotBlank() && !it.equals("NaN", true) }
     }
 
-    val shape = RoundedCornerShape(cardCorner)
+    val shape = CutCornerShape(
+        topStart = 0.dp,
+        topEnd = cardCorner,
+        bottomEnd = 0.dp,
+        bottomStart = cardCorner
+    )
+
     val interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
@@ -143,11 +159,11 @@ fun GameCard(
     Card(
         shape = shape,
         colors = CardDefaults.cardColors(
-            containerColor = cardColor,
-            contentColor = cs.onSurface
+            containerColor = CyberDark.copy(alpha = 0.95f),
+            contentColor = CyberYellow
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        border = BorderStroke(1.dp, cs.outline.copy(alpha = 0.15f)),
+        border = BorderStroke(1.dp, CyberRed.copy(alpha = 0.45f)),
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
@@ -168,7 +184,7 @@ fun GameCard(
                 ) {
                     Card(
                         shape = RoundedCornerShape(if (isTabletOrWide) 14.dp else 12.dp),
-                        colors = CardDefaults.cardColors(containerColor = cs.surfaceVariant),
+                        colors = CardDefaults.cardColors(containerColor = CyberGray),
                         elevation = CardDefaults.cardElevation(1.dp),
                         modifier = Modifier
                             .width(imageWidth)
@@ -195,7 +211,7 @@ fun GameCard(
                         Icon(
                             imageVector = if (game.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = "Favorite",
-                            tint = if (game.isFavorite) Color(0xFFE91E63) else cs.onSurface.copy(alpha = 0.6f),
+                            tint = if (game.isFavorite) CyberBlue else CyberYellow.copy(alpha = 0.8f),
                             modifier = Modifier.size(favoriteIconSize)
                         )
                     }
@@ -214,7 +230,8 @@ fun GameCard(
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        color = cs.onSurface
+                        color = CyberYellow,
+                        fontFamily = FontFamily.Monospace
                     )
 
                     Spacer(modifier = Modifier.height(if (isTabletOrWide) 8.dp else 6.dp))
@@ -224,8 +241,8 @@ fun GameCard(
                             InfoBadge(
                                 text = game.year,
                                 icon = Icons.Filled.CalendarToday,
-                                color = cs.surfaceVariant,
-                                textColor = cs.onSurfaceVariant,
+                                color = CyberGray,
+                                textColor = CyberBlue,
                                 isTabletOrWide = isTabletOrWide,
                                 badgeRadius = badgeRadius,
                                 iconSize = badgeIcon
@@ -238,8 +255,8 @@ fun GameCard(
                             InfoBadge(
                                 text = game.rating,
                                 icon = Icons.Filled.Star,
-                                color = Color(0xFFFFF9C4),
-                                textColor = Color(0xFFF57F17),
+                                color = CyberGray,
+                                textColor = CyberYellow,
                                 isTabletOrWide = isTabletOrWide,
                                 badgeRadius = badgeRadius,
                                 iconSize = badgeIcon
@@ -253,8 +270,8 @@ fun GameCard(
                             InfoBadge(
                                 text = game.platform,
                                 icon = Icons.Filled.SportsEsports,
-                                color = cs.secondaryContainer,
-                                textColor = cs.onSecondaryContainer,
+                                color = CyberGray,
+                                textColor = CyberYellow,
                                 isTabletOrWide = isTabletOrWide,
                                 badgeRadius = badgeRadius,
                                 iconSize = badgeIcon
@@ -316,81 +333,58 @@ fun GameCard(
                             MaterialTheme.typography.labelLarge
                         else
                             MaterialTheme.typography.labelSmall,
-                        color = cs.primary,
+                        color = CyberBlue,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Monospace,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
                 }
-
-                AnimatedVisibility(visible = expanded) {
-                    Text(
-                        text = game.description.ifEmpty {
-                            stringResource(AppR.string.no_description)
-                        },
-                        style = if (isTabletOrWide)
-                            MaterialTheme.typography.bodyMedium
-                        else
-                            MaterialTheme.typography.bodySmall,
-                        color = cs.onSurface.copy(alpha = 0.85f),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
-
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(top = 2.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        TextButton(onClick = { expanded = !expanded }) {
-                            Text(
-                                if (expanded)
-                                    stringResource(AppR.string.button_hide_info)
-                                else
-                                    stringResource(AppR.string.button_show_info),
-                                style = if (isTabletOrWide)
-                                    MaterialTheme.typography.titleMedium
-                                else
-                                    MaterialTheme.typography.bodyMedium
-                            )
-                        }
+                    CyberActionButton(
+                        text = if (expanded)
+                            stringResource(AppR.string.button_hide_info)
+                        else
+                            stringResource(AppR.string.button_show_info),
+                        onClick = { expanded = !expanded },
+                        isTabletOrWide = isTabletOrWide
+                    )
 
-                        Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
 
-                        TextButton(onClick = { onEditStatus(game) }) {
-                            Text(
-                                stringResource(id = AppR.string.button_edit_status),
-                                style = if (isTabletOrWide)
-                                    MaterialTheme.typography.titleMedium
-                                else
-                                    MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    }
-
-                    if (showTestHistoryButton && game.testResults.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        TextButton(onClick = { onShowTestHistory(game) }) {
-                            Text(
-                                stringResource(id = AppR.string.button_tested_history),
-                                style = if (isTabletOrWide)
-                                    MaterialTheme.typography.titleMedium
-                                else
-                                    MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(4.dp))
+                    CyberActionButton(
+                        text = stringResource(id = AppR.string.button_edit_status),
+                        onClick = { onEditStatus(game) },
+                        isTabletOrWide = isTabletOrWide,
+                        accent = CyberBlue
+                    )
                 }
+                AnimatedVisibility(visible = expanded) {
+                    Column {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = game.description.ifEmpty {
+                                stringResource(AppR.string.no_description)
+                            },
+                            style = if (isTabletOrWide)
+                                MaterialTheme.typography.bodyMedium
+                            else
+                                MaterialTheme.typography.bodySmall,
+                            color = Color.White.copy(alpha = 0.88f),
+                            fontFamily = FontFamily.Monospace,
+                            modifier = Modifier.padding(vertical = 6.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
     }
@@ -399,18 +393,56 @@ fun GameCard(
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { showIssueDialog = false },
             confirmButton = {
-                TextButton(onClick = { showIssueDialog = false }) {
-                    Text(stringResource(AppR.string.button_ok))
+                androidx.compose.material3.TextButton(onClick = { showIssueDialog = false }) {
+                    Text(stringResource(AppR.string.button_ok), color = CyberYellow)
                 }
             },
-            title = { Text(stringResource(AppR.string.dialog_issue_title)) },
+            containerColor = CyberDark,
+            title = { Text(stringResource(AppR.string.dialog_issue_title), color = CyberYellow) },
             text = {
                 Text(
                     text = latestTest?.issueNote?.ifBlank {
                         stringResource(AppR.string.dialog_issue_empty)
-                    } ?: stringResource(AppR.string.dialog_issue_empty)
+                    } ?: stringResource(AppR.string.dialog_issue_empty),
+                    color = Color.White.copy(alpha = 0.85f),
+                    fontFamily = FontFamily.Monospace
                 )
             }
+        )
+    }
+}
+
+@Composable
+private fun CyberActionButton(
+    text: String,
+    onClick: () -> Unit,
+    isTabletOrWide: Boolean,
+    accent: Color = CyberYellow
+) {
+    val shape = CutCornerShape(topEnd = 10.dp, bottomStart = 10.dp)
+    val borderBrush = Brush.horizontalGradient(listOf(CyberRed, CyberYellow, CyberBlue))
+
+    Surface(
+        onClick = onClick,
+        shape = shape,
+        color = CyberBlack,
+        border = BorderStroke(1.dp, borderBrush),
+        tonalElevation = 0.dp
+    ) {
+        Text(
+            text = text.uppercase(),
+            style = if (isTabletOrWide)
+                MaterialTheme.typography.titleSmall
+            else
+                MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Black,
+            color = accent,
+            fontFamily = FontFamily.Monospace,
+            modifier = Modifier.padding(
+                horizontal = if (isTabletOrWide) 14.dp else 12.dp,
+                vertical = if (isTabletOrWide) 9.dp else 8.dp
+            ),
+            letterSpacing = 1.sp
         )
     }
 }
@@ -440,9 +472,52 @@ fun InfoBadge(
                 style = if (isTabletOrWide)
                     MaterialTheme.typography.labelLarge
                 else
-                    MaterialTheme.typography.labelMedium,
+                    MaterialTheme.typography.labelSmall,
                 color = textColor,
-                maxLines = 1
+                fontFamily = FontFamily.Monospace
+            )
+        }
+    }
+}
+
+
+@Composable
+private fun DeviceChip(
+    text: String,
+    isTabletOrWide: Boolean,
+    iconSize: androidx.compose.ui.unit.Dp,
+    radius: androidx.compose.ui.unit.Dp
+) {
+    Surface(
+        color = CyberGray,
+        shape = RoundedCornerShape(radius),
+        border = BorderStroke(1.dp, CyberRed.copy(alpha = 0.45f)),
+        tonalElevation = 0.dp
+    ) {
+        Row(
+            modifier = Modifier.padding(
+                horizontal = if (isTabletOrWide) 10.dp else 8.dp,
+                vertical = if (isTabletOrWide) 6.dp else 5.dp
+            ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.PhoneAndroid,
+                contentDescription = null,
+                tint = CyberBlue,
+                modifier = Modifier.size(iconSize)
+            )
+            Spacer(Modifier.width(6.dp))
+            Text(
+                text = text,
+                style = if (isTabletOrWide)
+                    MaterialTheme.typography.labelLarge
+                else
+                    MaterialTheme.typography.labelMedium,
+                color = CyberBlue,
+                fontFamily = FontFamily.Monospace,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -457,29 +532,23 @@ fun WorkStatusBadge(
     horizontalPadding: androidx.compose.ui.unit.Dp = 10.dp,
     verticalPadding: androidx.compose.ui.unit.Dp = 5.dp
 ) {
-    val bgColor: Color
     val contentColor: Color
     val textResId: Int
     val icon: ImageVector
 
     when (status) {
         WorkStatus.WORKING -> {
-            bgColor = Color(0xFFE8F5E9)
-            contentColor = Color(0xFF2E7D32)
+            contentColor = CyberBlue
             textResId = AppR.string.work_status_working
             icon = Icons.Filled.CheckCircle
         }
-
         WorkStatus.UNTESTED -> {
-            bgColor = Color(0xFFFFF3E0)
-            contentColor = Color(0xFFEF6C00)
+            contentColor = CyberYellow
             textResId = AppR.string.work_status_untested
             icon = Icons.AutoMirrored.Filled.HelpOutline
         }
-
         WorkStatus.NOT_WORKING -> {
-            bgColor = Color(0xFFFFEBEE)
-            contentColor = Color(0xFFC62828)
+            contentColor = CyberRed
             textResId = AppR.string.work_status_not_working
             icon = Icons.Filled.Warning
         }
@@ -493,9 +562,9 @@ fun WorkStatusBadge(
         }
 
     Surface(
-        color = bgColor,
+        color = CyberGray,
         shape = RoundedCornerShape(50),
-        border = BorderStroke(1.dp, contentColor.copy(alpha = 0.25f)),
+        border = BorderStroke(1.dp, contentColor.copy(alpha = 0.45f)),
         modifier = clickableModifier
     ) {
         Row(
@@ -508,9 +577,7 @@ fun WorkStatusBadge(
                 tint = contentColor,
                 modifier = Modifier.size(iconSize)
             )
-
             Spacer(modifier = Modifier.width(8.dp))
-
             Text(
                 text = stringResource(id = textResId),
                 style = if (isTabletOrWide)
@@ -518,48 +585,8 @@ fun WorkStatusBadge(
                 else
                     MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
-                color = contentColor
-            )
-        }
-    }
-}
-
-@Composable
-private fun DeviceChip(
-    text: String,
-    isTabletOrWide: Boolean,
-    iconSize: androidx.compose.ui.unit.Dp,
-    radius: androidx.compose.ui.unit.Dp
-) {
-    val cs = MaterialTheme.colorScheme
-    Surface(
-        color = cs.surfaceVariant,
-        shape = RoundedCornerShape(radius),
-        border = BorderStroke(1.dp, cs.outline.copy(alpha = 0.12f))
-    ) {
-        Row(
-            modifier = Modifier.padding(
-                horizontal = if (isTabletOrWide) 10.dp else 8.dp,
-                vertical = if (isTabletOrWide) 6.dp else 5.dp
-            ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Filled.PhoneAndroid,
-                contentDescription = null,
-                tint = cs.onSurfaceVariant,
-                modifier = Modifier.size(iconSize)
-            )
-            Spacer(Modifier.width(6.dp))
-            Text(
-                text = text,
-                style = if (isTabletOrWide)
-                    MaterialTheme.typography.labelLarge
-                else
-                    MaterialTheme.typography.labelMedium,
-                color = cs.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                color = contentColor,
+                fontFamily = FontFamily.Monospace
             )
         }
     }

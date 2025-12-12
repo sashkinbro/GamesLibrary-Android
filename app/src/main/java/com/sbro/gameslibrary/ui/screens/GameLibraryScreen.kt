@@ -402,9 +402,8 @@ fun GameLibraryScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .navigationBarsPadding()
                 .background(MaterialTheme.colorScheme.background)
+                .padding(padding)
         ) {
             when (val state = uiState) {
                 is GameViewModel.UiState.Loading -> {
@@ -531,7 +530,7 @@ fun GameLibraryScreen(
                                     items = gamesToDisplay,
                                     key = { it.id }
                                 ) { game ->
-                                    GameCard(
+                                        GameCard(
                                         game = game,
                                         onEditStatus = { g -> onOpenEditStatus(g) },
                                         onToggleFavorite = { g ->
@@ -539,7 +538,15 @@ fun GameLibraryScreen(
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
                                         onOpenDetails = onOpenDetails,
-                                        showTestBadges = true
+                                        showTestBadges = true,
+                                        showTestHistoryButton = false
+                                    )
+                                }
+                                item {
+                                    Spacer(
+                                        modifier = Modifier.windowInsetsBottomHeight(
+                                            WindowInsets.navigationBars
+                                        )
                                     )
                                 }
                             }
@@ -566,7 +573,15 @@ fun GameLibraryScreen(
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
                                         onOpenDetails = onOpenDetails,
-                                        showTestBadges = true
+                                        showTestBadges = true,
+                                        showTestHistoryButton = false
+                                    )
+                                }
+                                item {
+                                    Spacer(
+                                        modifier = Modifier.windowInsetsBottomHeight(
+                                            WindowInsets.navigationBars
+                                        )
                                     )
                                 }
                             }

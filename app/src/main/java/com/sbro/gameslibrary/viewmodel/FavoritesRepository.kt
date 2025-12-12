@@ -1,5 +1,6 @@
 package com.sbro.gameslibrary.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -31,6 +32,7 @@ object FavoritesRepository {
     private var job: Job = Job()
     private var scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
 
+    @SuppressLint("StaticFieldLeak")
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val favoritesCollection = firestore.collection("userFavorites")

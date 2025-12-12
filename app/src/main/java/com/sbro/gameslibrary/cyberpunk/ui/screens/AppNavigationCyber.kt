@@ -1,4 +1,4 @@
-package com.sbro.gameslibrary.ui.screens
+package com.sbro.gameslibrary.cyberpunk.ui.screens
 
 import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -81,7 +81,7 @@ object Routes {
 }
 
 @Composable
-fun PSGamesApp() {
+fun CyberGamesApp() {
     val navController = rememberNavController()
     val vm: GameViewModel = viewModel()
     val profileVm: ProfileViewModel = viewModel()

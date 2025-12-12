@@ -8,13 +8,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -89,9 +92,10 @@ fun HomeScreen(
     ) {
         Scaffold(
             containerColor = Color.Transparent,
+            contentWindowInsets = WindowInsets(0),
             topBar = {
                 Column {
-                    TopAppBar(
+                    TopAppBar(modifier = Modifier.statusBarsPadding(),
                         navigationIcon = {
                             IconButton(onClick = { safeClick(onBack) }) {
                                 Icon(
@@ -135,24 +139,28 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .navigationBarsPadding()
             ) {
                 if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 24.dp, vertical = 16.dp),
+                            .padding(horizontal = 24.dp),
                         horizontalArrangement = Arrangement.spacedBy(24.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(modifier = Modifier.weight(1f)) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(top = 16.dp)
+                        ) {
                             HomeHeroCard()
                         }
 
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .verticalScroll(rememberScrollState()),
+                                .verticalScroll(rememberScrollState())
+                                .padding(top = 16.dp, bottom = 16.dp),
                             verticalArrangement = Arrangement.Center
                         ) {
                             HomeMenuButton(
@@ -188,6 +196,11 @@ fun HomeScreen(
                                 baseColor = MaterialTheme.colorScheme.primary,
                                 onClick = { safeClick(onOpenSwitchGames) }
                             )
+                            Spacer(
+                                modifier = Modifier.windowInsetsBottomHeight(
+                                    WindowInsets.navigationBars
+                                )
+                            )
                         }
                     }
                 } else {
@@ -195,7 +208,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
-                            .padding(horizontal = 24.dp),
+                            .padding(horizontal = 24.dp, vertical = 16.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -235,6 +248,11 @@ fun HomeScreen(
                             icon = Icons.Filled.SportsEsports,
                             baseColor = MaterialTheme.colorScheme.primary,
                             onClick = { safeClick(onOpenSwitchGames) }
+                        )
+                        Spacer(
+                            modifier = Modifier.windowInsetsBottomHeight(
+                                WindowInsets.navigationBars
+                            )
                         )
                     }
                 }

@@ -56,7 +56,7 @@ fun LastTestsScreen(
 
     val isLoading = uiState is LastTestsViewModel.UiState.Loading
 
-    Scaffold(
+    Scaffold(contentWindowInsets = WindowInsets(0),
         topBar = {
             Column {
                 TopAppBar(
@@ -123,8 +123,7 @@ fun LastTestsScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(padding)
-                        .navigationBarsPadding(),
+                        .padding(padding),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -135,6 +134,13 @@ fun LastTestsScreen(
                         LatestTestCard(
                             item = item,
                             onClick = { safeClick { onOpenLastTestDetails(item.gameId) } }
+                        )
+                    }
+                    item {
+                        Spacer(
+                            modifier = Modifier.windowInsetsBottomHeight(
+                                WindowInsets.navigationBars
+                            )
                         )
                     }
                 }

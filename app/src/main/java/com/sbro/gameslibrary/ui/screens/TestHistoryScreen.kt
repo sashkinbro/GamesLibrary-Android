@@ -142,7 +142,7 @@ fun TestHistoryScreen(
                     top = pv.calculateTopPadding(),
                     bottom = pv.calculateBottomPadding()
                 )
-                .navigationBarsPadding()
+
         ) {
             item {
                 Box(
@@ -272,6 +272,13 @@ fun TestHistoryScreen(
                         onClick = { onOpenTestDetails(test.updatedAtMillis) }
                     )
                 }
+            }
+            item(key = "bottom_inset") {
+                Spacer(
+                    modifier = Modifier.windowInsetsBottomHeight(
+                        WindowInsets.navigationBars
+                    )
+                )
             }
         }
     }

@@ -13,10 +13,11 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -35,12 +36,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +57,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.datastore.preferences.core.edit
 import com.sbro.gameslibrary.R
+import com.sbro.gameslibrary.util.CYBERPUNK_MODE
+import com.sbro.gameslibrary.util.dataStore
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,6 +71,11 @@ fun AboutScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+
+    val scope = rememberCoroutineScope()
+    val isCyberpunkEnabled by context.dataStore.data
+        .map { prefs -> prefs[CYBERPUNK_MODE] ?: false }
+        .collectAsState(initial = false)
 
     val backLastClick = remember { mutableLongStateOf(0L) }
     fun safeBackClick() {
@@ -133,7 +149,7 @@ fun AboutScreen(
                 .fillMaxSize()
                 .background(backgroundGradient)
                 .padding(padding)
-                .navigationBarsPadding()
+
         ) {
             Column(
                 modifier = Modifier
@@ -199,6 +215,37 @@ fun AboutScreen(
                             text = stringResource(R.string.about_description),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
+                        )
+                    }
+                }
+
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp, horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.about_toggle_cyberpunk),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Switch(
+                            checked = isCyberpunkEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    context.dataStore.edit { prefs -> prefs[CYBERPUNK_MODE] = enabled }
+                                }
+                            }
                         )
                     }
                 }
@@ -281,6 +328,11 @@ fun AboutScreen(
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 2.dp, bottom = 12.dp)
+                )
+                Spacer(
+                    modifier = Modifier.windowInsetsBottomHeight(
+                        WindowInsets.navigationBars
+                    )
                 )
             }
         }
