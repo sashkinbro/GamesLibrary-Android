@@ -28,7 +28,7 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="about_link_github_subtitle">Вихідний код та issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
     <string name="about_footer">Розроблена Sashkin Apps © 2025</string>
-    <!-- Toggle label for enabling the cyberpunk interface from the About screen -->
+
     <string name="about_toggle_cyberpunk">Сучасна тема</string>
     <string name="title_ps_games_library">Ігри</string>
     <string name="subtitle_games_count">%1$d ігор</string>

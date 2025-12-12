@@ -224,9 +224,6 @@ fun AboutScreen(
                     }
                 }
 
-                // Card allowing the user to toggle the cyberpunk theme.  Placed after the hero
-                // section so it appears prominently.  The styling matches the cyberpunk
-                // aesthetic with angular corners and a gradient border.
                 Surface(
                     shape = CutCornerShape(topEnd = 18.dp, bottomStart = 18.dp),
                     color = CyberDark,
