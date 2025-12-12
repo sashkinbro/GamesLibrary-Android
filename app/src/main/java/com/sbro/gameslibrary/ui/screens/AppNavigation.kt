@@ -28,6 +28,10 @@ import com.sbro.gameslibrary.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+// Use the shared DataStore instance and keys defined in SettingsDataStore.kt.  This
+// avoids creating multiple DataStore objects for the same file, which would
+// otherwise trigger runtime exceptions.
+
 
 private fun onboardingShownFlow(context: Context) =
     context.dataStore.data.map { prefs ->

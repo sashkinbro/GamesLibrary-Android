@@ -35,7 +35,7 @@ import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.GameTestResult
-import com.sbro.gameslibrary.components.WorkStatusBadge
+import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter

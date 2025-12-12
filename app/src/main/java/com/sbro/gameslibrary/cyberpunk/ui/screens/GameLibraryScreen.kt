@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.Game
-// Use the cyberpunk variant of GameCard instead of the classic version
 import com.sbro.gameslibrary.cyberpunk.components.GameCard
 import com.sbro.gameslibrary.viewmodel.ErrorType
 import com.sbro.gameslibrary.viewmodel.GameViewModel
@@ -730,6 +729,7 @@ fun GameLibraryScreen(
                                             },
                                             onShowTestHistory = { g -> onOpenTestHistory(g) },
                                             onOpenDetails = onOpenDetails,
+                                        // Show status badges but hide the test history button in the cyberpunk library screen
                                         showTestBadges = true,
                                         showTestHistoryButton = false
                                         )
@@ -767,6 +767,7 @@ fun GameLibraryScreen(
                                             },
                                             onShowTestHistory = { g -> onOpenTestHistory(g) },
                                             onOpenDetails = onOpenDetails,
+                                        // Show status badges but hide the test history button in the cyberpunk library screen
                                         showTestBadges = true,
                                         showTestHistoryButton = false
                                         )

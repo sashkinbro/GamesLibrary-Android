@@ -69,7 +69,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.WorkStatus
-import com.sbro.gameslibrary.components.WorkStatusBadge
+import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.MyCommentsViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 import java.text.SimpleDateFormat

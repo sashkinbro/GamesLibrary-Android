@@ -74,6 +74,7 @@ import com.sbro.gameslibrary.R as AppR
 import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.WorkStatus
 
+// Cyberpunk color palette for the custom card design
 private val CyberYellow = Color(0xFFFCEE0A)
 private val CyberRed = Color(0xFFFF003C)
 private val CyberBlue = Color(0xFF00F0FF)
@@ -81,6 +82,14 @@ private val CyberBlack = Color(0xFF050505)
 private val CyberDark = Color(0xFF0F0F0F)
 private val CyberGray = Color(0xFF202020)
 
+/**
+ * A cyberpunk-styled variant of [GameCard]. This version renders the game card with
+ * neon colors and cut-corner shapes. It accepts the same parameters as the classic
+ * [GameCard] from the root components package, including optional hooks for
+ * showing or hiding test history UI. The cyberpunk design does not include a
+ * dedicated test history button, so [onShowTestHistory] and
+ * [showTestHistoryButton] are ignored.
+ */
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun GameCard(
@@ -480,7 +489,11 @@ fun InfoBadge(
     }
 }
 
-
+/**
+ * A simple chip component to display the last tested devices in the cyberpunk card.
+ * This replicates the behavior of the classic DeviceChip but uses the cyberpunk
+ * color palette. It is private to this file since it's only used here.
+ */
 @Composable
 private fun DeviceChip(
     text: String,
@@ -523,6 +536,13 @@ private fun DeviceChip(
     }
 }
 
+/**
+ * A cyberpunk-styled badge indicating the overall work status of a game. This
+ * implementation mirrors the structure of the classic WorkStatusBadge but
+ * applies neon colors and styling consistent with the cyberpunk theme. When
+ * the status is NOT_WORKING and [onClick] is provided, the badge becomes
+ * clickable to open the issue note dialog.
+ */
 @Composable
 fun WorkStatusBadge(
     status: WorkStatus,

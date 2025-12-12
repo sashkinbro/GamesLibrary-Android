@@ -39,15 +39,18 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val context = LocalContext.current
+            // Observe the preference that determines whether the cyberpunk skin is enabled.
             val isCyberpunkEnabled by context.dataStore.data
                 .map { prefs -> prefs[CYBERPUNK_MODE] ?: false }
                 .collectAsState(initial = false)
 
             if (isCyberpunkEnabled) {
+                // Apply the cyberpunk color theme and show the cyberpunk version of the app.
                 PSGamesThemeCyberpunk {
                     CyberGamesApp()
                 }
             } else {
+                // Fall back to the classic theme and screens.
                 PSGamesTheme {
                     PSGamesApp()
                 }
@@ -55,3 +58,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

@@ -78,6 +78,7 @@ fun GameCard(
     onShowTestHistory: (Game) -> Unit,
     onOpenDetails: (Game) -> Unit,
     showTestBadges: Boolean = true,
+
     showTestHistoryButton: Boolean = true
 ) {
     val context = LocalContext.current
@@ -374,6 +375,7 @@ fun GameCard(
                             )
                         }
                     }
+
 
                     if (showTestHistoryButton && game.testResults.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(6.dp))

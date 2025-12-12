@@ -95,7 +95,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.GameTestResult
-import com.sbro.gameslibrary.components.WorkStatusBadge
+import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 import kotlinx.coroutines.delay

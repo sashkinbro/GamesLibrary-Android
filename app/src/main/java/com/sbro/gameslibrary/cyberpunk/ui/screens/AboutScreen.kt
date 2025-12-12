@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import com.sbro.gameslibrary.R
+
+// Import DataStore utilities for theme switching
 import com.sbro.gameslibrary.util.CYBERPUNK_MODE
 import com.sbro.gameslibrary.util.dataStore
 import androidx.datastore.preferences.core.edit
@@ -57,6 +59,7 @@ fun AboutScreen(
 ) {
     val context = LocalContext.current
 
+    // Observe the current theme preference and provide a coroutine scope for updates.
     val scope = rememberCoroutineScope()
     val isCyberpunkEnabled by context.dataStore.data
         .map { prefs -> prefs[CYBERPUNK_MODE] ?: false }
@@ -221,6 +224,9 @@ fun AboutScreen(
                     }
                 }
 
+                // Card allowing the user to toggle the cyberpunk theme.  Placed after the hero
+                // section so it appears prominently.  The styling matches the cyberpunk
+                // aesthetic with angular corners and a gradient border.
                 Surface(
                     shape = CutCornerShape(topEnd = 18.dp, bottomStart = 18.dp),
                     color = CyberDark,

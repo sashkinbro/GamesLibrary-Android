@@ -538,6 +538,9 @@ fun GameLibraryScreen(
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
                                         onOpenDetails = onOpenDetails,
+                                        // Show status badges but hide the test history button in the
+                                        // library screen by keeping showTestBadges true and passing
+                                        // showTestHistoryButton = false.
                                         showTestBadges = true,
                                         showTestHistoryButton = false
                                     )
@@ -573,6 +576,7 @@ fun GameLibraryScreen(
                                         },
                                         onShowTestHistory = { g -> onOpenTestHistory(g) },
                                         onOpenDetails = onOpenDetails,
+                                        // Show status badges but hide the test history button
                                         showTestBadges = true,
                                         showTestHistoryButton = false
                                     )

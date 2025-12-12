@@ -78,11 +78,6 @@ fun PSGamesTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (useDarkTheme) DarkColorScheme else LightColorScheme
-    // Configure system bars to match the selected color scheme.  Without this, the
-    // status bar may become unreadable when the app draws behind system bars on
-    // light backgrounds.  The status and navigation bars use the surface color from
-    // the Material color scheme, and the icon appearance is toggled based on the
-    // current theme.
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
