@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,9 +33,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.PhoneAndroid
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -81,6 +86,8 @@ import com.sbro.gameslibrary.components.IssueType
 import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.util.PhoneDbItem
+import com.sbro.gameslibrary.util.PresetRepository
+import com.sbro.gameslibrary.util.TestPreset
 import com.sbro.gameslibrary.util.loadPhonesFromAssets
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.MyDevicesState
@@ -286,6 +293,7 @@ private fun EditStatusContent(
     val context = LocalContext.current
     var phoneDb by remember { mutableStateOf<List<PhoneDbItem>>(emptyList()) }
     val scope = rememberCoroutineScope()
+    val presetRepo = remember { PresetRepository(context) }
 
     LaunchedEffect(Unit) {
         phoneDb = loadPhonesFromAssets(context)
@@ -360,6 +368,17 @@ private fun EditStatusContent(
     var fpsTo by remember { mutableStateOf("") }
 
     var mediaLinkText by remember { mutableStateOf("") }
+    var saveAsPreset by remember { mutableStateOf(false) }
+    var showPresetDialog by remember { mutableStateOf(false) }
+    var presetsList by remember { mutableStateOf<List<TestPreset>>(emptyList()) }
+
+    fun refreshPresets() {
+        presetsList = presetRepo.getAllPresets()
+    }
+
+    LaunchedEffect(showPresetDialog) {
+        if (showPresetDialog) refreshPresets()
+    }
 
     val androidVersions = listOf("16", "15", "14", "13", "12", "11", otherLabel)
     val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", otherLabel)
@@ -572,6 +591,88 @@ private fun EditStatusContent(
         }
     }
 
+    fun applyPreset(preset: TestPreset) {
+        if (androidVersions.contains(preset.androidVersion)) {
+            androidVersionSelected = preset.androidVersion
+            androidVersionCustom = ""
+        } else {
+            androidVersionSelected = otherLabel
+            androidVersionCustom = preset.androidVersion
+        }
+
+        deviceModelText = preset.deviceModel
+        gpuModelText = preset.gpuModel
+        driverVersionText = preset.driverVersion
+
+        // RAM
+        if (ramOptions.contains(preset.ram)) {
+            ramSelected = preset.ram
+            ramCustom = ""
+        } else {
+            ramSelected = otherLabel
+            ramCustom = preset.ram
+        }
+
+        // Wrapper
+        if (wrapperOptions.contains(preset.wrapper)) {
+            wrapperSelected = preset.wrapper
+            wrapperCustom = ""
+        } else {
+            wrapperSelected = otherLabel
+            wrapperCustom = preset.wrapper
+        }
+
+        // Performance Mode
+        if (perfModeOptions.contains(preset.performanceMode)) {
+            perfModeSelected = preset.performanceMode
+            perfModeCustom = ""
+        } else {
+            perfModeSelected = otherLabel
+            perfModeCustom = preset.performanceMode
+        }
+
+        // App
+        if (appOptions.contains(preset.app)) {
+            selectedApp = preset.app
+        } else {
+            selectedApp = appOptions.firstOrNull() ?: ""
+        }
+        appVersionText = preset.appVersion
+
+        // Emu settings
+        try {
+            selectedEmuBuild = EmulatorBuildType.valueOf(preset.emulatorBuildType)
+        } catch (_: Exception) {
+            selectedEmuBuild = EmulatorBuildType.STABLE
+        }
+
+        if (accuracyOptions.contains(preset.accuracy)) {
+            accuracySelected = preset.accuracy
+            accuracyCustom = ""
+        } else {
+            accuracySelected = otherLabel
+            accuracyCustom = preset.accuracy
+        }
+
+        if (scaleOptions.contains(preset.scale)) {
+            scaleSelected = preset.scale
+            scaleCustom = ""
+        } else {
+            scaleSelected = otherLabel
+            scaleCustom = preset.scale
+        }
+
+        asyncShaderEnabled = preset.asyncShader
+
+        if (frameSkipOptions.contains(preset.frameSkip)) {
+            frameSkipSelected = preset.frameSkip
+            frameSkipCustom = ""
+        } else {
+            frameSkipSelected = otherLabel
+            frameSkipCustom = preset.frameSkip
+        }
+    }
+
     if (showSearchDialog) {
         AlertDialog(
             onDismissRequest = { showSearchDialog = false },
@@ -765,6 +866,59 @@ private fun EditStatusContent(
             }
         )
     }
+    if (showPresetDialog) {
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { showPresetDialog = false },
+            sheetState = sheetState
+        ) {
+            BottomSheetTitle(stringResource(R.string.title_presets))
+
+            if (presetsList.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        stringResource(R.string.no_presets_found),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(items = presetsList, key = { it.id }) { preset ->
+                        PresetCard(
+                            preset = preset,
+                            onApply = {
+                                applyPreset(preset)
+                                showPresetDialog = false
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.preset_applied),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onRename = { newName ->
+                                presetRepo.renamePreset(preset.id, newName)
+                                refreshPresets()
+                            },
+                            onDelete = {
+                                presetRepo.deletePreset(preset.id)
+                                refreshPresets()
+                            }
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(24.dp))
+        }
+    }
 
     Scaffold(contentWindowInsets = WindowInsets(0),
         topBar = {
@@ -831,6 +985,15 @@ private fun EditStatusContent(
                         enabled = devicesState.isLoggedIn && devicesState.devices.isNotEmpty(),
                         modifier = Modifier.weight(1f)
                     ) { Text(stringResource(R.string.pick_from_my_devices)) }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Button(
+                    onClick = { showPresetDialog = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.button_presets))
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -1184,6 +1347,23 @@ private fun EditStatusContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
+            ) {
+                Switch(
+                    checked = saveAsPreset,
+                    onCheckedChange = { saveAsPreset = it }
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    stringResource(R.string.label_save_as_preset),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             if (!isFormValid) {
                 Text(
                     text = stringResource(R.string.dialog_fill_all_fields),
@@ -1206,6 +1386,27 @@ private fun EditStatusContent(
                 TextButton(
                     enabled = isFormValid,
                     onClick = {
+                        if (saveAsPreset) {
+                            val newPreset = TestPreset(
+                                name = presetRepo.getNextDefaultName(),
+                                androidVersion = androidVersionFinal,
+                                deviceModel = deviceModelText.trim(),
+                                gpuModel = gpuModelText.trim(),
+                                driverVersion = driverVersionText.trim(),
+                                ram = ramFinal,
+                                wrapper = wrapperFinal,
+                                performanceMode = perfModeFinal,
+                                app = selectedApp.trim(),
+                                appVersion = appVersionText.trim(),
+                                emulatorBuildType = selectedEmuBuild.name,
+                                accuracy = if(showEmulatorSettings) accuracyFinal else "",
+                                scale = if(showEmulatorSettings) scaleFinal else "",
+                                asyncShader = if(showEmulatorSettings) asyncShaderEnabled else false,
+                                frameSkip = if(showEmulatorSettings) frameSkipFinal else ""
+                            )
+                            presetRepo.savePreset(newPreset)
+                        }
+
                         onSave(
                             EditDialogResult(
                                 status = currentStatus,
@@ -1479,7 +1680,9 @@ private fun BottomSheetTitle(text: String) {
         Text(
             text = text,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
         Spacer(Modifier.height(6.dp))
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -1619,5 +1822,100 @@ private fun WorkStatusRadioRow(
             text = text,
             style = MaterialTheme.typography.bodyLarge
         )
+    }
+}
+
+@Composable
+private fun PresetCard(
+    preset: TestPreset,
+    onApply: () -> Unit,
+    onRename: (String) -> Unit,
+    onDelete: () -> Unit
+) {
+    var isEditing by remember(preset.id) { mutableStateOf(false) }
+    var editText by remember(preset.id) { mutableStateOf(preset.name) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = !isEditing) { onApply() },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.outlineVariant
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Icon(
+                imageVector = Icons.Outlined.Save,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(22.dp)
+            )
+
+            Spacer(Modifier.width(12.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                if (isEditing) {
+                    OutlinedTextField(
+                        value = editText,
+                        onValueChange = { editText = it },
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Text(
+                        text = preset.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = preset.deviceModel,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1
+                    )
+                    Text(
+                        text = "${preset.gpuModel} • ${preset.ram}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1
+                    )
+                }
+            }
+
+            Spacer(Modifier.width(8.dp))
+
+            if (isEditing) {
+                IconButton(onClick = {
+                    val name = editText.trim()
+                    if (name.isNotEmpty()) {
+                        onRename(name)
+                        isEditing = false
+                    }
+                }) {
+                    Icon(Icons.Outlined.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                IconButton(onClick = { isEditing = true }) {
+                    Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary)
+                }
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Filled.Delete, null, tint = MaterialTheme.colorScheme.error)
+                }
+            }
+        }
     }
 }

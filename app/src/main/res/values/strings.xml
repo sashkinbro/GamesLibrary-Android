@@ -351,6 +351,11 @@ You can also submit anonymous test results to keep your own testing history and 
 
 
     <string name="details_data_source_igdb">Data taken from the IGDB API</string>
+    <string name="button_presets">Presets</string>
+    <string name="title_presets">Saved Presets</string>
+    <string name="no_presets_found">No presets found yet.</string>
+    <string name="preset_applied">Preset applied successfully.</string>
+    <string name="label_save_as_preset">Save configuration as new preset</string>
 
 
 

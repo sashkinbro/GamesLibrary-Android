@@ -35,9 +35,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.PhoneAndroid
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -95,6 +98,8 @@ import com.sbro.gameslibrary.components.IssueType
 import com.sbro.gameslibrary.components.Reproducibility
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.util.PhoneDbItem
+import com.sbro.gameslibrary.util.PresetRepository
+import com.sbro.gameslibrary.util.TestPreset
 import com.sbro.gameslibrary.util.loadPhonesFromAssets
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.MyDevicesState
@@ -359,6 +364,7 @@ private fun EditStatusContent(
     val context = LocalContext.current
     var phoneDb by remember { mutableStateOf<List<PhoneDbItem>>(emptyList()) }
     val scope = rememberCoroutineScope()
+    val presetRepo = remember { PresetRepository(context) }
 
     LaunchedEffect(Unit) {
         phoneDb = loadPhonesFromAssets(context)
@@ -433,6 +439,17 @@ private fun EditStatusContent(
     var fpsTo by remember { mutableStateOf("") }
 
     var mediaLinkText by remember { mutableStateOf("") }
+    var saveAsPreset by remember { mutableStateOf(false) }
+    var showPresetDialog by remember { mutableStateOf(false) }
+    var presetsList by remember { mutableStateOf<List<TestPreset>>(emptyList()) }
+
+    fun refreshPresets() {
+        presetsList = presetRepo.getAllPresets()
+    }
+
+    LaunchedEffect(showPresetDialog) {
+        if (showPresetDialog) refreshPresets()
+    }
 
     val androidVersions = listOf("16", "15", "14", "13", "12", "11", otherLabel)
     val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", otherLabel)
@@ -645,6 +662,88 @@ private fun EditStatusContent(
         }
     }
 
+    fun applyPreset(preset: TestPreset) {
+        if (androidVersions.contains(preset.androidVersion)) {
+            androidVersionSelected = preset.androidVersion
+            androidVersionCustom = ""
+        } else {
+            androidVersionSelected = otherLabel
+            androidVersionCustom = preset.androidVersion
+        }
+
+        deviceModelText = preset.deviceModel
+        gpuModelText = preset.gpuModel
+        driverVersionText = preset.driverVersion
+
+        // RAM
+        if (ramOptions.contains(preset.ram)) {
+            ramSelected = preset.ram
+            ramCustom = ""
+        } else {
+            ramSelected = otherLabel
+            ramCustom = preset.ram
+        }
+
+        // Wrapper
+        if (wrapperOptions.contains(preset.wrapper)) {
+            wrapperSelected = preset.wrapper
+            wrapperCustom = ""
+        } else {
+            wrapperSelected = otherLabel
+            wrapperCustom = preset.wrapper
+        }
+
+        // Performance Mode
+        if (perfModeOptions.contains(preset.performanceMode)) {
+            perfModeSelected = preset.performanceMode
+            perfModeCustom = ""
+        } else {
+            perfModeSelected = otherLabel
+            perfModeCustom = preset.performanceMode
+        }
+
+        // App
+        if (appOptions.contains(preset.app)) {
+            selectedApp = preset.app
+        } else {
+            selectedApp = appOptions.firstOrNull() ?: ""
+        }
+        appVersionText = preset.appVersion
+
+        // Emu settings
+        try {
+            selectedEmuBuild = EmulatorBuildType.valueOf(preset.emulatorBuildType)
+        } catch (_: Exception) {
+            selectedEmuBuild = EmulatorBuildType.STABLE
+        }
+
+        if (accuracyOptions.contains(preset.accuracy)) {
+            accuracySelected = preset.accuracy
+            accuracyCustom = ""
+        } else {
+            accuracySelected = otherLabel
+            accuracyCustom = preset.accuracy
+        }
+
+        if (scaleOptions.contains(preset.scale)) {
+            scaleSelected = preset.scale
+            scaleCustom = ""
+        } else {
+            scaleSelected = otherLabel
+            scaleCustom = preset.scale
+        }
+
+        asyncShaderEnabled = preset.asyncShader
+
+        if (frameSkipOptions.contains(preset.frameSkip)) {
+            frameSkipSelected = preset.frameSkip
+            frameSkipCustom = ""
+        } else {
+            frameSkipSelected = otherLabel
+            frameSkipCustom = preset.frameSkip
+        }
+    }
+
     if (showSearchDialog) {
         CyberAlertDialog(
             title = stringResource(R.string.search_device_title),
@@ -797,6 +896,131 @@ private fun EditStatusContent(
             }
         }
     }
+    if (showPresetDialog) {
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { showPresetDialog = false },
+            sheetState = sheetState,
+            containerColor = CyberBlack,
+            dragHandle = {
+                Box(
+                    Modifier
+                        .padding(top = 8.dp)
+                        .size(width = 48.dp, height = 3.dp)
+                        .background(CyberYellow.copy(alpha = 0.5f))
+                )
+            }
+        ) {
+            BottomSheetTitle(stringResource(R.string.title_presets))
+
+            if (presetsList.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        stringResource(R.string.no_presets_found),
+                        color = CyberYellow.copy(alpha = 0.6f),
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp)
+                ) {
+                    items(presetsList) { preset ->
+                        var isEditingName by remember { mutableStateOf(false) }
+                        var editNameText by remember { mutableStateOf(preset.name) }
+
+                        Card(
+                            shape = CutCornerShape(0.dp, 12.dp, 0.dp, 12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = CyberDark,
+                                contentColor = CyberBlue
+                            ),
+                            border = BorderStroke(1.dp, CyberYellow.copy(alpha = 0.2f)),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 5.dp)
+                                .clickable {
+                                    if (!isEditingName) {
+                                        applyPreset(preset)
+                                        showPresetDialog = false
+                                        Toast.makeText(context, context.getString(R.string.preset_applied), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                        ) {
+                            Column(Modifier.padding(14.dp)) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    if (isEditingName) {
+                                        CyberOutlinedTextField(
+                                            value = editNameText,
+                                            onValueChange = { editNameText = it },
+                                            label = "",
+                                            singleLine = true,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                        IconButton(onClick = {
+                                            if (editNameText.isNotBlank()) {
+                                                presetRepo.renamePreset(preset.id, editNameText.trim())
+                                                refreshPresets()
+                                                isEditingName = false
+                                            }
+                                        }) {
+                                            Icon(Icons.Outlined.CheckCircle, null, tint = CyberYellow)
+                                        }
+                                    } else {
+                                        Icon(Icons.Outlined.Save, null, tint = CyberYellow, modifier = Modifier.size(20.dp))
+                                        Spacer(Modifier.width(10.dp))
+                                        Text(
+                                            text = preset.name,
+                                            fontFamily = FontFamily.Monospace,
+                                            fontWeight = FontWeight.Bold,
+                                            color = CyberYellow,
+                                            fontSize = 16.sp,
+                                            modifier = Modifier.weight(1f)
+                                        )
+
+                                        IconButton(onClick = { isEditingName = true }, modifier = Modifier.size(32.dp)) {
+                                            Icon(Icons.Filled.Edit, null, tint = CyberBlue.copy(alpha = 0.7f), modifier = Modifier.size(18.dp))
+                                        }
+                                        IconButton(onClick = {
+                                            presetRepo.deletePreset(preset.id)
+                                            refreshPresets()
+                                        }, modifier = Modifier.size(32.dp)) {
+                                            Icon(Icons.Filled.Delete, null, tint = CyberRed.copy(alpha = 0.7f), modifier = Modifier.size(18.dp))
+                                        }
+                                    }
+                                }
+
+                                Spacer(Modifier.height(8.dp))
+                                Text(
+                                    text = preset.deviceModel,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.White.copy(alpha = 0.9f),
+                                    fontFamily = FontFamily.Monospace
+                                )
+                                Text(
+                                    text = "${preset.gpuModel} | ${preset.ram}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color.White.copy(alpha = 0.6f),
+                                    fontFamily = FontFamily.Monospace
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            Spacer(Modifier.height(24.dp))
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -908,6 +1132,13 @@ private fun EditStatusContent(
                             onClick = { showMyDevicesDialog = true },
                             accent = CyberBlue,
                             enabled = devicesState.isLoggedIn && devicesState.devices.isNotEmpty(),
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        CyberCutButton(
+                            text = stringResource(R.string.button_presets),
+                            onClick = { showPresetDialog = true },
+                            accent = CyberRed,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -1259,6 +1490,33 @@ private fun EditStatusContent(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
+                ) {
+                    Switch(
+                        checked = saveAsPreset,
+                        onCheckedChange = { saveAsPreset = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = CyberYellow,
+                            checkedTrackColor = CyberRed.copy(alpha = 0.35f),
+                            checkedBorderColor = CyberRed,
+                            uncheckedThumbColor = CyberGray,
+                            uncheckedTrackColor = CyberDark,
+                            uncheckedBorderColor = CyberYellow.copy(alpha = 0.35f)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        stringResource(R.string.label_save_as_preset),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = CyberYellow,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
                 if (!isFormValid) {
                     Text(
                         text = stringResource(R.string.dialog_fill_all_fields),
@@ -1294,6 +1552,27 @@ private fun EditStatusContent(
                     CyberCutButton(
                         text = stringResource(R.string.button_save),
                         onClick = {
+                            if (saveAsPreset) {
+                                val newPreset = TestPreset(
+                                    name = presetRepo.getNextDefaultName(),
+                                    androidVersion = androidVersionFinal,
+                                    deviceModel = deviceModelText.trim(),
+                                    gpuModel = gpuModelText.trim(),
+                                    driverVersion = driverVersionText.trim(),
+                                    ram = ramFinal,
+                                    wrapper = wrapperFinal,
+                                    performanceMode = perfModeFinal,
+                                    app = selectedApp.trim(),
+                                    appVersion = appVersionText.trim(),
+                                    emulatorBuildType = selectedEmuBuild.name,
+                                    accuracy = if(showEmulatorSettings) accuracyFinal else "",
+                                    scale = if(showEmulatorSettings) scaleFinal else "",
+                                    asyncShader = if(showEmulatorSettings) asyncShaderEnabled else false,
+                                    frameSkip = if(showEmulatorSettings) frameSkipFinal else ""
+                                )
+                                presetRepo.savePreset(newPreset)
+                            }
+
                             onSave(
                                 EditDialogResult(
                                     status = currentStatus,
@@ -1624,7 +1903,9 @@ private fun BottomSheetTitle(text: String) {
             fontWeight = FontWeight.SemiBold,
             fontFamily = FontFamily.Monospace,
             color = CyberYellow,
-            letterSpacing = 0.8.sp
+            letterSpacing = 0.8.sp,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
         Spacer(Modifier.height(6.dp))
         Box(
@@ -1703,11 +1984,13 @@ private fun CyberOutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = {
-            Text(
-                label,
-                fontFamily = FontFamily.Monospace,
-                color = CyberYellow.copy(alpha = 0.8f)
-            )
+            if (label.isNotEmpty()) {
+                Text(
+                    label,
+                    fontFamily = FontFamily.Monospace,
+                    color = CyberYellow.copy(alpha = 0.8f)
+                )
+            }
         },
         leadingIcon = leadingIcon,
         minLines = minLines,
@@ -1769,7 +2052,7 @@ private fun CyberCutButton(
                         )
                     )
                 )
-                .padding(horizontal = 14.dp),
+                .padding(horizontal = 4.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -1778,7 +2061,8 @@ private fun CyberCutButton(
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
-                fontSize = 15.sp
+                fontSize = 13.sp,
+                maxLines = 1
             )
         }
     }
