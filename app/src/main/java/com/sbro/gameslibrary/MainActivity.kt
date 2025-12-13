@@ -6,12 +6,12 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.google.firebase.FirebaseApp
-import android.content.Context
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
 import com.sbro.gameslibrary.util.CYBERPUNK_MODE
 import com.sbro.gameslibrary.util.dataStore
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import com.sbro.gameslibrary.ui.screens.PSGamesApp
 import com.sbro.gameslibrary.ui.theme.PSGamesTheme
@@ -20,6 +20,12 @@ import com.sbro.gameslibrary.cyberpunk.ui.theme.PSGamesThemeCyberpunk
 import com.sbro.gameslibrary.viewmodel.FavoritesRepository
 
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        @Volatile
+        private var cachedCyberMode: Boolean? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,23 +45,37 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val context = LocalContext.current
-            // Observe the preference that determines whether the cyberpunk skin is enabled.
-            val isCyberpunkEnabled by context.dataStore.data
-                .map { prefs -> prefs[CYBERPUNK_MODE] ?: false }
-                .collectAsState(initial = false)
 
-            if (isCyberpunkEnabled) {
-                // Apply the cyberpunk color theme and show the cyberpunk version of the app.
-                PSGamesThemeCyberpunk {
-                    CyberGamesApp()
+            val isCyberpunkEnabled by produceState(initialValue = cachedCyberMode) {
+                context.dataStore.data
+                    .map { prefs -> prefs[CYBERPUNK_MODE] ?: false }
+                    .distinctUntilChanged()
+                    .collect { mode ->
+                        cachedCyberMode = mode
+                        value = mode
+                    }
+            }
+
+            when (isCyberpunkEnabled) {
+                true -> {
+                    PSGamesThemeCyberpunk {
+                        CyberGamesApp()
+                    }
                 }
-            } else {
-                // Fall back to the classic theme and screens.
-                PSGamesTheme {
-                    PSGamesApp()
+
+                false -> {
+                    PSGamesTheme {
+                        PSGamesApp()
+                    }
+                }
+
+                null -> {
+
+                    PSGamesThemeCyberpunk {
+                        CyberGamesApp()
+                    }
                 }
             }
         }
     }
 }
-
