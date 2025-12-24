@@ -33,7 +33,7 @@ fun SplashScreen(
 
     LaunchedEffect(hasSeenOnboarding) {
         if (hasSeenOnboarding != null) {
-            delay(1700)
+            delay(200)
             onNavigateNext(!hasSeenOnboarding)
         }
     }
