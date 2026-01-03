@@ -221,6 +221,7 @@ fun TestHistoryDetailScreen(
                     InfoRow(stringResource(R.string.label_android_version), test.testedAndroidVersion)
                     InfoRow(stringResource(R.string.label_device_model), test.testedDeviceModel)
                     InfoRow(stringResource(R.string.label_gpu_model), test.testedGpuModel)
+                    InfoRow(stringResource(R.string.label_driver_version), test.testedDriverVersion)
                     InfoRow(stringResource(R.string.label_ram), test.testedRam)
                     InfoRow(stringResource(R.string.label_wrapper), test.testedWrapper)
                     InfoRow(stringResource(R.string.label_performance_mode), test.testedPerformanceMode)
@@ -235,6 +236,8 @@ fun TestHistoryDetailScreen(
             InfoRow(stringResource(R.string.test_history_label_app), test.testedApp)
             InfoRow(stringResource(R.string.test_history_label_app_version), test.testedAppVersion)
             InfoRow(stringResource(R.string.label_game_version_build), test.testedGameVersionOrBuild)
+            InfoRow(stringResource(R.string.label_download_size), test.downloadSize)
+            InfoRow(stringResource(R.string.label_controller_support), test.controllerSupport)
 
             Spacer(Modifier.height(14.dp))
             HorizontalDivider(color = cs.outline.copy(alpha = 0.25f))
@@ -261,8 +264,8 @@ fun TestHistoryDetailScreen(
                 HorizontalDivider(color = cs.outline.copy(alpha = 0.25f))
                 Spacer(Modifier.height(14.dp))
             }
-
             SectionTitle(stringResource(R.string.section_emulator_settings))
+
             InfoRow(
                 stringResource(R.string.label_emulator_build_type),
                 stringResource(emuBuildToLabel(test.emulatorBuildType))
@@ -275,6 +278,62 @@ fun TestHistoryDetailScreen(
                 else stringResource(R.string.value_off)
             )
             InfoRow(stringResource(R.string.label_frame_skip), test.frameSkip)
+
+            val hasPcFields = test.winlatorFork.isNotBlank() || test.wineVersion.isNotBlank() ||
+                    test.box64Preset.isNotBlank() || test.vkd3dVersion.isNotBlank()
+
+            if (hasPcFields) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    stringResource(R.string.section_pc_settings),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = cs.primary
+                )
+                Spacer(Modifier.height(4.dp))
+                InfoRow(stringResource(R.string.label_winlator_fork), test.winlatorFork)
+                InfoRow(stringResource(R.string.label_wine_version), test.wineVersion)
+                InfoRow(stringResource(R.string.label_box64_preset), test.box64Preset)
+                InfoRow(stringResource(R.string.label_box64_version), test.box64Version)
+                InfoRow(stringResource(R.string.label_turnip_version), test.turnipVersion)
+                InfoRow(stringResource(R.string.label_audio_driver), test.audioDriver)
+                InfoRow(stringResource(R.string.label_dxvk_version), test.dxvkVersion)
+                InfoRow(stringResource(R.string.label_vkd3d_version), test.vkd3dVersion)
+                InfoRow(stringResource(R.string.label_startup_selection), test.startupSelection)
+
+                if (test.envVariables.isNotBlank()) {
+                    Spacer(Modifier.height(4.dp))
+                    Text(stringResource(R.string.label_env_variables), style = MaterialTheme.typography.bodySmall, color = cs.onSurface.copy(alpha = 0.7f))
+                    Text(test.envVariables, style = MaterialTheme.typography.bodySmall, fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace)
+                }
+            }
+            val hasSwitchFields = test.dockedMode || test.audioOutputEngine.isNotBlank() ||
+                    test.cpuBackend.isNotBlank() || test.diskShaderCache
+
+            if (hasSwitchFields) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    stringResource(R.string.section_switch_settings),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = cs.primary
+                )
+                Spacer(Modifier.height(4.dp))
+                InfoRow(stringResource(R.string.label_docked_mode), if(test.dockedMode) stringResource(R.string.value_on) else stringResource(R.string.value_off))
+                InfoRow(stringResource(R.string.label_disk_shader_cache), if(test.diskShaderCache) stringResource(R.string.value_on) else stringResource(R.string.value_off))
+                InfoRow(stringResource(R.string.label_reactive_flushing), if(test.reactiveFlushing) stringResource(R.string.value_on) else stringResource(R.string.value_off))
+                InfoRow(stringResource(R.string.label_cpu_backend), test.cpuBackend)
+                InfoRow(stringResource(R.string.label_audio_output_engine), test.audioOutputEngine)
+            }
+            if (test.spuThreads.isNotBlank() || test.spuBlockSize.isNotBlank()) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    stringResource(R.string.section_ps3_settings),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = cs.primary
+                )
+                Spacer(Modifier.height(4.dp))
+                InfoRow(stringResource(R.string.label_spu_threads), test.spuThreads)
+                InfoRow(stringResource(R.string.label_spu_block_size), test.spuBlockSize)
+            }
 
             Spacer(Modifier.height(14.dp))
             HorizontalDivider(color = cs.outline.copy(alpha = 0.25f))
@@ -300,6 +359,22 @@ fun TestHistoryDetailScreen(
                         test.fpsMax
                     )
                 )
+            }
+            val hasAdvancedGraphics = test.vSync.isNotBlank() || test.anisotropicFilter.isNotBlank() ||
+                    test.antiAliasing.isNotBlank() || test.windowAdaptingFilter.isNotBlank()
+
+            if (hasAdvancedGraphics) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    stringResource(R.string.section_graphics_advanced),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.height(4.dp))
+                InfoRow(stringResource(R.string.label_vsync), test.vSync)
+                InfoRow(stringResource(R.string.label_anisotropic_filtering), test.anisotropicFilter)
+                InfoRow(stringResource(R.string.label_anti_aliasing), test.antiAliasing)
+                InfoRow(stringResource(R.string.label_window_adapting_filter), test.windowAdaptingFilter)
             }
 
             if (test.mediaLink.isNotBlank()) {

@@ -29,11 +29,14 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DeveloperBoard
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -75,7 +78,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.GameTestResult
-// Use cyberpunk-styled WorkStatusBadge instead of the classic version
 import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
@@ -541,6 +543,17 @@ private fun TestHistoryCardCyber(
                     ?: ""
             )
             InfoLineCyber(icon = Icons.Filled.Memory, text = test.testedGpuModel)
+            if (test.dockedMode) {
+                InfoLineCyber(Icons.Filled.Tv, stringResource(R.string.label_docked_mode))
+            }
+            if (test.winlatorFork.isNotBlank() || test.wineVersion.isNotBlank()) {
+                val fork = test.winlatorFork.ifBlank { "?" }
+                val wine = test.wineVersion.ifBlank { "?" }
+                InfoLineCyber(Icons.Filled.Code, "Fork: $fork • Wine: $wine")
+            }
+            if (test.spuThreads.isNotBlank()) {
+                InfoLineCyber(Icons.Filled.DeveloperBoard, "SPU Threads: ${test.spuThreads}")
+            }
 
             Spacer(Modifier.height(6.dp))
 

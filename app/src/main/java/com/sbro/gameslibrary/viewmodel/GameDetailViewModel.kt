@@ -385,7 +385,30 @@ class GameDetailViewModel : ViewModel() {
         val fpsMin: String,
         val fpsMax: String,
 
-        val mediaLink: String
+        val mediaLink: String,
+        val audioDriver: String,
+        val downloadSize: String,
+        val wineVersion: String,
+        val winlatorFork: String,
+        val turnipVersion: String,
+        val controllerSupport: String,
+        val box64Preset: String,
+        val box64Version: String,
+        val startupSelection: String,
+        val envVariables: String,
+        val vkd3dVersion: String,
+        val dxvkVersion: String,
+        val anisotropicFilter: String,
+        val antiAliasing: String,
+        val vSync: String,
+        val windowAdaptingFilter: String,
+        val spuThreads: String,
+        val spuBlockSize: String,
+        val dockedMode: Boolean,
+        val audioOutputEngine: String,
+        val diskShaderCache: Boolean,
+        val reactiveFlushing: Boolean,
+        val cpuBackend: String
     )
 
     fun updateGameStatus(
@@ -446,7 +469,30 @@ class GameDetailViewModel : ViewModel() {
             authorName = user?.displayName,
             authorEmail = user?.email,
             authorPhotoUrl = user?.photoUrl?.toString(),
-            fromAccount = user != null
+            fromAccount = user != null,
+            audioDriver = payload.audioDriver,
+            downloadSize = payload.downloadSize,
+            wineVersion = payload.wineVersion,
+            winlatorFork = payload.winlatorFork,
+            turnipVersion = payload.turnipVersion,
+            controllerSupport = payload.controllerSupport,
+            box64Preset = payload.box64Preset,
+            box64Version = payload.box64Version,
+            startupSelection = payload.startupSelection,
+            envVariables = payload.envVariables,
+            vkd3dVersion = payload.vkd3dVersion,
+            dxvkVersion = payload.dxvkVersion,
+            anisotropicFilter = payload.anisotropicFilter,
+            antiAliasing = payload.antiAliasing,
+            vSync = payload.vSync,
+            windowAdaptingFilter = payload.windowAdaptingFilter,
+            spuThreads = payload.spuThreads,
+            spuBlockSize = payload.spuBlockSize,
+            dockedMode = payload.dockedMode,
+            audioOutputEngine = payload.audioOutputEngine,
+            diskShaderCache = payload.diskShaderCache,
+            reactiveFlushing = payload.reactiveFlushing,
+            cpuBackend = payload.cpuBackend
         )
 
         val current = _game.value
@@ -565,7 +611,30 @@ class GameDetailViewModel : ViewModel() {
                         "resolutionHeight" to newResult.resolutionHeight,
                         "fpsMin" to newResult.fpsMin,
                         "fpsMax" to newResult.fpsMax,
-                        "mediaLink" to newResult.mediaLink
+                        "mediaLink" to newResult.mediaLink,
+                        "audioDriver" to newResult.audioDriver,
+                        "downloadSize" to newResult.downloadSize,
+                        "wineVersion" to newResult.wineVersion,
+                        "winlatorFork" to newResult.winlatorFork,
+                        "turnipVersion" to newResult.turnipVersion,
+                        "controllerSupport" to newResult.controllerSupport,
+                        "box64Preset" to newResult.box64Preset,
+                        "box64Version" to newResult.box64Version,
+                        "startupSelection" to newResult.startupSelection,
+                        "envVariables" to newResult.envVariables,
+                        "vkd3dVersion" to newResult.vkd3dVersion,
+                        "dxvkVersion" to newResult.dxvkVersion,
+                        "anisotropicFilter" to newResult.anisotropicFilter,
+                        "antiAliasing" to newResult.antiAliasing,
+                        "vSync" to newResult.vSync,
+                        "windowAdaptingFilter" to newResult.windowAdaptingFilter,
+                        "spuThreads" to newResult.spuThreads,
+                        "spuBlockSize" to newResult.spuBlockSize,
+                        "dockedMode" to newResult.dockedMode,
+                        "audioOutputEngine" to newResult.audioOutputEngine,
+                        "diskShaderCache" to newResult.diskShaderCache,
+                        "reactiveFlushing" to newResult.reactiveFlushing,
+                        "cpuBackend" to newResult.cpuBackend
                     )
                 ).await()
 
@@ -633,7 +702,30 @@ class GameDetailViewModel : ViewModel() {
             "authorName" to user?.displayName,
             "authorEmail" to user?.email,
             "authorPhotoUrl" to user?.photoUrl?.toString(),
-            "fromAccount" to (user != null)
+            "fromAccount" to (user != null),
+            "audioDriver" to audioDriver,
+            "downloadSize" to downloadSize,
+            "wineVersion" to wineVersion,
+            "winlatorFork" to winlatorFork,
+            "turnipVersion" to turnipVersion,
+            "controllerSupport" to controllerSupport,
+            "box64Preset" to box64Preset,
+            "box64Version" to box64Version,
+            "startupSelection" to startupSelection,
+            "envVariables" to envVariables,
+            "vkd3dVersion" to vkd3dVersion,
+            "dxvkVersion" to dxvkVersion,
+            "anisotropicFilter" to anisotropicFilter,
+            "antiAliasing" to antiAliasing,
+            "vSync" to vSync,
+            "windowAdaptingFilter" to windowAdaptingFilter,
+            "spuThreads" to spuThreads,
+            "spuBlockSize" to spuBlockSize,
+            "dockedMode" to dockedMode,
+            "audioOutputEngine" to audioOutputEngine,
+            "diskShaderCache" to diskShaderCache,
+            "reactiveFlushing" to reactiveFlushing,
+            "cpuBackend" to cpuBackend
         )
     }
 
@@ -708,6 +800,33 @@ class GameDetailViewModel : ViewModel() {
             val authorEmail = getString("authorEmail")
             val authorPhotoUrl = getString("authorPhotoUrl")
             val fromAccount = getBoolean("fromAccount") ?: false
+            val audioDriver = getString("audioDriver") ?: ""
+            val downloadSize = getString("downloadSize") ?: ""
+            val wineVersion = getString("wineVersion") ?: ""
+            val winlatorFork = getString("winlatorFork") ?: ""
+            val turnipVersion = getString("turnipVersion") ?: ""
+            val controllerSupport = getString("controllerSupport") ?: ""
+            val box64Preset = getString("box64Preset") ?: ""
+            val box64Version = getString("box64Version") ?: ""
+            val startupSelection = getString("startupSelection") ?: ""
+            val envVariables = getString("envVariables") ?: ""
+            val vkd3dVersion = getString("vkd3dVersion") ?: ""
+            val dxvkVersion = getString("dxvkVersion") ?: ""
+
+            val anisotropicFilter = getString("anisotropicFilter") ?: ""
+            val antiAliasing = getString("antiAliasing") ?: ""
+            val vSync = getString("vSync") ?: ""
+            val windowAdaptingFilter = getString("windowAdaptingFilter") ?: ""
+
+            val spuThreads = getString("spuThreads") ?: ""
+            val spuBlockSize = getString("spuBlockSize") ?: ""
+
+            val dockedMode = getBoolean("dockedMode") ?: false
+            val audioOutputEngine = getString("audioOutputEngine") ?: ""
+            val diskShaderCache = getBoolean("diskShaderCache") ?: false
+            val reactiveFlushing = getBoolean("reactiveFlushing") ?: false
+            val cpuBackend = getString("cpuBackend") ?: ""
+
 
             val formattedDate = updatedAt?.toDate()?.let { date ->
                 val formatter =
@@ -764,7 +883,30 @@ class GameDetailViewModel : ViewModel() {
                 authorName = authorName,
                 authorEmail = authorEmail,
                 authorPhotoUrl = authorPhotoUrl,
-                fromAccount = fromAccount
+                fromAccount = fromAccount,
+                audioDriver = audioDriver,
+                downloadSize = downloadSize,
+                wineVersion = wineVersion,
+                winlatorFork = winlatorFork,
+                turnipVersion = turnipVersion,
+                controllerSupport = controllerSupport,
+                box64Preset = box64Preset,
+                box64Version = box64Version,
+                startupSelection = startupSelection,
+                envVariables = envVariables,
+                vkd3dVersion = vkd3dVersion,
+                dxvkVersion = dxvkVersion,
+                anisotropicFilter = anisotropicFilter,
+                antiAliasing = antiAliasing,
+                vSync = vSync,
+                windowAdaptingFilter = windowAdaptingFilter,
+                spuThreads = spuThreads,
+                spuBlockSize = spuBlockSize,
+                dockedMode = dockedMode,
+                audioOutputEngine = audioOutputEngine,
+                diskShaderCache = diskShaderCache,
+                reactiveFlushing = reactiveFlushing,
+                cpuBackend = cpuBackend
             )
         } catch (_: Exception) {
             null

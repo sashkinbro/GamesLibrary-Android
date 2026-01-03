@@ -341,7 +341,7 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="common_save">Save</string>
     <string name="common_cancel">Cancel</string>
     <string name="auth_error_empty_name">Enter your name</string>
-    <string name="label_driver_version">GPU version driver</string>
+    <string name="label_driver_version">GPU Model</string>
     <string name="common_or">or</string>
     <string name="profile_menu_section">My sections</string>
     <string name="profile_guest_hint_tests">Save your test history</string>
@@ -357,6 +357,42 @@ You can also submit anonymous test results to keep your own testing history and 
     <string name="preset_applied">Preset applied successfully.</string>
     <string name="label_save_as_preset">Save configuration as new preset</string>
 
+
+
+
+
+
+    <string name="label_audio_driver">Audio Driver</string>
+    <string name="label_download_size">Download Size</string>
+    <string name="label_wine_version">Wine Version</string>
+    <string name="label_winlator_fork">Winlator Fork</string>
+    <string name="label_turnip_version">Turnip Driver Version</string>
+    <string name="label_controller_support">Controller Support</string>
+    <string name="label_box64_preset">Box64 Preset</string>
+    <string name="label_box64_version">Box64 Version</string>
+    <string name="label_startup_selection">Startup Selection</string>
+    <string name="label_env_variables">Environment Variables</string>
+    <string name="label_vkd3d_version">VKD3D Version</string>
+    <string name="label_dxvk_version">DXVK Version</string>
+
+    <string name="label_anisotropic_filtering">Anisotropic Filtering</string>
+    <string name="label_anti_aliasing">Anti-Aliasing</string>
+    <string name="label_vsync">VSync</string>
+    <string name="label_window_adapting_filter">Window Adapting Filter</string>
+
+    <string name="label_spu_threads">SPU Threads</string>
+    <string name="label_spu_block_size">SPU Block Size</string>
+
+    <string name="label_docked_mode">Docked Mode</string>
+    <string name="label_audio_output_engine">Audio Output Engine</string>
+    <string name="label_disk_shader_cache">Disk Shader Cache</string>
+    <string name="label_reactive_flushing">Reactive Flushing</string>
+    <string name="label_cpu_backend">CPU Backend</string>
+
+    <string name="section_pc_settings">PC / Winlator / GameHub Settings</string>
+    <string name="section_ps3_settings">PS3 Settings</string>
+    <string name="section_switch_settings">Switch Settings</string>
+    <string name="section_graphics_advanced">Advanced Graphics</string>
 
 
 

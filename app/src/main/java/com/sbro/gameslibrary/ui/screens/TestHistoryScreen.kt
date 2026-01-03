@@ -357,7 +357,6 @@ private fun TestHistoryCard(
                 modifier = Modifier.padding(vertical = 8.dp),
                 color = cs.onSurface.copy(alpha = 0.08f)
             )
-
             InfoLine(icon = Icons.Filled.Smartphone, text = test.testedDeviceModel)
             InfoLine(
                 icon = Icons.Filled.Android,
@@ -366,6 +365,17 @@ private fun TestHistoryCard(
                     ?: ""
             )
             InfoLine(icon = Icons.Filled.Memory, text = test.testedGpuModel)
+            if (test.dockedMode) {
+                InfoLine(Icons.Filled.Tv, stringResource(R.string.label_docked_mode))
+            }
+            if (test.winlatorFork.isNotBlank() || test.wineVersion.isNotBlank()) {
+                val fork = test.winlatorFork.ifBlank { "?" }
+                val wine = test.wineVersion.ifBlank { "?" }
+                InfoLine(Icons.Filled.Code, "Fork: $fork • Wine: $wine")
+            }
+            if (test.spuThreads.isNotBlank()) {
+                InfoLine(Icons.Filled.DeveloperBoard, "SPU Threads: ${test.spuThreads}")
+            }
 
             Spacer(Modifier.height(6.dp))
 

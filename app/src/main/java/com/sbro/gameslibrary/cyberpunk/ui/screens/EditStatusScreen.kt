@@ -139,7 +139,30 @@ data class EditDialogResult(
     val resolutionHeight: String,
     val fpsMin: String,
     val fpsMax: String,
-    val mediaLink: String
+    val mediaLink: String,
+    val audioDriver: String,
+    val downloadSize: String,
+    val wineVersion: String,
+    val winlatorFork: String,
+    val turnipVersion: String,
+    val controllerSupport: String,
+    val box64Preset: String,
+    val box64Version: String,
+    val startupSelection: String,
+    val envVariables: String,
+    val vkd3dVersion: String,
+    val dxvkVersion: String,
+    val anisotropicFilter: String,
+    val antiAliasing: String,
+    val vSync: String,
+    val windowAdaptingFilter: String,
+    val spuThreads: String,
+    val spuBlockSize: String,
+    val dockedMode: Boolean,
+    val audioOutputEngine: String,
+    val diskShaderCache: Boolean,
+    val reactiveFlushing: Boolean,
+    val cpuBackend: String
 )
 
 @SuppressLint("ConfigurationScreenWidthHeight")
@@ -287,7 +310,30 @@ fun EditStatusScreen(
                     fpsMin = result.fpsMin,
                     fpsMax = result.fpsMax,
 
-                    mediaLink = result.mediaLink
+                    mediaLink = result.mediaLink,
+                    audioDriver = result.audioDriver,
+                    downloadSize = result.downloadSize,
+                    wineVersion = result.wineVersion,
+                    winlatorFork = result.winlatorFork,
+                    turnipVersion = result.turnipVersion,
+                    controllerSupport = result.controllerSupport,
+                    box64Preset = result.box64Preset,
+                    box64Version = result.box64Version,
+                    startupSelection = result.startupSelection,
+                    envVariables = result.envVariables,
+                    vkd3dVersion = result.vkd3dVersion,
+                    dxvkVersion = result.dxvkVersion,
+                    anisotropicFilter = result.anisotropicFilter,
+                    antiAliasing = result.antiAliasing,
+                    vSync = result.vSync,
+                    windowAdaptingFilter = result.windowAdaptingFilter,
+                    spuThreads = result.spuThreads,
+                    spuBlockSize = result.spuBlockSize,
+                    dockedMode = result.dockedMode,
+                    audioOutputEngine = result.audioOutputEngine,
+                    diskShaderCache = result.diskShaderCache,
+                    reactiveFlushing = result.reactiveFlushing,
+                    cpuBackend = result.cpuBackend
                 )
 
                 viewModel.updateGameStatus(
@@ -329,7 +375,30 @@ fun EditStatusScreen(
                     fpsMax = result.fpsMax,
                     mediaLink = result.mediaLink,
                     testedDateFormatted = "",
-                    updatedAtMillis = testMillis
+                    updatedAtMillis = testMillis,
+                    audioDriver = result.audioDriver,
+                    downloadSize = result.downloadSize,
+                    wineVersion = result.wineVersion,
+                    winlatorFork = result.winlatorFork,
+                    turnipVersion = result.turnipVersion,
+                    controllerSupport = result.controllerSupport,
+                    box64Preset = result.box64Preset,
+                    box64Version = result.box64Version,
+                    startupSelection = result.startupSelection,
+                    envVariables = result.envVariables,
+                    vkd3dVersion = result.vkd3dVersion,
+                    dxvkVersion = result.dxvkVersion,
+                    anisotropicFilter = result.anisotropicFilter,
+                    antiAliasing = result.antiAliasing,
+                    vSync = result.vSync,
+                    windowAdaptingFilter = result.windowAdaptingFilter,
+                    spuThreads = result.spuThreads,
+                    spuBlockSize = result.spuBlockSize,
+                    dockedMode = result.dockedMode,
+                    audioOutputEngine = result.audioOutputEngine,
+                    diskShaderCache = result.diskShaderCache,
+                    reactiveFlushing = result.reactiveFlushing,
+                    cpuBackend = result.cpuBackend
                 )
 
                 viewModel.editTestResult(
@@ -373,26 +442,96 @@ private fun EditStatusContent(
     var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
     val otherLabel = stringResource(R.string.option_other)
     val customLabel = stringResource(R.string.option_custom)
-    var driverVersionText by remember { mutableStateOf("") }
+
     val platformLower = game.platform.lowercase()
     val isSwitchPlatform = platformLower.contains("switch") || platformLower.contains("nintendo")
     val isPcPlatform = platformLower.contains("pc") || platformLower.contains("windows")
+    val isPs3Platform = platformLower.contains("playstation") || platformLower.contains("ps3")
 
     val appOptions = when {
         isSwitchPlatform -> listOf("Yuzu", "Eden", "Citron", "Torzu", "Sumi", "Sudachi", "Strato")
-        isPcPlatform -> listOf("Winlator", "GameHub")
+        isPcPlatform -> listOf("Winlator", "GameHub", "Mobox", "Exagear")
         else -> listOf("RPCSX-UI-Android", "aPS3e")
     }
-
-    val androidMajor = remember {
-        Build.VERSION.RELEASE?.substringBefore(".") ?: ""
+    val androidVersions = listOf("16", "15", "14", "13", "12", "11", otherLabel)
+    val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", otherLabel)
+    val turnipOptions = listOf(
+        "v26.0.0 R7",
+        "v26.0.0 R6",
+        "v26.0.0 R5",
+        "v25.3.0 (new autotuner)",
+        "v25.2.0",
+        "v25.0.0",
+        "System Default",
+        otherLabel
+    )
+    val audioDriverOptions = listOf("PulseAudio", "Alsa", "AAudio", "OpenSL ES", "Oboe", otherLabel)
+    val winlatorForkOptions = listOf("Official", "Glibc", "Frost", "CJ", "Afei", "Mod by Ajay", otherLabel)
+    val wineVersionOptions = listOf(
+        "Wine 11.0-rc4",
+        "Wine 11.0-rc2",
+        "Wine 11.0-rc1",
+        "Wine 10.15",
+        "Wine 10.0",
+        "Wine 9.0",
+        "Wine 8.0",
+        "Proton GE 10-28",
+        otherLabel
+    )
+    val box64PresetOptions = listOf("Performance", "Compatible", "Stability", "Safe", "Aggressive", otherLabel)
+    val box64VersionOptions = listOf(
+        "0.4.0",
+        "0.3.8",
+        "0.3.6",
+        "0.3.2",
+        "git-latest",
+        otherLabel
+    )
+    val vkd3dOptions = listOf(
+        "3.0b",
+        "3.0a",
+        "3.0",
+        "2.13",
+        "2.12",
+        "2.11.1",
+        otherLabel
+    )
+    val dxvkOptions = listOf(
+        "2.7.1",
+        "2.7",
+        "2.6.2",
+        "2.6",
+        "2.5.3",
+        "2.5",
+        "2.4.1",
+        "2.4",
+        "1.10.3",
+        otherLabel
+    )
+    val controllerOptions = listOf("Native (XInput)", "Virtual", "Keyboard", "Touchscreen", "External Controller", otherLabel)
+    val vsyncOptions = listOf("Off", "On", "Mailbox", "FIFO", "Immediate", otherLabel)
+    val anisotropicOptions = listOf("Off", "2x", "4x", "8x", "16x", "Automatic", otherLabel)
+    val aaOptions = listOf("Off", "FXAA", "SMAA", "MSAA 2x", "MSAA 4x", "TAA", otherLabel)
+    val cpuBackendOptions = listOf("NCE", "JIT", "Interpreter", otherLabel)
+    val audioEngineOptions = listOf("auto", "cubeb", "sdl2", "openal", otherLabel)
+    val windowFilterOptions = listOf("Bilinear", "Bicubic", "Gaussian", "ScaleForce", "AMD FSR", "Nearest", otherLabel)
+    val wrapperOptions = when {
+        isPcPlatform -> listOf("DXVK", "VKD3D", "WineD3D", "OpenGL", otherLabel)
+        else -> listOf("Vulkan", "OpenGL", "D3D wrapper", otherLabel)
     }
+    val perfModeOptions = listOf("Extreme performance", "Performance", "Balanced", "Quality", otherLabel)
+    val accuracyOptions = listOf("Performance", "Balanced", "Accuracy", otherLabel)
+    val scaleOptions = listOf("0.5x", "0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.25x", "2.5x", "2.75x", "3x", otherLabel)
+    val frameSkipOptions = listOf("0", "1", "2", otherLabel)
+
+    val androidMajor = remember { Build.VERSION.RELEASE?.substringBefore(".") ?: "" }
 
     var androidVersionSelected by remember { mutableStateOf(androidMajor) }
     var androidVersionCustom by remember { mutableStateOf(if (androidMajor.isBlank()) androidMajor else "") }
 
     var deviceModelText by remember { mutableStateOf("") }
     var gpuModelText by remember { mutableStateOf("") }
+    var driverVersionText by remember { mutableStateOf("") }
 
     var ramSelected by remember { mutableStateOf("") }
     var ramCustom by remember { mutableStateOf("") }
@@ -426,6 +565,62 @@ private fun EditStatusContent(
     var frameSkipSelected by remember { mutableStateOf("") }
     var frameSkipCustom by remember { mutableStateOf("") }
 
+    var audioDriverSelected by remember { mutableStateOf("") }
+    var audioDriverCustom by remember { mutableStateOf("") }
+
+    var downloadSizeText by remember { mutableStateOf("") }
+
+    var wineVersionSelected by remember { mutableStateOf("") }
+    var wineVersionCustom by remember { mutableStateOf("") }
+
+    var winlatorForkSelected by remember { mutableStateOf("") }
+    var winlatorForkCustom by remember { mutableStateOf("") }
+
+    var turnipVersionSelected by remember { mutableStateOf("") }
+    var turnipVersionCustom by remember { mutableStateOf("") }
+
+    var controllerSupportSelected by remember { mutableStateOf("") }
+    var controllerSupportCustom by remember { mutableStateOf("") }
+
+    var box64PresetSelected by remember { mutableStateOf("") }
+    var box64PresetCustom by remember { mutableStateOf("") }
+
+    var box64VersionSelected by remember { mutableStateOf("") }
+    var box64VersionCustom by remember { mutableStateOf("") }
+
+    var startupSelectionText by remember { mutableStateOf("") }
+    var envVariablesText by remember { mutableStateOf("") }
+
+    var vkd3dVersionSelected by remember { mutableStateOf("") }
+    var vkd3dVersionCustom by remember { mutableStateOf("") }
+
+    var dxvkVersionSelected by remember { mutableStateOf("") }
+    var dxvkVersionCustom by remember { mutableStateOf("") }
+
+    var anisotropicFilterSelected by remember { mutableStateOf("") }
+    var anisotropicFilterCustom by remember { mutableStateOf("") }
+
+    var antiAliasingSelected by remember { mutableStateOf("") }
+    var antiAliasingCustom by remember { mutableStateOf("") }
+
+    var vSyncSelected by remember { mutableStateOf("") }
+    var vSyncCustom by remember { mutableStateOf("") }
+
+    var windowAdaptingFilterSelected by remember { mutableStateOf("") }
+    var windowAdaptingFilterCustom by remember { mutableStateOf("") }
+
+    var spuThreadsText by remember { mutableStateOf("") }
+    var spuBlockSizeText by remember { mutableStateOf("") }
+
+    var dockedMode by remember { mutableStateOf(false) }
+    var audioOutputEngineSelected by remember { mutableStateOf("") }
+    var audioOutputEngineCustom by remember { mutableStateOf("") }
+
+    var diskShaderCache by remember { mutableStateOf(false) }
+    var reactiveFlushing by remember { mutableStateOf(false) }
+    var cpuBackendSelected by remember { mutableStateOf("") }
+    var cpuBackendCustom by remember { mutableStateOf("") }
+
     val resolutionPresets = listOf(
         "640×360", "854×480", "960×540", "1280×720", "1600×900",
         "1920×1080", "2340×1080", "2400×1080", customLabel
@@ -451,52 +646,51 @@ private fun EditStatusContent(
         if (showPresetDialog) refreshPresets()
     }
 
-    val androidVersions = listOf("16", "15", "14", "13", "12", "11", otherLabel)
-    val ramOptions = listOf("4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", otherLabel)
-
-    val wrapperOptions = when {
-        isPcPlatform -> listOf("DXVK", "VKD3D", "WineD3D", "OpenGL", otherLabel)
-        else -> listOf("Vulkan", "OpenGL", "D3D wrapper", otherLabel)
-    }
-
-    val perfModeOptions = listOf("Extreme performance", "Performance", "Balanced", "Quality", otherLabel)
-    val accuracyOptions = listOf("Performance", "Balanced", "Accuracy", otherLabel)
-    val scaleOptions = listOf("0.5x", "0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.25x", "2.5x", "2.75x", "3x", otherLabel)
-    val frameSkipOptions = listOf("0", "1", "2", otherLabel)
-
     val showEmulatorSettings = !isPcPlatform
     val showWrapper = true
     val showPerfMode = true
 
-    val androidVersionFinal =
-        if (androidVersionSelected == otherLabel) androidVersionCustom.trim()
-        else androidVersionSelected.trim()
+    fun getFinal(selected: String, custom: String): String {
+        return if (selected == otherLabel) custom.trim() else selected.trim()
+    }
 
-    val ramFinal =
-        if (ramSelected == otherLabel) ramCustom.trim()
-        else ramSelected.trim()
+    val androidVersionFinal = getFinal(androidVersionSelected, androidVersionCustom)
+    val ramFinal = getFinal(ramSelected, ramCustom)
+    val wrapperFinal = getFinal(wrapperSelected, wrapperCustom)
+    val perfModeFinal = getFinal(perfModeSelected, perfModeCustom)
+    val accuracyFinal = getFinal(accuracySelected, accuracyCustom)
+    val scaleFinal = getFinal(scaleSelected, scaleCustom)
+    val frameSkipFinal = getFinal(frameSkipSelected, frameSkipCustom)
 
-    val wrapperFinal =
-        if (wrapperSelected == otherLabel) wrapperCustom.trim()
-        else wrapperSelected.trim()
-
-    val perfModeFinal =
-        if (perfModeSelected == otherLabel) perfModeCustom.trim()
-        else perfModeSelected.trim()
-
-    val accuracyFinal =
-        if (accuracySelected == otherLabel) accuracyCustom.trim()
-        else accuracySelected.trim()
-
-    val scaleFinal =
-        if (scaleSelected == otherLabel) scaleCustom.trim()
-        else scaleSelected.trim()
-
-    val frameSkipFinal =
-        if (frameSkipSelected == otherLabel) frameSkipCustom.trim()
-        else frameSkipSelected.trim()
+    val audioDriverFinal = getFinal(audioDriverSelected, audioDriverCustom)
+    val turnipVersionFinal = getFinal(turnipVersionSelected, turnipVersionCustom)
+    val winlatorForkFinal = getFinal(winlatorForkSelected, winlatorForkCustom)
+    val wineVersionFinal = getFinal(wineVersionSelected, wineVersionCustom)
+    val box64PresetFinal = getFinal(box64PresetSelected, box64PresetCustom)
+    val box64VersionFinal = getFinal(box64VersionSelected, box64VersionCustom)
+    val vkd3dVersionFinal = getFinal(vkd3dVersionSelected, vkd3dVersionCustom)
+    val dxvkVersionFinal = getFinal(dxvkVersionSelected, dxvkVersionCustom)
+    val controllerSupportFinal = getFinal(controllerSupportSelected, controllerSupportCustom)
+    val vSyncFinal = getFinal(vSyncSelected, vSyncCustom)
+    val anisotropicFilterFinal = getFinal(anisotropicFilterSelected, anisotropicFilterCustom)
+    val antiAliasingFinal = getFinal(antiAliasingSelected, antiAliasingCustom)
+    val cpuBackendFinal = getFinal(cpuBackendSelected, cpuBackendCustom)
+    val audioOutputEngineFinal = getFinal(audioOutputEngineSelected, audioOutputEngineCustom)
+    val windowAdaptingFilterFinal = getFinal(windowAdaptingFilterSelected, windowAdaptingFilterCustom)
 
     var didPrefill by remember(testMillis) { mutableStateOf(false) }
+
+    fun setField(options: List<String>, value: String, setSelect: (String) -> Unit, setCustom: (String) -> Unit) {
+        if (value.isNotBlank()) {
+            if (options.contains(value)) {
+                setSelect(value)
+                setCustom("")
+            } else {
+                setSelect(otherLabel)
+                setCustom(value)
+            }
+        }
+    }
 
     LaunchedEffect(testMillis, game.testResults) {
         if (testMillis == null || didPrefill) return@LaunchedEffect
@@ -510,32 +704,17 @@ private fun EditStatusContent(
 
             currentStatus = t.status
 
-            androidVersionSelected =
-                if (androidVersions.contains(t.testedAndroidVersion)) t.testedAndroidVersion else otherLabel
-            androidVersionCustom =
-                if (androidVersionSelected == otherLabel) t.testedAndroidVersion else ""
+            setField(androidVersions, t.testedAndroidVersion, { androidVersionSelected = it }, { androidVersionCustom = it })
 
             deviceModelText = t.testedDeviceModel
             gpuModelText = t.testedGpuModel
             driverVersionText = t.testedDriverVersion
 
-            ramSelected =
-                if (ramOptions.contains(t.testedRam)) t.testedRam else otherLabel
-            ramCustom =
-                if (ramSelected == otherLabel) t.testedRam else ""
+            setField(ramOptions, t.testedRam, { ramSelected = it }, { ramCustom = it })
+            setField(wrapperOptions, t.testedWrapper, { wrapperSelected = it }, { wrapperCustom = it })
+            setField(perfModeOptions, t.testedPerformanceMode, { perfModeSelected = it }, { perfModeCustom = it })
 
-            wrapperSelected =
-                if (wrapperOptions.contains(t.testedWrapper)) t.testedWrapper else otherLabel
-            wrapperCustom =
-                if (wrapperSelected == otherLabel) t.testedWrapper else ""
-
-            perfModeSelected =
-                if (perfModeOptions.contains(t.testedPerformanceMode)) t.testedPerformanceMode else otherLabel
-            perfModeCustom =
-                if (perfModeSelected == otherLabel) t.testedPerformanceMode else ""
-
-            selectedApp =
-                if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
+            selectedApp = if (appOptions.contains(t.testedApp)) t.testedApp else appOptions.first()
             appVersionText = t.testedAppVersion
             gameVersionText = t.testedGameVersionOrBuild
 
@@ -545,22 +724,12 @@ private fun EditStatusContent(
             issueNoteText = t.issueNote
 
             selectedEmuBuild = t.emulatorBuildType
-            accuracySelected =
-                if (accuracyOptions.contains(t.accuracyLevel)) t.accuracyLevel else otherLabel
-            accuracyCustom =
-                if (accuracySelected == otherLabel) t.accuracyLevel else ""
-
-            scaleSelected =
-                if (scaleOptions.contains(t.resolutionScale)) t.resolutionScale else otherLabel
-            scaleCustom =
-                if (scaleSelected == otherLabel) t.resolutionScale else ""
+            setField(accuracyOptions, t.accuracyLevel, { accuracySelected = it }, { accuracyCustom = it })
+            setField(scaleOptions, t.resolutionScale, { scaleSelected = it }, { scaleCustom = it })
 
             asyncShaderEnabled = t.asyncShaderEnabled
 
-            frameSkipSelected =
-                if (frameSkipOptions.contains(t.frameSkip)) t.frameSkip else otherLabel
-            frameSkipCustom =
-                if (frameSkipSelected == otherLabel) t.frameSkip else ""
+            setField(frameSkipOptions, t.frameSkip, { frameSkipSelected = it }, { frameSkipCustom = it })
 
             resW = t.resolutionWidth
             resH = t.resolutionHeight
@@ -568,6 +737,34 @@ private fun EditStatusContent(
             fpsTo = t.fpsMax
 
             mediaLinkText = t.mediaLink
+
+            setField(audioDriverOptions, t.audioDriver, { audioDriverSelected = it }, { audioDriverCustom = it })
+            downloadSizeText = t.downloadSize
+            setField(wineVersionOptions, t.wineVersion, { wineVersionSelected = it }, { wineVersionCustom = it })
+            setField(winlatorForkOptions, t.winlatorFork, { winlatorForkSelected = it }, { winlatorForkCustom = it })
+            setField(turnipOptions, t.turnipVersion, { turnipVersionSelected = it }, { turnipVersionCustom = it })
+            setField(controllerOptions, t.controllerSupport, { controllerSupportSelected = it }, { controllerSupportCustom = it })
+            setField(box64PresetOptions, t.box64Preset, { box64PresetSelected = it }, { box64PresetCustom = it })
+            setField(box64VersionOptions, t.box64Version, { box64VersionSelected = it }, { box64VersionCustom = it })
+
+            startupSelectionText = t.startupSelection
+            envVariablesText = t.envVariables
+
+            setField(vkd3dOptions, t.vkd3dVersion, { vkd3dVersionSelected = it }, { vkd3dVersionCustom = it })
+            setField(dxvkOptions, t.dxvkVersion, { dxvkVersionSelected = it }, { dxvkVersionCustom = it })
+            setField(anisotropicOptions, t.anisotropicFilter, { anisotropicFilterSelected = it }, { anisotropicFilterCustom = it })
+            setField(aaOptions, t.antiAliasing, { antiAliasingSelected = it }, { antiAliasingCustom = it })
+            setField(vsyncOptions, t.vSync, { vSyncSelected = it }, { vSyncCustom = it })
+            setField(windowFilterOptions, t.windowAdaptingFilter, { windowAdaptingFilterSelected = it }, { windowAdaptingFilterCustom = it })
+
+            spuThreadsText = t.spuThreads
+            spuBlockSizeText = t.spuBlockSize
+            dockedMode = t.dockedMode
+
+            setField(audioEngineOptions, t.audioOutputEngine, { audioOutputEngineSelected = it }, { audioOutputEngineCustom = it })
+            diskShaderCache = t.diskShaderCache
+            reactiveFlushing = t.reactiveFlushing
+            setField(cpuBackendOptions, t.cpuBackend, { cpuBackendSelected = it }, { cpuBackendCustom = it })
         }
     }
 
@@ -663,46 +860,16 @@ private fun EditStatusContent(
     }
 
     fun applyPreset(preset: TestPreset) {
-        if (androidVersions.contains(preset.androidVersion)) {
-            androidVersionSelected = preset.androidVersion
-            androidVersionCustom = ""
-        } else {
-            androidVersionSelected = otherLabel
-            androidVersionCustom = preset.androidVersion
-        }
+        setField(androidVersions, preset.androidVersion, { androidVersionSelected = it }, { androidVersionCustom = it })
 
         deviceModelText = preset.deviceModel
         gpuModelText = preset.gpuModel
         driverVersionText = preset.driverVersion
 
-        // RAM
-        if (ramOptions.contains(preset.ram)) {
-            ramSelected = preset.ram
-            ramCustom = ""
-        } else {
-            ramSelected = otherLabel
-            ramCustom = preset.ram
-        }
+        setField(ramOptions, preset.ram, { ramSelected = it }, { ramCustom = it })
+        setField(wrapperOptions, preset.wrapper, { wrapperSelected = it }, { wrapperCustom = it })
+        setField(perfModeOptions, preset.performanceMode, { perfModeSelected = it }, { perfModeCustom = it })
 
-        // Wrapper
-        if (wrapperOptions.contains(preset.wrapper)) {
-            wrapperSelected = preset.wrapper
-            wrapperCustom = ""
-        } else {
-            wrapperSelected = otherLabel
-            wrapperCustom = preset.wrapper
-        }
-
-        // Performance Mode
-        if (perfModeOptions.contains(preset.performanceMode)) {
-            perfModeSelected = preset.performanceMode
-            perfModeCustom = ""
-        } else {
-            perfModeSelected = otherLabel
-            perfModeCustom = preset.performanceMode
-        }
-
-        // App
         if (appOptions.contains(preset.app)) {
             selectedApp = preset.app
         } else {
@@ -710,38 +877,17 @@ private fun EditStatusContent(
         }
         appVersionText = preset.appVersion
 
-        // Emu settings
         try {
             selectedEmuBuild = EmulatorBuildType.valueOf(preset.emulatorBuildType)
         } catch (_: Exception) {
             selectedEmuBuild = EmulatorBuildType.STABLE
         }
 
-        if (accuracyOptions.contains(preset.accuracy)) {
-            accuracySelected = preset.accuracy
-            accuracyCustom = ""
-        } else {
-            accuracySelected = otherLabel
-            accuracyCustom = preset.accuracy
-        }
-
-        if (scaleOptions.contains(preset.scale)) {
-            scaleSelected = preset.scale
-            scaleCustom = ""
-        } else {
-            scaleSelected = otherLabel
-            scaleCustom = preset.scale
-        }
+        setField(accuracyOptions, preset.accuracy, { accuracySelected = it }, { accuracyCustom = it })
+        setField(scaleOptions, preset.scale, { scaleSelected = it }, { scaleCustom = it })
 
         asyncShaderEnabled = preset.asyncShader
-
-        if (frameSkipOptions.contains(preset.frameSkip)) {
-            frameSkipSelected = preset.frameSkip
-            frameSkipCustom = ""
-        } else {
-            frameSkipSelected = otherLabel
-            frameSkipCustom = preset.frameSkip
-        }
+        setField(frameSkipOptions, preset.frameSkip, { frameSkipSelected = it }, { frameSkipCustom = it })
     }
 
     if (showSearchDialog) {
@@ -1182,6 +1328,30 @@ private fun EditStatusContent(
                         label = stringResource(R.string.label_driver_version),
                         singleLine = true
                     )
+                    if (isPcPlatform) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_turnip_version),
+                            options = turnipOptions,
+                            selected = turnipVersionSelected,
+                            onSelectedChange = { turnipVersionSelected = it },
+                            customValue = turnipVersionCustom,
+                            onCustomChange = { turnipVersionCustom = it },
+                            customPlaceholder = stringResource(R.string.label_turnip_version),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_audio_driver),
+                            options = audioDriverOptions,
+                            selected = audioDriverSelected,
+                            onSelectedChange = { audioDriverSelected = it },
+                            customValue = audioDriverCustom,
+                            onCustomChange = { audioDriverCustom = it },
+                            customPlaceholder = stringResource(R.string.label_audio_driver),
+                            otherLabel = otherLabel
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
@@ -1228,6 +1398,111 @@ private fun EditStatusContent(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                if (isPcPlatform) {
+                    CyberSectionCard(title = stringResource(R.string.section_pc_settings)) {
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_winlator_fork),
+                            options = winlatorForkOptions,
+                            selected = winlatorForkSelected,
+                            onSelectedChange = { winlatorForkSelected = it },
+                            customValue = winlatorForkCustom,
+                            onCustomChange = { winlatorForkCustom = it },
+                            customPlaceholder = stringResource(R.string.label_winlator_fork),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_wine_version),
+                            options = wineVersionOptions,
+                            selected = wineVersionSelected,
+                            onSelectedChange = { wineVersionSelected = it },
+                            customValue = wineVersionCustom,
+                            onCustomChange = { wineVersionCustom = it },
+                            customPlaceholder = stringResource(R.string.label_wine_version),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_box64_preset),
+                            options = box64PresetOptions,
+                            selected = box64PresetSelected,
+                            onSelectedChange = { box64PresetSelected = it },
+                            customValue = box64PresetCustom,
+                            onCustomChange = { box64PresetCustom = it },
+                            customPlaceholder = stringResource(R.string.label_box64_preset),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_box64_version),
+                            options = box64VersionOptions,
+                            selected = box64VersionSelected,
+                            onSelectedChange = { box64VersionSelected = it },
+                            customValue = box64VersionCustom,
+                            onCustomChange = { box64VersionCustom = it },
+                            customPlaceholder = stringResource(R.string.label_box64_version),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_vkd3d_version),
+                            options = vkd3dOptions,
+                            selected = vkd3dVersionSelected,
+                            onSelectedChange = { vkd3dVersionSelected = it },
+                            customValue = vkd3dVersionCustom,
+                            onCustomChange = { vkd3dVersionCustom = it },
+                            customPlaceholder = stringResource(R.string.label_vkd3d_version),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_dxvk_version),
+                            options = dxvkOptions,
+                            selected = dxvkVersionSelected,
+                            onSelectedChange = { dxvkVersionSelected = it },
+                            customValue = dxvkVersionCustom,
+                            onCustomChange = { dxvkVersionCustom = it },
+                            customPlaceholder = stringResource(R.string.label_dxvk_version),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        CyberOutlinedTextField(
+                            value = envVariablesText,
+                            onValueChange = { envVariablesText = it },
+                            label = stringResource(R.string.label_env_variables),
+                            singleLine = false,
+                            maxLines = 3
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        CyberOutlinedTextField(
+                            value = startupSelectionText,
+                            onValueChange = { startupSelectionText = it },
+                            label = stringResource(R.string.label_startup_selection),
+                            singleLine = true
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
+                if (isPs3Platform) {
+                    CyberSectionCard(title = stringResource(R.string.section_ps3_settings)) {
+                        CyberOutlinedTextField(
+                            value = spuThreadsText,
+                            onValueChange = { spuThreadsText = it },
+                            label = stringResource(R.string.label_spu_threads),
+                            singleLine = true
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        CyberOutlinedTextField(
+                            value = spuBlockSizeText,
+                            onValueChange = { spuBlockSizeText = it },
+                            label = stringResource(R.string.label_spu_block_size),
+                            singleLine = true
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
                 CyberSectionCard(title = stringResource(R.string.section_app_game)) {
 
                     BottomSheetSelectorField(
@@ -1254,6 +1529,27 @@ private fun EditStatusContent(
                         label = stringResource(R.string.label_game_version_build),
                         singleLine = true
                     )
+
+                    if (isPcPlatform) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        CyberOutlinedTextField(
+                            value = downloadSizeText,
+                            onValueChange = { downloadSizeText = it },
+                            label = stringResource(R.string.label_download_size),
+                            singleLine = true
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_controller_support),
+                            options = controllerOptions,
+                            selected = controllerSupportSelected,
+                            onSelectedChange = { controllerSupportSelected = it },
+                            customValue = controllerSupportCustom,
+                            onCustomChange = { controllerSupportCustom = it },
+                            customPlaceholder = stringResource(R.string.label_controller_support),
+                            otherLabel = otherLabel
+                        )
+                    }
                 }
 
                 if (currentStatus == WorkStatus.NOT_WORKING) {
@@ -1384,6 +1680,132 @@ private fun EditStatusContent(
                             customValue = frameSkipCustom,
                             onCustomChange = { frameSkipCustom = it },
                             customPlaceholder = stringResource(R.string.label_frame_skip),
+                            otherLabel = otherLabel
+                        )
+                    }
+                }
+
+                if (isSwitchPlatform) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    CyberSectionCard(title = stringResource(R.string.section_switch_settings)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Switch(
+                                checked = dockedMode,
+                                onCheckedChange = { dockedMode = it },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = CyberYellow,
+                                    checkedTrackColor = CyberRed.copy(alpha = 0.35f),
+                                    checkedBorderColor = CyberRed,
+                                    uncheckedThumbColor = CyberGray,
+                                    uncheckedTrackColor = CyberDark,
+                                    uncheckedBorderColor = CyberYellow.copy(alpha = 0.35f)
+                                )
+                            )
+                            Spacer(Modifier.width(10.dp))
+                            Text(stringResource(R.string.label_docked_mode), color = CyberYellow, fontFamily = FontFamily.Monospace)
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Switch(
+                                checked = diskShaderCache,
+                                onCheckedChange = { diskShaderCache = it },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = CyberYellow,
+                                    checkedTrackColor = CyberRed.copy(alpha = 0.35f),
+                                    checkedBorderColor = CyberRed,
+                                    uncheckedThumbColor = CyberGray,
+                                    uncheckedTrackColor = CyberDark,
+                                    uncheckedBorderColor = CyberYellow.copy(alpha = 0.35f)
+                                )
+                            )
+                            Spacer(Modifier.width(10.dp))
+                            Text(stringResource(R.string.label_disk_shader_cache), color = CyberYellow, fontFamily = FontFamily.Monospace)
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Switch(
+                                checked = reactiveFlushing,
+                                onCheckedChange = { reactiveFlushing = it },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = CyberYellow,
+                                    checkedTrackColor = CyberRed.copy(alpha = 0.35f),
+                                    checkedBorderColor = CyberRed,
+                                    uncheckedThumbColor = CyberGray,
+                                    uncheckedTrackColor = CyberDark,
+                                    uncheckedBorderColor = CyberYellow.copy(alpha = 0.35f)
+                                )
+                            )
+                            Spacer(Modifier.width(10.dp))
+                            Text(stringResource(R.string.label_reactive_flushing), color = CyberYellow, fontFamily = FontFamily.Monospace)
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_cpu_backend),
+                            options = cpuBackendOptions,
+                            selected = cpuBackendSelected,
+                            onSelectedChange = { cpuBackendSelected = it },
+                            customValue = cpuBackendCustom,
+                            onCustomChange = { cpuBackendCustom = it },
+                            customPlaceholder = stringResource(R.string.label_cpu_backend),
+                            otherLabel = otherLabel
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_audio_output_engine),
+                            options = audioEngineOptions,
+                            selected = audioOutputEngineSelected,
+                            onSelectedChange = { audioOutputEngineSelected = it },
+                            customValue = audioOutputEngineCustom,
+                            onCustomChange = { audioOutputEngineCustom = it },
+                            customPlaceholder = stringResource(R.string.label_audio_output_engine),
+                            otherLabel = otherLabel
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                CyberSectionCard(title = stringResource(R.string.section_graphics_advanced)) {
+                    BottomSheetDropdownWithCustom(
+                        label = stringResource(R.string.label_vsync),
+                        options = vsyncOptions,
+                        selected = vSyncSelected,
+                        onSelectedChange = { vSyncSelected = it },
+                        customValue = vSyncCustom,
+                        onCustomChange = { vSyncCustom = it },
+                        customPlaceholder = stringResource(R.string.label_vsync),
+                        otherLabel = otherLabel
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    BottomSheetDropdownWithCustom(
+                        label = stringResource(R.string.label_anisotropic_filtering),
+                        options = anisotropicOptions,
+                        selected = anisotropicFilterSelected,
+                        onSelectedChange = { anisotropicFilterSelected = it },
+                        customValue = anisotropicFilterCustom,
+                        onCustomChange = { anisotropicFilterCustom = it },
+                        customPlaceholder = stringResource(R.string.label_anisotropic_filtering),
+                        otherLabel = otherLabel
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    BottomSheetDropdownWithCustom(
+                        label = stringResource(R.string.label_anti_aliasing),
+                        options = aaOptions,
+                        selected = antiAliasingSelected,
+                        onSelectedChange = { antiAliasingSelected = it },
+                        customValue = antiAliasingCustom,
+                        onCustomChange = { antiAliasingCustom = it },
+                        customPlaceholder = stringResource(R.string.label_anti_aliasing),
+                        otherLabel = otherLabel
+                    )
+                    if (isSwitchPlatform) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BottomSheetDropdownWithCustom(
+                            label = stringResource(R.string.label_window_adapting_filter),
+                            options = windowFilterOptions,
+                            selected = windowAdaptingFilterSelected,
+                            onSelectedChange = { windowAdaptingFilterSelected = it },
+                            customValue = windowAdaptingFilterCustom,
+                            onCustomChange = { windowAdaptingFilterCustom = it },
+                            customPlaceholder = stringResource(R.string.label_window_adapting_filter),
                             otherLabel = otherLabel
                         )
                     }
@@ -1605,7 +2027,32 @@ private fun EditStatusContent(
                                     fpsMin = fpsFrom.trim(),
                                     fpsMax = fpsTo.trim(),
 
-                                    mediaLink = mediaLinkText.trim()
+                                    mediaLink = mediaLinkText.trim(),
+
+                                    // New Fields Passing
+                                    audioDriver = audioDriverFinal,
+                                    downloadSize = downloadSizeText.trim(),
+                                    wineVersion = wineVersionFinal,
+                                    winlatorFork = winlatorForkFinal,
+                                    turnipVersion = turnipVersionFinal,
+                                    controllerSupport = controllerSupportFinal,
+                                    box64Preset = box64PresetFinal,
+                                    box64Version = box64VersionFinal,
+                                    startupSelection = startupSelectionText.trim(),
+                                    envVariables = envVariablesText.trim(),
+                                    vkd3dVersion = vkd3dVersionFinal,
+                                    dxvkVersion = dxvkVersionFinal,
+                                    anisotropicFilter = anisotropicFilterFinal,
+                                    antiAliasing = antiAliasingFinal,
+                                    vSync = vSyncFinal,
+                                    windowAdaptingFilter = windowAdaptingFilterFinal,
+                                    spuThreads = spuThreadsText.trim(),
+                                    spuBlockSize = spuBlockSizeText.trim(),
+                                    dockedMode = dockedMode,
+                                    audioOutputEngine = audioOutputEngineFinal,
+                                    diskShaderCache = diskShaderCache,
+                                    reactiveFlushing = reactiveFlushing,
+                                    cpuBackend = cpuBackendFinal
                                 )
                             )
                         },

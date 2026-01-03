@@ -339,7 +339,7 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="common_save">Зберегти</string>
     <string name="common_cancel">Скасувати</string>
     <string name="auth_error_empty_name">Вкажіть імʼя</string>
-    <string name="label_driver_version">Версія драйвера GPU</string>
+    <string name="label_driver_version">Модель GPU</string>
     <string name="common_or">або</string>
     <string name="profile_menu_section">Мої розділи</string>
     <string name="profile_guest_hint_tests">Зберігайте історію пройдених тестів</string>
@@ -349,12 +349,40 @@ GamesLibrary — це легкий каталог для відстеження 
 
 
 
-    <string name="details_data_source_igdb">Дані взяті з API IGDB</string>
-    <string name="button_presets">Пресети</string>
-    <string name="title_presets">Збережені пресети</string>
-    <string name="no_presets_found">Пресети ще не знайдено.</string>
-    <string name="preset_applied">Пресет успішно застосовано.</string>
-    <string name="label_save_as_preset">Зберегти конфігурацію як новий пресет</string>
+
+
+
+    <string name="label_audio_driver">Аудіодрайвер</string>
+    <string name="label_download_size">Розмір завантаження</string>
+    <string name="label_wine_version">Версія Wine</string>
+    <string name="label_winlator_fork">Форк Winlator</string>
+    <string name="label_turnip_version">Версія драйвера Turnip</string>
+    <string name="label_controller_support">Підтримка контролера</string>
+    <string name="label_box64_preset">Пресет Box64</string>
+    <string name="label_box64_version">Версія Box64</string>
+    <string name="label_startup_selection">Вибір запуску</string>
+    <string name="label_env_variables">Змінні середовища</string>
+    <string name="label_vkd3d_version">Версія VKD3D</string>
+    <string name="label_dxvk_version">Версія DXVK</string>
+
+    <string name="label_anisotropic_filtering">Анізотропна фільтрація</string>
+    <string name="label_anti_aliasing">Згладжування</string>
+    <string name="label_vsync">Вертикальна синхронізація</string>
+    <string name="label_window_adapting_filter">Фільтр адаптації вікна</string>
+
+    <string name="label_spu_threads">Потоки SPU</string>
+    <string name="label_spu_block_size">Розмір блоку SPU</string>
+
+    <string name="label_docked_mode">Режим док-станції</string>
+    <string name="label_audio_output_engine">Аудіо рушій виводу</string>
+    <string name="label_disk_shader_cache">Дисковий кеш шейдерів</string>
+    <string name="label_reactive_flushing">Реактивне очищення</string>
+    <string name="label_cpu_backend">CPU бекенд</string>
+
+    <string name="section_pc_settings">Налаштування PC / Winlator / GameHub</string>
+    <string name="section_ps3_settings">Налаштування PS3</string>
+    <string name="section_switch_settings">Налаштування Switch</string>
+    <string name="section_graphics_advanced">Розширені налаштування графіки</string>
 
 
 </resources>

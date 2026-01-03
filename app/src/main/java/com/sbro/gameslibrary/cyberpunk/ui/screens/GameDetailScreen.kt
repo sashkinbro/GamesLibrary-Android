@@ -40,9 +40,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.AspectRatio
+import androidx.compose.material.icons.filled.Audiotrack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DeveloperBoard
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -56,6 +61,7 @@ import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -500,7 +506,6 @@ fun GameDetailScreen(
                                             modifier = Modifier.padding(vertical = 8.dp),
                                             color = CyberYellow.copy(alpha = 0.12f)
                                         )
-
                                         InfoRowModern(Icons.Filled.Smartphone, latestTest.testedDeviceModel)
                                         InfoRowModern(
                                             Icons.Filled.Android,
@@ -514,6 +519,41 @@ fun GameDetailScreen(
                                         Spacer(Modifier.height(4.dp))
                                         InfoRowModern(Icons.Filled.Settings, latestTest.testedWrapper)
                                         InfoRowModern(Icons.Filled.Speed, latestTest.testedPerformanceMode)
+
+                                        if (latestTest.winlatorFork.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Build, "Fork: ${latestTest.winlatorFork}")
+                                        }
+                                        if (latestTest.wineVersion.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Code, "Wine: ${latestTest.wineVersion}")
+                                        }
+                                        if (latestTest.box64Preset.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Memory, "Box64: ${latestTest.box64Preset}")
+                                        }
+                                        if (latestTest.audioDriver.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Audiotrack, "Audio: ${latestTest.audioDriver}")
+                                        }
+                                        if (latestTest.downloadSize.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Download, "Size: ${latestTest.downloadSize}")
+                                        }
+                                        if (latestTest.dockedMode) {
+                                            InfoRowModern(Icons.Filled.Tv, "Docked Mode")
+                                        }
+                                        if (latestTest.audioOutputEngine.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Audiotrack, "Audio: ${latestTest.audioOutputEngine}")
+                                        }
+                                        if (latestTest.cpuBackend.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Memory, "CPU: ${latestTest.cpuBackend}")
+                                        }
+                                        if (latestTest.spuThreads.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.DeveloperBoard, "SPU Threads: ${latestTest.spuThreads}")
+                                        }
+                                        if (latestTest.spuBlockSize.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.DeveloperBoard, "SPU Block: ${latestTest.spuBlockSize}")
+                                        }
+
+                                        if (latestTest.anisotropicFilter.isNotBlank()) {
+                                            InfoRowModern(Icons.Filled.Settings, "Aniso: ${latestTest.anisotropicFilter}")
+                                        }
 
                                         Spacer(Modifier.height(4.dp))
                                         if (

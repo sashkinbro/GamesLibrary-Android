@@ -90,7 +90,31 @@ data class GameTestResult(
     val authorName: String? = null,
     val authorEmail: String? = null,
     val authorPhotoUrl: String? = null,
-    val fromAccount: Boolean = false
+    val fromAccount: Boolean = false,
+    val audioDriver: String = "",
+    val downloadSize: String = "",
+    val wineVersion: String = "",
+    val winlatorFork: String = "",
+    val turnipVersion: String = "",
+    val controllerSupport: String = "",
+    val box64Preset: String = "",
+    val box64Version: String = "",
+    val startupSelection: String = "",
+    val envVariables: String = "",
+    val vkd3dVersion: String = "",
+    val dxvkVersion: String = "",
+    val anisotropicFilter: String = "",
+    val antiAliasing: String = "",
+    val vSync: String = "",
+    val windowAdaptingFilter: String = "",
+    val spuThreads: String = "",
+    val spuBlockSize: String = "",
+    val dockedMode: Boolean = false,
+    val audioOutputEngine: String = "",
+    val diskShaderCache: Boolean = false,
+    val reactiveFlushing: Boolean = false,
+    val cpuBackend: String = ""
+
 ) : Serializable
 
 data class Game(

@@ -39,9 +39,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.AspectRatio
+import androidx.compose.material.icons.filled.Audiotrack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DeveloperBoard
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -55,6 +60,7 @@ import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -455,110 +461,153 @@ fun GameDetailScreen(
                                 shrinkVertically(tween(200))
                     ) {
                         Surface(
-                        shape = RoundedCornerShape(18.dp),
-                        color = cs.surfaceVariant.copy(alpha = 0.5f),
-                        border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            shape = RoundedCornerShape(18.dp),
+                            color = cs.surfaceVariant.copy(alpha = 0.5f),
+                            border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth()
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                WorkStatusBadge(status = latestStatus)
 
-                                Column(horizontalAlignment = Alignment.End) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        latestTest?.testedDateFormatted
-                                            ?.takeIf { it.isNotBlank() }
-                                            ?.let { date ->
-                                                Text(
-                                                    text = date,
-                                                    style = MaterialTheme.typography.labelMedium,
-                                                    color = cs.onSurfaceVariant
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    WorkStatusBadge(status = latestStatus)
+
+                                    Column(horizontalAlignment = Alignment.End) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            latestTest?.testedDateFormatted
+                                                ?.takeIf { it.isNotBlank() }
+                                                ?.let { date ->
+                                                    Text(
+                                                        text = date,
+                                                        style = MaterialTheme.typography.labelMedium,
+                                                        color = cs.onSurfaceVariant
+                                                    )
+                                                }
+
+                                            if (latestTest?.fromAccount == true) {
+                                                Spacer(Modifier.width(6.dp))
+                                                Icon(
+                                                    Icons.Filled.CheckCircle,
+                                                    contentDescription = "From account",
+                                                    tint = cs.primary,
+                                                    modifier = Modifier.size(20.dp)
                                                 )
                                             }
+                                        }
 
-                                        if (latestTest?.fromAccount == true) {
-                                            Spacer(Modifier.width(6.dp))
-                                            Icon(
-                                                Icons.Filled.CheckCircle,
-                                                contentDescription = "From account",
-                                                tint = cs.primary,
-                                                modifier = Modifier.size(20.dp)
+                                        val authorName = latestTest?.authorName?.trim().orEmpty()
+                                        if (latestTest?.fromAccount == true && authorName.isNotBlank()) {
+                                            Spacer(Modifier.height(2.dp))
+                                            Text(
+                                                text = authorName,
+                                                style = MaterialTheme.typography.labelMedium,
+                                                fontWeight = FontWeight.SemiBold,
+                                                color = cs.onSurface.copy(alpha = 0.85f)
                                             )
                                         }
                                     }
+                                }
 
-                                    val authorName = latestTest?.authorName?.trim().orEmpty()
-                                    if (latestTest?.fromAccount == true && authorName.isNotBlank()) {
-                                        Spacer(Modifier.height(2.dp))
-                                        Text(
-                                            text = authorName,
-                                            style = MaterialTheme.typography.labelMedium,
-                                            fontWeight = FontWeight.SemiBold,
-                                            color = cs.onSurface.copy(alpha = 0.85f)
+                                if (latestTest != null) {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(vertical = 8.dp),
+                                        color = cs.onSurface.copy(alpha = 0.1f)
+                                    )
+
+                                    // Base Info
+                                    InfoRowModern(Icons.Filled.Smartphone, latestTest.testedDeviceModel)
+                                    InfoRowModern(
+                                        Icons.Filled.Android,
+                                        if (latestTest.testedAndroidVersion.isNotBlank())
+                                            "Android ${latestTest.testedAndroidVersion}"
+                                        else ""
+                                    )
+                                    InfoRowModern(Icons.Filled.Memory, latestTest.testedGpuModel)
+                                    InfoRowModern(Icons.Filled.Storage, latestTest.testedRam)
+
+                                    Spacer(Modifier.height(4.dp))
+                                    InfoRowModern(Icons.Filled.Settings, latestTest.testedWrapper)
+                                    InfoRowModern(Icons.Filled.Speed, latestTest.testedPerformanceMode)
+                                    if (latestTest.winlatorFork.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Build, "Fork: ${latestTest.winlatorFork}")
+                                    }
+                                    if (latestTest.wineVersion.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Code, "Wine: ${latestTest.wineVersion}")
+                                    }
+                                    if (latestTest.box64Preset.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Memory, "Box64 Preset: ${latestTest.box64Preset}")
+                                    }
+                                    if (latestTest.audioDriver.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Audiotrack, "Audio: ${latestTest.audioDriver}")
+                                    }
+                                    if (latestTest.turnipVersion.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Settings, "Turnip: ${latestTest.turnipVersion}")
+                                    }
+                                    if (latestTest.downloadSize.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Download, "Size: ${latestTest.downloadSize}")
+                                    }
+                                    if (latestTest.dockedMode) {
+                                        InfoRowModern(Icons.Filled.Tv, "Docked Mode")
+                                    }
+                                    if (latestTest.audioOutputEngine.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Audiotrack, "Audio: ${latestTest.audioOutputEngine}")
+                                    }
+                                    if (latestTest.cpuBackend.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Memory, "CPU Backend: ${latestTest.cpuBackend}")
+                                    }
+                                    if (latestTest.diskShaderCache) {
+                                        InfoRowModern(Icons.Filled.Storage, "Disk Shader Cache")
+                                    }
+                                    if (latestTest.spuThreads.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.DeveloperBoard, "SPU Threads: ${latestTest.spuThreads}")
+                                    }
+                                    if (latestTest.spuBlockSize.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.DeveloperBoard, "SPU Block: ${latestTest.spuBlockSize}")
+                                    }
+                                    if (latestTest.vSync.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Settings, "VSync: ${latestTest.vSync}")
+                                    }
+                                    if (latestTest.anisotropicFilter.isNotBlank()) {
+                                        InfoRowModern(Icons.Filled.Settings, "Anisotropic: ${latestTest.anisotropicFilter}")
+                                    }
+
+                                    Spacer(Modifier.height(4.dp))
+                                    if (
+                                        latestTest.resolutionWidth.isNotBlank() &&
+                                        latestTest.resolutionHeight.isNotBlank()
+                                    ) {
+                                        InfoRowModern(
+                                            Icons.Filled.AspectRatio,
+                                            "${latestTest.resolutionWidth}×${latestTest.resolutionHeight}"
                                         )
                                     }
-                                }
-                            }
-
-                            if (latestTest != null) {
-                                HorizontalDivider(
-                                    modifier = Modifier.padding(vertical = 8.dp),
-                                    color = cs.onSurface.copy(alpha = 0.1f)
-                                )
-
-                                InfoRowModern(Icons.Filled.Smartphone, latestTest.testedDeviceModel)
-                                InfoRowModern(
-                                    Icons.Filled.Android,
-                                    if (latestTest.testedAndroidVersion.isNotBlank())
-                                        "Android ${latestTest.testedAndroidVersion}"
-                                    else ""
-                                )
-                                InfoRowModern(Icons.Filled.Memory, latestTest.testedGpuModel)
-                                InfoRowModern(Icons.Filled.Storage, latestTest.testedRam)
-
-                                Spacer(Modifier.height(4.dp))
-                                InfoRowModern(Icons.Filled.Settings, latestTest.testedWrapper)
-                                InfoRowModern(Icons.Filled.Speed, latestTest.testedPerformanceMode)
-
-                                Spacer(Modifier.height(4.dp))
-                                if (
-                                    latestTest.resolutionWidth.isNotBlank() &&
-                                    latestTest.resolutionHeight.isNotBlank()
-                                ) {
-                                    InfoRowModern(
-                                        Icons.Filled.AspectRatio,
-                                        "${latestTest.resolutionWidth}×${latestTest.resolutionHeight}"
+                                    if (
+                                        latestTest.fpsMin.isNotBlank() &&
+                                        latestTest.fpsMax.isNotBlank()
+                                    ) {
+                                        InfoRowModern(
+                                            Icons.Filled.MonitorHeart,
+                                            "FPS: ${latestTest.fpsMin} – ${latestTest.fpsMax}"
+                                        )
+                                    }
+                                } else {
+                                    Text(
+                                        text = stringResource(R.string.details_no_tests),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = cs.onSurface.copy(alpha = 0.6f),
+                                        modifier = Modifier.padding(top = 8.dp)
                                     )
                                 }
-                                if (
-                                    latestTest.fpsMin.isNotBlank() &&
-                                    latestTest.fpsMax.isNotBlank()
-                                ) {
-                                    InfoRowModern(
-                                        Icons.Filled.MonitorHeart,
-                                        "FPS: ${latestTest.fpsMin} – ${latestTest.fpsMax}"
-                                    )
-                                }
-                            } else {
-                                Text(
-                                    text = stringResource(R.string.details_no_tests),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = cs.onSurface.copy(alpha = 0.6f),
-                                    modifier = Modifier.padding(top = 8.dp)
-                                )
                             }
                         }
-                    }
 
-                }
+                    }
 
                     Spacer(modifier = Modifier.height(24.dp))
 
