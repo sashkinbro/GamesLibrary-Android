@@ -17,8 +17,8 @@ You can also submit test results to keep your own testing history and help other
 </string>
     <string name="about_feature_fast_title">Fast library browsing</string>
     <string name="about_feature_fast_body">Smooth search, sorting and favorites to keep your collection organized.</string>
-    <string name="about_feature_anonymous_title">Anonymous results sharing</string>
-    <string name="about_feature_anonymous_body">Contribute test reports without accounts or personal data.</string>
+    <string name="about_feature_anonymous_title">Results sharing</string>
+    <string name="about_feature_anonymous_body">Contribute test reports.</string>
     <string name="about_feature_open_title">Open ecosystem</string>
     <string name="about_feature_open_body">Built to work with different emulators and platforms in one place.</string>
     <string name="about_link_site_title">Developer website</string>
@@ -27,7 +27,7 @@ You can also submit test results to keep your own testing history and help other
     <string name="about_link_github_title">GitHub repository</string>
     <string name="about_link_github_subtitle">Source code &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Developed by Sashkin Apps © 2025</string>
+    <string name="about_footer">Developed by Sashkin Apps © 2025-2026</string>
 
     <string name="about_toggle_cyberpunk">Modern theme</string>
     <string name="title_ps_games_library">Games</string>

@@ -17,8 +17,8 @@ GamesLibrary — это лёгкий каталог для отслеживан�
 </string>
     <string name="about_feature_fast_title">Быстрый просмотр библиотеки</string>
     <string name="about_feature_fast_body">Плавный поиск, сортировка и избранное помогут держать коллекцию в порядке.</string>
-    <string name="about_feature_anonymous_title">Анонимный обмен результатами</string>
-    <string name="about_feature_anonymous_body">Добавляйте отчёты без аккаунтов и личных данных.</string>
+    <string name="about_feature_anonymous_title">Обмен результатами</string>
+    <string name="about_feature_anonymous_body">Добавляйте отчёты.</string>
     <string name="about_feature_open_title">Открытая экосистема</string>
     <string name="about_feature_open_body">Создано для работы с разными эмуляторами и платформами в одном месте.</string>
     <string name="about_link_site_title">Сайт разработчика</string>
@@ -27,9 +27,9 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="about_link_github_title">Репозиторий GitHub</string>
     <string name="about_link_github_subtitle">Исходный код и issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Разработано Sashkin Apps © 2025</string>
+    <string name="about_footer">Разработано Sashkin Apps © 2025-2026</string>
 
-    <string name="about_toggle_cyberpunk">Современная тема</string>
+    <string name="about_toggle_cyberpunk">Игровая тема</string>
     <string name="title_ps_games_library">Игры</string>
     <string name="subtitle_games_count">%1$d игр</string>
     <string name="subtitle_error">Ошибка</string>
