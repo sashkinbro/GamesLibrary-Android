@@ -63,6 +63,7 @@ object Routes {
     const val SPLASH = "splash"
     const val ONBOARDING = "onboarding"
 
+    const val AUTH_GATE = "auth_gate"
     const val AUTH_LOGIN = "auth_login"
     const val AUTH_REGISTER = "auth_register"
     const val AUTH_RESET = "auth_reset"
@@ -326,13 +327,29 @@ fun CyberGamesApp() {
         }
 
         composable(Routes.SPLASH) {
+            val state by profileVm.state.collectAsState()
+
             SplashScreen(
                 hasSeenOnboarding = hasSeenOnboarding,
                 onNavigateNext = { goToOnboarding ->
-                    navController.navigate(
-                        if (goToOnboarding) Routes.ONBOARDING else Routes.MAIN
-                    ) {
-                        popUpTo(Routes.SPLASH) { inclusive = true }
+                    when {
+                        goToOnboarding -> {
+                            navController.navigate(Routes.ONBOARDING) {
+                                popUpTo(Routes.SPLASH) { inclusive = true }
+                            }
+                        }
+
+                        state.user != null -> {
+                            navController.navigate(Routes.MAIN) {
+                                popUpTo(Routes.SPLASH) { inclusive = true }
+                            }
+                        }
+
+                        else -> {
+                            navController.navigate(Routes.AUTH_GATE) {
+                                popUpTo(Routes.SPLASH) { inclusive = true }
+                            }
+                        }
                     }
                 }
             )
@@ -343,11 +360,26 @@ fun CyberGamesApp() {
                 onFinish = {
                     scope.launch {
                         setOnboardingShown(context)
-                        navController.navigate(Routes.MAIN) {
+                        navController.navigate(Routes.AUTH_GATE) {
                             popUpTo(Routes.ONBOARDING) { inclusive = true }
                         }
                     }
                 }
+            )
+        }
+
+        composable(Routes.AUTH_GATE) {
+            val state by profileVm.state.collectAsState()
+
+            AuthGateScreenCyber(
+                user = state.user,
+                onContinueAsGuest = {
+                    navController.navigate(Routes.MAIN) {
+                        popUpTo(Routes.AUTH_GATE) { inclusive = true }
+                    }
+                },
+                onOpenLogin = { navController.navigate(Routes.AUTH_LOGIN) },
+                onOpenRegister = { navController.navigate(Routes.AUTH_REGISTER) }
             )
         }
 
@@ -367,7 +399,6 @@ fun CyberGamesApp() {
             )
         }
 
-        // NEW auth screens
         composable(Routes.AUTH_LOGIN) {
             LoginScreen(
                 viewModel = profileVm,
@@ -375,7 +406,10 @@ fun CyberGamesApp() {
                 onGoRegister = { navController.navigate(Routes.AUTH_REGISTER) },
                 onGoReset = { navController.navigate(Routes.AUTH_RESET) },
                 onLoggedIn = {
-                    navController.popBackStack(Routes.PROFILE, inclusive = false)
+                    navController.navigate(Routes.MAIN) {
+                        popUpTo(Routes.AUTH_GATE) { inclusive = true }
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -390,7 +424,7 @@ fun CyberGamesApp() {
                     }
                 },
                 onRegistered = {
-                    navController.popBackStack(Routes.PROFILE, inclusive = false)
+                    navController.popBackStack()
                 }
             )
         }

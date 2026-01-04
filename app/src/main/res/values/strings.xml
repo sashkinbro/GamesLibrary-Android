@@ -396,4 +396,29 @@ You can also submit anonymous test results to keep your own testing history and 
 
 
 
+
+
+    <string name="login_to_comment">Sign in to leave comments</string>
+    <string name="login_to_save_tests">Sign in to save tests</string>
+
+    <string name="login_required">Sign in</string>
+    <string name="cannot_edit_other_comment">You cannot edit someone else’s comment</string>
+    <string name="toast_auth_required_to_save_test">Sign in to save the test</string>
+    <string name="toast_auth_required_to_comment">Sign in to leave a comment</string>
+
+    <string name="label_auth_required_to_save_test">To save a test, you need to sign in</string>
+    <string name="label_auth_required_to_comment">To leave a comment, you need to sign in</string>
+
+    <string name="auth_gate_title">Sign in</string>
+    <string name="auth_gate_subtitle">Sign in to add tests and comments. Or continue as a guest (view only).</string>
+    <string name="auth_gate_sign_in">Sign in</string>
+    <string name="auth_gate_register">Register</string>
+    <string name="auth_gate_continue_guest">Continue as guest</string>
+    <string name="auth_gate_hint_bottom">Guests can only view content. Adding tests and comments is available after signing in.</string>
+    <string name="auth_gate_guest_caption">View-only mode without the ability to add tests or comments</string>
+    <string name="auth_gate_benefit_sync">Synchronization</string>
+    <string name="auth_gate_benefit_backup">Backup</string>
+    <string name="auth_gate_benefit_guest">Guest</string>
+
+
 </resources>

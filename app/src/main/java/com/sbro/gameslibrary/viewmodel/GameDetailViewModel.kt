@@ -288,7 +288,14 @@ class GameDetailViewModel : ViewModel() {
         text: String
     ) {
         val user = currentUser.value
-        val isAcc = user != null
+        if (user == null) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_to_comment),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
 
         val data = hashMapOf(
             "gameId" to gameId,
@@ -298,11 +305,11 @@ class GameDetailViewModel : ViewModel() {
             "createdAt" to Timestamp.now(),
             "authorDevice" to android.os.Build.MODEL,
 
-            "fromAccount" to isAcc,
-            "authorUid" to user?.uid,
-            "authorName" to user?.displayName,
-            "authorEmail" to user?.email,
-            "authorPhotoUrl" to user?.photoUrl?.toString()
+            "fromAccount" to true,
+            "authorUid" to user.uid,
+            "authorName" to user.displayName,
+            "authorEmail" to user.email,
+            "authorPhotoUrl" to user.photoUrl?.toString()
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -329,18 +336,54 @@ class GameDetailViewModel : ViewModel() {
     ) {
         val text = newText.trim()
         if (text.isBlank()) return
+        val user = currentUser.value
+        if (user == null) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_required),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                commentsCollection.document(commentId)
-                    .update(
-                        mapOf(
-                            "text" to text,
-                            "editedAt" to Timestamp.now()
-                        )
+                val user = currentUser.value
+                if (user == null) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.login_required),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    return@launch
+                }
+
+                val docRef = commentsCollection.document(commentId)
+                val snap = docRef.get().await()
+                val authorUid = snap.getString("authorUid")
+
+                if (authorUid != user.uid) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.cannot_edit_other_comment),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    return@launch
+                }
+
+                docRef.update(
+                    mapOf(
+                        "text" to text,
+                        "editedAt" to Timestamp.now()
                     )
-                    .await()
+                ).await()
+
                 currentGameId?.let { loadCommentsForGame(it, showGlobalLoading = false) }
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
@@ -427,6 +470,14 @@ class GameDetailViewModel : ViewModel() {
 
         val currentGameTitle = _game.value?.title.orEmpty()
         val user = currentUser.value
+        if (user == null) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_to_save_tests),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
 
         val newTest = GameTestResult(
             testId = testId,
@@ -465,11 +516,11 @@ class GameDetailViewModel : ViewModel() {
             testedDateFormatted = formattedDate,
             updatedAtMillis = nowMillis,
 
-            authorUid = user?.uid,
-            authorName = user?.displayName,
-            authorEmail = user?.email,
-            authorPhotoUrl = user?.photoUrl?.toString(),
-            fromAccount = user != null,
+            authorUid = user.uid,
+            authorName = user.displayName,
+            authorEmail = user.email,
+            authorPhotoUrl = user.photoUrl?.toString(),
+            fromAccount = true,
             audioDriver = payload.audioDriver,
             downloadSize = payload.downloadSize,
             wineVersion = payload.wineVersion,
@@ -702,7 +753,7 @@ class GameDetailViewModel : ViewModel() {
             "authorName" to user?.displayName,
             "authorEmail" to user?.email,
             "authorPhotoUrl" to user?.photoUrl?.toString(),
-            "fromAccount" to (user != null),
+            "fromAccount" to true,
             "audioDriver" to audioDriver,
             "downloadSize" to downloadSize,
             "wineVersion" to wineVersion,

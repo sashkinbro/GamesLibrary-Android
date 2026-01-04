@@ -390,4 +390,30 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="section_switch_settings">Настройки Switch</string>
     <string name="section_graphics_advanced">Расширенные настройки графики</string>
 
+
+
+
+
+    <string name="login_to_comment">Войдите в аккаунт, чтобы оставлять комментарии</string>
+    <string name="login_to_save_tests">Войдите в аккаунт, чтобы сохранять тесты</string>
+
+    <string name="login_required">Войдите в аккаунт</string>
+    <string name="cannot_edit_other_comment">Нельзя редактировать чужой комментарий</string>
+    <string name="toast_auth_required_to_save_test">Войдите в аккаунт, чтобы сохранить тест</string>
+    <string name="toast_auth_required_to_comment">Войдите в аккаунт, чтобы оставить комментарий</string>
+
+    <string name="label_auth_required_to_save_test">Чтобы сохранить тест — нужно войти в аккаунт</string>
+    <string name="label_auth_required_to_comment">Чтобы оставить комментарий — нужно войти в аккаунт</string>
+
+    <string name="auth_gate_title">Вход</string>
+    <string name="auth_gate_subtitle">Войдите, чтобы добавлять тесты и комментарии. Или продолжите как гость (только просмотр).</string>
+    <string name="auth_gate_sign_in">Войти</string>
+    <string name="auth_gate_register">Зарегистрироваться</string>
+    <string name="auth_gate_continue_guest">Продолжить как гость</string>
+    <string name="auth_gate_hint_bottom">Гость может только просматривать. Добавление тестов и комментариев доступно после входа.</string>
+    <string name="auth_gate_guest_caption">Просмотр без возможности добавлять тесты и комментарии</string>
+    <string name="auth_gate_benefit_sync">Синхронизация</string>
+    <string name="auth_gate_benefit_backup">Резервное копирование</string>
+    <string name="auth_gate_benefit_guest">Гость</string>
+
 </resources>

@@ -164,6 +164,9 @@ fun EditStatusScreen(
 
     val isLoading by viewModel.isLoading.collectAsState()
 
+    val currentUser by viewModel.currentUser.collectAsState()
+    val isLoggedIn = currentUser != null
+
     LaunchedEffect(gameId) {
         viewModel.init(context, gameId)
     }
@@ -203,6 +206,7 @@ fun EditStatusScreen(
         game = game!!,
         testMillis = testMillis,
         devicesState = devicesState,
+        isLoggedIn = isLoggedIn,
         onBack = onBack,
         onSave = { result ->
 
@@ -357,6 +361,7 @@ private fun EditStatusContent(
     game: Game,
     testMillis: Long?,
     devicesState: MyDevicesState,
+    isLoggedIn: Boolean,
     onBack: () -> Unit,
     onSave: (EditDialogResult) -> Unit
 ) {
@@ -1775,6 +1780,15 @@ private fun EditStatusContent(
                 )
             }
 
+            if (!isLoggedIn) {
+                Text(
+                    text = stringResource(R.string.label_auth_required_to_save_test),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -1788,6 +1802,16 @@ private fun EditStatusContent(
                 TextButton(
                     enabled = isFormValid,
                     onClick = {
+
+                        if (!isLoggedIn) {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.toast_auth_required_to_save_test),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@TextButton
+                        }
+
                         if (saveAsPreset) {
                             val newPreset = TestPreset(
                                 name = presetRepo.getNextDefaultName(),

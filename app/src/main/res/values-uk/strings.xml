@@ -385,4 +385,31 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="section_graphics_advanced">Розширені налаштування графіки</string>
 
 
+
+
+
+    <string name="login_to_comment">Увійдіть у акаунт, щоб залишати коментарі</string>
+    <string name="login_to_save_tests">Увійдіть у акаунт, щоб зберігати тести</string>
+
+    <string name="login_required">Увійдіть у акаунт</string>
+    <string name="cannot_edit_other_comment">Не можна редагувати чужий коментар</string>
+    <string name="toast_auth_required_to_save_test">Увійдіть у акаунт, щоб зберегти тест</string>
+    <string name="toast_auth_required_to_comment">Увійдіть у акаунт, щоб залишити коментар</string>
+
+    <string name="label_auth_required_to_save_test">Щоб зберегти тест — потрібно увійти в акаунт</string>
+    <string name="label_auth_required_to_comment">Щоб залишити коментар — потрібно увійти в акаунт</string>
+
+
+    <string name="auth_gate_title">Вхід</string>
+    <string name="auth_gate_subtitle">Увійди, щоб залишати тести та коментарі. Або продовж як гість (тільки перегляд).</string>
+    <string name="auth_gate_sign_in">Увійти</string>
+    <string name="auth_gate_register">Зареєструватися</string>
+    <string name="auth_gate_continue_guest">Продовжити як гість</string>
+    <string name="auth_gate_hint_bottom">Гість може тільки переглядати. Додавання тестів/коментарів доступне після входу.</string>
+    <string name="auth_gate_guest_caption">Перегляд без можливості додавати тести/коментарі</string>
+    <string name="auth_gate_benefit_sync">Синхронізація</string>
+    <string name="auth_gate_benefit_backup">Резервне</string>
+    <string name="auth_gate_benefit_guest">Гість</string>
+
+
 </resources>

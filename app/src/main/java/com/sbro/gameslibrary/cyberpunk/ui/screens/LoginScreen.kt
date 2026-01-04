@@ -49,6 +49,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -90,10 +92,19 @@ fun LoginScreen(
     val context = LocalContext.current
     val scroll = rememberScrollState()
 
+    val state by viewModel.state.collectAsState()
+
     var email by rememberSaveable { mutableStateOf("") }
     var pass by rememberSaveable { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(state.user) {
+        if (state.user != null) {
+            isLoading = false
+            onLoggedIn()
+        }
+    }
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
@@ -108,8 +119,11 @@ fun LoginScreen(
     ) { res ->
         if (res.resultCode == Activity.RESULT_OK) {
             viewModel.handleGoogleResult(context, res.data) {
+                isLoading = false
                 error = it
             }
+        } else {
+            isLoading = false
         }
     }
 
@@ -396,6 +410,8 @@ fun LoginScreen(
                 OutlinedButton(
                     onClick = {
                         safeClick {
+                            isLoading = true
+                            error = null
                             googleLauncher.launch(viewModel.getGoogleSignInIntent(context))
                         }
                     },
