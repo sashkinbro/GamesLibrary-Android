@@ -6,14 +6,14 @@
     <string name="home_button_pc">Ігри ПК</string>
     <string name="home_button_switch">Ігри Nintendo Switch</string>
     <string name="home_hero_title">Погнали!</string>
-    <string name="home_hero_body">Тестуйте ігри, перевіряйте сумісність і діліться анонімними результатами.</string>
+    <string name="home_hero_body">Тестуйте ігри, перевіряйте сумісність і діліться результатами.</string>
     <string name="cd_open_about">Про застосунок</string>
     <string name="about_title">Про застосунок</string>
     <string name="about_subtitle">Версія %1$s (%2$d)</string>
     <string name="about_description">
 GamesLibrary — це легкий каталог для відстеження того, як ігри з інших платформ працюють на Android через емулятори.
 Переглядайте список тайтлів, фільтруйте за платформою та швидко перевіряйте сумісність на своєму пристрої.
-Також ви можете додавати анонімні результати тестів, щоб зберігати власну історію перевірок і допомагати іншим знаходити найкращі налаштування емуляції.
+Також ви можете додавати результати тестів, щоб зберігати власну історію перевірок і допомагати іншим знаходити найкращі налаштування емуляції.
 </string>
     <string name="about_feature_fast_title">Швидкий перегляд бібліотеки</string>
     <string name="about_feature_fast_body">Плавний пошук, сортування та обране допоможуть впорядкувати колекцію.</string>

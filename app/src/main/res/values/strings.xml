@@ -6,14 +6,14 @@
     <string name="home_button_pc">PC games</string>
     <string name="home_button_switch">Nintendo Switch games</string>
     <string name="home_hero_title">Let’s go!</string>
-    <string name="home_hero_body">Test games, check compatibility, and share anonymous results.</string>
+    <string name="home_hero_body">Test games, check compatibility, and share results.</string>
     <string name="cd_open_about">About app</string>
     <string name="about_title">About</string>
     <string name="about_subtitle">Version %1$s (%2$d)</string>
     <string name="about_description">
 GamesLibrary is a lightweight catalog for tracking how games from other platforms run on Android through emulation.
 Browse supported titles, filter by platform, and quickly check compatibility on your device.
-You can also submit anonymous test results to keep your own testing history and help others find the best emulator settings.
+You can also submit test results to keep your own testing history and help others find the best emulator settings.
 </string>
     <string name="about_feature_fast_title">Fast library browsing</string>
     <string name="about_feature_fast_body">Smooth search, sorting and favorites to keep your collection organized.</string>
