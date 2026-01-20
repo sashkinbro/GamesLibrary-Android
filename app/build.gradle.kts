@@ -1,5 +1,6 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.gradle.kotlin.dsl.configure
 import java.util.Properties
-
 
 plugins {
     alias(libs.plugins.android.application)
@@ -15,7 +16,7 @@ val props = Properties().apply {
     }
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "com.sbro.gameslibrary"
     compileSdk {
         version = release(36)
@@ -63,6 +64,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    //noinspection WrongGradleMethod
     kotlin {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
@@ -112,5 +114,4 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.kotlinx.coroutines.play.services)
     implementation(libs.kotlinx.serialization.json)
-    
 }
