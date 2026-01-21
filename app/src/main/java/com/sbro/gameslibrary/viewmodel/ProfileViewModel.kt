@@ -184,6 +184,7 @@ class ProfileViewModel : ViewModel() {
 
     override fun onCleared() {
         favoritesJob?.cancel()
+        authManager.clear()
         super.onCleared()
     }
 }

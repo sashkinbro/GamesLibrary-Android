@@ -217,7 +217,7 @@ class MyTestsViewModel(
 
             val formattedDate = updatedAt?.toDate()?.let { date ->
                 SimpleDateFormat(
-                    "d MMM yyyy • HH:mm",
+                    "d MMM yyyy, HH:mm",
                     Locale.getDefault()
                 ).format(date)
             } ?: ""

@@ -439,4 +439,11 @@ class GameViewModel : ViewModel() {
 
     @Serializable
     private data class GamesCacheDto(val games: List<Game> = emptyList())
+
+    override fun onCleared() {
+        favoritesJob?.cancel()
+        searchJob?.cancel()
+        authManager.clear()
+        super.onCleared()
+    }
 }

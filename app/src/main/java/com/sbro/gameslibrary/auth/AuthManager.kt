@@ -18,6 +18,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.sbro.gameslibrary.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,7 +30,8 @@ class AuthManager(
     private val onLoggedIn: (Context?) -> Unit = {},
     private val onLoggedOut: () -> Unit = {}
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val job = SupervisorJob()
+    private val scope = CoroutineScope(job + Dispatchers.Main)
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val _currentUser = MutableStateFlow(auth.currentUser)
@@ -54,6 +56,11 @@ class AuthManager(
 
     fun setAppContext(ctx: Context) {
         appContext = ctx.applicationContext
+    }
+
+    fun clear() {
+        auth.removeAuthStateListener(authStateListener)
+        job.cancel()
     }
 
     fun getGoogleSignInIntent(context: Context): Intent {

@@ -99,4 +99,9 @@ class MyFavoritesViewModel : ViewModel() {
     fun toggleFavorite(gameId: String) {
         FavoritesRepository.toggleFavorite(gameId)
     }
+
+    override fun onCleared() {
+        authManager.clear()
+        super.onCleared()
+    }
 }

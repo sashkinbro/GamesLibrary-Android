@@ -720,7 +720,7 @@ class GameDetailViewModel : ViewModel() {
         val testId = "${gameId}_${nowMillis}"
 
         val formattedDate = now.toDate().let { date ->
-            val formatter = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
+            val formatter = SimpleDateFormat("d MMM yyyy, HH:mm", Locale.getDefault())
             formatter.format(date)
         }
 
@@ -1149,7 +1149,7 @@ class GameDetailViewModel : ViewModel() {
 
             val formattedDate = updatedAt?.toDate()?.let { date ->
                 val formatter =
-                    SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
+                    SimpleDateFormat("d MMM yyyy, HH:mm", Locale.getDefault())
                 formatter.format(date)
             } ?: ""
 
@@ -1230,5 +1230,11 @@ class GameDetailViewModel : ViewModel() {
         } catch (_: Exception) {
             null
         }
+    }
+
+    override fun onCleared() {
+        favoritesObserveJob?.cancel()
+        authManager.clear()
+        super.onCleared()
     }
 }
