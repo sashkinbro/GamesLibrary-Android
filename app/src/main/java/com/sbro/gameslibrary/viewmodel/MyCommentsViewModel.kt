@@ -256,4 +256,11 @@ class MyCommentsViewModel : ViewModel() {
             }
         }
     }
+
+    override fun onCleared() {
+        commentsJob?.cancel()
+        initJob?.cancel()
+        authManager.clear()
+        super.onCleared()
+    }
 }
