@@ -452,7 +452,7 @@ private fun EditStatusContent(
         phoneDb = loadPhonesFromAssets(context)
     }
 
-    var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
+    var currentStatus by remember { mutableStateOf(WorkStatus.WORKING) }
     val otherLabel = stringResource(R.string.option_other)
     val customLabel = stringResource(R.string.option_custom)
 

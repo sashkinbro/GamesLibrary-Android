@@ -373,7 +373,7 @@ private fun EditStatusContent(
     LaunchedEffect(Unit) {
         phoneDb = loadPhonesFromAssets(context)
     }
-    var currentStatus by remember { mutableStateOf(WorkStatus.UNTESTED) }
+    var currentStatus by remember { mutableStateOf(WorkStatus.WORKING) }
     val otherLabel = stringResource(R.string.option_other)
     val customLabel = stringResource(R.string.option_custom)
     var driverVersionText by remember { mutableStateOf("") }
