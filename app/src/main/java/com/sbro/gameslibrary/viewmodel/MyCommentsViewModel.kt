@@ -22,6 +22,7 @@ class MyCommentsViewModel : ViewModel() {
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val commentsCollection = firestore.collection("testComments")
+    private val gameCommentsCollection = firestore.collection("gameComments")
 
     private val _games = MutableStateFlow(emptyList<Game>())
     val games: StateFlow<List<Game>> = _games.asStateFlow()
@@ -37,10 +38,17 @@ class MyCommentsViewModel : ViewModel() {
     private val _hasLoadedComments = MutableStateFlow(false)
     val hasLoadedComments: StateFlow<Boolean> = _hasLoadedComments.asStateFlow()
 
+    private val _hasMoreComments = MutableStateFlow(true)
+    val hasMoreComments: StateFlow<Boolean> = _hasMoreComments.asStateFlow()
+
+    private val _isLoadingMore = MutableStateFlow(false)
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore.asStateFlow()
+
     private var appContext: Context? = null
 
     private var lastMyCommentsDoc: DocumentSnapshot? = null
-    private val PAGE_SIZE = 100
+    private var lastGameCommentsDoc: DocumentSnapshot? = null
+    private val PAGE_SIZE = 5
 
     private var commentsJob: Job? = null
     private var initJob: Job? = null
@@ -86,6 +94,7 @@ class MyCommentsViewModel : ViewModel() {
     }
 
     fun loadMoreMyComments() {
+        if (_isLoadingMore.value || !_hasMoreComments.value) return
         loadMyCommentsInternal(loadMore = true)
     }
 
@@ -97,6 +106,11 @@ class MyCommentsViewModel : ViewModel() {
                 withContext(Dispatchers.Main) {
                     _hasLoadedComments.value = false
                 }
+                _hasMoreComments.value = true
+                lastMyCommentsDoc = null
+                lastGameCommentsDoc = null
+            } else {
+                _isLoadingMore.value = true
             }
             withContext(Dispatchers.Main) {
                 _isLoading.value = true
@@ -107,11 +121,14 @@ class MyCommentsViewModel : ViewModel() {
                 if (uid == null) {
                     withContext(Dispatchers.Main) {
                         _commentsByTest.value = emptyMap()
+                        _hasMoreComments.value = false
+                        _isLoadingMore.value = false
                     }
                     return@launch
                 }
 
                 if (!loadMore) lastMyCommentsDoc = null
+                if (!loadMore) lastGameCommentsDoc = null
 
                 var q = commentsCollection
                     .whereEqualTo("authorUid", uid)
@@ -151,6 +168,42 @@ class MyCommentsViewModel : ViewModel() {
                     )
                 }
 
+                val gameSnap = gameCommentsCollection
+                    .whereEqualTo("authorUid", uid)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .limit(PAGE_SIZE.toLong())
+                    .let { base ->
+                        if (loadMore && lastGameCommentsDoc != null) {
+                            base.startAfter(lastGameCommentsDoc!!)
+                        } else base
+                    }
+                    .get()
+                    .await()
+
+                if (!gameSnap.isEmpty) {
+                    lastGameCommentsDoc = gameSnap.documents.last()
+                }
+
+                val gameComments = gameSnap.documents.mapNotNull { d ->
+                    val text = d.getString("text") ?: return@mapNotNull null
+
+                    TestComment(
+                        id = d.id,
+                        gameId = d.getString("gameId") ?: "",
+                        testId = "",
+                        testMillis = 0L,
+                        text = text,
+                        authorDevice = d.getString("authorDevice") ?: "",
+                        createdAt = d.getTimestamp("createdAt"),
+
+                        authorUid = d.getString("authorUid"),
+                        authorName = d.getString("authorName"),
+                        authorEmail = d.getString("authorEmail"),
+                        authorPhotoUrl = d.getString("authorPhotoUrl"),
+                        fromAccount = d.getBoolean("fromAccount") ?: false
+                    )
+                }
+
                 val groupedNew = comments
                     .groupBy { c ->
                         c.testId.ifBlank { "legacy_${c.testMillis}" }
@@ -158,6 +211,18 @@ class MyCommentsViewModel : ViewModel() {
                     .mapValues { (_, list) ->
                         list.sortedBy { it.createdAt?.toDate()?.time ?: 0L }
                     }
+                    .toMutableMap()
+
+                val groupedGames = gameComments.groupBy { c ->
+                    "game_${c.gameId}"
+                }.mapValues { (_, list) ->
+                    list.sortedBy { it.createdAt?.toDate()?.time ?: 0L }
+                }
+
+                groupedGames.forEach { (k, v) ->
+                    val existing = groupedNew[k].orEmpty()
+                    groupedNew[k] = existing + v
+                }
 
                 val merged = if (loadMore) {
                     val current = _commentsByTest.value.toMutableMap()
@@ -172,6 +237,8 @@ class MyCommentsViewModel : ViewModel() {
 
                 withContext(Dispatchers.Main) {
                     _commentsByTest.value = merged
+                    _hasMoreComments.value =
+                        snapshot.size() == PAGE_SIZE || gameSnap.size() == PAGE_SIZE
                 }
 
             } catch (_: Exception) {
@@ -183,6 +250,7 @@ class MyCommentsViewModel : ViewModel() {
             } finally {
                 withContext(Dispatchers.Main) {
                     _isLoading.value = false
+                    if (loadMore) _isLoadingMore.value = false
                     if (!loadMore) _hasLoadedComments.value = true
                 }
             }

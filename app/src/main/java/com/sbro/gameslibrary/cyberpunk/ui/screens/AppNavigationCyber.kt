@@ -456,8 +456,12 @@ fun CyberGamesApp() {
         composable(Routes.MY_COMMENTS) {
             MyCommentsScreen(
                 onBack = { navController.popBackStack() },
-                onOpenComment = { gameId, _ ->
-                    navController.navigate(Routes.testHistoryRoute(gameId))
+                onOpenComment = { gameId, testMillis, isGameComment ->
+                    if (isGameComment) {
+                        navController.navigate(Routes.detailsRoute(gameId))
+                    } else {
+                        navController.navigate(Routes.testHistoryRoute(gameId))
+                    }
                 }
             )
         }

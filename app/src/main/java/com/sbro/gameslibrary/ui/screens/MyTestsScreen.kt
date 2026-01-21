@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -33,6 +32,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -59,9 +59,6 @@ import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,23 +86,6 @@ fun MyTestsScreen(
     val background = Brush.verticalGradient(
         listOf(cs.background, cs.surfaceContainer)
     )
-
-    val listState = rememberLazyListState()
-    LaunchedEffect(listState, myTests.size, hasMoreTests, hasLoadedTests) {
-        snapshotFlow { listState.layoutInfo }
-            .map { info ->
-                val lastVisible = info.visibleItemsInfo.lastOrNull()?.index ?: 0
-                val total = info.totalItemsCount
-                lastVisible to total
-            }
-            .distinctUntilChanged()
-            .filter { (lastVisible, total) ->
-                hasLoadedTests && hasMoreTests && total > 0 && lastVisible >= total - 3
-            }
-            .collect {
-                viewModel.loadMoreMyTests()
-            }
-    }
 
     Scaffold(
         containerColor = cs.background,
@@ -182,7 +162,6 @@ fun MyTestsScreen(
         }
 
         LazyColumn(
-            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .background(background)
@@ -209,22 +188,24 @@ fun MyTestsScreen(
             }
 
             item(key = "footer") {
-                Spacer(Modifier.height(6.dp))
                 if (hasMoreTests) {
-                    Box(
-                        Modifier
+                    OutlinedButton(
+                        onClick = { viewModel.loadMoreMyTests() },
+                        enabled = !isLoading,
+                        modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 10.dp),
-                        contentAlignment = Alignment.Center
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         if (isLoading) {
-                            CircularProgressIndicator(modifier = Modifier.size(22.dp))
-                        } else {
-                            Spacer(Modifier.height(22.dp))
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(Modifier.width(8.dp))
                         }
+                        Text(stringResource(R.string.tests_load_more))
                     }
-                } else {
-                    Spacer(Modifier.height(8.dp))
                 }
                 Spacer(
                     modifier = Modifier.windowInsetsBottomHeight(

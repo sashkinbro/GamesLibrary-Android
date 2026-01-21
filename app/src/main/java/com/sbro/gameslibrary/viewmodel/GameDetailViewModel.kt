@@ -35,6 +35,7 @@ class GameDetailViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val testsCollection = firestore.collection("gameTests")
     private val commentsCollection = firestore.collection("testComments")
+    private val gameCommentsCollection = firestore.collection("gameComments")
 
     private val _game = MutableStateFlow<Game?>(null)
     val game = _game.asStateFlow()
@@ -45,6 +46,9 @@ class GameDetailViewModel : ViewModel() {
     private val _isLoadingMoreComments = MutableStateFlow(false)
     val isLoadingMoreComments = _isLoadingMoreComments.asStateFlow()
 
+    private val _gameComments = MutableStateFlow<List<TestComment>>(emptyList())
+    val gameComments = _gameComments.asStateFlow()
+
     private val _commentsByTest =
         MutableStateFlow<Map<String, List<TestComment>>>(emptyMap())
     val commentsByTest = _commentsByTest.asStateFlow()
@@ -53,7 +57,10 @@ class GameDetailViewModel : ViewModel() {
     private var currentGameId: String? = null
 
     private var lastCommentsDoc: DocumentSnapshot? = null
-    private val COMMENTS_PAGE_SIZE = 10
+    private var lastGameCommentDoc: DocumentSnapshot? = null
+    private var lastTestsDoc: DocumentSnapshot? = null
+    private val COMMENTS_PAGE_SIZE = 5
+    private val TESTS_PAGE_SIZE = 5
 
     private var gamesCache: List<Game>? = null
 
@@ -64,6 +71,14 @@ class GameDetailViewModel : ViewModel() {
     val currentUser = authManager.currentUser
 
     private var favoritesObserveJob: Job? = null
+    private val _hasMoreGameComments = MutableStateFlow(true)
+    val hasMoreGameComments = _hasMoreGameComments.asStateFlow()
+
+    private val _isLoadingMoreTests = MutableStateFlow(false)
+    val isLoadingMoreTests = _isLoadingMoreTests.asStateFlow()
+
+    private val _hasMoreTests = MutableStateFlow(true)
+    val hasMoreTests = _hasMoreTests.asStateFlow()
 
     fun init(context: Context, gameId: String) {
         if (appContext == null) {
@@ -79,6 +94,10 @@ class GameDetailViewModel : ViewModel() {
 
         favoritesObserveJob?.cancel()
         favoritesObserveJob = null
+        _hasMoreTests.value = true
+        lastTestsDoc = null
+        lastGameCommentDoc = null
+        _hasMoreGameComments.value = true
 
         viewModelScope.launch {
             loadLocalGame(context, gameId)
@@ -86,8 +105,15 @@ class GameDetailViewModel : ViewModel() {
 
             coroutineScope {
                 val testsDeferred = async { syncTestsForGame(context, gameId) }
-                val commentsDeferred = async {
+                val testCommentsDeferred = async {
                     loadCommentsForGameInternal(
+                        gameId = gameId,
+                        loadMore = false,
+                        showGlobalLoading = false
+                    )
+                }
+                val gameCommentsDeferred = async {
+                    loadGameCommentsInternal(
                         gameId = gameId,
                         loadMore = false,
                         showGlobalLoading = false
@@ -95,7 +121,8 @@ class GameDetailViewModel : ViewModel() {
                 }
 
                 testsDeferred.await()
-                commentsDeferred.await()
+                testCommentsDeferred.await()
+                gameCommentsDeferred.await()
             }
 
             _isLoading.value = false
@@ -141,28 +168,20 @@ class GameDetailViewModel : ViewModel() {
     suspend fun syncTestsForGame(context: Context, gameId: String) {
         try {
             val snap = withContext(Dispatchers.IO) {
-                try {
-                    testsCollection
-                        .whereEqualTo("gameId", gameId)
-                        .orderBy("updatedAt", Query.Direction.DESCENDING)
-                        .get()
-                        .await()
-                } catch (e: Exception) {
-                    val msg = e.message.orEmpty()
-                    if (msg.contains("requires an index", true) ||
-                        msg.contains("FAILED_PRECONDITION", true)
-                    ) {
-                        testsCollection
-                            .whereEqualTo("gameId", gameId)
-                            .get()
-                            .await()
-                    } else throw e
-                }
+                var q = testsCollection
+                    .whereEqualTo("gameId", gameId)
+                    .orderBy("updatedAt", Query.Direction.DESCENDING)
+                    .limit(TESTS_PAGE_SIZE.toLong())
+
+                q.get().await()
             }
 
             val tests = snap.documents.mapNotNull { doc ->
                 doc.toGameTestResult(gameId)
             }.sortedByDescending { it.updatedAtMillis }
+
+            lastTestsDoc = snap.documents.lastOrNull()
+            _hasMoreTests.value = snap.size() == TESTS_PAGE_SIZE
 
             val current = _game.value
             if (current != null) {
@@ -193,6 +212,69 @@ class GameDetailViewModel : ViewModel() {
     fun loadMoreCommentsForGame(gameId: String) {
         viewModelScope.launch {
             loadCommentsForGameInternal(gameId, loadMore = true)
+        }
+    }
+
+    fun loadMoreTestsForGame(gameId: String) {
+        viewModelScope.launch {
+            if (_isLoadingMoreTests.value || !_hasMoreTests.value) return@launch
+            _isLoadingMoreTests.value = true
+            try {
+                val snap = withContext(Dispatchers.IO) {
+                    var q = testsCollection
+                        .whereEqualTo("gameId", gameId)
+                        .orderBy("updatedAt", Query.Direction.DESCENDING)
+                        .limit(TESTS_PAGE_SIZE.toLong())
+
+                    if (lastTestsDoc != null) {
+                        q = q.startAfter(lastTestsDoc!!)
+                    }
+
+                    q.get().await()
+                }
+
+                lastTestsDoc = snap.documents.lastOrNull()
+                _hasMoreTests.value = snap.size() == TESTS_PAGE_SIZE
+
+                val newTests = snap.documents.mapNotNull { d ->
+                    d.toGameTestResult(gameId)
+                }
+
+                if (newTests.isNotEmpty()) {
+                    val current = _game.value
+                    if (current != null) {
+                        val merged = (current.testResults + newTests)
+                            .distinctBy { it.updatedAtMillis }
+                            .sortedByDescending { it.updatedAtMillis }
+                        _game.value = current.copy(testResults = merged)
+                    }
+                }
+            } catch (_: Exception) {
+                _hasMoreTests.value = false
+            } finally {
+                _isLoadingMoreTests.value = false
+            }
+        }
+    }
+
+    fun loadGameComments(gameId: String, showGlobalLoading: Boolean = true) {
+        viewModelScope.launch {
+            loadGameCommentsInternal(
+                gameId = gameId,
+                loadMore = false,
+                showGlobalLoading = showGlobalLoading
+            )
+        }
+    }
+
+    fun loadMoreGameComments(gameId: String) {
+        viewModelScope.launch {
+            if (_isLoadingMoreComments.value || !_hasMoreGameComments.value) return@launch
+            loadGameCommentsInternal(
+                gameId = gameId,
+                loadMore = true,
+                showGlobalLoading = false
+            )
         }
     }
 
@@ -275,6 +357,79 @@ class GameDetailViewModel : ViewModel() {
         }
     }
 
+    private suspend fun loadGameCommentsInternal(
+        gameId: String,
+        loadMore: Boolean,
+        showGlobalLoading: Boolean
+    ) {
+        if (loadMore) {
+            _isLoadingMoreComments.value = true
+        } else if (showGlobalLoading) {
+            _isLoading.value = true
+        }
+
+        if (!loadMore) {
+            _gameComments.value = emptyList()
+            _hasMoreGameComments.value = true
+        }
+
+        try {
+            if (!loadMore) lastGameCommentDoc = null
+
+            val snapshot = withContext(Dispatchers.IO) {
+                var q = gameCommentsCollection
+                    .whereEqualTo("gameId", gameId)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .limit(COMMENTS_PAGE_SIZE.toLong())
+
+                if (loadMore && lastGameCommentDoc != null) {
+                    q = q.startAfter(lastGameCommentDoc!!)
+                }
+
+                q.get().await()
+            }
+
+            if (!snapshot.isEmpty) {
+                lastGameCommentDoc = snapshot.documents.last()
+            }
+            _hasMoreGameComments.value = snapshot.size() == COMMENTS_PAGE_SIZE
+
+            val comments = snapshot.documents.mapNotNull { d ->
+                val text = d.getString("text") ?: return@mapNotNull null
+
+                TestComment(
+                    id = d.id,
+                    gameId = d.getString("gameId") ?: gameId,
+                    testId = "",
+                    testMillis = 0L,
+                    text = text,
+                    authorDevice = d.getString("authorDevice") ?: "",
+                    createdAt = d.getTimestamp("createdAt"),
+                    authorUid = d.getString("authorUid"),
+                    authorName = d.getString("authorName"),
+                    authorEmail = d.getString("authorEmail"),
+                    authorPhotoUrl = d.getString("authorPhotoUrl"),
+                    fromAccount = d.getBoolean("fromAccount") ?: false
+                )
+            }
+
+            val merged = if (loadMore) {
+                (_gameComments.value + comments).distinctBy { it.id }
+            } else comments
+
+            _gameComments.value = merged
+        } catch (e: Exception) {
+            e.printStackTrace()
+            if (!loadMore) _gameComments.value = emptyList()
+            _hasMoreGameComments.value = false
+        } finally {
+            _isLoadingMoreComments.value = false
+            if (!loadMore && showGlobalLoading) {
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun toggleFavorite() {
         val g = _game.value ?: return
         FavoritesRepository.toggleFavorite(g.id)
@@ -316,6 +471,51 @@ class GameDetailViewModel : ViewModel() {
             try {
                 commentsCollection.add(data).await()
                 loadCommentsForGame(gameId, showGlobalLoading = false)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_sync_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun addGameComment(
+        context: Context,
+        gameId: String,
+        text: String
+    ) {
+        val user = currentUser.value
+        if (user == null) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_to_comment),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val data = hashMapOf(
+            "gameId" to gameId,
+            "text" to text.trim(),
+            "createdAt" to Timestamp.now(),
+            "authorDevice" to android.os.Build.MODEL,
+
+            "fromAccount" to true,
+            "authorUid" to user.uid,
+            "authorName" to user.displayName,
+            "authorEmail" to user.email,
+            "authorPhotoUrl" to user.photoUrl?.toString()
+        )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                gameCommentsCollection.add(data).await()
+                loadGameComments(gameId, showGlobalLoading = false)
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
@@ -383,6 +583,62 @@ class GameDetailViewModel : ViewModel() {
                 ).await()
 
                 currentGameId?.let { loadCommentsForGame(it, showGlobalLoading = false) }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_sync_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun editGameComment(
+        context: Context,
+        commentId: String,
+        newText: String
+    ) {
+        val text = newText.trim()
+        if (text.isBlank()) return
+        val user = currentUser.value
+        if (user == null) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_required),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val docRef = gameCommentsCollection.document(commentId)
+                val snap = docRef.get().await()
+                val authorUid = snap.getString("authorUid")
+
+                if (authorUid != user.uid) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.cannot_edit_other_comment),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    return@launch
+                }
+
+                docRef.update(
+                    mapOf(
+                        "text" to text,
+                        "editedAt" to Timestamp.now()
+                    )
+                ).await()
+
+                currentGameId?.let { loadGameComments(it, showGlobalLoading = false) }
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -784,6 +1040,10 @@ class GameDetailViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             currentGameId = gameId
+            lastTestsDoc = null
+            _hasMoreTests.value = true
+            lastGameCommentDoc = null
+            _hasMoreGameComments.value = true
 
             favoritesObserveJob?.cancel()
             favoritesObserveJob = null
@@ -792,15 +1052,23 @@ class GameDetailViewModel : ViewModel() {
             loadLocalGame(context, gameId)
             coroutineScope {
                 val testsDeferred = async { syncTestsForGame(context, gameId) }
-                val commentsDeferred = async {
+                val testCommentsDeferred = async {
                     loadCommentsForGameInternal(
                         gameId = gameId,
                         loadMore = false,
                         showGlobalLoading = false
                     )
                 }
+                val gameCommentsDeferred = async {
+                    loadGameCommentsInternal(
+                        gameId = gameId,
+                        loadMore = false,
+                        showGlobalLoading = false
+                    )
+                }
                 testsDeferred.await()
-                commentsDeferred.await()
+                testCommentsDeferred.await()
+                gameCommentsDeferred.await()
             }
 
             _isLoading.value = false

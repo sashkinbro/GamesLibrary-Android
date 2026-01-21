@@ -37,6 +37,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.AspectRatio
 import androidx.compose.material.icons.filled.Audiotrack
@@ -63,6 +64,7 @@ import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
@@ -71,9 +73,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -135,11 +139,16 @@ fun GameDetailScreen(
     }
 
     val game by viewModel.game.collectAsState()
-    val commentsByTest by viewModel.commentsByTest.collectAsState()
+    val gameComments by viewModel.gameComments.collectAsState()
+    val currentUser by viewModel.currentUser.collectAsState()
+    val hasMoreGameComments by viewModel.hasMoreGameComments.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isLoadingMoreComments by viewModel.isLoadingMoreComments.collectAsState()
 
     var expandedDesc by remember { mutableStateOf(false) }
+    var commentInput by rememberSaveable(gameId) { mutableStateOf("") }
+    var editingComment by remember { mutableStateOf<TestComment?>(null) }
+    var editText by remember { mutableStateOf("") }
 
     if (isLoading && game == null) {
         Box(
@@ -193,9 +202,8 @@ fun GameDetailScreen(
     val latestStatus = g.overallStatus()
     val descText = g.description.ifBlank { stringResource(R.string.no_description) }
 
-    val allCommentsForGame = remember(commentsByTest, gameId) {
-        commentsByTest.values
-            .flatten()
+    val gameCommentsSorted = remember(gameComments, gameId) {
+        gameComments
             .filter { it.gameId == gameId }
             .sortedByDescending { it.createdAt?.toDate()?.time ?: 0L }
     }
@@ -681,7 +689,7 @@ fun GameDetailScreen(
                     Text(
                         text = stringResource(
                             R.string.comments_section_title,
-                            allCommentsForGame.size
+                            gameCommentsSorted.size
                         ),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
@@ -690,7 +698,7 @@ fun GameDetailScreen(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    if (allCommentsForGame.isEmpty()) {
+                    if (gameCommentsSorted.isEmpty()) {
                         Surface(
                             shape = RoundedCornerShape(14.dp),
                             color = cs.surfaceVariant.copy(alpha = 0.45f),
@@ -709,26 +717,78 @@ fun GameDetailScreen(
                             verticalArrangement = Arrangement.spacedBy(10.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            allCommentsForGame.forEach { comment ->
-                                CommentCard(comment)
+                            gameCommentsSorted.forEach { comment ->
+                                CommentCard(
+                                    comment = comment,
+                                    isOwn = comment.authorUid != null &&
+                                            comment.authorUid == currentUser?.uid,
+                                    onEdit = {
+                                        editingComment = comment
+                                        editText = comment.text
+                                    }
+                                )
                             }
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
-                        OutlinedButton(
-                            onClick = { viewModel.loadMoreCommentsForGame(g.id) },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(14.dp),
-                            enabled = !isLoadingMoreComments
-                        ) {
-                            if (isLoadingMoreComments) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(18.dp),
-                                    strokeWidth = 2.dp
-                                )
-                                Spacer(Modifier.width(8.dp))
+                        if (hasMoreGameComments) {
+                            OutlinedButton(
+                                onClick = { viewModel.loadMoreGameComments(g.id) },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(14.dp),
+                                enabled = !isLoadingMoreComments
+                            ) {
+                                if (isLoadingMoreComments) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(18.dp),
+                                        strokeWidth = 2.dp
+                                    )
+                                    Spacer(Modifier.width(8.dp))
+                                }
+                                Text(stringResource(R.string.comments_load_more))
                             }
-                            Text(stringResource(R.string.comments_load_more))
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    if (currentUser == null) {
+                        Text(
+                            text = stringResource(R.string.login_to_comment),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = cs.onSurface.copy(alpha = 0.7f)
+                        )
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            OutlinedTextField(
+                                value = commentInput,
+                                onValueChange = { commentInput = it },
+                                placeholder = { Text(stringResource(R.string.test_comment_hint)) },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(12.dp),
+                                singleLine = false,
+                                maxLines = 4,
+                                textStyle = MaterialTheme.typography.bodyMedium
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            IconButton(
+                                onClick = {
+                                    val text = commentInput.trim()
+                                    if (text.isNotBlank()) {
+                                        viewModel.addGameComment(context, g.id, text)
+                                        commentInput = ""
+                                    }
+                                },
+                                enabled = commentInput.trim().isNotBlank()
+                            ) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.Send,
+                                    contentDescription = stringResource(R.string.cd_send_comment)
+                                )
+                            }
                         }
                     }
 
@@ -779,6 +839,35 @@ fun GameDetailScreen(
                 }
             }
         }
+    }
+
+    if (editingComment != null) {
+        AlertDialog(
+            onDismissRequest = { editingComment = null },
+            title = { Text(stringResource(R.string.edit_comment_title)) },
+            text = {
+                OutlinedTextField(
+                    value = editText,
+                    onValueChange = { editText = it },
+                    minLines = 3,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val c = editingComment!!
+                        viewModel.editGameComment(context, c.id, editText)
+                        editingComment = null
+                    }
+                ) { Text(stringResource(R.string.button_save)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingComment = null }) {
+                    Text(stringResource(R.string.button_cancel))
+                }
+            }
+        )
     }
 }
 
@@ -912,7 +1001,11 @@ private fun TestVideoCard(
 }
 
 @Composable
-private fun CommentCard(comment: TestComment) {
+private fun CommentCard(
+    comment: TestComment,
+    isOwn: Boolean,
+    onEdit: () -> Unit
+) {
     val cs = MaterialTheme.colorScheme
     val context = LocalContext.current
 
@@ -987,12 +1080,27 @@ private fun CommentCard(comment: TestComment) {
                         color = cs.onSurface
                     )
 
-                    if (dateStr.isNotBlank()) {
-                        Text(
-                            text = dateStr,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = cs.onSurface.copy(alpha = 0.7f)
-                        )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (dateStr.isNotBlank()) {
+                            Text(
+                                text = dateStr,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = cs.onSurface.copy(alpha = 0.7f)
+                            )
+                        }
+
+                        if (isOwn) {
+                            IconButton(
+                                onClick = onEdit,
+                                modifier = Modifier.size(34.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Edit,
+                                    contentDescription = null,
+                                    tint = cs.primary
+                                )
+                            }
+                        }
                     }
                 }
 

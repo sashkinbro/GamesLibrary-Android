@@ -276,6 +276,7 @@ También puedes enviar resultados de pruebas para mantener tu propio historial y
     <string name="comments_section_title">Comentarios (%1$d)</string>
     <string name="comments_empty">Aún no hay comentarios</string>
     <string name="comments_load_more">Cargar más comentarios</string>
+    <string name="tests_load_more">Cargar mas pruebas</string>
     <string name="comments_unknown_author">Autor desconocido</string>
     <string name="sort_original">Orden original</string>
     <string name="sort_rating_high">Valoración (alta → baja)</string>

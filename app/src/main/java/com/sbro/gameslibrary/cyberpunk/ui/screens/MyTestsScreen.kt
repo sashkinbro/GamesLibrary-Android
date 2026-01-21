@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,9 +36,6 @@ import com.sbro.gameslibrary.components.Game
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
 import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 
 private val CyberYellow = Color(0xFFFCEE0A)
 private val CyberRed = Color(0xFFFF003C)
@@ -67,21 +63,6 @@ fun MyTestsScreen(
         if (now - lastClickTime.longValue < 450L) return
         lastClickTime.longValue = now
         action()
-    }
-
-    val listState = rememberLazyListState()
-    LaunchedEffect(listState, myTests.size, hasMoreTests, hasLoadedTests) {
-        snapshotFlow { listState.layoutInfo }
-            .map { info ->
-                val lastVisible = info.visibleItemsInfo.lastOrNull()?.index ?: 0
-                val total = info.totalItemsCount
-                lastVisible to total
-            }
-            .distinctUntilChanged()
-            .filter { (lastVisible, total) ->
-                hasLoadedTests && hasMoreTests && total > 0 && lastVisible >= total - 3
-            }
-            .collect { viewModel.loadMoreMyTests() }
     }
 
     Box(
@@ -173,7 +154,6 @@ fun MyTestsScreen(
             )
 
             LazyColumn(
-                state = listState,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(listBackground)
@@ -198,26 +178,36 @@ fun MyTestsScreen(
                 }
 
                 item(key = "footer") {
-                    Spacer(Modifier.height(6.dp))
                     if (hasMoreTests) {
-                        Box(
-                            Modifier
+                        OutlinedButton(
+                            onClick = { viewModel.loadMoreMyTests() },
+                            enabled = !isLoading,
+                            shape = CutCornerShape(topEnd = 12.dp, bottomStart = 12.dp),
+                            border = BorderStroke(
+                                1.dp,
+                                Brush.horizontalGradient(listOf(CyberRed, CyberYellow))
+                            ),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = CyberYellow
+                            ),
+                            modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 10.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
+                                .padding(vertical = 10.dp)
+                            ) {
                             if (isLoading) {
                                 CircularProgressIndicator(
                                     color = CyberYellow,
                                     strokeWidth = 2.dp,
-                                    modifier = Modifier.size(22.dp)
+                                    modifier = Modifier.size(18.dp)
                                 )
-                            } else {
-                                Spacer(Modifier.height(22.dp))
+                                Spacer(Modifier.width(8.dp))
                             }
+                            Text(
+                                stringResource(R.string.tests_load_more).uppercase(),
+                                fontFamily = FontFamily.Monospace
+                            )
                         }
-                    } else {
-                        Spacer(Modifier.height(8.dp))
                     }
                 }
                 item(key = "nav_inset") {

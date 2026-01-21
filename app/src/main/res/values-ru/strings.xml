@@ -276,6 +276,7 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="comments_section_title">Комментарии (%1$d)</string>
     <string name="comments_empty">Комментариев пока нет</string>
     <string name="comments_load_more">Загрузить еще комментарии</string>
+    <string name="tests_load_more">Загрузить больше тестов</string>
     <string name="comments_unknown_author">Неизвестный автор</string>
     <string name="sort_original">Исходный порядок</string>
     <string name="sort_rating_high">Рейтинг (по убыванию)</string>

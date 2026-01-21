@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.AspectRatio
 import androidx.compose.material.icons.filled.Audiotrack
@@ -67,13 +68,17 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -142,11 +147,16 @@ fun GameDetailScreen(
     }
 
     val game by viewModel.game.collectAsState()
-    val commentsByTest by viewModel.commentsByTest.collectAsState()
+    val gameComments by viewModel.gameComments.collectAsState()
+    val currentUser by viewModel.currentUser.collectAsState()
+    val hasMoreGameComments by viewModel.hasMoreGameComments.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isLoadingMoreComments by viewModel.isLoadingMoreComments.collectAsState()
 
     var expandedDesc by remember { mutableStateOf(false) }
+    var commentInput by rememberSaveable(gameId) { mutableStateOf("") }
+    var editingComment by remember { mutableStateOf<TestComment?>(null) }
+    var editText by remember { mutableStateOf("") }
 
     if (isLoading && game == null) {
         Box(
@@ -225,9 +235,8 @@ fun GameDetailScreen(
         }
     }
 
-    val allCommentsForGame = remember(commentsByTest, gameId) {
-        commentsByTest.values
-            .flatten()
+    val gameCommentsSorted = remember(gameComments, gameId) {
+        gameComments
             .filter { it.gameId == gameId }
             .sortedByDescending { it.createdAt?.toDate()?.time ?: 0L }
     }
@@ -663,7 +672,7 @@ fun GameDetailScreen(
                         Text(
                             text = stringResource(
                                 R.string.comments_section_title,
-                                allCommentsForGame.size
+                                gameCommentsSorted.size
                             ).uppercase(),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
@@ -673,7 +682,7 @@ fun GameDetailScreen(
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        if (allCommentsForGame.isEmpty()) {
+                        if (gameCommentsSorted.isEmpty()) {
                             Surface(
                                 shape = RoundedCornerShape(14.dp),
                                 color = CyberDark,
@@ -693,35 +702,103 @@ fun GameDetailScreen(
                                 verticalArrangement = Arrangement.spacedBy(10.dp),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                allCommentsForGame.forEach { comment ->
-                                    CommentCardCyber(comment)
+                                gameCommentsSorted.forEach { comment ->
+                                    CommentCardCyber(
+                                        comment = comment,
+                                        isOwn = comment.authorUid != null &&
+                                                comment.authorUid == currentUser?.uid,
+                                        onEdit = {
+                                            editingComment = comment
+                                            editText = comment.text
+                                        }
+                                    )
                                 }
                             }
 
                             Spacer(modifier = Modifier.height(12.dp))
-                            OutlinedButton(
-                                onClick = { viewModel.loadMoreCommentsForGame(g.id) },
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(14.dp),
-                                enabled = !isLoadingMoreComments,
-                                colors = ButtonDefaults.outlinedButtonColors(
-                                    contentColor = CyberYellow,
-                                    containerColor = Color.Transparent
-                                ),
-                                border = BorderStroke(1.dp, CyberYellow.copy(alpha = 0.35f))
-                            ) {
-                                if (isLoadingMoreComments) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(18.dp),
-                                        strokeWidth = 2.dp,
-                                        color = CyberYellow
+                            if (hasMoreGameComments) {
+                                OutlinedButton(
+                                    onClick = { viewModel.loadMoreGameComments(g.id) },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(14.dp),
+                                    enabled = !isLoadingMoreComments,
+                                    colors = ButtonDefaults.outlinedButtonColors(
+                                        contentColor = CyberYellow,
+                                        containerColor = Color.Transparent
+                                    ),
+                                    border = BorderStroke(1.dp, CyberYellow.copy(alpha = 0.35f))
+                                ) {
+                                    if (isLoadingMoreComments) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(18.dp),
+                                            strokeWidth = 2.dp,
+                                            color = CyberYellow
+                                        )
+                                        Spacer(Modifier.width(8.dp))
+                                    }
+                                    Text(
+                                        stringResource(R.string.comments_load_more).uppercase(),
+                                        fontFamily = FontFamily.Monospace
                                     )
-                                    Spacer(Modifier.width(8.dp))
                                 }
-                                Text(
-                                    stringResource(R.string.comments_load_more).uppercase(),
-                                    fontFamily = FontFamily.Monospace
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        if (currentUser == null) {
+                            Text(
+                                text = stringResource(R.string.login_to_comment).uppercase(),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = CyberYellow.copy(alpha = 0.7f),
+                                fontFamily = FontFamily.Monospace
+                            )
+                        } else {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                OutlinedTextField(
+                                    value = commentInput,
+                                    onValueChange = { commentInput = it },
+                                    placeholder = {
+                                        Text(
+                                            stringResource(R.string.test_comment_hint).uppercase(),
+                                            fontFamily = FontFamily.Monospace
+                                        )
+                                    },
+                                    modifier = Modifier.weight(1f),
+                                    singleLine = false,
+                                    maxLines = 4,
+                                    shape = CutCornerShape(topEnd = 12.dp, bottomStart = 12.dp),
+                                    textStyle = MaterialTheme.typography.bodyMedium.copy(
+                                        fontFamily = FontFamily.Monospace
+                                    ),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedBorderColor = CyberYellow,
+                                        unfocusedBorderColor = CyberYellow.copy(alpha = 0.35f),
+                                        focusedTextColor = Color.White,
+                                        unfocusedTextColor = Color.White,
+                                        cursorColor = CyberYellow
+                                    )
                                 )
+                                Spacer(Modifier.width(8.dp))
+                                IconButton(
+                                    onClick = {
+                                        val text = commentInput.trim()
+                                        if (text.isNotBlank()) {
+                                            viewModel.addGameComment(context, g.id, text)
+                                            commentInput = ""
+                                        }
+                                    },
+                                    enabled = commentInput.trim().isNotBlank()
+                                ) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.Send,
+                                        contentDescription = stringResource(R.string.cd_send_comment),
+                                        tint = if (commentInput.trim().isNotBlank()) CyberYellow else CyberGray
+                                    )
+                                }
                             }
                         }
 
@@ -773,6 +850,65 @@ fun GameDetailScreen(
                 }
             }
         }
+    }
+
+    if (editingComment != null) {
+        AlertDialog(
+            onDismissRequest = { editingComment = null },
+            containerColor = CyberDark,
+            tonalElevation = 0.dp,
+            shape = CutCornerShape(topEnd = 14.dp, bottomStart = 14.dp),
+            title = {
+                Text(
+                    stringResource(R.string.edit_comment_title).uppercase(),
+                    color = CyberYellow,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Black,
+                    letterSpacing = 1.sp
+                )
+            },
+            text = {
+                OutlinedTextField(
+                    value = editText,
+                    onValueChange = { editText = it },
+                    minLines = 3,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = CutCornerShape(topEnd = 10.dp, bottomStart = 10.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = CyberYellow,
+                        unfocusedBorderColor = CyberYellow.copy(alpha = 0.35f),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        cursorColor = CyberYellow
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val c = editingComment!!
+                        viewModel.editGameComment(context, c.id, editText)
+                        editingComment = null
+                    }
+                ) {
+                    Text(
+                        stringResource(R.string.button_save).uppercase(),
+                        color = CyberYellow,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Black
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingComment = null }) {
+                    Text(
+                        stringResource(R.string.button_cancel).uppercase(),
+                        color = Color.White.copy(alpha = 0.85f),
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
+            }
+        )
     }
 }
 
@@ -942,7 +1078,11 @@ private fun TestVideoCardCyber(
 }
 
 @Composable
-private fun CommentCardCyber(comment: TestComment) {
+private fun CommentCardCyber(
+    comment: TestComment,
+    isOwn: Boolean,
+    onEdit: () -> Unit
+) {
     val context = LocalContext.current
 
     val dateStr = remember(comment.createdAt) {
@@ -1017,13 +1157,27 @@ private fun CommentCardCyber(comment: TestComment) {
                         fontFamily = FontFamily.Monospace
                     )
 
-                    if (dateStr.isNotBlank()) {
-                        Text(
-                            text = dateStr,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = CyberYellow.copy(alpha = 0.7f),
-                            fontFamily = FontFamily.Monospace
-                        )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (dateStr.isNotBlank()) {
+                            Text(
+                                text = dateStr,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = CyberYellow.copy(alpha = 0.7f),
+                                fontFamily = FontFamily.Monospace
+                            )
+                        }
+                        if (isOwn) {
+                            IconButton(
+                                onClick = onEdit,
+                                modifier = Modifier.size(34.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Edit,
+                                    contentDescription = null,
+                                    tint = CyberYellow
+                                )
+                            }
+                        }
                     }
                 }
 

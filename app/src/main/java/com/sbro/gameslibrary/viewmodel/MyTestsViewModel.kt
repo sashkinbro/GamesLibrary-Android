@@ -57,7 +57,7 @@ class MyTestsViewModel(
     private var loadJob: Job? = null
     private var lastDoc: DocumentSnapshot? = null
 
-    private val PAGE_SIZE = 100
+    private val PAGE_SIZE = 5
 
     private var authListener: AuthStateListener? = null
 

@@ -276,6 +276,7 @@ You can also submit test results to keep your own testing history and help other
     <string name="comments_section_title">Comments (%1$d)</string>
     <string name="comments_empty">No comments yet</string>
     <string name="comments_load_more">Load more comments</string>
+    <string name="tests_load_more">Load more tests</string>
     <string name="comments_unknown_author">Unknown author</string>
     <string name="sort_original">Original order</string>
     <string name="sort_rating_high">Rating (high → low)</string>

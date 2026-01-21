@@ -37,6 +37,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -72,7 +73,7 @@ import java.util.Locale
 @Composable
 fun MyCommentsScreen(
     onBack: () -> Unit,
-    onOpenComment: (gameId: String, testMillis: Long) -> Unit,
+    onOpenComment: (gameId: String, testMillis: Long, isGameComment: Boolean) -> Unit,
     viewModel: MyCommentsViewModel = viewModel()
 ) {
     val cs = MaterialTheme.colorScheme
@@ -83,6 +84,8 @@ fun MyCommentsScreen(
     val games by viewModel.games.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val hasLoadedComments by viewModel.hasLoadedComments.collectAsState()
+    val hasMoreComments by viewModel.hasMoreComments.collectAsState()
+    val isLoadingMore by viewModel.isLoadingMore.collectAsState()
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
@@ -204,16 +207,36 @@ fun MyCommentsScreen(
                     comment = c,
                     onClick = {
                         safeClick {
+                            val isGameComment = c.testMillis == 0L && c.testId.isBlank()
                             val millis = when {
                                 c.testMillis != 0L -> c.testMillis
                                 c.testId.contains("_") ->
                                     c.testId.substringAfterLast("_").toLongOrNull() ?: 0L
                                 else -> 0L
                             }
-                            onOpenComment(c.gameId, millis)
+                            onOpenComment(c.gameId, millis, isGameComment)
                         }
                     }
                 )
+            }
+            if (hasMoreComments) {
+                item("load_more") {
+                    OutlinedButton(
+                        onClick = { viewModel.loadMoreMyComments() },
+                        enabled = !isLoadingMore,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        if (isLoadingMore) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(Modifier.width(8.dp))
+                        }
+                        Text(stringResource(R.string.comments_load_more))
+                    }
+                }
             }
             item {
                 Spacer(

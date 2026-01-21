@@ -52,6 +52,8 @@ fun TestHistoryScreen(
     val commentsByTest by viewModel.commentsByTest.collectAsState()
     val currentUser by viewModel.currentUser.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val hasMoreTests by viewModel.hasMoreTests.collectAsState()
+    val isLoadingMoreTests by viewModel.isLoadingMoreTests.collectAsState()
 
     when {
         isLoading -> {
@@ -271,6 +273,27 @@ fun TestHistoryScreen(
                         },
                         onClick = { onOpenTestDetails(test.updatedAtMillis) }
                     )
+                }
+                if (hasMoreTests) {
+                    item("load_more_tests") {
+                        OutlinedButton(
+                            onClick = { viewModel.loadMoreTestsForGame(gameId) },
+                            enabled = !isLoadingMoreTests,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            if (isLoadingMoreTests) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    strokeWidth = 2.dp
+                                )
+                                Spacer(Modifier.width(8.dp))
+                            }
+                            Text(stringResource(R.string.comments_load_more))
+                        }
+                    }
                 }
             }
             item(key = "bottom_inset") {

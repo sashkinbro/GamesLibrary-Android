@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -36,6 +37,8 @@ import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -86,7 +89,7 @@ private val CyberGray = Color(0xFF202020)
 @Composable
 fun MyCommentsScreen(
     onBack: () -> Unit,
-    onOpenComment: (gameId: String, testMillis: Long) -> Unit,
+    onOpenComment: (gameId: String, testMillis: Long, isGameComment: Boolean) -> Unit,
     viewModel: MyCommentsViewModel = viewModel()
 ) {
     MaterialTheme.colorScheme
@@ -97,6 +100,8 @@ fun MyCommentsScreen(
     val games by viewModel.games.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val hasLoadedComments by viewModel.hasLoadedComments.collectAsState()
+    val hasMoreComments by viewModel.hasMoreComments.collectAsState()
+    val isLoadingMore by viewModel.isLoadingMore.collectAsState()
 
     val lastClickTime = remember { mutableLongStateOf(0L) }
     fun safeClick(action: () -> Unit) {
@@ -251,6 +256,7 @@ fun MyCommentsScreen(
                                 comment = c,
                                 onClick = {
                                     safeClick {
+                                        val isGameComment = c.testMillis == 0L && c.testId.isBlank()
                                         val millis = when {
                                             c.testMillis != 0L -> c.testMillis
                                             c.testId.contains("_") ->
@@ -258,10 +264,41 @@ fun MyCommentsScreen(
                                                     ?: 0L
                                             else -> 0L
                                         }
-                                        onOpenComment(c.gameId, millis)
+                                        onOpenComment(c.gameId, millis, isGameComment)
                                     }
                                 }
                             )
+                        }
+                        if (hasMoreComments) {
+                            item("load_more") {
+                                OutlinedButton(
+                                    onClick = { viewModel.loadMoreMyComments() },
+                                    enabled = !isLoadingMore,
+                                    shape = CutCornerShape(topEnd = 12.dp, bottomStart = 12.dp),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        Brush.horizontalGradient(listOf(CyberRed, CyberYellow))
+                                    ),
+                                    colors = ButtonDefaults.outlinedButtonColors(
+                                        containerColor = Color.Transparent,
+                                        contentColor = CyberYellow
+                                    ),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    if (isLoadingMore) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(18.dp),
+                                            strokeWidth = 2.dp,
+                                            color = CyberYellow
+                                        )
+                                        Spacer(Modifier.width(8.dp))
+                                    }
+                                    Text(
+                                        stringResource(R.string.comments_load_more).uppercase(),
+                                        fontFamily = FontFamily.Monospace
+                                    )
+                                }
+                            }
                         }
                         item {
                             Spacer(
