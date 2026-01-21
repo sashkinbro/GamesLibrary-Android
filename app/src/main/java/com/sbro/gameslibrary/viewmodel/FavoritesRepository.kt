@@ -23,6 +23,7 @@ object FavoritesRepository {
 
     private const val PREFS_NAME = "favorites_prefs"
     private const val KEY_IDS = "favorite_ids"
+    private const val KEY_IDS_PREFIX = "favorite_ids_"
 
     private val initLock = Any()
     private val initialized = AtomicBoolean(false)
@@ -108,6 +109,7 @@ object FavoritesRepository {
         if (currentUid != uid) {
             detachCloudListener()
             currentUid = uid
+            _favoriteIds.value = readLocal(uid)
         }
 
         scope.launch { syncFromCloudIfLoggedIn() }
@@ -117,6 +119,8 @@ object FavoritesRepository {
     fun onUserLoggedOut() {
         detachCloudListener()
         currentUid = null
+        // Перемикаємося на гостьовий профіль, щоб не показувати чужі вподобані
+        _favoriteIds.value = readLocal(null)
     }
 
     private fun attachCloudListenerIfLoggedIn() {
@@ -163,7 +167,7 @@ object FavoritesRepository {
                 (snap.get("gameIds") as? List<*>)?.filterIsInstance<String>()?.toSet()
                     ?: emptySet()
 
-            val localIds = _favoriteIds.value
+            val localIds = readLocal(user.uid)
             val merged = (localIds + cloudIds).toSet()
 
             if (merged != localIds) {
@@ -179,7 +183,7 @@ object FavoritesRepository {
 
         } catch (e: FirebaseFirestoreException) {
             if (e.code == FirebaseFirestoreException.Code.NOT_FOUND) {
-                val localIds = _favoriteIds.value
+                val localIds = readLocal(user.uid)
                 try {
                     docRef.set(mapOf("gameIds" to localIds.toList())).await()
                 } catch (_: Exception) {}
@@ -187,14 +191,30 @@ object FavoritesRepository {
         } catch (_: Exception) {}
     }
 
-    private fun readLocal(): Set<String> {
+    private fun readLocal(uid: String? = auth.currentUser?.uid): Set<String> {
         val p = requirePrefs()
-        return p.getStringSet(KEY_IDS, emptySet()) ?: emptySet()
+        val key = storageKeyFor(uid)
+        val scoped = p.getStringSet(key, null)
+
+        // fallback на старий ключ, щоб не загубити дані після міграції
+        if (scoped == null) {
+            val legacy = p.getStringSet(KEY_IDS, emptySet()) ?: emptySet()
+            if (legacy.isNotEmpty()) {
+                writeLocal(legacy, uid)
+            }
+            return legacy
+        }
+        return scoped
     }
 
-    private fun writeLocal(ids: Set<String>) {
+    private fun writeLocal(ids: Set<String>, uid: String? = auth.currentUser?.uid) {
         val p = requirePrefs()
-        p.edit { putStringSet(KEY_IDS, ids) }
+        p.edit { putStringSet(storageKeyFor(uid), ids) }
+    }
+
+    private fun storageKeyFor(uid: String?): String {
+        val safeUid = uid?.ifBlank { null }
+        return if (safeUid == null) "${KEY_IDS_PREFIX}guest" else "$KEY_IDS_PREFIX$safeUid"
     }
 
     private fun requirePrefs(): SharedPreferences {
