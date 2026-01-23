@@ -413,4 +413,12 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="auth_gate_benefit_guest">Гість</string>
 
 
+    <string name="details_data_source_igdb">Дані взято з API IGDB</string>
+    <string name="button_presets">Пресети</string>
+    <string name="title_presets">Збережені пресети</string>
+    <string name="no_presets_found">Пресети поки не знайдено.</string>
+    <string name="preset_applied">Пресет успішно застосовано.</string>
+    <string name="label_save_as_preset">Зберегти конфігурацію як новий пресет</string>
+
+
 </resources>
