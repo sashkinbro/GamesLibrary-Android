@@ -270,7 +270,6 @@ fun GameDetailScreen(
                 ) {
                     Box(
                         modifier = Modifier
-                            .height(500.dp)
                             .fillMaxWidth()
                     ) {
                         AsyncImage(
@@ -279,55 +278,8 @@ fun GameDetailScreen(
                                 .crossfade(true)
                                 .build(),
                             contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .blur(radius = 40.dp)
-                                .background(CyberBlack.copy(alpha = 0.6f))
-                        )
-
-                        AsyncImage(
-                            model = ImageRequest.Builder(context)
-                                .data(g.imageUrl)
-                                .crossfade(true)
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 10.dp)
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.verticalGradient(
-                                        colorStops = arrayOf(
-                                            0.0f to CyberBlack,
-                                            0.15f to CyberBlack.copy(alpha = 0.85f),
-                                            0.3f to Color.Transparent,
-                                            0.7f to Color.Transparent,
-                                            0.9f to CyberBlack.copy(alpha = 0.95f),
-                                            1.0f to CyberBlack
-                                        )
-                                    )
-                                )
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.horizontalGradient(
-                                        colorStops = arrayOf(
-                                            0.0f to CyberBlack,
-                                            0.2f to Color.Transparent,
-                                            0.8f to Color.Transparent,
-                                            1.0f to CyberBlack
-                                        )
-                                    )
-                                )
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
