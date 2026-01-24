@@ -253,6 +253,10 @@ fun CyberTopBar(onOpenAbout: () -> Unit) {
                 )
             },
             actions = {
+                com.sbro.gameslibrary.cyberpunk.ui.components.CyberpunkThemeToggle()
+
+                Spacer(modifier = Modifier.width(8.dp))
+
                 IconButton(onClick = onOpenAbout) {
                     Icon(
                         imageVector = Icons.Filled.Info,

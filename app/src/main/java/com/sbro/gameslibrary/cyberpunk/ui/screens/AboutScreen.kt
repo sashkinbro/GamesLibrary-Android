@@ -252,22 +252,7 @@ fun AboutScreen(
                             color = CyberYellow,
                             modifier = Modifier.weight(1f)
                         )
-                        Switch(
-                            checked = isCyberpunkEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    context.dataStore.edit { prefs ->
-                                        prefs[CYBERPUNK_MODE] = enabled
-                                    }
-                                }
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = CyberYellow,
-                                checkedTrackColor = CyberYellow.copy(alpha = 0.3f),
-                                uncheckedThumbColor = CyberBlue,
-                                uncheckedTrackColor = CyberBlue.copy(alpha = 0.3f)
-                            )
-                        )
+                        com.sbro.gameslibrary.cyberpunk.ui.components.CyberpunkThemeToggle()
                     }
                 }
 

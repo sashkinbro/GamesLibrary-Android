@@ -74,6 +74,10 @@ fun MainScreen(
                             )
                         },
                         actions = {
+                            com.sbro.gameslibrary.cyberpunk.ui.components.CyberpunkThemeToggle()
+
+                            Spacer(modifier = Modifier.width(8.dp))
+                            
                             IconButton(
                                 onClick = { safeClick(onOpenAbout) }
                             ) {
