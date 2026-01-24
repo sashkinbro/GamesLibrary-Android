@@ -29,6 +29,19 @@ GamesLibrary — это лёгкий каталог для отслеживан�
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
     <string name="about_footer">Разработано Sashkin Apps © 2025-2026</string>
 
+    <string name="about_rules_button_title">Правила</string>
+    <string name="about_rules_button_subtitle">Открыть правила сообщества еще раз</string>
+    <string name="rules_title">Правила сообщества</string>
+    <string name="rules_intro">Перед тем как публиковать тесты или комментарии, уважайте команду и других игроков.</string>
+    <string name="rules_point_no_fake_tests">Нельзя выдумывать тесты или публиковать придуманные результаты.</string>
+    <string name="rules_point_no_junk">Никаких оскорбительных, нерелевантных или бессмысленных сообщений.</string>
+    <string name="rules_point_no_fun_uploads">Не сохраняйте тесты "ради прикола" и не спамьте дубликатами.</string>
+    <string name="rules_point_no_abuse">Запрещены оскорбления и травля других пользователей.</string>
+    <string name="rules_point_moderation">Все материалы проходят модерацию. За нарушения — перманентный бан, удаление тестов и комментариев без возможности восстановления аккаунта.</string>
+    <string name="rules_point_respect">Мы развиваем проект вместе — уважайте время и труд других людей.</string>
+    <string name="rules_checkbox_agree">Я прочитал(а) все правила и согласен(на) их соблюдать.</string>
+    <string name="rules_accept_button">Согласен(на)</string>
+
     <string name="about_toggle_cyberpunk">Игровая тема</string>
     <string name="title_ps_games_library">Игры</string>
     <string name="subtitle_games_count">%1$d игр</string>

@@ -11,3 +11,5 @@ val Context.dataStore by preferencesDataStore(name = "settings")
 val CYBERPUNK_MODE = booleanPreferencesKey("cyberpunk_enabled")
 
 val ONBOARDING_SHOWN = booleanPreferencesKey("onboarding_shown")
+
+val COMMUNITY_RULES_ACCEPTED = booleanPreferencesKey("community_rules_accepted")

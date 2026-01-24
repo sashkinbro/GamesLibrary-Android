@@ -28,6 +28,18 @@ You can also submit test results to keep your own testing history and help other
     <string name="about_link_github_subtitle">Source code &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
     <string name="about_footer">Developed by Sashkin Apps © 2025-2026</string>
+    <string name="about_rules_button_title">Rules</string>
+    <string name="about_rules_button_subtitle">Open the community rules again</string>
+    <string name="rules_title">Community rules</string>
+    <string name="rules_intro">Before publishing tests or comments, please respect the team and other players.</string>
+    <string name="rules_point_no_fake_tests">Do not invent tests or post made-up results.</string>
+    <string name="rules_point_no_junk">No offensive, off-topic, or low-effort text.</string>
+    <string name="rules_point_no_fun_uploads">Do not save tests "for fun" or spam duplicate reports.</string>
+    <string name="rules_point_no_abuse">No insulting or harassing other users.</string>
+    <string name="rules_point_moderation">We moderate submissions. Breaking the rules leads to a permanent ban, with all tests and comments removed and no account recovery.</string>
+    <string name="rules_point_respect">We want to grow the project together — respect everyone’s time and work.</string>
+    <string name="rules_checkbox_agree">I have read every rule and agree to follow them.</string>
+    <string name="rules_accept_button">Agree</string>
 
     <string name="about_toggle_cyberpunk">Modern theme</string>
     <string name="title_ps_games_library">Games</string>

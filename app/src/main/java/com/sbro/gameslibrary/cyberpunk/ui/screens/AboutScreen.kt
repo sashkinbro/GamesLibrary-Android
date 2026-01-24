@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.NewReleases
@@ -55,7 +56,8 @@ private val CyberDark = Color(0xFF0F0F0F)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onShowRules: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -267,6 +269,15 @@ fun AboutScreen(
                             )
                         )
                     }
+                }
+
+                SectionCardCyber {
+                    LinkButtonCyber(
+                        icon = Icons.Filled.Gavel,
+                        title = stringResource(R.string.about_rules_button_title),
+                        subtitle = stringResource(R.string.about_rules_button_subtitle),
+                        onClick = onShowRules
+                    )
                 }
 
                 SectionCardCyber {

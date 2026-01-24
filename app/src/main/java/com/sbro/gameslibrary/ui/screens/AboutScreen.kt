@@ -1,7 +1,6 @@
 package com.sbro.gameslibrary.ui.screens
 
 import android.content.Intent
-import android.content.Context
 import android.os.SystemClock
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.NewReleases
@@ -32,20 +32,20 @@ import androidx.compose.material.icons.filled.Security
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Switch
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,20 +57,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import androidx.datastore.preferences.core.edit
+import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.util.CYBERPUNK_MODE
 import com.sbro.gameslibrary.util.dataStore
-import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import androidx.core.net.toUri
-import com.sbro.gameslibrary.R
 
-// DataStore extension and preference key are defined in SettingsDataStore.kt and imported above.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onShowRules: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -253,6 +253,15 @@ fun AboutScreen(
                             }
                         )
                     }
+                }
+
+                SectionCard {
+                    LinkButton(
+                        icon = Icons.Filled.Gavel,
+                        title = stringResource(R.string.about_rules_button_title),
+                        subtitle = stringResource(R.string.about_rules_button_subtitle),
+                        onClick = onShowRules
+                    )
                 }
 
                 SectionCard {
