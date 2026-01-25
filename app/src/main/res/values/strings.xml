@@ -434,4 +434,5 @@ You can also submit test results to keep your own testing history and help other
     <string name="auth_gate_benefit_guest">Guest</string>
 
 
+    <string name="rules_toast_read_first">Please read all rules first</string>
 </resources>

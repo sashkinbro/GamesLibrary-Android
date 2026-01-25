@@ -1,4 +1,5 @@
 <resources>
+    <string name="rules_toast_read_first">Пожалуйста, прочтите сначала все правила</string>
     <string name="app_name">GamesLibrary</string>
     <string name="home_title">Библиотека игр</string>
     <string name="home_button_all_games">Все игры</string>
