@@ -1,0 +1,12 @@
+
+Starting a Gradle Daemon, 2 incompatible and 1 stopped Daemons could not be reused, use --status for details
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Gradle requires JVM 17 or later to run. Your build is currently configured to use JVM 11.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (Powered by Develocity).
+> Get more help at https://help.gradle.org.

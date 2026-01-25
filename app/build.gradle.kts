@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 val props = Properties().apply {
@@ -26,8 +27,8 @@ configure<ApplicationExtension> {
         applicationId = "com.sbro.gameslibrary"
         minSdk = 24
         targetSdk = 36
-        versionCode = 135
-        versionName = "1.5.1"
+        versionCode = 139
+        versionName = "1.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -109,6 +110,8 @@ dependencies {
     // Firebase MAIN modules
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // Google Sign-In
     implementation(libs.play.services.auth)
