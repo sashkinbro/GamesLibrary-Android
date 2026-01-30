@@ -1,24 +1,25 @@
 [versions]
-activityComposeVersion = "1.12.2"
+activityComposeVersion = "1.12.3"
 agp = "9.0.0"
 coilComposeVersion = "2.7.0"
-composeBom = "2026.01.00"
+composeBom = "2026.01.01"
 coreKtxVersion = "1.17.0"
 datastorePreferencesVersion = "1.2.0"
 gsonVersion = "2.13.2"
 kotlin = "2.3.0"
-kotlinxSerializationJsonVersion = "1.9.0"
+kotlinxSerializationJsonVersion = "1.10.0"
 lifecycleRuntimeKtxVersion = "2.10.0"
 lifecycleViewmodelComposeVersion = "2.10.0"
 materialIconsExtendedVersion = "1.7.8"
 firebaseBom = "34.8.0"
 kotlinxCoroutinesPlayServices = "1.10.2"
 googleServices = "4.4.4"
-media3ExoplayerVersion = "1.9.0"
-media3UiVersion = "1.9.0"
-navigationComposeVersion = "2.9.6"
+media3ExoplayerVersion = "1.9.1"
+media3UiVersion = "1.9.1"
+navigationComposeVersion = "2.9.7"
 playServicesAuthVersion = "21.5.0"
 firebaseCrashlyticsPlugin = "3.0.6"
+reviewKtxVersion = "2.0.2"
 
 [libraries]
 androidx-activity-compose-v182 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -46,6 +47,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
+review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "reviewKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

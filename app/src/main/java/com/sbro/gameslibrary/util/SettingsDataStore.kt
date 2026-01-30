@@ -13,3 +13,5 @@ val CYBERPUNK_MODE = booleanPreferencesKey("cyberpunk_enabled")
 val ONBOARDING_SHOWN = booleanPreferencesKey("onboarding_shown")
 
 val COMMUNITY_RULES_ACCEPTED = booleanPreferencesKey("community_rules_accepted")
+
+val APP_LAUNCH_COUNT = androidx.datastore.preferences.core.intPreferencesKey("app_launch_count")

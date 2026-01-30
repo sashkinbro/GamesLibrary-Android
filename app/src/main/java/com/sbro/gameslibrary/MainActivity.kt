@@ -21,6 +21,13 @@ import com.sbro.gameslibrary.ui.screens.PSGamesApp
 import com.sbro.gameslibrary.ui.theme.PSGamesTheme
 import com.sbro.gameslibrary.cyberpunk.ui.screens.CyberGamesApp
 import com.sbro.gameslibrary.cyberpunk.ui.theme.PSGamesThemeCyberpunk
+import androidx.lifecycle.lifecycleScope
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.sbro.gameslibrary.util.APP_LAUNCH_COUNT
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import com.sbro.gameslibrary.viewmodel.FavoritesRepository
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +53,33 @@ class MainActivity : ComponentActivity() {
                 darkScrim = android.graphics.Color.TRANSPARENT
             )
         )
+
+        if (savedInstanceState == null) {
+            lifecycleScope.launch {
+                val prefs = dataStore.data.first()
+                val currentLaunchCount = prefs[APP_LAUNCH_COUNT] ?: 0
+                val newLaunchCount = currentLaunchCount + 1
+
+                dataStore.edit { settings ->
+                    settings[APP_LAUNCH_COUNT] = newLaunchCount
+                }
+
+                if (newLaunchCount == 3) {
+                    delay(5000)
+                    val reviewManager = ReviewManagerFactory.create(this@MainActivity)
+                    val request = reviewManager.requestReviewFlow()
+                    request.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val reviewInfo = task.result
+                            val flow = reviewManager.launchReviewFlow(this@MainActivity, reviewInfo)
+                            flow.addOnCompleteListener { _ ->
+                                // Flow finished
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         setContent {
             val context = LocalContext.current
