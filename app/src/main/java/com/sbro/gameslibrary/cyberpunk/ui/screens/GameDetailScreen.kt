@@ -94,6 +94,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -165,13 +166,11 @@ fun GameDetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(CyberBlack),
-            contentAlignment = Alignment.Center
+                .background(CyberBlack)
         ) {
             CyberGridBackground()
             ScanlinesEffect()
             VignetteEffect()
-            CircularProgressIndicator(color = CyberYellow)
         }
         return
     }
@@ -273,9 +272,18 @@ fun GameDetailScreen(
                 ) {
                     var headerAspectRatio by rememberSaveable(gameId) { mutableStateOf(3f / 4f) }
                     var showHiRes by remember(gameId) { mutableStateOf(false) }
+                    var showBase by remember(gameId) { mutableStateOf(false) }
+                    val baseAlpha by androidx.compose.animation.core.animateFloatAsState(
+                        targetValue = if (showBase) 1f else 0f,
+                        animationSpec = tween(220),
+                        label = "baseCoverAlpha"
+                    )
                     LaunchedEffect(gameId) {
+                        showBase = false
                         showHiRes = false
-                        delay(120)
+                        delay(40)
+                        showBase = true
+                        delay(200)
                         showHiRes = true
                     }
                     Box(
@@ -305,13 +313,14 @@ fun GameDetailScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .background(CyberDark)
+                                    .graphicsLayer(alpha = baseAlpha)
                             )
 
                             if (showHiRes) {
                                 AsyncImage(
                                     model = ImageRequest.Builder(context)
                                         .data(g.imageUrl.replace("t_cover_big_2x", "t_1080p"))
-                                        .crossfade(true)
+                                        .crossfade(600)
                                         .build(),
                                     contentDescription = null,
                                     contentScale = ContentScale.Fit,

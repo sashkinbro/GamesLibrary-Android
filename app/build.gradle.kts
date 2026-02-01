@@ -27,8 +27,8 @@ configure<ApplicationExtension> {
         applicationId = "com.sbro.gameslibrary"
         minSdk = 24
         targetSdk = 36
-        versionCode = 144
-        versionName = "1.5.5"
+        versionCode = 147
+        versionName = "1.5.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
