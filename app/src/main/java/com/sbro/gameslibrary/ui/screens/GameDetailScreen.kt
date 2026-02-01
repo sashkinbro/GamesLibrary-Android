@@ -229,30 +229,60 @@ fun GameDetailScreen(
                     .navigationBarsPadding()
             ) {
                 var headerAspectRatio by rememberSaveable(gameId) { mutableStateOf(3f / 4f) }
+                var showHiRes by remember(gameId) { mutableStateOf(false) }
+                LaunchedEffect(gameId) {
+                    showHiRes = false
+                    delay(120)
+                    showHiRes = true
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(g.imageUrl.replace("t_cover_big_2x", "t_1080p"))
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        onSuccess = { result ->
-                            val width = result.result.drawable.intrinsicWidth
-                            val height = result.result.drawable.intrinsicHeight
-                            if (width > 0 && height > 0) {
-                                headerAspectRatio = width.toFloat() / height.toFloat()
-                            }
-                        },
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(headerAspectRatio)
-                            .background(cs.surfaceVariant)
                             .animateContentSize()
-                    )
+                    ) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(context)
+                                .data(g.imageUrl)
+                                .crossfade(false)
+                                .build(),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            onSuccess = { result ->
+                                val width = result.result.drawable.intrinsicWidth
+                                val height = result.result.drawable.intrinsicHeight
+                                if (width > 0 && height > 0) {
+                                    headerAspectRatio = width.toFloat() / height.toFloat()
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(cs.surfaceVariant)
+                        )
+
+                        if (showHiRes) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(context)
+                                    .data(g.imageUrl.replace("t_cover_big_2x", "t_1080p"))
+                                    .crossfade(true)
+                                    .build(),
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                onSuccess = { result ->
+                                    val width = result.result.drawable.intrinsicWidth
+                                    val height = result.result.drawable.intrinsicHeight
+                                    if (width > 0 && height > 0) {
+                                        headerAspectRatio = width.toFloat() / height.toFloat()
+                                    }
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
                 }
 
                 Column(
