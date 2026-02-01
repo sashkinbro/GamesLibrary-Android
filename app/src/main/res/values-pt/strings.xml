@@ -27,7 +27,7 @@ Você também pode enviar resultados de testes para manter seu próprio históri
     <string name="about_link_github_title">Repositório no GitHub</string>
     <string name="about_link_github_subtitle">Código-fonte &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Desenvolvido por Sashkin Apps © 2025-2026</string>
+    <string name="about_footer">Desenvolvido por Sashkin Apps © 2025–2026</string>
     <string name="about_rules_button_title">Regras</string>
     <string name="about_rules_button_subtitle">Abrir novamente as regras da comunidade</string>
     <string name="rules_title">Regras da comunidade</string>
@@ -45,9 +45,9 @@ Você também pode enviar resultados de testes para manter seu próprio históri
     <string name="title_ps_games_library">Jogos</string>
     <string name="subtitle_games_count">%1$d jogos</string>
     <string name="subtitle_error">Erro</string>
-    <string name="subtitle_loading">Carregando...</string>
+    <string name="subtitle_loading">Carregando…</string>
     <string name="subtitle_select_csv">Pronto</string>
-    <string name="search_hint">Buscar jogo...</string>
+    <string name="search_hint">Buscar jogo…</string>
     <string name="cd_open_search">Abrir busca</string>
     <string name="cd_close_search">Fechar busca</string>
     <string name="cd_open_sort">Abrir menu de ordenação</string>

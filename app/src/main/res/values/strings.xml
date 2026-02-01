@@ -27,7 +27,7 @@ You can also submit test results to keep your own testing history and help other
     <string name="about_link_github_title">GitHub repository</string>
     <string name="about_link_github_subtitle">Source code &amp; issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Developed by Sashkin Apps © 2025-2026</string>
+    <string name="about_footer">Developed by Sashkin Apps © 2025–2026</string>
     <string name="about_rules_button_title">Rules</string>
     <string name="about_rules_button_subtitle">Open the community rules again</string>
     <string name="rules_title">Community rules</string>
@@ -45,9 +45,9 @@ You can also submit test results to keep your own testing history and help other
     <string name="title_ps_games_library">Games</string>
     <string name="subtitle_games_count">%1$d games</string>
     <string name="subtitle_error">Error</string>
-    <string name="subtitle_loading">Loading...</string>
+    <string name="subtitle_loading">Loading…</string>
     <string name="subtitle_select_csv">Ready</string>
-    <string name="search_hint">Search game...</string>
+    <string name="search_hint">Search game…</string>
     <string name="cd_open_search">Open search</string>
     <string name="cd_close_search">Close search</string>
     <string name="cd_open_sort">Open sort menu</string>

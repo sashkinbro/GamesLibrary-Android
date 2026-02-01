@@ -28,7 +28,7 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="about_link_github_title">Репозиторій GitHub</string>
     <string name="about_link_github_subtitle">Вихідний код та issues</string>
     <string name="about_link_github_url">https://github.com/sashkinbro/GamesLibrary-Android</string>
-    <string name="about_footer">Розроблена Sashkin Apps © 2025-2026</string>
+    <string name="about_footer">Розроблена Sashkin Apps © 2025–2026</string>
 
     <string name="about_rules_button_title">Правила</string>
     <string name="about_rules_button_subtitle">Відкрити правила спільноти ще раз</string>
@@ -47,9 +47,9 @@ GamesLibrary — це легкий каталог для відстеження 
     <string name="title_ps_games_library">Ігри</string>
     <string name="subtitle_games_count">%1$d ігор</string>
     <string name="subtitle_error">Помилка</string>
-    <string name="subtitle_loading">Завантаження...</string>
+    <string name="subtitle_loading">Завантаження…</string>
     <string name="subtitle_select_csv">Готово</string>
-    <string name="search_hint">Пошук гри...</string>
+    <string name="search_hint">Пошук гри…</string>
     <string name="cd_open_search">Відкрити пошук</string>
     <string name="cd_close_search">Закрити пошук</string>
     <string name="cd_open_sort">Відкрити меню сортування</string>
