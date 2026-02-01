@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,7 +43,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,15 +61,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.WorkStatus
 import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
+import com.sbro.gameslibrary.util.extractYouTubeId
+import com.sbro.gameslibrary.util.isDirectVideoUrl
+import com.sbro.gameslibrary.util.isImageUrl
+import com.sbro.gameslibrary.util.isValidHttpUrl
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 
 private val CyberYellow = Color(0xFFFCEE0A)
@@ -87,7 +87,8 @@ fun TestHistoryDetailScreen(
     gameId: String,
     testMillis: Long,
     onBack: () -> Unit,
-    onEditTest: (Long) -> Unit
+    onEditTest: (Long) -> Unit,
+    onOpenVideo: (String) -> Unit
 ) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
@@ -458,12 +459,13 @@ fun TestHistoryDetailScreen(
                     )
                 }
 
-                if (test.mediaLink.isNotBlank()) {
+                if (isValidHttpUrl(test.mediaLink)) {
                     Spacer(Modifier.height(14.dp))
                     SectionTitleCyber(stringResource(R.string.label_media_link))
 
                     MediaBlockCyber(
                         url = test.mediaLink,
+                        onOpenVideo = onOpenVideo,
                         onOpenExternal = { safeClick { runCatching { uriHandler.openUri(test.mediaLink) } } }
                     )
                 }
@@ -483,6 +485,7 @@ fun TestHistoryDetailScreen(
 @Composable
 private fun MediaBlockCyber(
     url: String,
+    onOpenVideo: (String) -> Unit,
     onOpenExternal: () -> Unit
 ) {
     val youtubeId = remember(url) { extractYouTubeId(url) }
@@ -493,64 +496,20 @@ private fun MediaBlockCyber(
         youtubeId != null -> {
             MediaPreviewCardCyber(
                 thumbOverride = "https://img.youtube.com/vi/$youtubeId/hqdefault.jpg",
-                label = stringResource(R.string.media_type_youtube),
-                onOpenExternal = onOpenExternal
+                label = stringResource(R.string.media_type_youtube).uppercase(),
+                onOpen = { onOpenVideo(url) }
             )
         }
         isDirectVideo -> {
-            InlineVideoPlayerCyber(url = url)
+            MediaPreviewCardCyber(
+                thumbOverride = null,
+                label = stringResource(R.string.media_type_video).uppercase(),
+                onOpen = { onOpenVideo(url) }
+            )
         }
         isImage -> {
             ImagePreviewCyber(url = url, onOpenExternal = onOpenExternal)
         }
-        else -> {
-            MediaPreviewCardCyber(
-                thumbOverride = null,
-                label = stringResource(R.string.media_type_video),
-                onOpenExternal = onOpenExternal
-            )
-        }
-    }
-}
-
-@Composable
-private fun InlineVideoPlayerCyber(url: String) {
-    val context = LocalContext.current
-
-    val player = remember(url) {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(url))
-            prepare()
-            playWhenReady = false
-        }
-    }
-
-    DisposableEffect(player) {
-        onDispose { player.release() }
-    }
-
-    val shape = CutCornerShape(topEnd = 16.dp, bottomStart = 16.dp)
-
-    Surface(
-        shape = shape,
-        color = CyberDark,
-        border = BorderStroke(1.dp, CyberYellow.copy(alpha = 0.25f)),
-        tonalElevation = 0.dp,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(220.dp)
-    ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(8.dp)),
-            factory = {
-                PlayerView(it).apply {
-                    this.player = player
-                    useController = true
-                }
-            }
-        )
     }
 }
 
@@ -587,7 +546,7 @@ private fun ImagePreviewCyber(url: String, onOpenExternal: () -> Unit) {
 private fun MediaPreviewCardCyber(
     thumbOverride: String?,
     label: String,
-    onOpenExternal: () -> Unit
+    onOpen: () -> Unit
 ) {
     val context = LocalContext.current
     val shape = CutCornerShape(topEnd = 16.dp, bottomStart = 16.dp)
@@ -602,8 +561,8 @@ private fun MediaPreviewCardCyber(
         tonalElevation = 0.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .clickable { onOpenExternal() }
+            .aspectRatio(16f / 9f)
+            .clickable { onOpen() }
     ) {
         Box(Modifier.fillMaxSize()) {
 
@@ -614,8 +573,10 @@ private fun MediaPreviewCardCyber(
                         .crossfade(true)
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(CyberBlack)
                 )
 
                 Box(
@@ -723,28 +684,3 @@ private fun CyberEmptyPanel(text: String) {
 }
 
 
-private fun isImageUrl(url: String): Boolean {
-    val u = url.lowercase()
-    return u.endsWith(".jpg") || u.endsWith(".jpeg") ||
-            u.endsWith(".png") || u.endsWith(".webp") ||
-            u.endsWith(".gif")
-}
-
-private fun isDirectVideoUrl(url: String): Boolean {
-    val u = url.lowercase()
-    return u.endsWith(".mp4") || u.endsWith(".webm") ||
-            u.endsWith(".m3u8") || u.endsWith(".mov")
-}
-
-private fun extractYouTubeId(url: String): String? {
-    val u = url.trim()
-    return when {
-        u.contains("youtu.be/") ->
-            u.substringAfter("youtu.be/").substringBefore("?").substringBefore("&")
-        u.contains("youtube.com/watch") && u.contains("v=") ->
-            u.substringAfter("v=").substringBefore("&").substringBefore("?")
-        u.contains("youtube.com/shorts/") ->
-            u.substringAfter("shorts/").substringBefore("?").substringBefore("&")
-        else -> null
-    }?.takeIf { it.isNotBlank() }
-}

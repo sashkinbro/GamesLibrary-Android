@@ -1,6 +1,7 @@
 package com.sbro.gameslibrary.ui.screens
 
 import android.content.Context
+import android.net.Uri
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,8 @@ import com.sbro.gameslibrary.viewmodel.MyFavoritesViewModel
 import com.sbro.gameslibrary.viewmodel.MyTestsViewModel
 import com.sbro.gameslibrary.viewmodel.PlatformFilter
 import com.sbro.gameslibrary.viewmodel.ProfileViewModel
+import com.sbro.gameslibrary.util.extractYouTubeId
+import com.sbro.gameslibrary.util.isDirectVideoUrl
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -83,6 +86,7 @@ object Routes {
     const val TEST_HISTORY = "test_history/{gameId}"
 
     const val TEST_HISTORY_DETAIL = "test_history_detail/{gameId}/{testId}"
+    const val VIDEO_FULL = "video_full/{type}/{data}"
 
     const val SPLASH = "splash"
     const val ONBOARDING = "onboarding"
@@ -103,6 +107,9 @@ object Routes {
 
     fun testHistoryDetailRoute(gameId: String, testId: String) =
         "test_history_detail/$gameId/$testId"
+
+    fun videoRoute(type: String, data: String) =
+        "video_full/$type/${Uri.encode(data)}"
 }
 
 @Composable
@@ -184,6 +191,22 @@ fun PSGamesApp() {
                     onOpenLastTestDetails = { gameId ->
                         navController.navigate(Routes.detailsRoute(gameId))
                     }
+                )
+            }
+
+            composable(
+                route = Routes.VIDEO_FULL,
+                arguments = listOf(
+                    navArgument("type") { type = NavType.StringType },
+                    navArgument("data") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val type = backStackEntry.arguments?.getString("type").orEmpty()
+                val data = backStackEntry.arguments?.getString("data").orEmpty()
+                VideoFullscreenScreen(
+                    type = type,
+                    data = data,
+                    onBack = { navController.popBackStack() }
                 )
             }
 
@@ -271,6 +294,13 @@ fun PSGamesApp() {
                     },
                     onOpenTestHistory = { id ->
                         navController.navigate(Routes.testHistoryRoute(id))
+                    },
+                    onOpenVideo = { url ->
+                        val ytId = extractYouTubeId(url)
+                        when {
+                            ytId != null -> navController.navigate(Routes.videoRoute("yt", ytId))
+                            isDirectVideoUrl(url) -> navController.navigate(Routes.videoRoute("direct", url))
+                        }
                     },
                     onTestSavedConsumed = {
                         savedStateHandle["test_saved"] = false
@@ -373,6 +403,13 @@ fun PSGamesApp() {
                     onBack = { navController.popBackStack() },
                     onEditTest = { millis ->
                         navController.navigate(Routes.editStatusRoute(gameId, millis))
+                    },
+                    onOpenVideo = { url ->
+                        val ytId = extractYouTubeId(url)
+                        when {
+                            ytId != null -> navController.navigate(Routes.videoRoute("yt", ytId))
+                            isDirectVideoUrl(url) -> navController.navigate(Routes.videoRoute("direct", url))
+                        }
                     }
                 )
             }

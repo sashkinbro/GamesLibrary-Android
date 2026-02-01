@@ -59,8 +59,8 @@ class GameDetailViewModel : ViewModel() {
     private var lastCommentsDoc: DocumentSnapshot? = null
     private var lastGameCommentDoc: DocumentSnapshot? = null
     private var lastTestsDoc: DocumentSnapshot? = null
-    private val COMMENTS_PAGE_SIZE = 5
-    private val TESTS_PAGE_SIZE = 5
+    private val COMMENTS_PAGE_SIZE = 3
+    private val TESTS_PAGE_SIZE = 3
 
     private var gamesCache: List<Game>? = null
 

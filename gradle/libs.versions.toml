@@ -20,6 +20,7 @@ navigationComposeVersion = "2.9.7"
 playServicesAuthVersion = "21.5.0"
 firebaseCrashlyticsPlugin = "3.0.6"
 reviewKtxVersion = "2.0.2"
+youtubePlayerVersion = "13.0.0"
 
 [libraries]
 androidx-activity-compose-v182 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -48,6 +49,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "reviewKtxVersion" }
+youtube-player-core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "youtubePlayerVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

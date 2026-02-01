@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -56,6 +57,7 @@ import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Speed
@@ -92,7 +94,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -103,6 +104,9 @@ import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.components.WorkStatusBadge
+import com.sbro.gameslibrary.util.extractYouTubeId
+import com.sbro.gameslibrary.util.isDirectVideoUrl
+import com.sbro.gameslibrary.util.isValidHttpUrl
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 import kotlinx.coroutines.delay
@@ -119,11 +123,11 @@ fun GameDetailScreen(
     onBack: () -> Unit,
     onOpenEditStatus: (String) -> Unit,
     onOpenTestHistory: (String) -> Unit,
+    onOpenVideo: (String) -> Unit,
     testSaved: Boolean,
     onTestSavedConsumed: () -> Unit
 ) {
     val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
     val cs = MaterialTheme.colorScheme
 
     LaunchedEffect(gameId) {
@@ -224,6 +228,7 @@ fun GameDetailScreen(
                     .verticalScroll(scrollState)
                     .navigationBarsPadding()
             ) {
+                var headerAspectRatio by rememberSaveable(gameId) { mutableStateOf(3f / 4f) }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -234,32 +239,26 @@ fun GameDetailScreen(
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier.fillMaxWidth()
+                        contentScale = ContentScale.Fit,
+                        onSuccess = { result ->
+                            val width = result.result.drawable.intrinsicWidth
+                            val height = result.result.drawable.intrinsicHeight
+                            if (width > 0 && height > 0) {
+                                headerAspectRatio = width.toFloat() / height.toFloat()
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(headerAspectRatio)
+                            .background(cs.surfaceVariant)
+                            .animateContentSize()
                     )
                 }
 
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .offset(y = (-40).dp)
+                        .padding(horizontal = 20.dp, vertical = 16.dp)
                 ) {
-                    if (g.platform.isNotBlank()) {
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = cs.primary.copy(alpha = 0.2f),
-                            border = BorderStroke(1.dp, cs.primary.copy(alpha = 0.5f)),
-                            modifier = Modifier.padding(bottom = 12.dp)
-                        ) {
-                            Text(
-                                text = g.platform,
-                                color = cs.primary,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                            )
-                        }
-                    }
-
                     Text(
                         text = g.title,
                         style = MaterialTheme.typography.displaySmall,
@@ -273,6 +272,30 @@ fun GameDetailScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        if (g.platform.isNotBlank()) {
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = cs.surfaceVariant.copy(alpha = 0.7f),
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        Icons.Filled.Tv,
+                                        null,
+                                        modifier = Modifier.size(14.dp),
+                                        tint = cs.onSurfaceVariant
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    Text(
+                                        g.platform,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = cs.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        }
                         if (g.year.isNotBlank()) {
 
                             Surface(
@@ -292,33 +315,6 @@ fun GameDetailScreen(
                                     Spacer(Modifier.width(6.dp))
                                     Text(
                                         g.year,
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = cs.onSurfaceVariant
-                                    )
-                                }
-                            }
-                        }
-
-                        if (g.genre.isNotBlank()) {
-
-
-                            Surface(
-                                shape = RoundedCornerShape(8.dp),
-                                color = cs.surfaceVariant.copy(alpha = 0.7f),
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        Icons.Filled.Category,
-                                        null,
-                                        modifier = Modifier.size(14.dp),
-                                        tint = cs.onSurfaceVariant
-                                    )
-                                    Spacer(Modifier.width(6.dp))
-                                    Text(
-                                        g.genre,
                                         style = MaterialTheme.typography.labelLarge,
                                         color = cs.onSurfaceVariant
                                     )
@@ -351,6 +347,33 @@ fun GameDetailScreen(
                                         style = MaterialTheme.typography.labelLarge,
                                         color = Color(0xFFFFE082),
                                         fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+
+                        if (g.genre.isNotBlank()) {
+
+
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = cs.surfaceVariant.copy(alpha = 0.7f),
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        Icons.Filled.Category,
+                                        null,
+                                        modifier = Modifier.size(14.dp),
+                                        tint = cs.onSurfaceVariant
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    Text(
+                                        g.genre,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = cs.onSurfaceVariant
                                     )
                                 }
                             }
@@ -604,7 +627,10 @@ fun GameDetailScreen(
                     }
 
                     val videoTests = remember(g.testResults) {
-                        g.testResults.filter { it.mediaLink.isNotBlank() }
+                        g.testResults.filter {
+                            isValidHttpUrl(it.mediaLink) &&
+                                (extractYouTubeId(it.mediaLink) != null || isDirectVideoUrl(it.mediaLink))
+                        }
                     }
 
                     if (videoTests.isNotEmpty()) {
@@ -626,9 +652,7 @@ fun GameDetailScreen(
                             videoTests.forEach { test ->
                                 TestVideoCard(
                                     test = test,
-                                    onOpenVideo = { link ->
-                                        runCatching { uriHandler.openUri(link) }
-                                    }
+                                    onOpenVideo = onOpenVideo
                                 )
                             }
                         }
@@ -703,11 +727,19 @@ fun GameDetailScreen(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     if (currentUser == null) {
-                        Text(
-                            text = stringResource(R.string.login_to_comment),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = cs.onSurface.copy(alpha = 0.7f)
-                        )
+                        Surface(
+                            shape = RoundedCornerShape(14.dp),
+                            color = cs.surfaceVariant.copy(alpha = 0.45f),
+                            border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.08f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = stringResource(R.string.login_to_comment),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = cs.onSurface.copy(alpha = 0.8f),
+                                modifier = Modifier.padding(14.dp)
+                            )
+                        }
                     } else {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -855,7 +887,7 @@ private fun TestVideoCard(
     val context = LocalContext.current
 
     val thumbUrl = remember(test.mediaLink) {
-        youtubeThumbnailUrl(test.mediaLink)
+        extractYouTubeId(test.mediaLink)?.let { "https://img.youtube.com/vi/$it/hqdefault.jpg" }
     }
 
     Surface(
@@ -904,7 +936,7 @@ private fun TestVideoCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(190.dp)
+                    .aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(14.dp))
                     .background(cs.surface)
                     .clickable { onOpenVideo(test.mediaLink) },
@@ -917,8 +949,10 @@ private fun TestVideoCard(
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black)
                     )
                 }
 
@@ -959,11 +993,15 @@ private fun CommentCard(
     val cs = MaterialTheme.colorScheme
     val context = LocalContext.current
 
-    val dateStr = remember(comment.createdAt) {
+    val (dateLine, timeLine) = remember(comment.createdAt) {
         val millis = comment.createdAt?.toDate()?.time ?: 0L
-        if (millis == 0L) "" else {
-            val fmt = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
-            fmt.format(Date(millis))
+        if (millis == 0L) {
+            Pair("", "")
+        } else {
+            val locale = Locale.getDefault()
+            val date = SimpleDateFormat("d MMM yyyy", locale).format(Date(millis))
+            val time = SimpleDateFormat("HH:mm", locale).format(Date(millis))
+            Pair(date, time)
         }
     }
 
@@ -1013,43 +1051,57 @@ private fun CommentCard(
             Spacer(Modifier.width(10.dp))
 
             Column(Modifier.weight(1f)) {
+                val author = comment.authorName?.takeIf { it.isNotBlank() }
+                    ?: comment.authorDevice.takeIf { it.isNotBlank() }
+                    ?: stringResource(R.string.comments_unknown_author)
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val author = comment.authorName?.takeIf { it.isNotBlank() }
-                        ?: comment.authorDevice.takeIf { it.isNotBlank() }
-                        ?: stringResource(R.string.comments_unknown_author)
-
                     Text(
                         text = author,
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
-                        color = cs.onSurface
+                        color = cs.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
                     )
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (dateStr.isNotBlank()) {
+                    if (dateLine.isNotBlank()) {
+                        Spacer(Modifier.width(8.dp))
+                        Column(
+                            horizontalAlignment = Alignment.End,
+                            modifier = Modifier.align(Alignment.Bottom)
+                        ) {
                             Text(
-                                text = dateStr,
+                                text = timeLine,
                                 style = MaterialTheme.typography.labelMedium,
-                                color = cs.onSurface.copy(alpha = 0.7f)
+                                color = cs.onSurface.copy(alpha = 0.75f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = dateLine,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = cs.onSurface.copy(alpha = 0.65f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
+                    }
 
-                        if (isOwn) {
-                            IconButton(
-                                onClick = onEdit,
-                                modifier = Modifier.size(34.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Edit,
-                                    contentDescription = null,
-                                    tint = cs.primary
-                                )
-                            }
+                    if (isOwn) {
+                        IconButton(
+                            onClick = onEdit,
+                            modifier = Modifier.size(34.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = null,
+                                tint = cs.primary
+                            )
                         }
                     }
                 }
@@ -1066,17 +1118,6 @@ private fun CommentCard(
     }
 }
 
-private fun youtubeThumbnailUrl(url: String): String? {
-    val u = url.trim()
-    if (u.isBlank()) return null
-    val shortMatch = Regex("youtu\\.be/([A-Za-z0-9_-]{6,})").find(u)
-    val shortId = shortMatch?.groupValues?.getOrNull(1)
-    val longMatch = Regex("[?&]v=([A-Za-z0-9_-]{6,})").find(u)
-    val longId = longMatch?.groupValues?.getOrNull(1)
-    val id = shortId ?: longId ?: return null
-    return "https://img.youtube.com/vi/$id/hqdefault.jpg"
-}
-
 @Composable
 private fun DataSourceBadgeMaterial(
     modifier: Modifier = Modifier
@@ -1084,19 +1125,19 @@ private fun DataSourceBadgeMaterial(
     val cs = MaterialTheme.colorScheme
 
     Surface(
-        shape = RoundedCornerShape(14.dp),
-        color = cs.surfaceVariant.copy(alpha = 0.55f),
-        border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.10f)),
+        shape = RoundedCornerShape(12.dp),
+        color = cs.surfaceVariant.copy(alpha = 0.35f),
+        border = BorderStroke(1.dp, cs.onSurface.copy(alpha = 0.12f)),
         modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.Android,
+                imageVector = Icons.Filled.Public,
                 contentDescription = null,
-                tint = cs.primary,
+                tint = cs.primary.copy(alpha = 0.85f),
                 modifier = Modifier.size(16.dp)
             )
             Spacer(Modifier.width(8.dp))

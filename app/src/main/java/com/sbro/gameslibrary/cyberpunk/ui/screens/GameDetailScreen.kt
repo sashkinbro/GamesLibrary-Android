@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,6 +58,7 @@ import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Speed
@@ -94,7 +96,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -106,6 +107,9 @@ import coil.request.ImageRequest
 import com.sbro.gameslibrary.R
 import com.sbro.gameslibrary.components.GameTestResult
 import com.sbro.gameslibrary.cyberpunk.components.WorkStatusBadge
+import com.sbro.gameslibrary.util.extractYouTubeId
+import com.sbro.gameslibrary.util.isDirectVideoUrl
+import com.sbro.gameslibrary.util.isValidHttpUrl
 import com.sbro.gameslibrary.viewmodel.GameDetailViewModel
 import com.sbro.gameslibrary.viewmodel.TestComment
 import kotlinx.coroutines.delay
@@ -129,11 +133,11 @@ fun GameDetailScreen(
     onBack: () -> Unit,
     onOpenEditStatus: (String) -> Unit,
     onOpenTestHistory: (String) -> Unit,
+    onOpenVideo: (String) -> Unit,
     testSaved: Boolean,
     onTestSavedConsumed: () -> Unit
 ) {
     val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
 
     LaunchedEffect(gameId) {
         viewModel.init(context, gameId)
@@ -267,6 +271,7 @@ fun GameDetailScreen(
                         .verticalScroll(scrollState)
                         .navigationBarsPadding()
                 ) {
+                    var headerAspectRatio by rememberSaveable(gameId) { mutableStateOf(3f / 4f) }
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -277,38 +282,26 @@ fun GameDetailScreen(
                                 .crossfade(true)
                                 .build(),
                             contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier.fillMaxWidth()
+                            contentScale = ContentScale.Fit,
+                            onSuccess = { result ->
+                                val width = result.result.drawable.intrinsicWidth
+                                val height = result.result.drawable.intrinsicHeight
+                                if (width > 0 && height > 0) {
+                                    headerAspectRatio = width.toFloat() / height.toFloat()
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(headerAspectRatio)
+                                .background(CyberDark)
+                                .animateContentSize()
                         )
                     }
 
                     Column(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .offset(y = (-40).dp)
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp, vertical = 16.dp)
                     ) {
-                        if (g.platform.isNotBlank()) {
-                            Surface(
-                                shape = CutCornerShape(
-                                    topStart = 0.dp,
-                                    topEnd = 10.dp,
-                                    bottomEnd = 0.dp,
-                                    bottomStart = 10.dp
-                                ),
-                                color = CyberGray,
-                                border = BorderStroke(1.dp, CyberRed.copy(alpha = 0.6f)),
-                                modifier = Modifier.padding(bottom = 12.dp)
-                            ) {
-                                Text(
-                                    text = g.platform.uppercase(),
-                                    color = CyberYellow,
-                                    fontFamily = FontFamily.Monospace,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                                )
-                            }
-                        }
-
                         GlitchText(
                             text = g.title.uppercase(),
                             style = MaterialTheme.typography.displaySmall.copy(
@@ -324,19 +317,18 @@ fun GameDetailScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
+                            if (g.platform.isNotBlank()) {
+                                CyberChip(
+                                    icon = Icons.Filled.Tv,
+                                    text = g.platform.uppercase(),
+                                    tint = CyberYellow
+                                )
+                            }
                             if (g.year.isNotBlank()) {
                                 CyberChip(
                                     icon = Icons.Filled.CalendarToday,
                                     text = g.year,
                                     tint = CyberYellow
-                                )
-                            }
-
-                            if (g.genre.isNotBlank()) {
-                                CyberChip(
-                                    icon = Icons.Filled.Category,
-                                    text = g.genre,
-                                    tint = CyberBlue
                                 )
                             }
 
@@ -348,6 +340,15 @@ fun GameDetailScreen(
                                     highlight = true
                                 )
                             }
+
+                            if (g.genre.isNotBlank()) {
+                                CyberChip(
+                                    icon = Icons.Filled.Category,
+                                    text = g.genre,
+                                    tint = CyberBlue
+                                )
+                            }
+
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -587,7 +588,10 @@ fun GameDetailScreen(
                         }
 
                         val videoTests = remember(g.testResults) {
-                            g.testResults.filter { it.mediaLink.isNotBlank() }
+                            g.testResults.filter {
+                                isValidHttpUrl(it.mediaLink) &&
+                                    (extractYouTubeId(it.mediaLink) != null || isDirectVideoUrl(it.mediaLink))
+                            }
                         }
 
                         if (videoTests.isNotEmpty()) {
@@ -610,9 +614,7 @@ fun GameDetailScreen(
                                 videoTests.forEach { test ->
                                     TestVideoCardCyber(
                                         test = test,
-                                        onOpenVideo = { link ->
-                                            runCatching { uriHandler.openUri(link) }
-                                        }
+                                        onOpenVideo = onOpenVideo
                                     )
                                 }
                             }
@@ -697,14 +699,22 @@ fun GameDetailScreen(
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        if (currentUser == null) {
+                    if (currentUser == null) {
+                        Surface(
+                            shape = CutCornerShape(topEnd = 10.dp, bottomStart = 10.dp),
+                            color = CyberDark,
+                            border = BorderStroke(1.dp, CyberYellow.copy(alpha = 0.25f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             Text(
                                 text = stringResource(R.string.login_to_comment).uppercase(),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = CyberYellow.copy(alpha = 0.7f),
-                                fontFamily = FontFamily.Monospace
+                                color = CyberYellow.copy(alpha = 0.85f),
+                                fontFamily = FontFamily.Monospace,
+                                modifier = Modifier.padding(12.dp)
                             )
-                        } else {
+                        }
+                    } else {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.fillMaxWidth()
@@ -927,7 +937,9 @@ private fun TestVideoCardCyber(
     onOpenVideo: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val thumbUrl = remember(test.mediaLink) { youtubeThumbnailUrl(test.mediaLink) }
+    val thumbUrl = remember(test.mediaLink) {
+        extractYouTubeId(test.mediaLink)?.let { "https://img.youtube.com/vi/$it/hqdefault.jpg" }
+    }
 
     Surface(
         shape = CutCornerShape(
@@ -981,7 +993,7 @@ private fun TestVideoCardCyber(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(190.dp)
+                    .aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(14.dp))
                     .background(CyberGray)
                     .clickable { onOpenVideo(test.mediaLink) },
@@ -994,8 +1006,10 @@ private fun TestVideoCardCyber(
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(CyberBlack)
                     )
                 }
 
@@ -1036,11 +1050,15 @@ private fun CommentCardCyber(
 ) {
     val context = LocalContext.current
 
-    val dateStr = remember(comment.createdAt) {
+    val (dateLine, timeLine) = remember(comment.createdAt) {
         val millis = comment.createdAt?.toDate()?.time ?: 0L
-        if (millis == 0L) "" else {
-            val fmt = SimpleDateFormat("d MMM yyyy • HH:mm", Locale.getDefault())
-            fmt.format(Date(millis))
+        if (millis == 0L) {
+            Pair("", "")
+        } else {
+            val locale = Locale.getDefault()
+            val date = SimpleDateFormat("d MMM yyyy", locale).format(Date(millis))
+            val time = SimpleDateFormat("HH:mm", locale).format(Date(millis))
+            Pair(date, time)
         }
     }
 
@@ -1090,44 +1108,60 @@ private fun CommentCardCyber(
             Spacer(Modifier.width(10.dp))
 
             Column(Modifier.weight(1f)) {
+                val author = comment.authorName?.takeIf { it.isNotBlank() }
+                    ?: comment.authorDevice.takeIf { it.isNotBlank() }
+                    ?: stringResource(R.string.comments_unknown_author)
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val author = comment.authorName?.takeIf { it.isNotBlank() }
-                        ?: comment.authorDevice.takeIf { it.isNotBlank() }
-                        ?: stringResource(R.string.comments_unknown_author)
-
                     Text(
                         text = author,
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
                         color = CyberYellow,
-                        fontFamily = FontFamily.Monospace
+                        fontFamily = FontFamily.Monospace,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
                     )
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (dateStr.isNotBlank()) {
+                    if (dateLine.isNotBlank()) {
+                        Spacer(Modifier.width(8.dp))
+                        Column(
+                            horizontalAlignment = Alignment.End,
+                            modifier = Modifier.align(Alignment.Bottom)
+                        ) {
                             Text(
-                                text = dateStr,
+                                text = timeLine,
                                 style = MaterialTheme.typography.labelMedium,
-                                color = CyberYellow.copy(alpha = 0.7f),
-                                fontFamily = FontFamily.Monospace
+                                color = CyberYellow.copy(alpha = 0.8f),
+                                fontFamily = FontFamily.Monospace,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = dateLine,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = CyberYellow.copy(alpha = 0.65f),
+                                fontFamily = FontFamily.Monospace,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
-                        if (isOwn) {
-                            IconButton(
-                                onClick = onEdit,
-                                modifier = Modifier.size(34.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Edit,
-                                    contentDescription = null,
-                                    tint = CyberYellow
-                                )
-                            }
+                    }
+
+                    if (isOwn) {
+                        IconButton(
+                            onClick = onEdit,
+                            modifier = Modifier.size(34.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = null,
+                                tint = CyberYellow
+                            )
                         }
                     }
                 }
@@ -1143,17 +1177,6 @@ private fun CommentCardCyber(
             }
         }
     }
-}
-
-private fun youtubeThumbnailUrl(url: String): String? {
-    val u = url.trim()
-    if (u.isBlank()) return null
-    val shortMatch = Regex("youtu\\.be/([A-Za-z0-9_-]{6,})").find(u)
-    val shortId = shortMatch?.groupValues?.getOrNull(1)
-    val longMatch = Regex("[?&]v=([A-Za-z0-9_-]{6,})").find(u)
-    val longId = longMatch?.groupValues?.getOrNull(1)
-    val id = shortId ?: longId ?: return null
-    return "https://img.youtube.com/vi/$id/hqdefault.jpg"
 }
 
 @Composable
@@ -1244,22 +1267,22 @@ private fun DataSourceBadge(
     Surface(
         shape = CutCornerShape(
             topStart = 0.dp,
-            topEnd = 12.dp,
+            topEnd = 10.dp,
             bottomEnd = 0.dp,
-            bottomStart = 12.dp
+            bottomStart = 10.dp
         ),
-        color = CyberGray,
-        border = BorderStroke(1.dp, CyberBlue.copy(alpha = 0.45f)),
+        color = CyberDark.copy(alpha = 0.8f),
+        border = BorderStroke(1.dp, CyberBlue.copy(alpha = 0.35f)),
         modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.Android,
+                imageVector = Icons.Filled.Public,
                 contentDescription = null,
-                tint = CyberBlue,
+                tint = CyberBlue.copy(alpha = 0.85f),
                 modifier = Modifier.size(16.dp)
             )
             Spacer(Modifier.width(8.dp))

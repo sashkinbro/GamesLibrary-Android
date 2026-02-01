@@ -120,4 +120,7 @@ dependencies {
 
     // In-App Review
     implementation(libs.review.ktx)
+
+    // YouTube Player
+    implementation(libs.youtube.player.core)
 }
